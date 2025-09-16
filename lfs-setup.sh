@@ -1,5 +1,5 @@
 #!/bin/bash
-#Edited on Website.
+#Edited on Website #2
  
 echoL() {
 	local message="${1:-""}"  # Default to an empty string
