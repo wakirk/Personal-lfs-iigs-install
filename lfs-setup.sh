@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 echoL() {
 	local message="${1:-""}"  # Default to an empty string
 	if [ -n "$TMUX" ]; then
