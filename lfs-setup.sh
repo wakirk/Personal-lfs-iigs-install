@@ -1,4 +1,5 @@
 #!/bin/bash
+#Edited on DOS.
  
 echoL() {
 	local message="${1:-""}"  # Default to an empty string
