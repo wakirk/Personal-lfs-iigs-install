@@ -1,5 +1,4 @@
 #!/bin/bash
-#Edited on Website #2
  
 echoL() {
 	local message="${1:-""}"  # Default to an empty string
@@ -59,10 +58,7 @@ setup_term() {
 # Put this in your script (e.g., above main_routine)
 
 main_routine () {
-
-bash --noprofile --norc -i
-
-
+	bash --noprofile --norc -i
 }
 
 setup_term
