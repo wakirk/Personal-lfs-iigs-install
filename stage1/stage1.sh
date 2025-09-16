@@ -1,0 +1,166 @@
+#!/bin/bash
+# Canonical menu engine — copy this file for every stage. Only change the arrays and MENU_TITLE.
+set -euo pipefail
+# if [ -z "${BASH_VERSION:-}" ]; then exec /bin/bash "$0" "$@"; fi
+
+# ===== Config =====
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STATUS_FILE="${STATUS_FILE:-$SCRIPT_DIR/.lfs-setup.state}"
+STEPS_DIR="${STEPS_DIR:-$SCRIPT_DIR}"
+
+TESTING_CLI_SET=0
+MENU_TITLE="${MENU_TITLE:-Stage 1 - Build LFS Environment}"
+AUTO=0
+NO_PAUSE=0
+SKIP_BANNER=0
+RUN_MODE="single"   # "single" for N/number; "all" while A runs
+
+# ===== Define steps here (only part you edit per stage) =====
+# Top-level example: calls stage submenus with %FLAGS% so All runs headless, N/number stays interactive.
+STEPS_DESC=(
+  ""  # 0 dummy
+  "Fetch sources into LFS/sources" # "Fetch sources into $LFS/sources"
+  "Build cross-toolchain (pass 1)"
+  "Build temporary tools"
+)
+STEPS_CMD=(
+  ""  # 0 dummy
+  "$STEPS_DIR/01-fetch-sources.sh"
+  "$STEPS_DIR/02-build-cross-pass1.sh"
+  "$STEPS_DIR/03-build-temp-tools.sh"
+)
+TOTAL_STEPS=$(( ${#STEPS_DESC[@]} - 1 ))
+
+# ===== State helpers =====
+step_val() { local idx="$1"; eval "printf '%s' \"\${STEP_${idx}:-0}\""; }
+
+ensure_status_file() {
+  if [[ ! -f "$STATUS_FILE" ]]; then
+    { echo "TESTING=0"; echo "CURRENT=1"; for ((i=1;i<=TOTAL_STEPS;i++)); do echo "STEP_${i}=0"; done; } > "$STATUS_FILE"
+  fi
+}
+load_state() {
+  # shellcheck disable=SC1090
+  source "$STATUS_FILE"
+  : "${TESTING:=0}"; : "${CURRENT:=1}"
+  for ((i=1;i<=TOTAL_STEPS;i++)); do eval "STEP_${i}=\${STEP_${i}:-0}"; done
+}
+save_state() {
+  local tmp="${STATUS_FILE}.tmp"
+  { echo "TESTING=$TESTING"; echo "CURRENT=$CURRENT"; for ((i=1;i<=TOTAL_STEPS;i++)); do local v; v="$(step_val "$i")"; echo "STEP_${i}=${v:-0}"; done; } > "$tmp"
+  mv -f "$tmp" "$STATUS_FILE"
+}
+reset_state()      { rm -f "$STATUS_FILE"; ensure_status_file; load_state; }
+step_is_done()     { [[ "$(step_val "$1")" == "1" ]] ; }
+next_undone_index(){ for ((i=1;i<=TOTAL_STEPS;i++)); do if [[ "$(step_val "$i")" != "1" ]]; then echo "$i"; return; fi; done; echo 0; }
+mark_done() {
+  local idx="$1"; eval "STEP_${idx}=1"
+  for ((k=idx+1;k<=TOTAL_STEPS;k++)); do if [[ "$(step_val "$k")" != "1" ]]; then CURRENT="$k"; save_state; return; fi; done
+  CURRENT=$((TOTAL_STEPS+1)); save_state
+}
+clear_done() { local idx="$1"; eval "STEP_${idx}=0"; if (( idx < CURRENT )); then CURRENT="$idx"; fi; save_state; }
+
+# ===== Unified runner =====
+_run_step_exec() {
+  local idx="$1" desc="${STEPS_DESC[$idx]}" cmd="${STEPS_CMD[$idx]}"
+  # Inject flags for submenus if %FLAGS% is present
+  if [[ "$cmd" == *"%FLAGS%"* ]]; then
+    local flags="--skip-banner"
+    [[ "$RUN_MODE" == "all" ]] && flags+=" --auto --no-pause"
+    [[ "${TESTING:-0}" -eq 1 ]] && flags+=" --testing"
+    cmd="${cmd//%FLAGS%/$flags}"
+  fi
+
+  echo; echo "==> Running step $idx: $desc"; echo "    Command: $cmd"; echo
+  export LFS_SETUP_STEP="$idx" LFS_SETUP_STATUS_FILE="$STATUS_FILE" TESTING PARENT_TESTING="$TESTING"
+
+  set +e; /bin/bash -lc "$cmd"; local rc=$?; set -e
+  case "$rc" in 126|127) echo "• Step $idx command not found or not executable (rc=$rc)."; return 12;; esac
+  case "$rc" in
+    0)  mark_done "$idx"; echo "✓ Step $idx completed."; return 0;;
+    10) mark_done "$idx"; echo "• Step $idx already done (rc=10)."; return 0;;
+    11) echo "↷ Step $idx skipped (rc=11)."; return 11;;
+    12) echo "• Step $idx missing/not-exec (rc=12)."; return 12;;
+    *)  echo "✗ Step $idx failed (rc=$rc)."; return "$rc";;
+  esac
+}
+run_step() { local idx="$1"; (( idx>=1 && idx<=TOTAL_STEPS )) || { echo "Invalid step index: $idx"; return 2; }; if step_is_done "$idx"; then echo "Step $idx already completed: ${STEPS_DESC[$idx]}"; return 0; fi; _run_step_exec "$idx"; }
+run_next() { RUN_MODE="single"; local n; n="$(next_undone_index)"; (( n==0 )) && { echo "No remaining steps."; return 0; }; run_step "$n"; }
+run_all_from_current() {
+  local _old_mode="$RUN_MODE"; RUN_MODE="all"
+  while :; do
+    local n; n="$(next_undone_index)"
+    if (( n == 0 )); then echo "All steps are already complete."; RUN_MODE="$_old_mode"; return 0; fi
+    if ! run_step "$n"; then local rc=$?; case "$rc" in 11|12) continue ;; *) echo; echo "Stopped at step $n (rc=$rc). Fix it, then press N to resume or choose the step number."; RUN_MODE="$_old_mode"; return 1 ;; esac; fi
+  done
+  RUN_MODE="$_old_mode"
+}
+toggle_testing() { TESTING=$(( TESTING==1 ? 0 : 1 )); save_state; }
+
+# ===== UI =====
+draw_banner() {
+  clear
+  if (( SKIP_BANNER == 0 )); then
+    echo " "; echo " "; echo " "; echo " "; echo " "
+    echo "                        ██╗     ███████╗███████╗   ███████╗███████╗████████╗██╗   ██╗██████╗ "
+    echo "                        ██║     ██╔════╝██╔════╝   ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗"
+    echo "                        ██║     █████╗  ███████╗   ███████╗█████╗     ██║   ██║   ██║██████╔╝"
+    echo "                        ██║     ██╔══╝  ╚════██║   ╚════██║██╔══╝     ██║   ██║   ██║██╔═══╝ "
+    echo "                        ███████╗██║     ███████╗   ███████║███████║   ██║   ╚██████╔╝██║     "
+    echo "                        ╚══════╝╚═╝     ╚══════╝   ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝     "
+    echo " "
+  else
+    echo
+  fi
+  echo " "
+  echo " ${MENU_TITLE}"
+  echo " ---------------------"
+}
+draw_menu() {
+  draw_banner
+  echo " TESTING: $([[ $TESTING -eq 1 ]] && echo ON || echo OFF)"; echo
+  for ((i=1;i<=TOTAL_STEPS;i++)); do local doneflag; doneflag="$(step_val "$i")"; local badge="[ ]"; [[ "$doneflag" == "1" ]] && badge="[x]"; printf " %2d. %-3s %s\n" "$i" "$badge" "${STEPS_DESC[$i]}"; done
+  echo; echo "  A = Run all remaining   N = Run next step   T = Toggle TESTING"; echo "  R = Reset statuses       Q = Quit"; echo
+}
+handle_choice() {
+  local choice="$1" pause_after=0
+  case "$choice" in
+    [0-9]|[1-9][0-9])
+      if (( choice>=1 && choice<=TOTAL_STEPS )); then
+        if step_is_done "$choice"; then read -rp "Step $choice is marked DONE. Re-run and clear the flag? [y/N]: " yn; case "$yn" in y|Y|yes|YES) clear_done "$choice"; RUN_MODE="single"; run_step "$choice" ;; *) echo "Leaving step $choice marked done." ;; esac
+        else RUN_MODE="single"; run_step "$choice"; fi
+      else echo "Invalid step number."; fi
+      pause_after=1 ;;
+    [nN]) RUN_MODE="single"; run_next; pause_after=1 ;;
+    [aA]) run_all_from_current; pause_after=1 ;;
+    [tT]) toggle_testing; echo "TESTING is now $([[ $TESTING -eq 1 ]] && echo ON || echo OFF)"; pause_after=1 ;;
+    [rR]) reset_state; echo "Statuses reset."; pause_after=1 ;;
+    [qQ]) exit 0 ;;
+    *)    echo "Unknown selection."; pause_after=1 ;;
+  esac
+  if (( pause_after && NO_PAUSE == 0 )); then echo; read -rp "Press Enter to continue..." _; fi
+}
+
+# ===== CLI & Main =====
+while (( $# )); do
+  case "$1" in
+    --skip-banner) SKIP_BANNER=1 ;;
+    --title)       MENU_TITLE="$2"; shift ;;
+    --title=*)     MENU_TITLE="${1#--title=}" ;;
+    --auto)        AUTO=1 ;;
+    --no-pause)    NO_PAUSE=1 ;;
+    --reset)       reset_state; echo "Statuses cleared."; exit 0 ;;
+    --testing)     TESTING=1; TESTING_CLI_SET=1 ;;
+    --no-testing)  TESTING=0; TESTING_CLI_SET=1 ;;
+    *)             break ;;
+  esac
+  shift
+done
+
+ensure_status_file; load_state
+if (( TESTING_CLI_SET == 1 )); then :; elif [[ -n "${PARENT_TESTING:-}" ]]; then TESTING=$(( PARENT_TESTING ? 1 : 0 )); fi
+save_state
+
+if (( AUTO == 1 )); then run_all_from_current; exit $?; fi
+
+while true; do draw_menu; read -rp "Select (1-${TOTAL_STEPS}, A, N, T, R, Q): " CH; handle_choice "$CH"; done

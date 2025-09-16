@@ -1,0 +1,14 @@
+# Ignore List
+
+# Ignore local artifacts (repo-root relative)
+# Folders (end with /; use forward slashes on Windows too)
+USB/
+bin/
+dos/
+
+# Optional common junk
+*.log
+*.tmp
+*.swp
+*.bak
+*.old
