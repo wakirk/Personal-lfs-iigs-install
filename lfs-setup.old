@@ -38,6 +38,9 @@ setup_term() {
 	# Check if the script is running inside tmux
 	if [ -n "$TMUX" ]; then
 		SetScreen
+#		tmux set-window-option -w window-style "bg=default"
+#		tmux set-window-option -w window-active-style "bg=darkblue,fg=brightwhite"
+#		tmux refresh-client -S
 		clear
 		echo "*** Setup Script Starting.... ***"
 		echoL "Initalizing..."

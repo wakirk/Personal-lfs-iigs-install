@@ -26,10 +26,17 @@ SetScreen() {
 	tmux set-option -g window-status-current-format ""
 	tmux set-option -g status-left-length 40
 	tmux set-option -g status-right-length 40
+#    tmux set-window-option -w window-style "bg=default"
+#    tmux set-window-option -w window-active-style "bg=darkblue,fg=brightwhite"
+    tmux refresh-client -S
+	clear
 }
 
 setup_term() {
-    if [ -n "$TMUX" ]; then
+    ensure_tmux_session
+#    if [ -n "$TMUX" ]; then
+	if [ -n "${TMUX:-}" ] || [ "${LFS_TMUX_BOOTSTRAPPED:-0}" = "1" ]; then
+		export LFS_TMUX_BOOTSTRAPPED=1
         # Already inside tmux
         SetScreen
         clear
@@ -46,7 +53,8 @@ setup_term() {
     else
         # Launch new tmux session running this script
         SESSION="my_session"
-        tmux new-session -s "$SESSION" "$0"
+#       tmux new-session -s "$SESSION" "$0"
+        tmux new-session -s "$SESSION" "LFS_TMUX_BOOTSTRAPPED=1 TMUX_SESSION_NAME='$SESSION' '$0'"
         # When $0 exits, tmux will terminate automatically
     fi
 
@@ -88,8 +96,10 @@ who_am_I() {
 main_routine () {
     HERE="$(where_am_I)"
     SCRIPT_NAME="$(who_am_I)"
+	SetScreen
     export HERE SCRIPT_NAME
 	echo "I, $SCRIPT_NAME, amd at $HERE"
+	read
 	read
 	$HERE/test/stage0.sh
 #	bash --noprofile --norc -i
