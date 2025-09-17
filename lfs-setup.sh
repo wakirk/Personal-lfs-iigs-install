@@ -8,7 +8,7 @@ unset _BOOT_HERE
 
 
  main_routine () {
- 	echo "I, $SCRIPT_NAME, amd at $HERE"
+ 	echo "I, $SCRIPT_NAME, amd at $HERE supposed to be lfs-setup.sh"
  	read
 	read
  	$HERE/test/stage0.sh

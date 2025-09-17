@@ -26,7 +26,7 @@ who_am_I() {
 		local dir; dir="$(cd -P -- "$(dirname -- "$src")" && pwd)"
 		src="$(readlink -- "$src")"
 		[[ "$src" != /* ]] && src="$dir/$src"
-	end
+	done
 	basename -- "$src"
 }
 
