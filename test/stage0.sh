@@ -90,9 +90,7 @@ main_routine () {
     SCRIPT_NAME="$(who_am_I)"
     export HERE SCRIPT_NAME
 	echo "I, $SCRIPT_NAME, amd at $HERE"
-	read
-	$HERE/test/stage0.sh
-#	bash --noprofile --norc -i
+	bash --noprofile --norc -i
 }
 
 setup_term
