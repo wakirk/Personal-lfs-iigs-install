@@ -8,10 +8,13 @@ unset _BOOT_HERE
 
 
  main_routine () {
- 	echo "I, $SCRIPT_NAME, amd at $HERE supposed to be lfs-setup.sh"
+ 	echo "I, $SCRIPT_NAME, am at $HERE supposed to be lfs-setup.sh"
+ 	echo "running: $HERE/test/stage0.sh"
  	read
 	read
  	$HERE/test/stage0.sh
+	read
+	read
  #	bash --noprofile --norc -i
  }
 

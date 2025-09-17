@@ -9,8 +9,20 @@
 # NOTE: No output suppression; stick to your environment/style.
 
 # where_am_I: absolute dir of the current script, with symlinks resolved.
+## internal: the top-level caller file (not this library)
+lfs__topsrc() {
+	local last_index=$(( ${#BASH_SOURCE[@]} - 1 ))
+	local src="${BASH_SOURCE[$last_index]}"
+	# Fallbacks for odd shells/invocations
+	if [ -z "$src" ] || [ "$src" = "bash" ]; then
+		src="$0"
+	fi
+	printf '%s\n' "$src"
+}
+
+# where_am_I: absolute dir of the top-level script, with symlinks resolved.
 where_am_I() {
-	local src="${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}"
+	local src; src="$(lfs__topsrc)"
 	while [ -h "$src" ]; do
 		local dir; dir="$(cd -P -- "$(dirname -- "$src")" && pwd)"
 		src="$(readlink -- "$src")"
@@ -19,9 +31,9 @@ where_am_I() {
 	cd -P -- "$(dirname -- "$src")" && pwd
 }
 
-# who_am_I: basename of the current script (final target if symlinked)
+# who_am_I: basename of the top-level script (final target if symlinked)
 who_am_I() {
-	local src="${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}"
+	local src; src="$(lfs__topsrc)"
 	while [ -h "$src" ]; do
 		local dir; dir="$(cd -P -- "$(dirname -- "$src")" && pwd)"
 		src="$(readlink -- "$src")"
