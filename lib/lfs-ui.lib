@@ -1,4 +1,4 @@
-# lfs-ui.sh — screen/tmux + location helpers (source-able)
+# lfs-ui.lib — screen/tmux + location helpers (source-able)
 # Keep menus clean: source this file in any script, then:
 #   lfs_identity
 #   lfs_tmux_entry main_routine
@@ -109,7 +109,7 @@ lfs_tmux_entry() {
 	fi
 
 	# Create a new session and run this script inside it.
-	local sess="${TMUX_SESSION_NAME:-${SCRIPT_NAME%.sh}}"
+	local sess="${TMUX_SESSION_NAME:-${SCRIPT_NAME%.lib}}"
 	[ -n "$sess" ] || sess="lfs-setup"
 	sess="${sess//[^A-Za-z0-9_.-]/_}"
 
