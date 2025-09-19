@@ -8,8 +8,13 @@ test_func () {
 	return 0
 }
 
+test_func2() {
+    echo "Test Function called with $HERE."
+	return 0
+}
+
 main () {  # alwasy have main.
-#	menu_setup /root/lfs/mainmenu.tsv
+	menu_setup /root/lfs/mainmenu.tsv
 	echo "Hello World\n"3
 	read
 #	menu_load
