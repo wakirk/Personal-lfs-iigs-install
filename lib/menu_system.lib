@@ -334,6 +334,7 @@ _menu_validate_callbacks_or_halt() {
         local fn="${MENU_FUNCS[$i]}"
         if ! declare -F -- "$fn" >/dev/null 2>&1; then
             _menu_err "Menu System Load Error: Function [$fn] is missing in the host, please correct and restart."
+            read #DEBUG
             exit 1
         fi
         i=$((i + 1))
