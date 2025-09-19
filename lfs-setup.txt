@@ -1,0 +1,605 @@
+======= Previously Shared 
+
+
+menu_system.lib specifications:
+	Is not a stand alone script, meant to be included in another file for execution.
+
+Usage:
+	Inclusion in host script:	
+	source menu_system.lib   This includes the menu system into the host script.
+
+Files:
+File 1: Menu Data File
+					The exact name is what ever is passed to menu_setup().
+
+TSV file			Purpose:   This is where the menu items, actions, and function names are at.
+
+Foramt:
+	Function_name<tab>file_Name<tab>Display_Name
+
+Format Descriptor:
+	Function_name:		Is the name of the function in the script to call if the entry is selected.  Must be present.
+	File_name 			Is the name of the file to be called if required. (can be blank, i.e. ...<tab><tab>...)
+	Display Name 		Everything else is the display name to EOL. That gives me the most freedom to make it what I want.
+
+Can have as many items as needed, they will be assgined to menu items in Sequence from top to bottom.
+
+This file is not edited by the script.
+
+File 2: Save File
+				Purpose: Keeps track of the status of the menu flags, feature presistance.
+
+				fields:
+						Function Name: 	Text: Used to keep track of each menu items's status by the function name
+										used in the TSV, as that field is both required and short.
+						seporator:		(leaving this up to AI steps, but tab recommended, comma acceptable)
+						Status Code:	Character:  Code to use to set the menu's status code.  
+
+Reason for Menu and Save file seporation:
+				Ease of Reset, I just delete the save file and everything is cleared. Useful for a script to wipe them all
+				allowing for a global reset while leaving the menu intact.
+
+Matching:		the Function name field in the .TSV needs to match the function name field in the .sav file. 
+				this function name field is required in both, and also it should be present in the script, if 
+				it is not found in the script, stop everything with an error:
+				"Menu System Load Error: Funciton [function name] is missing in the host, please correct and restart."
+				So we can safely assume it's always there now.
+				
+
+Functions:
+
+menu_setup ()	paramter: TSV filename.  
+				Pass it the data file name with the entries to display.  Calling it again should be
+				an error.  It should load the data file and prep any variables data.  This gives the
+				system a chance to prep for all startup and needed Tasks.
+
+				Return Code:
+					0:  Locked and Loaded.
+					1:  Already Loaded. 	Don't do this more then once.
+					2:  File Error			Something went wrong with the TSV file its self.
+					3:	Format Error		Something went wrong with the data.
+					4:	... any other errors needed.
+
+menu_save()		Parameters:		None.
+				Save the status of the menu entries filename: ($HERE/.menu.sav)
+				During save, only use what currently active in memory, so it's written fresh to accomondate changes.
+				Return Code:
+					0 		Success
+					1		File Related Error
+
+menu_load()		Parameters:		None.
+				Load the status of the menu entries filename: ($HERE/.menu.sav)
+				During Load, try to match function Name in save file to what was loaded form .TSV file.
+				* If a menu matches on function name, set that fields status as what is in save file.
+				* if save's field is not found in the menu data, assume the entry was deleted and ignore it.
+				* if the menu has an entry that's not in the save file, defualt it to Incomplete. (new menu entry)
+				That should clear up any version changes.
+				Return Code:
+					0 		Success
+					1		File Related Error
+					2		Save File Format Error
+					3		TSV was not prevously loaded.
+							Halt with Error: "Error.  Load Menu Data File First."
+
+Run_Menu()		Paramters:	None
+				Main menu display, this controls the menu, callbacks, and control loop
+				Step 1:
+					Any setup or init that is needed.
+				Step 2: 
+					Main Menu Loop 
+					step L1:
+						pre-menu display
+						Check for Menu_Pre_Render() callback, 
+						if found, all it, and assume it setup the screen.
+						if not found, just clear the screen.
+					step L2:
+						Menu Entries Dispaly
+						Show the list of menu items (see extended details)
+					step L3:
+						post-menu dispaly
+						Check for Menu_Post_Render() callback,
+						if found, call it
+							if it returned 0 do nothing.
+							if it returned 1 show the menu instructions
+						if not found, show the menu instructions
+					step L4 
+						Get keystroke
+						Process keystroke
+						If Menu_Select_*() exists, call it, otherwise keep going.
+						* matches the letter or number of the menu choice.
+						Call funtion_name is deisgnated in .TSV file.
+					step L5, if menu paging is requried, update the list
+					step L6, Process remaining commands
+					:end Main Menu loop
+				Loop Exited
+				Step 3 Any Post Menu Cleanup, likely about to save and/or exit.
+
+for Step L2 display layout
+
+	Max Entries per screen 15
+
+	Only menu items are rendered,
+
+	Render procedure:
+	2. 1 blank line
+	3. menu entries 
+	4. 1 blank line
+
+	Single Menu item setup:
+	1.  5 spaces,
+	2.  litteral "["
+	3.  Option Settings, 1 character width
+		Menu Field 3: Option Setting displayes the status of the entry, 
+			Space:  Menu Items status is Incomplete.  (default)
+			"*":	Menu Items status is Complete.
+			"E": 	Menu Items status is In-Error.
+	4.  litteral "]"
+	5.  2 spaces
+	6.  1 character menu #, 1-9 A-F only.
+	7   1 space.
+	6.  Menu Display Item 60 Char max, > 60 char ignored, what ever was in Display Name TSV field, 
+
+
+for Step L4 Menu Input
+				This accepts input for the menu, 1 character only, then process.
+					there are 15, so, 1 2 3 4 5 6 7 8 9 A B C D E F only. 
+					If X is pressed:   Prompt: Market Entry Complete? 
+					If R is pressed:   Prompt: Reset Entry Not Complete?
+					For both: a 0 means ALL, anything else cancels.
+						1.  If a valid menu entry is entered, then it is marked Complete or Incomplete as requested.
+						2.  Any invalid entry is ignored an return to the menu.
+					If Q is pressed: simply returns from routine.
+					If any valid value 1-9, A-F then
+						1.  Sets EXEC_SCRIPT to the script name from the TSV File_name as it appears there.
+							a.  If that field is blank, then set EXEC_SCRIPT to "".
+						2.  Calls the callback function named in the Function_name field form the TSV file.
+					when call back finishes, it needs to return a value (1-3) and the menu re-displays.
+						if the callback returns 0, the entry does not change
+						if the callback returns 1, the entry is marked Complete.
+						if the callback returns 2, the entry is marked Incomplete
+						if the callback returns 3, the entry is makred In Error
+						
+					Page screens:  N / P Next and Previous if the number of entries in the .TSV exceed 15.
+						
+					Loop Processing:
+					Option:  U   Execute Unfinished Tasks  Any tasks from the beginning of the list
+					to the end are executed one after another, skipping any completed entries.
+					For each entry, - Do not Execute the loop if: Any entry is In-Error at the start.
+						Skip any marked Complieted Tasks
+						call In-Completed Tasks as if they were called directly by the main menu.
+						return handling during loop:
+							These differ on purpose:  this is under loop processing. 
+							for the loop, the return values are processed like this:
+							0: If 0 is returned during loop, mark the entry as complete.
+							1. If 1 is returned during loop, mark the entry as complete.
+							2. If 2 is returned during loop, leave the entry as in-complete, do not execute it again.
+							3. If 3 is returned during lopo, mark the entry is In-Error and terminate the loop.
+							The reason for the difference is some menus could call scripts that have menus, there's nothing
+							to be considered 'done' so a manual call doesn't need it to be marked complete, but an automated one does.
+					
+					Command Summary:
+						1 Item  1
+						2 Item  2
+						3 Item  3
+						4 Item  4
+						5 Item  5
+						6 Item  6
+						7 Item  7
+						8 Item  8
+						9 Item  9 
+						A Item 10
+						B Item 11
+						C Item 12
+						D Item 13
+						E Item 14
+						F Item 15
+						P Previous Page
+						N Next Page
+						Q Quit Menu Routine
+						X Mark Entry Complete
+						R Mark Entry In-Complete (can clear In-Error Status)
+						U Execute All Unfinished Entries in sequence.
+
+					Instruction Text: (display of instructions skipped if requested)
+						"Select Entry by menu Code, Q-Quit, X-Mark Complete, R-Mark Incomplete"
+						"U Execute all Imcomplete Tasks.  [N-Next Page, P-Previous Page]"
+						"Choice: "
+						[ ] means only show these if there is enough content to need paging.
+	
+						readkey, do not require enter to select choice, single key-press of code is enough.
+						save goes for X and R.
+						for X and R:
+						   "X: Select Entry to mark as Complet: "
+						   "R: Select Entry to mark as Incomplete:"
+						   only valid menu entries do anything, any other keys then valid menu entries simply return to main selection.
+						for U:
+						   "Execute Imcomplete Steps Automaitically: (Y)" only 'y' is accepted to execute.
+						   or
+						   "Some steps are In Error, clear them then retry, any key to continue"
+						for N and P: Just redraw the menu with the next or previous page, 
+						the list wraps: so P at the top goes to the last page.
+						for Q. exit the routine with no action back to host.
+						for any other 1-9 or A-F, do the required action if there is a menu item on the selection
+						if not, silently ignore it.  
+						Manually calling entries marked complete will execute them anyway, even if complete. only automated don't get called
+						for complete entries.
+						silently ignore any other keys.
+				
+
+
+Menu_Pre_Render()
+optional callback		executed just before the menu, to allow for custom screens.
+
+Menu_Post_Render()
+optional callback		executed just after the menu, to allow for custom instructions.
+						Returns 0 to have the main loop not show instructions
+						Returns 1 to allow the main loop to print instructions
+						Allows for any additional instructions or formatting.
+
+optional callback
+Menu_Select_*()			* matches the of the menu option select, if it is on a second page,
+						it will be called Menu_Select_Pn*  where n is the page number
+						these are called jsut before the main call when called manaully and are 
+						not called when the list is called as a loop. EXEC_SCRIPT should be set
+						and contain the name of the File_name field, or "" if that field was empty.
+						the purpose of these extra Menu_Selects allows for scripts that don't have 
+						actions that call external functions or pre-setup code before the main loop
+						these are not called during the run loop.
+						
+required callback
+various()				This is the callback that gets control if a menu is selected.
+						the name is defined by the Function_name field of the TSV
+						throw an error if this is missing showing the expected name,
+						when called, EXEC_SCRIPT should be set (not exported) and contain
+						the name of the File_name field, or "" if that field was empty.
+						It is expected to return a control value (0-3) on the results of its execution
+						so the menu system knows what to do.  The rest of the scripts contents depends on
+						what ever needs doiong.
+
+
+
+
+
+I am going to address the issues:
+
+Solid parts
+Accetped:
+
+Contradictions / Ambiguities to fix
+Callback return codes (two behaviors)
+
+Manual call: 0=no change, 1=complete, 2=incomplete, 3=error.
+
+U-loop: you explicitly want a different rule: 0→complete, 1→complete, 2→incomplete, 3→error/stop.
+✅ That’s fine, but let’s state this explicitly in both places so it isn’t mistaken for a spec drift.
+
+It is explicit, as a manual call and under U command loop the behavior is different.
+I explained the reason in the descriptions.  It has to do with sub-menu setups. if this script calls
+another script with menus, I don't want manually calleing that script as 'done'.
+Automated runs can enter sub menus but need to mark the tasks complete as so not to run them again.
+
+
+Function presence timing vs “stop everything”
+Spec says: if a function named in TSV is missing in the host, stop everything with an error at load time.
+In practice, source order matters: the host must have already defined those callbacks before menu_setup validates.
+✅ Either:
+Require host to source callbacks... before menu_setup, or
+Postpone hard validation until first use (friendlier) and only warn at menu_setup.
+
+The host script contains the execution, not the menu system, so the loaded scripts can't check for it
+until menu_setup() is called and loads the .TSV file, so it can't check until then, this was specified.
+
+Menu_Select_* naming is brittle
+You propose Menu_Select_* and Menu_Select_Pn* (page + code). Page numbers change when TSV changes, so function names would have to change too.
+✅ Safer alternatives:
+Index-based hook: Menu_Select_Index<N> (stable across paging), or
+Name-based hook: Menu_Select_Func_<Function_name> (stable if function name is stable), or
+
+Agreed, Line number Menu_Select_N will go by the line number in the file, so keep track. Count starts at 1.
+
+TSV path + file-name resolution
+Not defined whether relative paths are relative to $HERE or $RUN_ROOT.
+✅ Recommend: absolute allowed; otherwise relative to $HERE (the host script’s dir). That keeps menus self-contained.
+not applicalbe, it has to be passed to menu_setup(), that's what it will go by.  Because I could change the menu in 
+host file and don't want to fiddle with the menu sub-system to fix this. I want that manual choice.
+
+TSV tolerance
+
+Should blank lines / # comments be ignored?
+✅ Recommend: ignore blank lines and lines starting with #. Error on lines with <2 tabs.
+no, an earlier choice dictates this, any content other then data is an error. the Line number of 
+the entry matters for reasons. 
+
+Save file identity / collisions
+Save file fixed as $HERE/.menu.sav. If you run multiple different menus in the same directory, they’ll clash.
+✅ Recommend: $HERE/.menu.sav.<tsv_basename> (or include a short hash of the TSV path). Your “delete to reset” story still holds.
+The higher level design this won't be an issue, as each menu is meant to have its own directory, no two menu systems will be
+in the same directory.
+
+Status source vs TSV “Field 3”
+“Menu Field 3: Option Setting displays the status…” reads like TSV provides status. It doesn’t—the TSV has Display Name in field 3.
+✅ Clarify: status comes only from save state (default incomplete). TSV field 3 is just the label.
+I did, the TSV does not contain status inforamtion, during load, the defualt is 'Incomplete'
+follow the spec.  I even said the TSV is not ment to be edited by the script. That stands.
+
+Key handling niceties
+Case of A–F?
+✅ Treat a–f as A–F. Ignore anything else. N/P/Q/X/R/U should also be case-insensitive.
+Accepted, caps or lower case for letters.
+
+Prompts wordings (minor typos)
+“Market Entry Complete?” → “Mark Entry Complete?”
+“Complet / Imcomplete / lopo / dispaly” (spelling) — purely cosmetic, but I’ll keep your exact messages unless you want them cleaned.
+Accepted
+
+
+Lifecycle naming consistency
+You use menu_setup, menu_save, menu_load, but Run_Menu() (capital R).
+✅ Suggest menu_run for uniformity (or keep Run_Menu if you prefer; just be consistent in docs).
+Accepted, evne better, it would be better menu_run()
+
+Edge cases I’ll cover (no change to your UX)
+
+More than 15 items → page wrap with N/P.
+SUGGESTION for not having dangling menus:
+if > 15 entires, do pageing, until it reaches 15, this will keep dangling single entries on another page.
+for example (this is hard to describe, but easy to demo line by line)
+12 entreis: 1...12, all on screen one, no paging.
+13 entreis: 1...13, all on screen one, no paging. 
+14 entreis: 1...14, all on screen one.
+15 entries: 1...15, screen is full, no paging.
+16 entreis  1...12, page 2 has entries 13-16 so there is no dangle.
+17 entreis  1...12, page 2 has entries 13-17 so there is no dnagle.
+18 entreis  1...12, page 2 has entries 13-18 so there is no dnagle.
+19 entries  1...12, page 2 has entreis 13-19 so there is no dangle.
+20 entreis  1...15, page 2 has entreis 16-20 then return to normal processing.
+
+Selecting an item code that doesn’t exist on the current page → silently ignore.
+TSV line with missing function name → format error (return 3).
+Missing callback at call time → per your spec, fatal with message (if we keep strict validation).
+If you adopt “validate on use,” we’ll error then.
+
+menu_setup called twice → return 1 (“already loaded”).
+menu_load before menu_setup → return 3 and show your error text.
+Save file format (proposal that meets your needs)
+
+save file should follow spec provided.
+				fields:
+						Function Name: 	Text: Used to keep track of each menu items's status by the function name
+										used in the TSV, as that field is both required and short.
+										only the function name, nothing else. the field should match what is in the TSV.
+										it has to for this to work.
+						seporator:		Tab. I will clear this up for you.
+						Status Code:	Character:  Code to use to set the menu's status code.  
+
+On load: build a map by Function_name. New items default to incomplete; missing old items are ignored.
+per spec.
+
+If tsv_path differs or unreadable, still proceed (per your reset story), but you can warn. If you want stricter behavior, we can require match.
+if the save file is missing, all entries default to Incomplete.
+
+Execution flow (Minor changes for review)
+
+menu_setup TSV:
+	Resolve TSV path  (filepath will be provided)
+	Parse into arrays: MENU_FUNCS[], MENU_FILES[], MENU_NAMES[]
+	Required: validate that each MENU_FUNCS[i] is a valid Bash identifier
+	Required: validate callbacks exist now
+	Init MENU_STATE[] to ' ' (incomplete)
+
+menu_load:
+	If save file exists, load into a map by function name; assign statuses into MENU_STATE[] where matched.
+
+menu_run (aka your Run_Menu):
+	Loop:
+		Pre-render: if Menu_Pre_Render exists, call; else clear screen
+		Display menu page (render status + label with truncation to 60 chars, keys 1–9/A–F)
+		Post-render: if Menu_Post_Render exists and returns 0, suppress standard instruction lines; if returns 1 or missing, show instructions (including [N/P] only if needed)
+		Read single key
+		If item selection: set EXEC_SCRIPT (as was provied by TSV), run optional pre-select hook (per final naming decision), then run the required callback
+		Manual call mapping: 0=no change, 1=*, 2=␠, 3=E
+		If X/R: prompt for 0 (all) or a single item code; apply change
+		If U: if any E present at start → warn and cancel; else iterate incomplete ones in order:
+		Loop mapping: 0→*, 1→*, 2→␠ (and don’t re-run), 3→E and stop.
+		If N/P: page move (wrap); redraw
+		If Q: exit loop and return
+
+NOTICE: auto save is not desired for reasons.
+
+menu_save:
+	Write the in-memory state freshly (no partial merges)
+	only save actions, writing list of functions names and status, tab seporated, as specified.
+
+Menu_Select_* naming:
+	As mentnioned, use .TSV line number
+	file listed in TSV will be AS IS to EXEC_SCRIPT
+
+Save file name: use $HERE/.menu.sav as specified.
+
+================= Old New Response Here.
+
+Things to pin down (minor, but important)
+X/R prompt behavior (contradiction)
+
+You have both:
+“If X/R: 0=ALL, any other cancels.”
+and: “If a valid menu entry is entered, mark that entry.”
+➤ Decide one:
+A) X/R supports ALL or a single item (my recommendation), or
+B) X/R supports ALL only (anything else cancels).
+
+I don't have 0=ALL in my spec,
+
+I will define it like this:
+	X:  Mark an Entry Complete
+	R:	Mark an Entry Incomplete
+
+when X or R are pressed:
+Prompt:
+if x:   "Select Entry to mark as Complet: "
+if r:   "Select Entry to mark as Incomplete: "
+single key response, one of the menu items on display
+it will mark complete/incomplete if X or R respectivley.
+0 (not normally accepted) will mark All entries as Complete or Incomplete, reguardless
+if they are shown on current page or not. any other key aborts selection.
+
+
+Menu_Select_* exact naming
+You chose line-number hooks (good). Please confirm:
+Format is exactly Menu_Select_<LINE>, e.g. Menu_Select_13.
+Accepted.
+
+No page prefixes (the earlier Pn* is gone).
+True.
+
+Line numbers are 1-based and match TSV line order after rejecting malformed lines (since you forbid blanks/comments, that’s straightforward).
+
+Function name uniqueness
+
+Save/load maps status by Function_name. If the TSV has duplicate function names, behavior is ambiguous.
+➤ Propose: treat duplicates as a Format Error (return 3) at menu_setup.
+
+Duplicate function_name is save or .TSV is a format error.
+
+EXEC_SCRIPT handling
+
+You said: “file listed in TSV will be AS IS to EXEC_SCRIPT.”
+That means the menu system does not resolve or alter it. The callback is responsible for interpreting it (relative to $HERE, $RUN_ROOT, or absolute).
+➤ Confirm that’s intended.  Correct.
+
+Key echo during input
+You want single keypress without Enter. Should the key echo on screen or be silent?
+➤ I’ll default to silent (read -rsn1) unless you want it echoed.
+Echo it.
+
+Menu_Post_Render return
+
+0 → suppress built-in instructions
+1 → show built-in instructions
+➤ Confirm that missing Menu_Post_Render is treated like return 1 (i.e., show instructions). Correct.
+
+Error messages (exact strings)
+Load-time missing callback:
+“Menu System Load Error: Function [name] is missing in the host, please correct and restart.”
+Accepted:
+
+Load before menu_setup:
+“Error. Load Menu Data File First.”
+➤ I’ll use these exact texts unless you want spelling cleaned (e.g., “Function” vs “Funciton”).
+Correct any obious spelling errors.
+
+Save/load strictness
+You require tab as the save separator (not comma) — confirmed.
+If the save file is missing/corrupt → treat all entries as incomplete and continue
+Correct.
+
+
+Edge-case checklist (I’ll implement as such)
+Selecting a slot not present on a page → silently ignore.  Ture.
+Keys outside {1–9,A–F,N,P,Q,X,R,U} → silently ignore.   True.
+menu_setup called twice → return 1 (no changes).    Shows an error as described.
+menu_load before menu_setup → return 3, print your error, and stop.  has to stop as error as it won't function.
+TSV line with <2 tabs or empty Function_name → Format Error (3) with line number.
+Only file name can be blank. middle field.
+
+Menu_Pre_Render missing → clear screen and proceed.
+In U-loop: presence of any ‘E’ at start → warn (“clear them then retry”) and cancel the loop.
+if there is an "E" display "Entry N is in Error, Clear to continue." where N is the index line lumber from the TSV file,
+not what's on screen, as it could be on another screen not being shown.
+
+Paging rule (fully specified)
+total <= 15 → page 1 shows all; no paging.
+16 <= total <= 19 → page 1 shows 12 items; page 2 shows items 13..total.
+total >= 20 → standard paging of 15 per page (page 1: 1..15, page 2: 16..30, etc.), with wrap.
+This looks right.
+
+Integration with your framework
+Uses $HERE (from your header) for .menu.sav location.
+Accepted.  It should be valid.
+
+No autosave: state lives in memory until host calls menu_save.
+True.
+
+Required-callback validation at menu_setup means: the host must have sourced/defined those functions before calling
+menu_setup. (Ordering requirement.)
+yes, the hsot must have the entires defined, when menu_setup is called, they are validated and an error if the source
+is missing one.
+
+
+================= Old New Response Here.
+
+
+1.  X/R prompts: single item or ALL
+You finalized: one code on current page → mark that item; 0 → mark all entries; anything else cancels.
+I’ll implement exactly that (case-insensitive X/R; selection echo ON).
+Yes.
+
+2. Per-page numbering
+The printed code (1–9,A–F) is per page, not global. Selecting 1 always picks the first item on the current page (we’ll translate to the global line number internally).
+Your error/warning messages that reference “Entry N” will use the global TSV line number (1-based).
+Correct.
+
+3. Menu_Select_* naming
+Exactly Menu_Select_<LINE> (1-based TSV line index), no page prefixes.
+Called only for manual selections (not during U loop), and after EXEC_SCRIPT is set.
+Currect.
+
+4.  Function name uniqueness
+Duplicate Function_name in TSV or in .menu.sav is a Format Error at load; we’ll stop with return code
+3 and a line number.
+Correct.
+
+5.  Missing/Corrupt save file
+Spec says default all to Incomplete and continue.
+Implementation detail: I’ll treat missing or unreadable/corrupt save file as success (return 0)
+and just start clean, but print a short warning to stderr. (Otherwise your own “File Related Error”
+code would contradict the “continue” behavior.)
+
+Let me clarify:
+If a read error occures, or format error occurs, 
+Display the type of error, as:
+"Save File Error: <details>"  contains what the failure was.
+"Press [Enter] to conintue."  Litteral.
+routine returns non-zero, and that's it, the host will decide what to do then.
+That should square that away.
+
+6.  Save file duplicates
+If .menu.sav accidentally contains multiple lines for the same function name, I’ll choose last occurrence
+wins (simplest and predictable). OK?
+No. this is a format error, do as discussed in #5.
+
+7.  Display name field
+Because tabs delimit the TSV, the Display_Name must not contain tabs (newlines too). I’ll enforce that; a tab in the
+label triggers Format Error (3) with line number.
+Empty display name allowed? If a line ends right after the second tab, I’ll
+render an empty label (no placeholder) unless you want a default like "(no title)".
+No, It is a format error if the display name is empty or an extra tab (>2) is found.
+Do as spec defined.
+
+8.  Spelling in prompts
+I’ll correct obvious typos in the built-ins (e.g., “Complet/Imcomplete/dispaly/lopo” → 
+“Complete/Incomplete/display/loop”), per your note.
+
+9.  Menu_Post_Render default
+Missing ⇒ behave as return 1 (show built-in instructions). Return 0 suppresses them.
+Correct.
+
+Return codes on “already loaded”
+menu_setup called twice: I’ll print an error and return 1 (as you stated).
+No.  menu_setup should halt with Error Message exit 1 if attempted to be called twice. this a major error in host.
+
+U-loop early abort message
+
+If any entry is E at the start: I’ll find the first such entry and print
+Entry <N> is in Error, Clear to continue.
+where <N> is the TSV line number.
+Correct. Also, if an entry that had been executed returns an error the loop should exit.
+but this was already spelled out in spec.
+
+🧰 Implementation notes I’ll follow (no action yet)
+	Follow specs and notes.
+
+
+
+#5 stop at first entry
+#6 do as specified.
