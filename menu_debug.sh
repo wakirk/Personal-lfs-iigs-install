@@ -191,7 +191,7 @@ test_func2() {
 # 1) paste in (only) the functions listed above + the array declarations
 
 # 2) parse and validate
-_menu_parse_tsv "/absolute/path/to/mainmenu.tsv" || exit $?
+_menu_parse_tsv "/root/lfs/mainmenu.tsv" || exit $?
 _menu_validate_callbacks_or_halt
 echo "Parser+validator: OK (MENU_COUNT=$MENU_COUNT)"
 printf 'Row1: fn=%s file=%s label=%s\n' "${MENU_FUNCS[0]}" "${MENU_FILES[0]}" "${MENU_NAMES[0]}"
