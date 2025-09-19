@@ -334,7 +334,7 @@ _menu_validate_callbacks_or_halt() {
         local fn="${MENU_FUNCS[$i]}"
         if ! declare -F -- "$fn" >/dev/null 2>&1; then
             _menu_err "Menu System Load Error: Function [$fn] is missing in the host, please correct and restart."
-            read #DEBUG
+            read     # DEBUG
             exit 1
         fi
         i=$((i + 1))
@@ -665,11 +665,13 @@ _menu_u_loop() {
 menu_setup() {
     if [ "$MENU_LOADED" -ne 0 ]; then
         _menu_err "Menu System Error: menu_setup called more than once."
+        read   # DEBUG
         exit 1
     fi
 
     if [ $# -ne 1 ]; then
         _menu_err "Usage: menu_setup <tsv_path>"
+        read  # DEBUG
         exit 1
     fi
 
@@ -681,10 +683,12 @@ menu_setup() {
     parse_rc=$?
     if [ "$parse_rc" -eq 2 ]; then
         # File error
+        read # DEBUG
         exit 2
     fi
     if [ "$parse_rc" -eq 3 ]; then
         # Format error
+        read # DEBUG
         exit 3
     fi
 
