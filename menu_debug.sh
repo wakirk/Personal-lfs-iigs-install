@@ -82,7 +82,7 @@ _menu_split_tsv_line() {
 
 	printf -v "$__out_fn"   "%s" "$f1"
 	printf -v "$__out_file" "%s" "$f2"
-	printf -v "$__out_label"%s  "$f3"
+	printf -v "$__out_label" "%s" "$f3"
 
 	return 0
 }
