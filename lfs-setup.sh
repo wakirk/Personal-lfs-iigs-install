@@ -1,8 +1,6 @@
 #!/bin/bash
 source /root/lfs/lib/common-header.sh   # In every script.
 
-
-# Main routine.
 main () {  # alwasy have main.
     echo "Hello World\n"
 	echo "I, $SCRIPT_NAME, am at $HERE supposed to be lfs-setup.sh"
