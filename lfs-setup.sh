@@ -2,16 +2,17 @@
 source /root/lfs/lib/common-header.lib   # In every script.
 source /root/lfs/lib/menu_system.lib
 
-
-test_func () {
+test_func() {
     echo "Test Function called with $HERE."
 	return 0
-}
+} #	stage0	Test Function
 
 test_func2() {
     echo "Test Function called with $HERE."
 	return 0
-}
+} #	stage1	Test Second Function
+
+
 
 main () {  # alwasy have main.
 	menu_setup /root/lfs/mainmenu.tsv
