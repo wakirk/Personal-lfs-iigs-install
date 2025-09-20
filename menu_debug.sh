@@ -122,11 +122,12 @@ _menu_parse_tsv() {
 
 
 	MENU_COUNT=0
-	unset MENU_FUNCS MENU_FILES MENU_NAMES MENU_STATE
-	declare -a MENU_FUNCS
-	declare -a MENU_FILES
-	declare -a MENU_NAMES
-	declare -a MENU_STATE
+	# Reset the already-declared GLOBAL arrays.
+	# Do NOT 'declare' inside this function (that would create locals).
+	MENU_FUNCS=()
+	MENU_FILES=()
+	MENU_NAMES=()
+	MENU_STATE=()
 
 
 	if [ ! -f "$path" ]; then
@@ -259,5 +260,4 @@ _menu_validate_callbacks_or_halt
 echo "Parser+validator: OK (MENU_COUNT=$MENU_COUNT)"
 printf 'Row1: fn=%s file=%s label=%s\n' "${MENU_FUNCS[0]}" "${MENU_FILES[0]}" "${MENU_NAMES[0]}"
 printf 'Row2: fn=%s file=%s label=%s\n' "${MENU_FUNCS[1]}" "${MENU_FILES[1]}" "${MENU_NAMES[1]}"
-
 
