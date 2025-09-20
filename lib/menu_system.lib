@@ -776,6 +776,7 @@ _menu_first_error_index() {
 # -------------------------------------------------
 _menu_read_key() {
 	read -n 1 key
+	echo
 }
 #	local __outvar="$1"
 #	local key=""
