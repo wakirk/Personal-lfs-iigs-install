@@ -16,22 +16,21 @@ test_func2() {
 
 main () {  # alwasy have main.
 	menu_setup /root/lfs/mainmenu.tsv
-	echo "Hello World\n"3
-	read
-#	menu_load
-#	menu_run
-
-
-#	menu_save
+	echo "Hello World."
+	menu_load
+	menu_run
+	menu_save
 
 #	echo "I, $SCRIPT_NAME, am at $HERE supposed to be lfs-setup.sh"
 # 	echo "running: $HERE/test/stage0.sh"
- 	read
-	read
+# 	read
+#	read
 # 	$HERE/test/stage0.sh
-	read
-	read
+#	read
+#	read
 	#	bash --noprofile --norc -i
+	read
+
 }
 
 
