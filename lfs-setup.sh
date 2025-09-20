@@ -14,7 +14,15 @@ test_func2() {
 	return 0
 } #	stage1	Test Second Function
 
+#Menu_Pre_Render() {
+#	echo "Header Render"
+#
+#}
 
+Menu_Post_Render() {
+	echo "Footer Render"
+	return 1
+}
 
 main () {  # alwasy have main.
 	menu_setup /root/lfs/mainmenu.tsv

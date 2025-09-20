@@ -125,6 +125,7 @@ _menu_parse_tsv() {
 	if [ ! -f "$path" ]; then
 		_menu_err "TSV File Error: cannot open '$path'"
 		# Return code handled by caller (menu_setup -> exit or return code 2)
+		read
 		return 2
 	fi
 
@@ -184,7 +185,7 @@ _menu_parse_tsv() {
 		MENU_STATE+=(" ")    # default: incomplete
 		MENU_COUNT=$((MENU_COUNT + 1))
 		# DEBUG: show what we parsed
-		printf 'DBG: L%u fn=%q file=%q label=%q\n' "$line_no" "$fn" "$file" "$label" >&2
+		# printf 'DBG: L%u fn=%q file=%q label=%q\n' "$line_no" "$fn" "$file" "$label" >&2
 	done < "$path"
 	return 0
 }
@@ -201,10 +202,12 @@ _menu_validate_callbacks_or_halt() {
 		local fn="${MENU_FUNCS[i]-}"
 		if [ -z "${fn+x}" ]; then
 			_menu_err "Internal Error: MENU_FUNCS[$i] unset despite MENU_COUNT=$MENU_COUNT"
+			read
 			exit 1
 		fi
 		if ! declare -F -- "$fn" >/dev/null 2>&1; then
 			_menu_err "Menu System Load Error: Function [$fn] is missing in the host, please correct and restart."
+			read
 			exit 1
 		fi
 	done

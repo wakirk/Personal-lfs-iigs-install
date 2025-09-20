@@ -481,7 +481,8 @@ menu_run() {
 
 		# L5/L6 handled implicitly by loop; redraw next iteration
 	done
-
+	echo "did we exit here?"
+	read
 	return 0
 }
 
