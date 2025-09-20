@@ -358,7 +358,9 @@ menu_run() {
 	while [ "$running" -eq 1 ]; do
 		# L1: Pre-render
 		if declare -F -- "Menu_Pre_Render" >/dev/null 2>&1; then
+			set +e
 			Menu_Pre_Render
+			set -e
 		else
 			clear
 		fi
@@ -369,6 +371,7 @@ menu_run() {
 
 		# L3: Post-render and instructions
 		local show_instructions=1
+		set +e
 		if declare -F -- "Menu_Post_Render" >/dev/null 2>&1; then
 			Menu_Post_Render
 			if [ $? -eq 0 ]; then
@@ -380,6 +383,7 @@ menu_run() {
 		else
 			echo -n "Choice: "
 		fi
+		set -e
 
 		# L4: Read single key and process
 		local key=""
