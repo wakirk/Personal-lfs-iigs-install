@@ -79,7 +79,6 @@ _menu_split_tsv_line() {
 
 	# Assign by name
 	# Assign by indirection
-
 	printf -v "$__out_fn"   "%s" "$f1"
 	printf -v "$__out_file" "%s" "$f2"
 	printf -v "$__out_label" "%s" "$f3"
@@ -200,16 +199,21 @@ _menu_parse_tsv() {
 # --------------------------------------------
 # Validate that required callbacks exist now.
 # Stop at the first missing and HALT per spec.
+# Nounset-safe: avoid exploding on unset elements.
 # --------------------------------------------
 _menu_validate_callbacks_or_halt() {
-	local i=0
-	while [ "$i" -lt "$MENU_COUNT" ]; do
-		local fn="${MENU_FUNCS[$i]}"
+	local -i i
+	for (( i = 0; i < MENU_COUNT; i++ )); do
+		# Use defaulted expansion to avoid set -u errors on sparse elements
+		local fn="${MENU_FUNCS[i]-}"
+		if [ -z "${fn+x}" ]; then
+			_menu_err "Internal Error: MENU_FUNCS[$i] unset despite MENU_COUNT=$MENU_COUNT"
+			exit 1
+		fi
 		if ! declare -F -- "$fn" >/dev/null 2>&1; then
 			_menu_err "Menu System Load Error: Function [$fn] is missing in the host, please correct and restart."
 			exit 1
 		fi
-		i=$((i + 1))
 	done
 }
 
@@ -255,4 +259,5 @@ _menu_validate_callbacks_or_halt
 echo "Parser+validator: OK (MENU_COUNT=$MENU_COUNT)"
 printf 'Row1: fn=%s file=%s label=%s\n' "${MENU_FUNCS[0]}" "${MENU_FILES[0]}" "${MENU_NAMES[0]}"
 printf 'Row2: fn=%s file=%s label=%s\n' "${MENU_FUNCS[1]}" "${MENU_FILES[1]}" "${MENU_NAMES[1]}"
+
 
