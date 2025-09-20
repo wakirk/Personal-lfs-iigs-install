@@ -486,22 +486,6 @@ menu_run() {
 }
 
 
-# -------------------------------------------------
-# Input: single key, echoed (no Enter required)
-# Returns the character read in the variable named
-# by $1 (output variable name).
-# -------------------------------------------------
-_menu_read_key() {
-	local __outvar="$1"
-	local key=""
-	# Do not use -s (we want echo). -n1 reads one char, returns immediately.
-	IFS= read -r -n 1 key
-	printf -v "$__outvar" "%s" "$key"
-	# Print a newline to move past the "Choice: " line
-	echo
-}
-
-
 # ----------------------------------------------------------
 # Utility: convert a letter to upper-case (A..Z) explicitly
 # (No parameter-expansion tricks to keep it obvious.)
@@ -679,14 +663,16 @@ _menu_prompt_mark() {
 	local mode="$1"   # "X" or "R"
 	local prompt=""
 	if [ "$mode" = "X" ]; then
+		echo
 		prompt="Select Entry to mark as Complete: "
 	else
+		echo
 		prompt="Select Entry to mark as Incomplete: "
 	fi
 
 	echo -n "$prompt"
 	local ch=""
-	IFS= read -r -n 1 ch
+	read -n 1 ch
 	echo
 
 	# Output results via globals for simplicity (and readability)
@@ -742,26 +728,6 @@ _menu_call_preselect() {
 
 
 # ---------------------------------------------------------
-# Run a required callback by global index.
-# Sets EXEC_SCRIPT as-is from TSV before the call.
-# Returns the callback's exit code.
-# ---------------------------------------------------------
-_menu_run_callback() {
-	local global_idx="$1"
-
-	local fn="${MENU_FUNCS[$global_idx]}"
-	local file="${MENU_FILES[$global_idx]}"
-
-	# Per spec: EXEC_SCRIPT is set but NOT exported
-	EXEC_SCRIPT="$file"
-
-	# Safety: function existence was validated at setup; call directly
-	"$fn"
-	return $?
-}
-
-
-# ---------------------------------------------------------
 # Helpers for U loop
 # ---------------------------------------------------------
 _menu_has_any_error() {
@@ -774,6 +740,7 @@ _menu_has_any_error() {
 	done
 	return 1
 }
+
 
 _menu_first_error_index() {
 	local i=0
@@ -788,12 +755,105 @@ _menu_first_error_index() {
 }
 
 
+# -------------------------------------------------
+# Input: single key, echoed (no Enter required)
+# Returns the character read in the variable named
+# by $1 (output variable name).
+# -------------------------------------------------
+#_menu_read_key() {
+#local __outvar="$1"
+#local key=""
+## Do not use -s (we want echo). -n1 reads one char, returns immediately.
+#IFS= read -r -n 1 key
+#printf -v "$__outvar" "%s" "$key"
+## Print a newline to move past the "Choice: " line
+#echo
+#}
+# -------------------------------------------------
+# Input: single key, echoed (no Enter required)
+# Reads directly from /dev/tty so pipes/redirects don't break input.
+# Returns the character read in the variable named by $1.
+# -------------------------------------------------
+_menu_read_key() {
+	read -n 1 key
+}
+#	local __outvar="$1"
+#	local key=""
+
+#	# Prefer direct TTY read; this avoids cases where STDIN isn't a tty.
+#	if [ -r /dev/tty ]; then
+#		# First try bash read -n 1 (no Enter needed)
+#		if IFS= read -r -n 1 key < /dev/tty; then
+#			:
+#		else
+#			# Fallback: raw mode for exactly one byte, then restore
+#			local _old
+#			_old="$(stty -g </dev/tty)" || _old=""
+#			# guard set -e
+#			set +e
+#			stty -icanon min 1 time 0 echo </dev/tty 2>/dev/null
+#			key="$(dd bs=1 count=1 2>/dev/null </dev/tty)"
+#			[ -n "$_old" ] && stty "$_old" </dev/tty 2>/dev/null
+#			set -e
+#		fi
+#	else
+#		# No /dev/tty (very rare). Last resort: read from STDIN.
+#		IFS= read -r -n 1 key || key=""
+#	fi
+
+#	printf -v "$__outvar" "%s" "$key"
+#	echo
+#}
+
+
+
+# ---------------------------------------------------------
+# Optional pre-select hook: Menu_Select_<LINE>
+# Called ONLY for manual selections (not during U).
+# LINE is 1-based TSV index.
+# ---------------------------------------------------------
+_menu_call_preselect() {
+	local global_idx="$1"        # 0-based
+	local line_no=$((global_idx + 1))
+	local hook="Menu_Select_${line_no}"
+
+	if declare -F -- "$hook" >/dev/null 2>&1; then
+		"$hook"
+	fi
+}
+
+
+# ---------------------------------------------------------
+# Run a required callback by global index.
+# Sets EXEC_SCRIPT as-is from TSV before the call.
+# Returns the callback's exit code.
+# ---------------------------------------------------------
+_menu_run_callback() {
+	local global_idx="$1"
+
+	local fn="${MENU_FUNCS[$global_idx]}"
+	local file="${MENU_FILES[$global_idx]}"
+
+	# Per spec: EXEC_SCRIPT is set but NOT exported
+	EXEC_SCRIPT="$file"
+
+	# Safety: existence was validated at setup; call directly.
+	# Guard against set -e so nonzero rc doesn't kill the menu loop.
+	local rc
+	set +e
+	"$fn"
+	rc=$?
+	set -e
+	return "$rc"
+}
+
+
 # ---------------------------------------------------------
 # Execute all INCOMPLETE entries in order (U behavior)
 # Returns to menu after completion or first error.
 # ---------------------------------------------------------
 _menu_u_loop() {
-	# Check for any 'E' at start
+	# If any 'E' exists, require clearing before U run
 	if _menu_has_any_error ; then
 		local err_idx="$(_menu_first_error_index)"
 		local line_no=$((err_idx + 1))
@@ -804,7 +864,7 @@ _menu_u_loop() {
 		return
 	fi
 
-	# Confirm execution per spec (only 'y' accepts)
+	# Confirm execution per spec (only lowercase 'y' accepts)
 	echo -n "Execute Incomplete Steps Automatically: (Y) "
 	local yn=""
 	IFS= read -r -n 1 yn
@@ -821,11 +881,15 @@ _menu_u_loop() {
 			EXEC_SCRIPT="${MENU_FILES[$i]}"
 			local fn="${MENU_FUNCS[$i]}"
 
-			# Safety: existence was validated.
+			# Call guarded against set -e
+			local rc
+			set +e
 			"$fn"
-			local rc=$?
+			rc=$?
+			set -e
 
-			# Apply U-loop mapping
+			# Apply U-loop mapping:
+			# 0|1 => '*', 2 => ' ' (continue), 3 => 'E' (STOP)
 			if [ "$rc" -eq 3 ]; then
 				MENU_STATE[$i]="E"
 				return
@@ -833,13 +897,9 @@ _menu_u_loop() {
 			if [ "$rc" -eq 2 ]; then
 				MENU_STATE[$i]=" "
 			else
-				# rc 0 or 1 => mark complete
 				MENU_STATE[$i]="*"
 			fi
 		fi
 		i=$((i + 1))
 	done
 }
-
-
-

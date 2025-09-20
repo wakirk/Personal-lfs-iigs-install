@@ -4,11 +4,13 @@ source /root/lfs/lib/menu_system.lib
 
 test_func() {
     echo "Test Function called with $HERE."
+	read
 	return 0
 } #	stage0	Test Function
 
 test_func2() {
     echo "Test Function called with $HERE."
+	read
 	return 0
 } #	stage1	Test Second Function
 
