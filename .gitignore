@@ -2,7 +2,7 @@
 
 # Ignore local artifacts (repo-root relative)
 # Folders (end with /; use forward slashes on Windows too)
-USB/
+USB/*
 !USB/LFS/
 !USB/LFS/**
 bin/
