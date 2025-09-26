@@ -1,0 +1,6 @@
+prep_wipedisk	10-clean-partition.sh	Clean Partitions (CAUTION)
+prep_newparts	20-NewPartition.sh	New Partitions (CAUTION)
+prep_mklfsfs	30-FileSystem.sh	Create LFS File systems (CAUTION)
+prep_mountlfs	40-MountingSystem.sh	Mount LFS File system
+prep_initdirs	50-Inital-dirs.sh	Inital System Directories
+prep_environ	60-Environment.sh	Configure Build Environment

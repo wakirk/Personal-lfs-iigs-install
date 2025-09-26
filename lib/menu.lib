@@ -1,0 +1,1312 @@
+###############################################################################
+# menu_system.lib 
+# -----------------------------------------------------------------------------
+# Source-only library that renders a 2-page console menu from a TSV file,
+# tracks per-entry status via a save file, and calls host-defined callbacks.
+#
+# Public API:
+#   menu_setup <tsv_path>   # load TSV, validate, initialize state (HALTS on errors per spec)
+#   menu_load               # load statuses from $HERE/.menu.sav (non-zero on error, host decides)
+#   menu_save               # save statuses to $HERE/.menu.sav
+#   menu_run                # interactive loop (render, input, callbacks, paging)
+#
+# Requirements and conventions:
+#   - The host must define callbacks whose names are in TSV column 1.
+#   - This library validates those callbacks at menu_setup and HALTS on first missing.
+#   - The host must define $HERE (your header does this) for save-file location.
+#   - TSV format is STRICT: exactly 3 tab-separated fields, no blanks, no comments.
+#       col1: Function_name  (Bash identifier, REQUIRED, UNIQUE)
+#       col2: File_name      (may be empty; copied AS-IS to EXEC_SCRIPT)
+#       col3: Display_Name   (REQUIRED, <= any length, but no tabs)
+#   - Status characters: ' ' (incomplete), '*' (complete), 'E' (error)
+#   - Keys: 1..9, A..F (case-insensitive), plus N/P/Q/X/R/U (letters case-insensitive)
+#   - X/R prompts accept one visible code or '0' for ALL; anything else cancels
+#   - Manual vs U-run return mapping is intentionally different (see below)
+#   - No autosave. Host calls menu_save explicitly.
+#
+# Paging rules:
+#   - total <= 15 : page 1 has all entries
+#   - 16..19      : page 1 shows entries 1..12; page 2 shows 13..N (avoid dangling 1-item pages)
+#   - >= 20       : 15 entries per page (1..15, 16..30, etc.), wrap with N/P
+#
+# Manual callback return mapping (applied after a manual selection):
+#   0 => no change
+#   1 => mark complete ('*')
+#   2 => mark incomplete (' ')
+#   3 => mark error ('E')
+#
+# U-loop callback return mapping (applied during U run):
+#   0 => mark complete ('*')
+#   1 => mark complete ('*')
+#   2 => mark incomplete (' ') and continue to next
+#   3 => mark error ('E') and STOP the loop
+#
+# Errors / Messages (exact strings as requested):
+#   - Missing callback at setup:
+#       "Menu System Load Error: Function [name] is missing in the host, please correct and restart."
+#     (HALT)
+#   - menu_load errors:
+#       "Save File Error: <details>"
+#       "Press [Enter] to continue."
+#     (Return non-zero; host decides next step)
+#   - menu_setup called twice:
+#       Print an error and exit 1 (hard halt)
+#   - menu_load before menu_setup:
+#       Print "Error. Load Menu Data File First." and return 3.
+#
+# Keep menus clean: source this file in any script, then:
+#   lfs_identity
+#   lfs_tmux_entry main_routine
+#
+# Exports:
+#   HERE, SCRIPT_NAME, LFS_TMUX_BOOTSTRAPPED (sentinel)
+#
+# NOTE: No output suppression; stick to your environment/style.
+
+###############################################################################
+
+
+
+MENU_PAGE=1				# Paging
+MENU_PAGE_COUNT=1
+MENU_PAGE_START_IDX=0	# inclusive, 0-based global index for first item on current page
+MENU_PAGE_END_IDX=-1	# inclusive, 0-based global index for last  item on current page
+MENU_LOADED=0			# Setup guard
+						# Auto mode (opt-in from host)
+						# 1 when host wants '--auto'
+MENU_AUTO=0
+MENU_AUTO_RAN=0			# MENU_AUTO_RAN=1 after we've triggered auto once
+MENU_AUTO_DONE=0		# MENU_AUTO_DONE=1 when auto flow is complete and we should return to host
+AUTO_STATUS=0			# AUTO_STATUS = final overall result for host to exit with (0/2/3)
+# AUTO_RUNNING=1 while a U-run (manual or --auto) is executing,
+# so callbacks can decide to propagate --auto to submenus.
+AUTO_RUNNING=0
+# Globals filled by the parser
+MENU_COUNT=0
+declare -a MENU_FUNCS  # => function name (string)
+declare -a MENU_FILES  # => file (string, may be "")
+declare -a MENU_NAMES  # => display label (string)
+declare -a MENU_STATE  # => status char: ' ', '*', or 'E'
+
+
+lfs_share_on() {
+    # Make CIFS appear owned/writable by lfs:lfs
+    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)",file_mode=0664,dir_mode=0775 "$SHARE"
+}
+
+root_share_on() {
+    # Restore CIFS to root:root view (tweak modes as you prefer)
+    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid=0,gid=0,file_mode=0644,dir_mode=0755 "$SHARE"
+}
+
+run_as_lfs() {
+    # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
+    # Runs via bash so +x isn’t required on CIFS.
+    sudo -u lfs -g lfs -H bash -lc "bash $(printf %q "$1")${2:+ $(printf ' %q' "${@:2}")}"
+}
+
+# --- Auto mode: export-only, no flags ---
+
+# Enable auto (persists to child shells)
+enable_auto() {
+    AUTO_OPT=1
+    export AUTO_OPT
+	MENU_AUTO=$AUTO_OPT
+}
+
+# Disable auto (persists to child shells)
+disable_auto() {
+    AUTO_OPT=0
+    export AUTO_OPT
+	MENU_AUTO=$AUTO_OPT
+}
+
+# Optional: completely remove the variable from env
+unset_auto() {
+    unset AUTO_OPT
+}
+
+# Test: returns 0 if enabled, 1 otherwise (set -e friendly)
+check_auto() {
+	MENU_AUTO=$AUTO_OPT
+    [ "${AUTO_OPT:-0}" -eq 1 ]
+}
+
+return_wait() {
+	[ "${AUTO_OPT:-0}" -eq 0 ] && { read -n 1 -p "Press any key to continue..." _; echo; }
+}
+
+
+# echoL/echoR: write to tmux status or stdout if not in tmux.
+echoL() {
+	local message="${1:-""}"
+	if [ -n "$TMUX" ]; then
+		tmux set-option -g status-left "$message"
+	else
+		echo "$message"
+	fi
+}
+
+
+echoR() {
+	local message="${1:-""}"
+	if [ -n "$TMUX" ]; then
+		tmux set-option -g status-right "$message"
+	else
+		echo "$message"
+	fi
+}
+
+
+# SetScreen: keep your original styling intact.
+SetScreen() {
+	# Use a dark blue background and bright white text for active panes
+	tmux set-option -g window-active-style "bg=darkblue,fg=brightwhite"
+	tmux set-option -g status-style "bold,bg=black,fg=brightyellow"
+	tmux set-option -g window-status-format ""
+	tmux set-option -g window-status-current-format ""
+	tmux set-option -g status-left-length 40
+	tmux set-option -g status-right-length 40
+}
+
+
+# lfs_tmux_entry <main_func>
+# - If already in tmux (or bootstrapped), style and run <main_func>.
+# - Else, create a session and re-run this script inside it, with a sentinel.
+lfs_tmux_entry() {
+	local entry="${1:-main_routine}"	#debug
+	if lfs__in_tmux || [ "${LFS_TMUX_BOOTSTRAPPED:-0}" = "1" ]; then
+		export LFS_TMUX_BOOTSTRAPPED=1
+		SetScreen
+		clear
+		echo "*** Setup Script Starting.... ***"
+		echoL "Initializing..."
+		echoR "Startup"
+		PS1='\[\e[1;33m\][\u@\h \w]\$\[\e[0m\] '
+		export PS1
+		"$entry" "$@"
+		return $?
+	fi
+
+	# Create a new session and run this script inside it.
+	local sess="${TMUX_SESSION_NAME:-${SCRIPT_NAME%.lib}}"
+	[ -n "$sess" ] || sess="lfs-setup"
+	sess="${sess//[^A-Za-z0-9_.-]/_}"
+
+	# Re-run the top-level script ($0) inside tmux; preserve spaces by quoting.
+	#tmux new-session -s "$sess" "LFS_TMUX_BOOTSTRAPPED=1 TMUX_SESSION_NAME=$sess \"$0\""
+	# BEFORE:
+	# tmux new-session -s "$sess" "LFS_TMUX_BOOTSTRAPPED=1 TMUX_SESSION_NAME=$sess \"$0\""
+	# AFTER (keeps all original args):
+	tmux new-session -s "$sess" \
+		"LFS_TMUX_BOOTSTRAPPED=1 TMUX_SESSION_NAME=$sess \"$0\" \"$@\""
+
+}
+
+
+call_bash() {
+    # set yellow PS1 and clear any ls alias before each prompt
+    _prep_shell() {
+        unalias ls 2>/dev/null || true
+        PS1=$'\[\e[1;33m\][\u@\h \w]\$\[\e[0m\] '
+    }
+    export -f _prep_shell
+    local pc="_prep_shell"
+    [[ -n "$PROMPT_COMMAND" ]] && pc="$pc; $PROMPT_COMMAND"
+    PROMPT_COMMAND="$pc" bash -i
+}
+
+# ============================================
+# PUBLIC: menu_setup <tsv_path>
+# ============================================
+menu_setup() {
+	if [ "$MENU_LOADED" -ne 0 ]; then
+		_menu_err "Menu System Error: menu_setup called more than once."
+		read	# DEBUG
+		exit 1
+	fi
+
+	if [ $# -ne 1 ]; then
+		_menu_err "Usage: menu_setup <tsv_path>"
+		read	# DEBUG
+		exit 1
+	fi
+
+	MENU_TSV_PATH="$1"
+
+	# Parse TSV
+	local parse_rc=0
+	_menu_parse_tsv "$MENU_TSV_PATH"
+	parse_rc=$?
+	if [ "$parse_rc" -eq 2 ]; then
+		# File error
+		read	# DEBUG
+		exit 2
+	fi
+	if [ "$parse_rc" -eq 3 ]; then
+		# Format error
+		read	# DEBUG
+		exit 3
+	fi
+	# Validate callbacks (HALT on first missing)
+	_menu_validate_callbacks_or_halt
+	# Initialize paging
+	_menu_init_paging
+	MENU_LOADED=1
+	# Success
+	return 0
+}
+
+
+# PUBLIC: menu_load
+# Reads statuses from $HERE/.menu.sav
+# Missing file => start fresh (all incomplete), return 0
+# Format/read error => print messages and return non-zero
+menu_load() {
+	if [ "$MENU_LOADED" -eq 0 ]; then
+		_menu_err "Error. Load Menu Data File First."
+		return 3
+	fi
+
+	local path="$(_menu_save_path)"
+
+	if [ ! -f "$path" ]; then
+		# Missing file => not an error; start fresh
+		return 0
+	fi
+
+	# Build a map from function name -> status, with strict checks.
+	# We use two arrays to detect duplicates in the save file.
+	local -a SAVE_FNS
+	local -a SAVE_STS
+	local save_count=0
+
+	local line_no=0
+	local line=""
+	while IFS= read -r line; do
+		line_no=$((line_no + 1))
+
+		# Expect exactly one tab in save lines
+		local tab_count=0
+		local tmp="$line"
+		while : ; do
+			case "$tmp" in
+				*$'\t'*) tab_count=$((tab_count + 1)); tmp="${tmp#*$'\t'}" ;;
+				*) break ;;
+			esac
+		done
+		
+		if [ "$tab_count" -ne 1 ]; then
+			_menu_err "Save File Error: format error at line $line_no (expected FunctionName<TAB>StatusChar)."
+			echo "Press [Enter] to continue."
+			IFS= read -r _
+			return 2
+		fi
+
+		local fn="${line%%$'\t'*}"
+		local st="${line#*$'\t'}"
+
+		if [ -z "$fn" ]; then
+			_menu_err "Save File Error: empty function name at line $line_no."
+			echo "Press [Enter] to continue."
+			IFS= read -r _
+			return 2
+		fi
+		if ! _menu_is_valid_identifier "$fn"; then
+			_menu_err "Save File Error: invalid function name '$fn' at line $line_no."
+			echo "Press [Enter] to continue."
+			IFS= read -r _
+			return 2
+		fi
+
+		if [ "$st" != " " ] && [ "$st" != "*" ] && [ "$st" != "E" ]; then
+			_menu_err "Save File Error: invalid status '$st' at line $line_no."
+			echo "Press [Enter] to continue."
+			IFS= read -r _
+			return 2
+		fi
+
+		# Duplicate in save file is a format error
+		local d=0
+		local dup=0
+		while [ "$d" -lt "$save_count" ]; do
+			if [ "${SAVE_FNS[$d]}" = "$fn" ]; then
+				dup=1
+				break
+			fi
+			d=$((d + 1))
+		done
+		if [ "$dup" -eq 1 ]; then
+			_menu_err "Save File Error: duplicate function '$fn' at line $line_no."
+			echo "Press [Enter] to continue."
+			IFS= read -r _
+			return 2
+		fi
+
+		SAVE_FNS+=("$fn")
+		SAVE_STS+=("$st")
+		save_count=$((save_count + 1))
+	done < "$path"
+
+	# Apply loaded statuses to MENU_STATE by matching function names
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		local fn="${MENU_FUNCS[$i]}"
+		local found=0
+		local j=0
+		while [ "$j" -lt "$save_count" ]; do
+			if [ "${SAVE_FNS[$j]}" = "$fn" ]; then
+				MENU_STATE[$i]="${SAVE_STS[$j]}"
+				found=1
+				break
+			fi
+			j=$((j + 1))
+		done
+		if [ "$found" -eq 0 ]; then
+			MENU_STATE[$i]=" "   # default to incomplete for new items
+		fi
+		i=$((i + 1))
+	done
+
+	return 0
+}
+
+
+# PUBLIC: menu_save
+# Writes statuses to $HERE/.menu.sav
+menu_save() {
+	if [ "$MENU_LOADED" -eq 0 ]; then
+		_menu_err "Error. Load Menu Data File First."
+		return 3
+	fi
+
+	local path="$(_menu_save_path)"
+	local tmp="${path}.tmp"
+
+	# Write fresh file
+	: > "$tmp" 2>/dev/null
+	if [ $? -ne 0 ]; then
+		_menu_err "Save File Error: cannot write temporary file."
+		return 1
+	fi
+
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		local fn="${MENU_FUNCS[$i]}"
+		local st="${MENU_STATE[$i]}"
+		printf "%s\t%s\n" "$fn" "$st" >> "$tmp"
+		i=$((i + 1))
+	done
+
+	mv -f "$tmp" "$path" 2>/dev/null
+	if [ $? -ne 0 ]; then
+		_menu_err "Save File Error: cannot replace save file."
+		return 1
+	fi
+
+	return 0
+}
+
+
+# PUBLIC: menu_run
+# Main interactive loop
+menu_run() {
+	if [ "$MENU_LOADED" -eq 0 ]; then
+		_menu_err "Error. Load Menu Data File First."
+		return 3
+	fi
+
+	local running=1
+	while [ "$running" -eq 1 ]; do
+		# L1: Pre-render
+		if declare -F -- "Menu_Pre_Render" >/dev/null 2>&1; then
+			Menu_Pre_Render
+		else
+			clear
+		fi
+
+		# L2: Entries
+		_menu_calc_pages
+		_menu_render_entries
+
+		# L3: Post-render and instructions
+		local show_instructions=1
+		if declare -F -- "Menu_Post_Render" >/dev/null 2>&1; then
+			Menu_Post_Render
+			if [ $? -eq 0 ]; then
+				show_instructions=0
+			fi
+		fi
+		if [ "$show_instructions" -eq 1 ]; then
+			_menu_show_instructions
+		else
+			echo -n "Choice: "
+		fi
+
+		# Auto mode: trigger once just before input if requested
+		_menu_auto_maybe_run
+		if [ "${MENU_AUTO_DONE:-0}" -eq 1 ]; then
+			break
+		fi
+
+		# L4: Read single key and process
+		local key=""
+		_menu_read_key key
+		key="$(_menu_to_upper "$key")"
+
+		# Give optional per-code hook first chance (Menu_Select_<LINE>) only on manual item picks.
+		# But we only do that AFTER we confirm the code maps to a visible item.
+		local processed=0
+
+		# Item selection 1..9, A..F
+		local pos="$(_menu_position_for_code 1)"  # dummy to use function; no-op
+		case "$key" in
+			1|2|3|4|5|6|7|8|9|A|B|C|D|E|F)
+				local gidx="$(_menu_idx_from_code "$key")"
+				if [ "$gidx" -ge 0 ]; then
+					# Set EXEC_SCRIPT for this item
+					EXEC_SCRIPT="${MENU_FILES[$gidx]}"
+
+					# Optional preselect hook
+					_menu_call_preselect "$gidx"
+
+					# Run required callback
+					_menu_run_callback "$gidx"
+					local rc=$?
+					
+					# Manual mapping
+					if [ "$rc" -eq 1 ]; then
+						MENU_STATE[$gidx]="*"
+					elif [ "$rc" -eq 2 ]; then
+						MENU_STATE[$gidx]=" "
+					elif [ "$rc" -eq 3 ]; then
+						MENU_STATE[$gidx]="E"
+					else
+						# 0 => no change
+						:
+					fi
+				fi
+				processed=1
+				;;
+		esac
+
+		if [ "$processed" -eq 0 ]; then
+			# X: mark complete
+			if [ "$key" = "X" ]; then
+				_menu_prompt_mark "X"
+				_menu_apply_mark
+				processed=1
+			fi
+		fi
+
+		if [ "$processed" -eq 0 ]; then
+			# R: mark incomplete (clears 'E' too)
+			if [ "$key" = "R" ]; then
+				_menu_prompt_mark "R"
+				_menu_apply_mark
+				processed=1
+			fi
+		fi
+
+		if [ "$processed" -eq 0 ]; then
+			# U: run unfinished (incomplete) tasks
+			if [ "$key" = "U" ]; then
+				_menu_u_loop
+				processed=1
+			fi
+		fi
+
+		if [ "$processed" -eq 0 ]; then
+			# Paging: N/P (wrap)
+			if [ "$key" = "N" ]; then
+				_menu_calc_pages
+				local next=$((MENU_PAGE + 1))
+				if [ "$next" -gt "$MENU_PAGE_COUNT" ]; then
+					next=1
+				fi
+				MENU_PAGE="$next"
+				_menu_calc_pages
+				processed=1
+			elif [ "$key" = "P" ]; then
+				_menu_calc_pages
+				local prev=$((MENU_PAGE - 1))
+				if [ "$prev" -lt 1 ]; then
+					prev="$MENU_PAGE_COUNT"
+				fi
+				MENU_PAGE="$prev"
+				_menu_calc_pages
+				processed=1
+			fi
+		fi
+
+		if [ "$processed" -eq 0 ]; then
+			# Q: quit to host
+			if [ "$key" = "Q" ]; then
+				running=0
+				processed=1
+			fi
+		fi
+
+		# L5/L6 handled implicitly by loop; redraw next iteration
+	done
+	return 0
+}
+
+
+# Identify project paths and the calling script's directory (logical paths).
+lfs_identity() {
+	# Constants you requested
+	RUN_ROOT="/root/lfs"
+	LFS="/mnt/lfs"
+
+	# Determine the outermost script that started this process.
+	# In a sourced library, BASH_SOURCE[last] is the top-level script.
+	local top_script
+	if [ "${#BASH_SOURCE[@]}" -gt 0 ]; then
+		top_script="${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}"
+	else
+		# Fallback (non-bash or unusual cases)
+		top_script="$0"
+	fi
+
+	# Compute HERE = directory of the outermost script (logical; preserves symlinks).
+	local dir oldpwd
+	case "$top_script" in
+	*/*)
+		dir="$(dirname -- "$top_script")"
+		oldpwd="$PWD"
+		if cd -- "$dir" 2>/dev/null; then
+			HERE="$PWD"               # logical current dir (no -P), keeps symlink form
+			cd -- "$oldpwd" 2>/dev/null || true
+		else
+			echo "ERROR: cannot cd to '$dir'" >&2
+			HERE="$PWD"               # fallback to current process dir
+		fi
+	;;
+	*)
+		# No slash in name → use current dir as the script’s directory
+		HERE="$PWD"
+	;;
+	esac
+
+	# Convenience: basename of the outermost script
+	SCRIPT_NAME="$(basename -- "$top_script")"
+
+	return 0
+}
+
+
+# =============================================================================================================================
+
+
+# lfs__in_tmux: true if $TMUX points to a live server.
+lfs__in_tmux() {
+	if [ -n "${TMUX:-}" ]; then
+		local sock="${TMUX%%,*}"
+		tmux -S "$sock" has-session >/dev/null 2>&1 && return 0
+	fi
+	return 1
+}
+
+
+# internal: the top-level caller file (not this library)
+lfs__topsrc() {
+	local last_index=$(( ${#BASH_SOURCE[@]} - 1 ))
+	local src="${BASH_SOURCE[$last_index]}"
+	# Fallbacks for odd shells/invocations
+	if [ -z "$src" ] || [ "$src" = "bash" ]; then
+		src="$0"
+	fi
+	printf '%s\n' "$src"
+}
+
+
+# Validate that required callbacks exist now.
+# Stop at the first missing and HALT per spec.
+# Nounset-safe: avoid exploding on unset elements.
+_menu_validate_callbacks_or_halt() {
+	local -i i
+	for (( i = 0; i < MENU_COUNT; i++ )); do
+		# Use defaulted expansion to avoid set -u errors on sparse elements
+		local fn="${MENU_FUNCS[i]-}"
+		if [ -z "${fn+x}" ]; then
+			_menu_err "Internal Error: MENU_FUNCS[$i] unset despite MENU_COUNT=$MENU_COUNT"
+			read
+			exit 1
+			
+		fi
+		if ! declare -F -- "$fn" >/dev/null 2>&1; then
+			_menu_err "Menu System Load Error: Function [$fn] is missing in the host, please correct and restart."
+			read
+			exit 1
+		fi
+	done
+}
+
+
+# STRICT TSV parser
+#  - strips UTF-8 BOM on line 1
+#  - trims trailing \r for CRLF files
+#  - requires exactly 3 tab-separated fields
+#  - enforces unique function names
+# Fills: MENU_FUNCS / MENU_FILES / MENU_NAMES / MENU_STATE / MENU_COUNT
+# ----------------------------------------------
+# Parse the TSV into arrays; enforce strictness.
+# Stops the program for fatal errors per spec.
+_menu_parse_tsv() {
+	local path="$1"
+	local line_no=0
+	local line=0      # was this part of it?
+	local fn=""
+	local file=""
+	local label=""
+
+	MENU_COUNT=0
+	# Reset the already-declared GLOBAL arrays.
+	# Do NOT 'declare' inside this function (that would create locals).
+	MENU_FUNCS=()
+	MENU_FILES=()
+	MENU_NAMES=()
+	MENU_STATE=()
+
+	if [ ! -f "$path" ]; then
+		_menu_err "TSV File Error: cannot open '$path'"
+		# Return code handled by caller (menu_setup -> exit or return code 2)
+		read
+		return 2
+	fi
+
+	# Read file line-by-line, no tolerance for blanks/comments.
+	# We intentionally do not ignore spaces; the format is strict.
+	while IFS= read -r line; do
+
+		line_no=$((line_no + 1))
+		# On the first line only, strip a UTF-8 BOM (EF BB BF)
+		if [ "$line_no" -eq 1 ]; then
+			line="${line#$'\xEF\xBB\xBF'}"
+		fi
+
+		# Trim a trailing carriage return (for CRLF files)
+		line="${line%$'\r'}"
+
+		# Disallow completely empty lines
+		if [ -z "$line" ]; then
+			_menu_err "Format Error (line $line_no): empty line is not allowed."
+			return 3
+		fi
+
+		# Split into exactly 3 fields
+		if ! _menu_split_tsv_line "$line" fn file label; then
+			_menu_err "Format Error (line $line_no): expected exactly 3 tab-separated fields."
+			return 3
+		fi
+
+		# Validate function name field
+		if [ -z "$fn" ]; then
+			_menu_err "Format Error (line $line_no): missing Function_name."
+			return 3
+		fi
+		if ! _menu_is_valid_identifier "$fn"; then
+			_menu_err "Format Error (line $line_no): invalid Function_name '$fn'."
+			return 3
+		fi
+
+		# Validate display name (required, must not contain tabs, already split)
+		if [ -z "$label" ]; then
+			_menu_err "Format Error (line $line_no): Display_Name is required."
+			return 3
+		fi
+
+		# File_name may be empty (no further validation here)
+		# Enforce uniqueness on function name
+		if _menu_fn_already_seen "$fn"; then
+			_menu_err "Format Error (line $line_no): duplicate Function_name '$fn'."
+			return 3
+		fi
+
+		# Accept row
+		MENU_FUNCS+=("$fn")
+		MENU_FILES+=("$file")
+		MENU_NAMES+=("$label")
+		MENU_STATE+=(" ")    # default: incomplete
+		MENU_COUNT=$((MENU_COUNT + 1))
+		# DEBUG: show what we parsed
+		# printf 'DBG: L%u fn=%q file=%q label=%q\n' "$line_no" "$fn" "$file" "$label" >&2
+	done < "$path"
+	return 0
+}
+
+
+# Have we already seen this fn?
+_menu_fn_already_seen() {
+	local name="$1"
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		if [ "${MENU_FUNCS[$i]}" = "$name" ]; then
+			return 0
+		fi
+		i=$((i + 1))
+	done
+	return 1
+}
+
+
+# Split one TSV line into 3 fields
+# out: $2=function  $3=file  $4=label
+# requires exactly TWO tabs
+# 
+# Strictly split a line into exactly 3 tab-separated fields.
+# Returns 0 on success, non-zero on any format violation.
+# Sets out variables by name (passed as $2, $3, $4).
+_menu_split_tsv_line() {
+	local line="$1"
+	local __out_fn="$2"
+	local __out_file="$3"
+	local __out_label="$4"
+
+	# Count tabs; must be exactly 2
+	local tab_count=0
+	local tmp="$line"
+
+	# Count manually to keep the code obvious.
+	while : ; do
+		case "$tmp" in
+			*$'\t'*) tab_count=$((tab_count + 1)); tmp="${tmp#*$'\t'}" ;;
+			*) break ;;
+		esac
+	done
+
+	if [ "$tab_count" -ne 2 ]; then
+		return 1
+	fi
+
+	# Extract fields
+	local f1="${line%%$'\t'*}"
+	local rest="${line#*$'\t'}"
+	local f2="${rest%%$'\t'*}"
+	local f3="${rest#*$'\t'}"
+
+	# Assign by name
+	# Assign by indirection
+	printf -v "$__out_fn"   "%s" "$f1"
+	printf -v "$__out_file" "%s" "$f2"
+	printf -v "$__out_label" "%s" "$f3"
+
+	return 0
+}
+
+
+# TSV parsing helpers (strict format, clear error text)
+#
+# Validate Bash identifier
+#   start: [A-Za-z_]
+#   rest:  [A-Za-z0-9_]
+_menu_is_valid_identifier() {
+	local name="$1"
+	case "$name" in
+		[A-Za-z_][A-Za-z0-9_]*) return 0 ;;
+		*)                      return 1 ;;
+    esac
+}
+
+
+# Utility: print error messages to stderr
+_menu_err() {
+	local msg="$1"
+	>&2 echo "$msg"
+}
+
+
+# Execute all INCOMPLETE entries in order (U behavior)
+# Returns to menu after completion or first error.
+_menu_u_loop() {
+	# Explicit control: pass 1 to force auto, 0 to require prompt.
+	# If omitted, current AUTO state is respected (back-compat).
+	local want_auto="${1:-}"
+	AUTO_RUNNING=1
+	local did_enable=0
+	local prev_auto="${MENU_AUTO:-0}"
+	local forced_off=0
+
+	# Apply explicit intent up-front.
+	case "$want_auto" in
+		1)
+			enable_auto
+			did_enable=1
+			;;
+		0)
+			if [ "$prev_auto" -eq 1 ]; then
+				disable_auto
+				forced_off=1
+			fi
+			;;
+		*)
+			# leave as-is
+			;;
+	esac
+
+	# Block if any entry is already in error
+	if _menu_has_any_error ; then
+		if [ "${MENU_AUTO:-0}" -eq 1 ]; then
+			AUTO_RUNNING=0
+			if [ "$did_enable" -eq 1 ]; then
+				disable_auto
+			elif [ "$forced_off" -eq 1 ] && [ "$prev_auto" -eq 1 ] && [ "${MENU_AUTO:-0}" -ne 1 ]; then
+				enable_auto
+			fi
+			return
+		else
+			local err_idx="$(_menu_first_error_index)"
+			local line_no=$((err_idx + 1))
+			echo "Some steps are In Error, clear them then retry, any key to continue"
+			echo "Entry $line_no is in Error, Clear to continue."
+			IFS= read -r -n 1 _
+			echo
+			AUTO_RUNNING=0
+			return
+		fi
+	fi
+
+	# Confirmation (only lowercase 'y' accepts)
+	local yn=""
+	if [ "${MENU_AUTO:-0}" -eq 1 ]; then
+		yn="y"
+	else
+		echo -n "Execute Incomplete Steps Automatically: (Y) "
+		IFS= read -r -n 1 yn
+		echo
+		if [ "$yn" != "y" ]; then
+			AUTO_RUNNING=0
+			# restore only if we forced auto off earlier
+			if [ "$did_enable" -ne 1 ] && [ "$forced_off" -eq 1 ] && [ "$prev_auto" -eq 1 ]; then
+				enable_auto
+			fi
+			return
+		fi
+		if [ "${MENU_AUTO:-0}" -ne 1 ]; then
+			enable_auto
+			did_enable=1
+		fi
+	fi
+
+	# Iterate entries. Skip '*' (completed). Run those with ' ' (incomplete).
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		if [ "${MENU_STATE[$i]}" = " " ]; then
+			EXEC_SCRIPT="${MENU_FILES[$i]}"
+			local fn="${MENU_FUNCS[$i]}"
+
+			local rc
+			"$fn"
+			rc=$?
+
+			# Map return codes: 0|1 => '*', 2 => ' ' (continue), 3 => 'E' (STOP)
+			if [ "$rc" -eq 3 ]; then
+				MENU_STATE[$i]="E"
+				AUTO_RUNNING=0
+				if [ "$did_enable" -eq 1 ]; then
+					disable_auto
+				elif [ "$forced_off" -eq 1 ] && [ "$prev_auto" -eq 1 ] && [ "${MENU_AUTO:-0}" -ne 1 ]; then
+					enable_auto
+				fi
+				return
+			fi
+			if [ "$rc" -eq 2 ]; then
+				MENU_STATE[$i]=" "
+			else
+				MENU_STATE[$i]="*"
+			fi
+		fi
+		i=$((i + 1))
+	done
+
+	AUTO_RUNNING=0
+	if [ "$did_enable" -eq 1 ]; then
+		disable_auto
+	elif [ "$forced_off" -eq 1 ] && [ "$prev_auto" -eq 1 ] && [ "${MENU_AUTO:-0}" -ne 1 ]; then
+		enable_auto
+	fi
+}
+
+# Run a required callback by global index.
+# Sets EXEC_SCRIPT as-is from TSV before the call.
+# Returns the callback's exit code.
+_menu_run_callback() {
+	local global_idx="$1"
+
+	local fn="${MENU_FUNCS[$global_idx]}"
+	local file="${MENU_FILES[$global_idx]}"
+
+	# Per spec: EXEC_SCRIPT is set but NOT exported
+	EXEC_SCRIPT="$file"
+
+	# Safety: existence was validated at setup; call directly.
+	# Guard against set -e so nonzero rc doesn't kill the menu loop.
+	local rc
+	"$fn"
+	rc=$?
+	return "$rc"
+}
+
+
+# Input: single key, echoed (no Enter required)
+# Returns the character read in the variable named
+# by $1 (output variable name).
+_menu_read_key() {
+	read -n 1 key
+	echo
+}
+
+
+# Helpers for U loop
+_menu_has_any_error() {
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		if [ "${MENU_STATE[$i]}" = "E" ]; then
+			return 0
+		fi
+		i=$((i + 1))
+	done
+	return 1
+}
+
+
+_menu_first_error_index() {
+	local i=0
+	while [ "$i" -lt "$MENU_COUNT" ]; do
+		if [ "${MENU_STATE[$i]}" = "E" ]; then
+			echo "$i"
+			return
+		fi
+		i=$((i + 1))
+	done
+	echo "-1"
+}
+
+
+# Optional pre-select hook: Menu_Select_<LINE>
+# Called ONLY for manual selections (not during U).
+# LINE is 1-based TSV index.
+_menu_call_preselect() {
+	local global_idx="$1"  # 0-based
+	local line_no=$((global_idx + 1))
+	local hook="Menu_Select_${line_no}"
+
+	if declare -F -- "$hook" >/dev/null 2>&1; then
+		"$hook"
+	fi
+}
+
+
+# Apply X/R mark to either ALL or a single visible item.
+# No autosave here. Host may save later.
+_menu_apply_mark() {
+	local ch="$MARK_CHOICE"
+
+	if [ "$ch" = "0" ]; then
+		# Apply to ALL entries (across all pages)
+		local i=0
+		while [ "$i" -lt "$MENU_COUNT" ]; do
+			MENU_STATE[$i]="$MARK_CHAR"
+			i=$((i + 1))
+		done
+		return
+	fi
+
+	# Otherwise must be a code on the current page
+	local ch_up="$(_menu_to_upper "$ch")"
+	local idx="$(_menu_idx_from_code "$ch_up")"
+	if [ "$idx" -ge 0 ]; then
+		MENU_STATE[$idx]="$MARK_CHAR"
+	fi
+	# Any other key => ignore (cancel)
+}
+
+
+# Prompt for X/R marking. Returns:
+#   - mark="*" for complete, " " for incomplete
+#   - choice_code (raw single char the user typed)
+_menu_prompt_mark() {
+	local mode="$1"   # "X" or "R"
+	local prompt=""
+	if [ "$mode" = "X" ]; then
+		echo
+		prompt="Select Entry to mark as Complete: "
+	else
+		echo
+		prompt="Select Entry to mark as Incomplete: "
+	fi
+
+	echo -n "$prompt"
+	local ch=""
+	read -n 1 ch
+	echo
+
+	# Output results via globals for simplicity (and readability)
+	MARK_MODE="$mode"
+	MARK_CHAR=" "
+	if [ "$mode" = "X" ]; then
+		MARK_CHAR="*"
+	fi
+	MARK_CHOICE="$ch"
+}
+
+
+# Translate a code to a GLOBAL index on the current page.
+# Returns -1 if the code does not correspond to a visible item.
+_menu_idx_from_code() {
+	local code_raw="$1"
+	local code="$(_menu_to_upper "$code_raw")"
+	local pos="$(_menu_position_for_code "$code")"
+	if [ "$pos" -le 0 ]; then
+		echo "-1"
+		return
+	fi
+	local idx=$(( MENU_PAGE_START_IDX + (pos - 1) ))
+	if [ "$idx" -lt "$MENU_PAGE_START_IDX" ]; then
+		echo "-1"
+		return
+	fi
+	if [ "$idx" -gt "$MENU_PAGE_END_IDX" ]; then
+		echo "-1"
+		return
+	fi
+	echo "$idx"
+}
+
+
+# Utility: map position 1..15 on the CURRENT PAGE to a code string
+# (1..9, A..F). Returns "" if position is out of range for the page.
+_menu_code_for_position() {
+	local pos_on_page="$1"  # 1..15
+	if [ "$pos_on_page" -lt 1 ]; then
+		echo ""
+		return
+	fi
+	if [ "$pos_on_page" -le 9 ]; then
+		echo "$pos_on_page"
+		return
+	fi
+	case "$pos_on_page" in
+		10) echo "A" ;;
+		11) echo "B" ;;
+		12) echo "C" ;;
+		13) echo "D" ;;
+		14) echo "E" ;;
+		15) echo "F" ;;
+		*)  echo "" ;;
+	esac
+}
+
+
+# Utility: map an input code (1..9/A..F) to position 1..15 on page
+# Returns 0 if invalid.
+_menu_position_for_code() {
+	local code="$1"
+	local pos=0
+
+	case "$code" in
+		1)  pos=1  ;;
+		2)  pos=2  ;;
+		3)  pos=3  ;;
+		4)  pos=4  ;;
+		5)  pos=5  ;;
+		6)  pos=6  ;;
+		7)  pos=7  ;;
+		8)  pos=8  ;;
+		9)  pos=9  ;;
+		A)  pos=10 ;;
+		B)  pos=11 ;;
+		C)  pos=12 ;;
+		D)  pos=13 ;;
+		E)  pos=14 ;;
+		F)  pos=15 ;;
+		*)  pos=0  ;;
+	esac
+
+	echo "$pos"
+}
+
+
+# Utility: convert a letter to upper-case (A..Z) explicitly
+# (No parameter-expansion tricks to keep it obvious.)
+_menu_to_upper() {
+	local ch="$1"
+	case "$ch" in
+		a) echo "A" ;;
+		b) echo "B" ;;
+		c) echo "C" ;;
+		d) echo "D" ;;
+		e) echo "E" ;;
+		f) echo "F" ;;
+		g) echo "G" ;;
+		h) echo "H" ;;
+		i) echo "I" ;;
+		j) echo "J" ;;
+		k) echo "K" ;;
+		l) echo "L" ;;
+		m) echo "M" ;;
+		n) echo "N" ;;
+		o) echo "O" ;;
+		p) echo "P" ;;
+		q) echo "Q" ;;
+		r) echo "R" ;;
+		s) echo "S" ;;
+		t) echo "T" ;;
+		u) echo "U" ;;
+		v) echo "V" ;;
+		w) echo "W" ;;
+		x) echo "X" ;;
+		y) echo "Y" ;;
+		z) echo "Z" ;;
+		*) echo "$ch" ;;
+	esac
+}
+
+
+_menu_render_entries() {
+	local idx="$MENU_PAGE_START_IDX"
+	local pos_on_page=1
+
+	echo
+	while [ "$idx" -le "$MENU_PAGE_END_IDX" ]; do
+		local status="${MENU_STATE[$idx]}"
+		local code="$(_menu_code_for_position "$pos_on_page")"
+		local label="$(_menu_truncate_label "${MENU_NAMES[$idx]}")"
+		# Format: 5 spaces + "[" + status + "]  " + code + " " + label
+		printf "     [%s]  %s %s\n" "$status" "$code" "$label"
+
+		idx=$((idx + 1))
+		pos_on_page=$((pos_on_page + 1))
+	done
+	echo
+}
+
+
+_menu_show_instructions() {
+	local has_pages=0
+	if [ "$MENU_PAGE_COUNT" -gt 1 ]; then
+		has_pages=1
+	fi
+
+	echo "Select Entry by menu Code, Q-Quit, X-Mark Complete, R-Mark Incomplete"
+	if [ "$has_pages" -eq 1 ]; then
+		echo "U Execute all Incomplete Tasks.  [N-Next Page, P-Previous Page]"
+	else
+		echo "U Execute all Incomplete Tasks."
+	fi
+	echo -n "Choice: "
+}
+
+
+# Render helpers
+_menu_truncate_label() {
+	local text="$1"
+	local max=60
+	local out="$text"
+	# Keep it simple and explicit.
+	if [ "${#out}" -gt "$max" ]; then
+		out="${out:0:$max}"
+	fi
+	echo "$out"
+}
+
+
+# Save file path (uses $HERE provided by your header)
+# We do not set HERE; we assume your header exported it.
+_menu_save_path() {
+	echo "$HERE/.menu.sav"
+}
+
+
+# --------------------------------------------
+# Initialize paging values for page 1
+# --------------------------------------------
+_menu_init_paging() {
+	MENU_PAGE=1
+	_menu_calc_pages
+}
+
+
+# Calculate MENU_PAGE_COUNT and visible range for page.
+# Applies the special 16..19 rule and the 15-per-page rule.
+# Sets MENU_PAGE_START_IDX and MENU_PAGE_END_IDX (0-based).
+_menu_calc_pages() {
+	local total="$MENU_COUNT"
+
+	# Default values
+	MENU_PAGE_COUNT=1
+	MENU_PAGE_START_IDX=0
+	MENU_PAGE_END_IDX=$((total - 1))
+
+	if [ "$total" -le 15 ]; then
+		MENU_PAGE_COUNT=1
+		MENU_PAGE_START_IDX=0
+		MENU_PAGE_END_IDX=$((total - 1))
+		return
+	fi
+
+	if [ "$total" -ge 16 ] && [ "$total" -le 19 ]; then
+		MENU_PAGE_COUNT=2
+		if [ "$MENU_PAGE" -lt 1 ]; then
+			MENU_PAGE=1
+		fi
+		if [ "$MENU_PAGE" -gt 2 ]; then
+			MENU_PAGE=2
+		fi
+		if [ "$MENU_PAGE" -eq 1 ]; then
+			MENU_PAGE_START_IDX=0
+			MENU_PAGE_END_IDX=11           # 12 items: indices 0..11
+		else
+			MENU_PAGE_START_IDX=12         # index 12 => item 13 (1-based)
+			MENU_PAGE_END_IDX=$((total - 1))
+		fi
+		return
+	fi
+
+	# total >= 20 => 15 per page
+	local per_page=15
+	MENU_PAGE_COUNT=$(( (total + per_page - 1) / per_page ))
+	if [ "$MENU_PAGE" -lt 1 ]; then
+		MENU_PAGE=1
+	fi
+	if [ "$MENU_PAGE" -gt "$MENU_PAGE_COUNT" ]; then
+		MENU_PAGE="$MENU_PAGE_COUNT"
+	fi
+
+	MENU_PAGE_START_IDX=$(( (MENU_PAGE - 1) * per_page ))
+	local end=$(( MENU_PAGE_START_IDX + per_page - 1 ))
+	if [ "$end" -ge "$((total - 1))" ]; then
+		end=$((total - 1))
+	fi
+	MENU_PAGE_END_IDX="$end"
+}
+
+
+# Private: trigger auto once, right before reading input.
+# Behaves like pressing U and answering 'y', then sets AUTO_STATUS
+# and signals the loop to return to host.
+_menu_auto_maybe_run() {
+	if [ "${MENU_AUTO:-0}" -eq 1 ] && [ "${MENU_AUTO_RAN:-0}" -eq 0 ]; then
+		MENU_AUTO_RAN=1
+		_menu_u_loop
+		_menu_auto_finish
+		MENU_AUTO_DONE=1
+	fi
+}
+
+
+# Private: compute AUTO_STATUS from current MENU_STATE.
+#   any 'E' => 3
+#   else any ' ' => 2
+#   else (all '*') => 0
+_menu_auto_finish() {
+	local i
+	for ((i=0; i<MENU_COUNT; i++)); do
+		[ "${MENU_STATE[$i]}" = "E" ] && { AUTO_STATUS=3; return; }
+	done
+	for ((i=0; i<MENU_COUNT; i++)); do
+		[ "${MENU_STATE[$i]}" = " " ] && { AUTO_STATUS=2; return; }
+	done
+	AUTO_STATUS=0
+}

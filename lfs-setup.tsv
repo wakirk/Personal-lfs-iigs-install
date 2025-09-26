@@ -1,0 +1,11 @@
+sys_host_setup	Host.menu.sh	Updating Host System Software
+sys_preparing	Preparing.menu.sh	Preparing the Host System for Build
+sys_packages	Packages.menu.sh	Packages and Patches
+sys_preparations	Preparations.menu.sh	Final Preparations
+lfs_Cross_Toolchain	Cross-Toolchain.menu.sh	Compiling a Cross-Toolchain
+lfs_Cross_TempTools	CrossComp-TempTools.menu.sh	Cross Compiling Temporary Tools
+lfs_Cross_adddon_tempTools	Chroot-Addon-TempTools.menu.sh	Entering Chroot and Building Additional Temporary Tools
+lfs_System_Software	Install-System-Software.menu.sh	Installing Basic System Software
+lfs_System_Config	System-Config.menu.sh	System Configuration
+lfs_bootable	LFS-Bootable.menu.sh	Making the LFS System Bootable
+lfs_Cleanup	Cleanup.menu.sh	Cleanup and Final Steps
