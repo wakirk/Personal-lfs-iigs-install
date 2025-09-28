@@ -2,21 +2,35 @@
 
 source /root/lfs/lib/menu.lib   # In every script.
 
-host_setup() {
-	echoL "Setting up Workspace"
+setupClock() {
+	echoL "Set Clock"
 	"$HERE/$EXEC_SCRIPT"
 	return_wait
 	return 1
 }
 
-qemu_setup() {
-	echoL "Installing QEMU Emulator"
+setupPacman() {
+	echoL "Configure Pacman and Update System"
 	"$HERE/$EXEC_SCRIPT"
 	return_wait
 	return 1
 }
 
-version_check() {
+setupDevsw() {
+	echoL "Install Dev Software"
+	"$HERE/$EXEC_SCRIPT"
+	return_wait
+	return 1
+}
+
+setupQEMU() {
+	echoL "QEMU Setup"
+	"$HERE/$EXEC_SCRIPT"
+	return_wait
+	return 1
+}
+
+setupVcheck() {
 	echoL "Version Check"
 	"$HERE/$EXEC_SCRIPT"
 	return_wait

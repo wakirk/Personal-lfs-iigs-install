@@ -13,10 +13,17 @@ case $(uname -m) in
 esac
 
 cat > /home/lfs/.bash_profile << "EOF"
-exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
+# Load your common env
+[ -r ~/.bashrc ] && . ~/.bashrc
+
+# Only replace the shell for *interactive* logins
+case $- in
+  *i*) exec env -i HOME="$HOME" TERM="$TERM" PS1='\u:\w\$ ' /bin/bash ;;
+  *)   : ;;  # non-interactive (e.g., bash -lc '…'): do nothing; let -c run
+esac
 EOF
 
-chown lfs.lfs /home/lfs/.bash_profile
+chown lfs:lfs /home/lfs/.bash_profile
 
 cat > /home/lfs/.bashrc << "EOF"
 set +h
@@ -31,4 +38,6 @@ CONFIG_SITE=$LFS/usr/share/config.site
 export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 EOF
 
-chown lfs.lfs /home/lfs/.bashrc
+chown lfs:lfs /home/lfs/.bashrc
+ln -fs /mnt/net/d/LFS /home/lfs/lfs
+chown lfs:lfs /home/lfs/lfs

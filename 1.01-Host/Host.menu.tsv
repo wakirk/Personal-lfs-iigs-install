@@ -1,3 +1,5 @@
-host_setup	01-pacman-host-setup.sh	Host Software Setup
-qemu_setup	02-qemu-test.sh	QEMU Setup
-version_check	03-version-check.sh	Version Check
+setupClock	01-SetClock.sh	Set Clock
+setupPacman	02-Pacman.sh	Configure Pacman and Update System
+setupDevsw	03-DevSoftware.sh	Install Dev Software
+setupQEMU	04-QEMUSetup.sh	QEMU Setup
+setupVcheck	05-LFS-Versions-Check.sh	Version Check

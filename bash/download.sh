@@ -5,7 +5,9 @@
 
 URL="$1"
 FILE="$2"
-PKGDIR="/root/lfs/packages"
+PKGDIR="../Packages"
+
+echo "Download:    $1 to File $PKGDIR/$FILE"
 
 # Make sure the packages directory exists
 mkdir -p "$PKGDIR"
