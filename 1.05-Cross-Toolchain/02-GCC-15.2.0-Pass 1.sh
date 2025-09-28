@@ -43,7 +43,6 @@ main () {
 
 	echoL "Unpack: GCC (15.2.0)..."
 	sleep 2
-	bash
 	rm -fR gcc-15.2.0
 	tar -vxsf gcc-15.2.0.tar.xz
 	cd gcc-15.2.0

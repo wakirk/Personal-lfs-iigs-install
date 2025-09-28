@@ -46,8 +46,23 @@ GCCPass1() {
 	return 1
 }
 
+LinuxHeaders() {
+	echoL "Linux-6.16.1 API Headers"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
 
-
+Glibc () {
+	echoL "Glibc-2.42"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
 
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
@@ -163,11 +178,6 @@ Gettext (0.26) - 9,926 KB:
 Home page: https://www.gnu.org/software/gettext/
 Download: https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz
 MD5 sum: 8e14e926f088e292f5f2bce95b81d10e
-
-Glibc (2.42) - 19,464 KB:
-Home page: https://www.gnu.org/software/libc/
-Download: https://ftp.gnu.org/gnu/glibc/glibc-2.42.tar.xz
-MD5 sum: 23c6f5a27932b435cae94e087cb8b1f5
 
 [Note] Note
 The Glibc developers maintain a Git branch containing patches considered worthy for Glibc-2.42 but unfortunately developed after Glibc-2.42 release. The LFS editors will issue a security advisory if any security fix is added into the branch, but no actions will be taken for other newly added patches. You may review the patches yourself and incorporate some patches if you consider them important.
@@ -474,4 +484,37 @@ Zstd (1.5.7) - 2,378 KB:
 Home page: https://facebook.github.io/zstd/
 Download: https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz
 MD5 sum: 780fc1896922b1bc52a4e90980cdda48
+
+
+PATCHES:
+
+
+Bzip2 Documentation Patch - 1.6 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/bzip2-1.0.8-install_docs-1.patch
+MD5 sum: 6a5ac7e89b791aae556de0f745916f7f
+
+Coreutils Upstream Fix Patch - 4.1 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/coreutils-9.7-upstream_fix-1.patch
+MD5 sum: 96382a5aa85d6651a74f94ffb61785d9
+
+Coreutils Internationalization Fixes Patch - 159 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/coreutils-9.7-i18n-1.patch
+MD5 sum: 33ebfad32b2dfb8417c3335c08671206
+
+Expect GCC15 Patch - 12 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/expect-5.45.4-gcc15-1.patch
+MD5 sum: 0ca4d6bb8d572fbcdb13cb36cd34833e
+
+Glibc FHS Patch - 2.8 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/glibc-2.42-fhs-1.patch
+MD5 sum: 9a5997c3452909b1769918c759eff8a2
+
+Kbd Backspace/Delete Fix Patch - 12 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/kbd-2.8.0-backspace-1.patch
+MD5 sum: f75cca16a38da6caa7d52151f7136895
+
+SysVinit Consolidated Patch - 2.5 KB:
+Download: https://www.linuxfromscratch.org/patches/lfs/12.4/sysvinit-3.14-consolidated-1.patch
+MD5 sum: 3af8fd8e13cad481eeeaa48be4247445
+
 
