@@ -18,8 +18,6 @@ pacman -S --noconfirm bison texinfo flex pkgconf
 pacman -S --noconfirm --overwrite '/usr/include/*' zstd zlib xz bzip2
 
 # Optional system packages (only if you need them on the live host)
-pacman -S --noconfirm linux linux-firmware
-pacman -S --noconfirm parted dosfstools e2fsprogs rsync
 
 printf '%s\n' '#!/bin/sh' 'exec bison -y "$@"' > /usr/bin/yacc
 chmod +x /usr/bin/yacc

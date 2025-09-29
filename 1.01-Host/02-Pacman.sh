@@ -3,7 +3,6 @@
 source /root/lfs/lib/menu.lib   # In every script.
 cd /root/lfs/1.01-Host
 
-
 echoR "Configuring Host"
 echoL "Configuring Pacman...."
 
@@ -23,7 +22,6 @@ Include = /etc/pacman.d/mirrorlist
 Include = /etc/pacman.d/mirrorlist
 EOF
 
-
 curl -fsSL 'https://archlinux.org/mirrorlist/?country=US&protocol=https&ip_version=4&use_mirror_status=on' \
   | sed 's/^#Server/Server/' \
   > /etc/pacman.d/mirrorlist
@@ -33,25 +31,13 @@ pacman -Syy --noconfirm archlinux-keyring gnupg
 pacman-key --init
 pacman-key --populate archlinux
 
-
 echoL "Updating System..."
-#sed -i '/^\[options\]/a SigLevel = Never' /etc/pacman.conf
-#grep -q '^SigLevel = Never' /etc/pacman.conf || sed -i '/^\[options\]/a SigLevel = Never' /etc/pacman.conf
-#pacman -Syyu --noconfirm
-#pacman -Syyu --noconfirm linux-firmware linux-firmware-nvidia --overwrite '/usr/lib/firmware/nvidia/*'
-#pacman -S --noconfirm archlinux-keyring gnupg
-#sed -i 's/^SigLevel = Never/SigLevel = Required DatabaseOptional/' /etc/pacman.conf
-#pacman -Syyu --noconfirm
 
 # Add "SigLevel = Never" once (for bootstrap)
 grep -q '^SigLevel = Never' /etc/pacman.conf || sed -i '/^\[options\]/a SigLevel = Never' /etc/pacman.conf
+
 # Refresh DBs
 pacman -Syy --noconfirm
-#pacman -Syu --noconfirm --overwrite '/usr/lib/firmware/nvidia/*'
-# Fix the linux-firmware split (only if the nvidia subpkg exists in repos)
-#if pacman -Si linux-firmware-nvidia >/dev/null 2>&1; then
-#  pacman -S --noconfirm linux-firmware linux-firmware-nvidia --overwrite '/usr/lib/firmware/nvidia/*'
-#fi
 
 # 1) Remove the old owner (ignore deps—safe on live media)
 pacman -Rdd --noconfirm linux-firmware
@@ -59,17 +45,19 @@ pacman -Rdd --noconfirm linux-firmware
 # 2) Install the split packages together so ownership is correct
 pacman -S --noconfirm linux-firmware linux-firmware-nvidia
 
-
 # Fix the firmware split conflict in one transaction
 pacman -S --noconfirm linux-firmware linux-firmware-nvidia --overwrite '/usr/lib/firmware/nvidia/*'
+
 # Ensure keyring/gnupg are current
 pacman -S --noconfirm archlinux-keyring gnupg
+
 # Restore normal signature policy (first occurrence only)
 sed -i '0,/^SigLevel = Never/{s/^SigLevel = Never/SigLevel = Required DatabaseOptional/}' /etc/pacman.conf
-# Now do the full upgrade
-pacman -Syu --noconfirm
-# Updating System (full upgrade; fix nvidia firmware split)
 
+# Now do the full upgrade
+pacman -Syu --noconfirm --ignore linux,linux-lts,linux-zen,linux-hardened,mkinitcpio,systemd,dracut,systemd-sysvcompat,systemd-libs
+
+# Updating System (full upgrade; fix nvidia firmware split)
 
 exit 1
 
