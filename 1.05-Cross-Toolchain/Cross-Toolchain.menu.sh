@@ -64,6 +64,15 @@ Glibc () {
 	return 1
 }
 
+Libstdc() {
+	echoL "Libstdc++ from GCC-15.2.0"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
