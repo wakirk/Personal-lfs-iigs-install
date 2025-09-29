@@ -98,7 +98,7 @@ main () {
 	sleep 2
 	cd ..
 	cd ..
-	rm -fR gcc-15.2.0
+#	rm -fR gcc-15.2.0  nope. we use it later.
 
 	exit 1
 }
