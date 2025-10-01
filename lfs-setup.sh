@@ -84,7 +84,7 @@ lfs_Cross_Toolchain () {
 
 lfs_Cross_TempTools() {
 	echo "Cross Compiling Temporary Tools"
-	"$HERE/1.04-CrossComp-TempTools/$EXEC_SCRIPT"
+	"$HERE/1.04-XCompilingTempTools/$EXEC_SCRIPT"
 	echo "Cross Compiling Temporary Tools Complete"
 	return 1
 }

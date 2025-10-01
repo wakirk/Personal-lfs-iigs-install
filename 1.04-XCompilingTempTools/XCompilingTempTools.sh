@@ -1,31 +1,9 @@
-
-
-M41420			01 M4-1.4.20.sh				M4 1.4.20
-Ncurses65		02 Ncurses-6.5-20250809.sh	Ncurses 6.5-20250809
-Bash5			03 Bash-5.3.sh				Bash 5.3
-Coreutils9		04 Coreutils-9.7.sh			Coreutils 9.7
-Diffutils3		05 Diffutils-3.12.sh		Diffutils 3.12
-File5			06 File-5.46.sh				File 5.46
-Findutils4		07 Findutils-4.10.0.sh		Findutils 4.10.0
-Gawk5			08 Gawk-5.3.2.sh			Gawk 5.3.2
-Grep3			09 Grep-3.12.sh				Grep 3.12
-Gzip1			10 Gzip-1.14.sh				Gzip 1.14
-Make4			11 Make-4.4.1.sh			Make 4.4.1
-Patch2			12 Patch-2.8.sh				Patch 2.8
-Sed4			13 Sed-4.9.sh				Sed 4.9
-Tar1			14 Tar-1.35.sh				Tar 1.35
-Xz5				15 Xz-5.8.1.sh				Xz 5.8.1
-Binutils2Pass2	16 Binutils-2.45-Pass 2.sh	Binutils 2.45 Pass 2
-GCC15Pass2		17 GCC-15.2.0-Pass 2.sh		GCC-15.2.0 Pass 2
-
-
-
 #!/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 source /root/lfs/USB/userID.key  # Access Keys
 export $SHARE, $SHARE_USER, $SHARE_PASS, $SHARE_VERS, $SHARE_ID
-cd /root/lfs/1.02-Preparing
+cd /root/lfs/1.04-XCompilingTempTools
 
 Menu_Pre_Render() {
 	clear
@@ -36,7 +14,7 @@ Menu_Pre_Render() {
 }
 
 main() {
-	menu_setup $HERE/Cross-Toolchain.menu.tsv
+	menu_setup $HERE/XCompilingTempTools.tsv
 	menu_load
 	check_auto
 	menu_run
@@ -50,18 +28,122 @@ Menu_Post_Render() {
 }
 
 
+M41420() {
+	echoL "M4 1.4.20"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+Ncurses65() {
+	echoL "Ncurses 6.5-20250809"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+Bash5() {
+	echoL "Bash (5.3)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+Coreutils9() {
+	echoL "Coreutils (9.7)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+Diffutils3() {
+	echoL "Diffutils (3.12)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+File5() {
+	echoL "File (5.46)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
+}
+
+Findutils4() {
+	# 07 Findutils-4.10.0.sh		Findutils 4.10.0
+	:;
+}
+
+Gawk5() {
+	# 08 Gawk-5.3.2.sh			Gawk 5.3.2
+	:;
+}
+
+Grep3() {
+	# 09 Grep-3.12.sh				Grep 3.12
+	:;
+}
+
+Gzip1() {
+	# 10 Gzip-1.14.sh				Gzip 1.14
+	:;
+}
+
+Make4() {
+	# 11 Make-4.4.1.sh			Make 4.4.1
+	:;
+}
+
+Patch2() {
+	# 12 Patch-2.8.sh				Patch 2.8
+	:;
+}
+
+Sed4() {
+	# 13 Sed-4.9.sh				Sed 4.9
+	:;
+}
+
+Tar1() {
+	# 14 Tar-1.35.sh				Tar 1.35
+	:;
+}
+
+Xz5() {
+	# 15 Xz-5.8.1.sh				Xz 5.8.1
+	:;
+}
+
+Binutils2Pass2() {
+	# 16 Binutils-2.45-Pass 2.sh	Binutils 2.45 Pass 2
+	:;
+}
+
+GCC15Pass2() {
+	 #17 GCC-15.2.0-Pass 2.sh		GCC-15.2.0 Pass 2
+	 :;
+}
+
+
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 0
 
 
-echoL "Binutils-2.45 Pass 1"
-lfs_share_on
-run_as_lfs "$HERE/$EXEC_SCRIPT"
-root_share_on
-return_wait 1
-return 1
 
 
 #
@@ -115,10 +197,6 @@ Home page: https://www.gnu.org/software/automake/
 Download: https://ftp.gnu.org/gnu/automake/automake-1.18.1.tar.xz
 MD5 sum: cea31dbf1120f890cbf2a3032cfb9a68
 
-Bash (5.3) - 11,089 KB:
-Home page: https://www.gnu.org/software/bash/
-Download: https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz
-MD5 sum: 977c8c0c5ae6309191e7768e28ebc951
 
 Bc (7.0.3) - 464 KB:
 Home page: https://github.com/gavinhoward
@@ -135,20 +213,10 @@ Bzip2 (1.0.8) - 792 KB:
 Download: https://www.sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
 MD5 sum: 67e051268d0c475ea773822f7500d0e5
 
-Coreutils (9.7) - 6,015 KB:
-Home page: https://www.gnu.org/software/coreutils/
-Download: https://ftp.gnu.org/gnu/coreutils/coreutils-9.7.tar.xz
-MD5 sum: 6b7285faf7d5eb91592bdd689270d3f1
-
 DejaGNU (1.6.3) - 608 KB:
 Home page: https://www.gnu.org/software/dejagnu/
 Download: https://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.3.tar.gz
 MD5 sum: 68c5208c58236eba447d7d6d1326b821
-
-Diffutils (3.12) - 1,894 KB:
-Home page: https://www.gnu.org/software/diffutils/
-Download: https://ftp.gnu.org/gnu/diffutils/diffutils-3.12.tar.xz
-MD5 sum: d1b18b20868fb561f77861cd90b05de4
 
 E2fsprogs (1.47.3) - 9,851 KB:
 Home page: https://e2fsprogs.sourceforge.net/
@@ -170,16 +238,6 @@ Home page: https://core.tcl.tk/expect/
 Download: https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz
 MD5 sum: 00fce8de158422f5ccd2666512329bd2
 
-File (5.46) - 1,283 KB:
-Home page: https://www.darwinsys.com/file/
-Download: https://astron.com/pub/file/file-5.46.tar.gz
-MD5 sum: 459da2d4b534801e2e2861611d823864
-
-Findutils (4.10.0) - 2,189 KB:
-Home page: https://www.gnu.org/software/findutils/
-Download: https://ftp.gnu.org/gnu/findutils/findutils-4.10.0.tar.xz
-MD5 sum: 870cfd71c07d37ebe56f9f4aaf4ad872
-
 Flex (2.6.4) - 1,386 KB:
 Home page: https://github.com/westes/flex
 Download: https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz
@@ -189,11 +247,6 @@ Flit-core (3.12.0) - 53 KB:
 Home page: https://pypi.org/project/flit-core/
 Download: https://pypi.org/packages/source/f/flit-core/flit_core-3.12.0.tar.gz
 MD5 sum: c538415c1f27bd69cbbbf3cdd5135d39
-
-Gawk (5.3.2) - 3,662 KB:
-Home page: https://www.gnu.org/software/gawk/
-Download: https://ftp.gnu.org/gnu/gawk/gawk-5.3.2.tar.xz
-MD5 sum: b7014650c5f45e5d4837c31209dc0037
 
 GDBM (1.26) - 1,198 KB:
 Home page: https://www.gnu.org/software/gdbm/
@@ -213,11 +266,6 @@ Home page: https://www.gnu.org/software/gperf/
 Download: https://ftp.gnu.org/gnu/gperf/gperf-3.3.tar.gz
 MD5 sum: 31753b021ea78a21f154bf9eecb8b079
 
-Grep (3.12) - 1,874 KB:
-Home page: https://www.gnu.org/software/grep/
-Download: https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz
-MD5 sum: 5d9301ed9d209c4a88c8d3a6fd08b9ac
-
 Groff (1.23.0) - 7,259 KB:
 Home page: https://www.gnu.org/software/groff/
 Download: https://ftp.gnu.org/gnu/groff/groff-1.23.0.tar.gz
@@ -227,11 +275,6 @@ GRUB (2.12) - 6,524 KB:
 Home page: https://www.gnu.org/software/grub/
 Download: https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz
 MD5 sum: 60c564b1bdc39d8e43b3aab4bc0fb140
-
-Gzip (1.14) - 865 KB:
-Home page: https://www.gnu.org/software/gzip/
-Download: https://ftp.gnu.org/gnu/gzip/gzip-1.14.tar.xz
-MD5 sum: 4bf5a10f287501ee8e8ebe00ef62b2c2
 
 Iana-Etc (20250807) - 592 KB:
 Home page: https://www.iana.org/protocols
@@ -317,16 +360,6 @@ Home page: https://lz4.org/
 Download: https://github.com/lz4/lz4/releases/download/v1.10.0/lz4-1.10.0.tar.gz
 MD5 sum: dead9f5f1966d9ae56e1e32761e4e675
 
-M4 (1.4.20) - 1,997 KB:
-Home page: https://www.gnu.org/software/m4/
-Download: https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz
-MD5 sum: 6eb2ebed5b24e74b6e890919331d2132
-
-Make (4.4.1) - 2,300 KB:
-Home page: https://www.gnu.org/software/make/
-Download: https://ftp.gnu.org/gnu/make/make-4.4.1.tar.gz
-MD5 sum: c8469a3713cbbe04d955d4ae4be23eeb
-
 Man-DB (2.13.1) - 2,061 KB:
 Home page: https://www.nongnu.org/man-db/
 Download: https://download.savannah.gnu.org/releases/man-db/man-db-2.13.1.tar.xz
@@ -348,10 +381,6 @@ Download: https://github.com/mesonbuild/meson/releases/download/1.8.3/meson-1.8.
 MD5 sum: 08221d2f515e759686f666ff6409a903
 
 
-Ncurses (6.5-20250809) - 3,703 KB:
-Home page: https://www.gnu.org/software/ncurses/
-Download: https://invisible-mirror.net/archives/ncurses/current/ncurses-6.5-20250809.tgz
-MD5 sum: 679987405412f970561cc85e1e6428a2
 
 Ninja (1.13.1) - 286 KB:
 Home page: https://ninja-build.org/
@@ -367,11 +396,6 @@ Packaging (25.0) - 162 KB:
 Home page: https://pypi.org/project/packaging/
 Download: https://files.pythonhosted.org/packages/source/p/packaging/packaging-25.0.tar.gz
 MD5 sum: ab0ef21ddebe09d1803575120d3f99f8
-
-Patch (2.8) - 886 KB:
-Home page: https://savannah.gnu.org/projects/patch/
-Download: https://ftp.gnu.org/gnu/patch/patch-2.8.tar.xz
-MD5 sum: 149327a021d41c8f88d034eab41c039f
 
 Perl (5.42.0) - 14,084 KB:
 Home page: https://www.perl.org/
@@ -407,11 +431,6 @@ Home page: https://tiswww.case.edu/php/chet/readline/rltop.html
 Download: https://ftp.gnu.org/gnu/readline/readline-8.3.tar.gz
 MD5 sum: 25a73bfb2a3ad7146c5e9d4408d9f6cd
 
-Sed (4.9) - 1,365 KB:
-Home page: https://www.gnu.org/software/sed/
-Download: https://ftp.gnu.org/gnu/sed/sed-4.9.tar.xz
-MD5 sum: 6aac9b2dbafcd5b7a67a8a9bcb8036c3
-
 Setuptools (80.9.0) - 1,290 KB:
 Home page: https://pypi.org/project/setuptools/
 Download: https://pypi.org/packages/source/s/setuptools/setuptools-80.9.0.tar.gz
@@ -444,11 +463,6 @@ SysVinit (3.14) - 236 KB:
 Home page: https://savannah.nongnu.org/projects/sysvinit
 Download: https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz
 MD5 sum: bc6890b975d19dc9db42d0c7364dd092
-
-Tar (1.35) - 2,263 KB:
-Home page: https://www.gnu.org/software/tar/
-Download: https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz
-MD5 sum: a2d8042658cfd8ea939e6d911eaf4152
 
 Tcl (8.6.16) - 11,406 KB:
 Home page: https://tcl.sourceforge.net/
@@ -495,11 +509,6 @@ XML::Parser (2.47) - 276 KB:
 Home page: https://github.com/chorny/XML-Parser
 Download: https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.47.tar.gz
 MD5 sum: 89a8e82cfd2ad948b349c0a69c494463
-
-Xz Utils (5.8.1) - 1,428 KB:
-Home page: https://tukaani.org/xz
-Download: https://github.com//tukaani-project/xz/releases/download/v5.8.1/xz-5.8.1.tar.xz
-MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
 
 Zlib (1.3.1) - 1,478 KB:
 Home page: https://zlib.net/
