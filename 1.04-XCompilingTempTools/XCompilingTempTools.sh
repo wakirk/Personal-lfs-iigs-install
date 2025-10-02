@@ -92,8 +92,12 @@ Findutils4() {
 }
 
 Gawk5() {
-	# 08 Gawk-5.3.2.sh			Gawk 5.3.2
-	:;
+	echoL "Gawk (5.3.2)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Grep3() {
