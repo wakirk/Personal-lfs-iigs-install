@@ -23,7 +23,12 @@ MD5 sum: 6aac9b2dbafcd5b7a67a8a9bcb8036c3
 #	tar -vxsf *
 #	cd *
 #	echoL "Building ..."
+./configure --prefix=/usr   \
+            --host=$LFS_TGT \
+            --build=$(./build-aux/config.guess)
+make
 #	echoL "Installing ..."
+make DESTDIR=$LFS install
 #	echoL "Install Complete "
 #	sleep 2
 #	cd ..
