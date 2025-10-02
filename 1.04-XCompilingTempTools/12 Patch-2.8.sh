@@ -1,14 +1,12 @@
-
-Patch (2.8) - 886 KB:
-Home page: https://savannah.gnu.org/projects/patch/
-Download: https://ftp.gnu.org/gnu/patch/patch-2.8.tar.xz
-MD5 sum: 149327a021d41c8f88d034eab41c039f
-
-
-#
 #!/bin/bash
-#source /home/lfs/lfs/lib/menu.lib   # In every script.
-###
+
+source /home/lfs/lfs/lib/menu.lib   # In every script.
+
+#Patch (2.8) - 886 KB:
+#Home page: https://savannah.gnu.org/projects/patch/
+#Download: https://ftp.gnu.org/gnu/patch/patch-2.8.tar.xz
+#MD5 sum: 149327a021d41c8f88d034eab41c039f
+
 #main () {
 #	clear
 #	echoR "Installing Software"
