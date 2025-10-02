@@ -83,8 +83,12 @@ File5() {
 }
 
 Findutils4() {
-	# 07 Findutils-4.10.0.sh		Findutils 4.10.0
-	:;
+	echoL "Findutils (4.10.0)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Gawk5() {
