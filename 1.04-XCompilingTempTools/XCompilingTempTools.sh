@@ -110,8 +110,12 @@ Grep3() {
 }
 
 Gzip1() {
-	# 10 Gzip-1.14.sh				Gzip 1.14
-	:;
+	echoL "Gzip (1.14)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Make4() {
