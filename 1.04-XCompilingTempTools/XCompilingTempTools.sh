@@ -101,8 +101,12 @@ Gawk5() {
 }
 
 Grep3() {
-	# 09 Grep-3.12.sh				Grep 3.12
-	:;
+	echoL "Grep (3.12)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Gzip1() {
