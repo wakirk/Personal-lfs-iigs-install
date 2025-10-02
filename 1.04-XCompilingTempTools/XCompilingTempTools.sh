@@ -119,8 +119,12 @@ Gzip1() {
 }
 
 Make4() {
-	# 11 Make-4.4.1.sh			Make 4.4.1
-	:;
+	echoL "Make (4.4.1)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Patch2() {
