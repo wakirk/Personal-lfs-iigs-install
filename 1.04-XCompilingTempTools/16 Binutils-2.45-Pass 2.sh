@@ -22,7 +22,31 @@ MD5 sum: dee5b4267e0305a99a3c9d6131f45759
 #	tar -vxsf *
 #	cd *
 #	echoL "Building ..."
+
+sed '6031s/$add_dir//' -i ltmain.sh
+
+mkdir -v build
+cd       build
+
+../configure                   \
+    --prefix=/usr              \
+    --build=$(../config.guess) \
+    --host=$LFS_TGT            \
+    --disable-nls              \
+    --enable-shared            \
+    --enable-gprofng=no        \
+    --disable-werror           \
+    --enable-64-bit-bfd        \
+    --enable-new-dtags         \
+    --enable-default-hash-style=gnu
+make
+
 #	echoL "Installing ..."
+
+make DESTDIR=$LFS install
+rm -v $LFS/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes,sframe}.{a,la}
+
+
 #	echoL "Install Complete "
 #	sleep 2
 #	cd ..
