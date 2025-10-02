@@ -24,7 +24,15 @@ MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
 #	tar -vxsf *
 #	cd *
 #	echoL "Building ..."
+./configure --prefix=/usr                     \
+            --host=$LFS_TGT                   \
+            --build=$(build-aux/config.guess) \
+            --disable-static                  \
+            --docdir=/usr/share/doc/xz-5.8.1
+make
 #	echoL "Installing ..."
+make DESTDIR=$LFS install
+rm -v $LFS/usr/lib/liblzma.la
 #	echoL "Install Complete "
 #	sleep 2
 #	cd ..
