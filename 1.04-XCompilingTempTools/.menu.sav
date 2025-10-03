@@ -9,8 +9,8 @@ Gawk5	*
 Grep3	*
 Gzip1	*
 Make4	*
-Patch2	 
-Sed4	 
+Patch2	*
+Sed4	*
 Tar1	 
 Xz5	 
 Binutils2Pass2	 
