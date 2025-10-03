@@ -52,5 +52,7 @@ main () {
 }
 
 
-lfs_identity
-lfs_tmux_entry main  # must be called after the routine it defines.
+#lfs_identity
+#lfs_tmux_entry main  # must be called after the routine it defines.
+main
+

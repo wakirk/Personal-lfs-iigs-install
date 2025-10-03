@@ -3,4 +3,4 @@ prep_newparts	*
 prep_mklfsfs	*
 prep_mountlfs	*
 prep_initdirs	*
-prep_environ	*
+prep_environ	 
