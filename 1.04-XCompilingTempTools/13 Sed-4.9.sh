@@ -25,13 +25,13 @@ main () {
 	cd sed-4.9
 
 	echoL "Building Sed (4.9)..."
-            ./configure --prefix=/usr   \
-            --host=$LFS_TGT \
-            --build=$(./build-aux/config.guess)
-            make
+	./configure --prefix=/usr   \
+		--host=$LFS_TGT \
+		--build=$(./build-aux/config.guess)
+	make
 
 	echoL "Installing Sed (4.9)..."
-            make DESTDIR=$LFS install
+	make DESTDIR=$LFS install
 
 	echoL "Install Complete Sed (4.9)"
 	sleep 2
