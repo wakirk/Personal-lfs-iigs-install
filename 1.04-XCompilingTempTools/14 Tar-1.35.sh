@@ -21,6 +21,7 @@ main () {
 	echoL "Unpack: Tar (1.35)..."
 	sleep 2
 	rm -fR tar-1.35
+	clear 
 	tar -vxsf tar-1.35.tar.xz
 	cd tar-1.35
 
@@ -31,8 +32,8 @@ main () {
 	make
 
 	echoL "Installing Tar (1.35)..."
-	make DESTDIR=$LFS install
-
+	make DESTDIR=$LFS install 
+	
 	echoL "Install Complete Tar (1.35)"
 	sleep 2
 	cd ..
