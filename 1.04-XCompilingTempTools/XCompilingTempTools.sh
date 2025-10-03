@@ -128,8 +128,12 @@ Make4() {
 }
 
 Patch2() {
-	# 12 Patch-2.8.sh				Patch 2.8
-	:;
+	echoL "Patch (2.8)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Sed4() {
