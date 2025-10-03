@@ -173,8 +173,12 @@ Binutils2Pass2() {
 }
 
 GCC15Pass2() {
-	 #17 GCC-15.2.0-Pass 2.sh		GCC-15.2.0 Pass 2
-	 :;
+	echoL "GCC (15.2.0) Pass 2"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 

@@ -46,7 +46,6 @@ main () {
 	cd ..
 	cd ..
 	rm -fR binutils-2.45
-	bash
 	exit 1
 }
 
