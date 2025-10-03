@@ -9,14 +9,12 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
 	echoR "Installing Software"
 	echoL "Downloading Linux Kernel (6.16)..."
+
 	echo "Downloading Linux Kernel (6.16)..."
-	../bash/Download.sh https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.16.1.tar.xz linux-6.16.1.tar.xz
-
-	cp -fv  ../Packages/linux-6.16.1.tar.xz $LFS/sources
-
+	/home/lfs/lfs/bash/download.sh https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.16.1.tar.xz linux-6.16.1.tar.xz
+	cp -fv /home/lfs/lfs/Packages/linux-6.16.1.tar.xz $LFS/sources
 	cd $LFS/sources
 
 	echoL "Unpack: Linux Kernel (6.16)..."

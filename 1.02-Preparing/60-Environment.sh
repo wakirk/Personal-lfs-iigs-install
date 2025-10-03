@@ -41,3 +41,6 @@ EOF
 chown lfs:lfs /home/lfs/.bashrc
 ln -fs /mnt/net/d/LFS /home/lfs/lfs
 chown lfs:lfs /home/lfs/lfs
+
+mkdir -p $LFS/sources
+chown lfs:lfs $LFS/sources

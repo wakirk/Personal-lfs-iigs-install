@@ -9,12 +9,18 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
 	echoR "Installing Software"
+	# Require $LFS; if missing, explain, pause, and exit cleanly.
+	if [ -z "$LFS" ]; then
+		printf 'Error: $LFS is not set.\n' >&2
+		read
+		exit 0
+	fi
+
 	echoL "Downloading Binutils (2.45)..."
 	echo "Downloading... Binutils (2.45)"
-	../bash/Download.sh https://sourceware.org/pub/binutils/releases/binutils-2.45.tar.xz binutils-2.45.tar.xz
-	cp ../Packages/binutils-2.45.tar.xz $LFS/sources
+	/home/lfs/lfs/bash/download.sh https://sourceware.org/pub/binutils/releases/binutils-2.45.tar.xz binutils-2.45.tar.xz
+	cp /home/lfs/lfs/Packages/binutils-2.45.tar.xz $LFS/sources
 	cd $LFS/sources
 	ls -l
 
@@ -52,7 +58,5 @@ main () {
 }
 
 
-#lfs_identity
-#lfs_tmux_entry main  # must be called after the routine it defines.
-main
-
+lfs_identity
+lfs_tmux_entry main  # must be called after the routine it defines.

@@ -28,7 +28,6 @@ Menu_Post_Render() {
 }
 
 BinutilsPass1() {
-	mkdir -p $HERE/../Packages
 	echoL "Binutils-2.45 Pass 1"
 	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"

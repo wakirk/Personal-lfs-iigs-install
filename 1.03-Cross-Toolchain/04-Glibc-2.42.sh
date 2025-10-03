@@ -15,14 +15,14 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
 	echoR "Installing Software"
 	echoL "Downloading Glibc (2.42)..."
+
 	echo "Downloading Glibc (2.42)..."
-	../bash/Download.sh https://mirrors.ocf.berkeley.edu/gnu/glibc/glibc-2.42.tar.xz glibc-2.42.tar.xz
-	../bash/Download.sh https://www.linuxfromscratch.org/patches/lfs/12.4/glibc-2.42-fhs-1.patch glibc-2.42-fhs-1.patch
-	cp -fv  ../Packages/glibc-2.42.tar.xz $LFS/sources
-	cp -fv  ../Packages/glibc-2.42-fhs-1.patch $LFS/sources
+	/home/lfs/lfs/bash/download.sh https://mirrors.ocf.berkeley.edu/gnu/glibc/glibc-2.42.tar.xz glibc-2.42.tar.xz
+	/home/lfs/lfs/bash/download.sh https://www.linuxfromscratch.org/patches/lfs/12.4/glibc-2.42-fhs-1.patch glibc-2.42-fhs-1.patch
+	cp -fv /home/lfs/lfs/Packages/glibc-2.42.tar.xz $LFS/sources
+	cp -fv /home/lfs/lfs/Packages/glibc-2.42-fhs-1.patch $LFS/sources
 	cd $LFS/sources
 
 	echoL "Unpack: Glibc (2.42)..."

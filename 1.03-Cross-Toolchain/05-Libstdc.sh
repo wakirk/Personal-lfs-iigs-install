@@ -5,22 +5,22 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 main () {
 	clear
 
+	echoR "Installing Software"
 	cd $LFS/sources
 	cd gcc-15.2.0
 
-	echoR "Installing Software"
 	echoL "Building Libstdc++ from GCC-15.2.0..."
 	mkdir -v build
 	cd       build
-	
-../libstdc++-v3/configure      \
-    --host=$LFS_TGT            \
-    --build=$(../config.guess) \
-    --prefix=/usr              \
-    --disable-multilib         \
-    --disable-nls              \
-    --disable-libstdcxx-pch    \
-    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/15.2.0
+
+	../libstdc++-v3/configure      \
+		--host=$LFS_TGT            \
+		--build=$(../config.guess) \
+		--prefix=/usr              \
+		--disable-multilib         \
+		--disable-nls              \
+		--disable-libstdcxx-pch    \
+		--with-gxx-include-dir=/tools/$LFS_TGT/include/c++/15.2.0
 	make
 
 	echoL "Installing Libstdc++ from GCC-15.2.0..."
@@ -31,6 +31,7 @@ main () {
 	sleep 2
 	cd ..
 	cd ..
+
 	exit 1
 }
 

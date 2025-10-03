@@ -25,22 +25,19 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
 	echoR "Installing Software"
 	echoL "Downloading GCC (15.2.0)..."
+
 	echo "Downloading... GCC (15.2.0)..."
-	../bash/Download.sh https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-15.2.0/gcc-15.2.0.tar.gz gcc-15.2.0.tar.xz
-	../bash/Download.sh https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.2.tar.xz mpfr-4.2.2.tar.xz
-	../bash/Download.sh https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz gmp-6.3.0.tar.xz
-	../bash/Download.sh https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz mpc-1.3.1.tar.gz
-
-	cp -fv  ../Packages/gcc-15.2.0.tar.xz $LFS/sources
-	cp -fv  ../Packages/mpfr-4.2.2.tar.xz $LFS/sources
-	cp -fv  ../Packages/gmp-6.3.0.tar.xz  $LFS/sources
-	cp -fv  ../Packages/mpc-1.3.1.tar.gz  $LFS/sources
-
+	/home/lfs/lfs/bash/download.sh https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-15.2.0/gcc-15.2.0.tar.gz gcc-15.2.0.tar.xz
+	/home/lfs/lfs/bash/download.sh https://ftp.gnu.org/gnu/mpfr/mpfr-4.2.2.tar.xz mpfr-4.2.2.tar.xz
+	/home/lfs/lfs/bash/download.sh https://ftp.gnu.org/gnu/gmp/gmp-6.3.0.tar.xz gmp-6.3.0.tar.xz
+	/home/lfs/lfs/bash/download.sh https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz mpc-1.3.1.tar.gz
+	cp -fv  /home/lfs/lfs/Packages/gcc-15.2.0.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpfr-4.2.2.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/gmp-6.3.0.tar.xz  $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpc-1.3.1.tar.gz  $LFS/sources
 	cd $LFS/sources
-
 	echoL "Unpack: GCC (15.2.0)..."
 	sleep 2
 	rm -fR gcc-15.2.0
