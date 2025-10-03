@@ -25,23 +25,23 @@ main () {
 	cd xz-5.8.1
 
 	echoL "Building Xz Utils (5.8.1)..."
-            ./configure --prefix=/usr                     \
-            --host=$LFS_TGT                   \
-            --build=$(build-aux/config.guess) \
-            --disable-static                  \
-            --docdir=/usr/share/doc/xz-5.8.1
+	./configure --prefix=/usr             \
+		--host=$LFS_TGT                   \
+		--build=$(build-aux/config.guess) \
+		--disable-static                  \
+		--docdir=/usr/share/doc/xz-5.8.1
 	make
 
-            echoL "Installing Xz Utils (5.8.1)..."
+	echoL "Installing Xz Utils (5.8.1)..."
 	make DESTDIR=$LFS install
 	rm -v $LFS/usr/lib/liblzma.la
 
-            echoL "Install Complete Xz Utils (5.8.1)"
+	echoL "Install Complete Xz Utils (5.8.1)"
 	sleep 2
 	cd ..
 	rm -fR xz-5.8.1
 
-            exit 1
+	exit 1
 }
 
 lfs_identity
