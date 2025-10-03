@@ -10,8 +10,7 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 main () {
 	clear
 	echoR "Installing Software Binutils (2.45) Pass 2"
-
-#   Already downloaded...
+	# Already downloaded...
 	cd $LFS/sources
 	ls
 
@@ -22,30 +21,30 @@ main () {
 	cd binutils-2.45
 
 	echoL "Building Binutils (2.45) Pass 2..."
-    sed '6031s/$add_dir//' -i ltmain.sh
-    mkdir -v build
-    cd       build
-    ../configure                   \
-    --prefix=/usr              \
-    --build=$(../config.guess) \
-    --host=$LFS_TGT            \
-    --disable-nls              \
-    --enable-shared            \
-    --enable-gprofng=no        \
-    --disable-werror           \
-    --enable-64-bit-bfd        \
-    --enable-new-dtags         \
-    --enable-default-hash-style=gnu
-    make
+	sed '6031s/$add_dir//' -i ltmain.sh
+	mkdir -v build
+	cd       build
+	../configure                   \
+		--prefix=/usr              \
+		--build=$(../config.guess) \
+		--host=$LFS_TGT            \
+		--disable-nls              \
+		--enable-shared            \
+		--enable-gprofng=no        \
+		--disable-werror           \
+		--enable-64-bit-bfd        \
+		--enable-new-dtags         \
+		--enable-default-hash-style=gnu
+	make
 
 	echoL "Installing Binutils (2.45) Pass 2..."
-    make DESTDIR=$LFS install
-    rm -v $LFS/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes,sframe}.{a,la}
+	make DESTDIR=$LFS install
+	rm -v $LFS/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes,sframe}.{a,la}
 
 	echoL "Install Complete Binutils (2.45) Pass 2"
 	sleep 2
 	cd ..
-    cd ..
+	cd ..
 	rm -fR binutils-2.45
 
 	exit 1
