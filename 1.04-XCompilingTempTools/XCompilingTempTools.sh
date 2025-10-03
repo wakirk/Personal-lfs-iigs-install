@@ -146,8 +146,12 @@ Sed4() {
 }
 
 Tar1() {
-	# 14 Tar-1.35.sh				Tar 1.35
-	:;
+	echoL "Tar (1.35)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Xz5() {
