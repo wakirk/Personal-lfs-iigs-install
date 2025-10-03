@@ -164,8 +164,12 @@ Xz5() {
 }
 
 Binutils2Pass2() {
-	# 16 Binutils-2.45-Pass 2.sh	Binutils 2.45 Pass 2
-	:;
+	echoL "Binutils (2.45) Pass 2"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 GCC15Pass2() {
