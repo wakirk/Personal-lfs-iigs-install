@@ -155,8 +155,12 @@ Tar1() {
 }
 
 Xz5() {
-	# 15 Xz-5.8.1.sh				Xz 5.8.1
-	:;
+	echoL "Xz Utils (5.8.1)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Binutils2Pass2() {
