@@ -137,8 +137,12 @@ Patch2() {
 }
 
 Sed4() {
-	# 13 Sed-4.9.sh				Sed 4.9
-	:;
+	echoL "Sed (4.9)"
+	lfs_share_on
+	run_as_lfs "$HERE/$EXEC_SCRIPT"
+	root_share_on
+	return_wait 1
+	return 1
 }
 
 Tar1() {
