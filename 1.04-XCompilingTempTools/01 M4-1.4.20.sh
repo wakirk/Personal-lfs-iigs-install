@@ -7,9 +7,7 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 #Download: https://ftp.gnu.org/gnu/m4/m4-1.4.20.tar.xz
 #MD5 sum: 6eb2ebed5b24e74b6e890919331d2132
 
-
 main () {
-
 	clear
 	echoR "Installing Software"
 	echoL "Downloading M4 (1.4.20) ..."

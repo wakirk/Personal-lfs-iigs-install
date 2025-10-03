@@ -9,7 +9,6 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
 	echoR "Installing Software"
 	echoL "Downloading Grep (3.12)..."
 
@@ -38,6 +37,7 @@ main () {
 	sleep 2
 	cd ..
 	rm -fR grep-3.12
+	
 	exit 1
 }
 

@@ -12,33 +12,33 @@ main () {
 	echoR "Installing Software"
 	echoL "Downloading Patch (2.8)..."
 
-            echo "Downloading Patch (2.8)... "
+	echo "Downloading Patch (2.8)... "
 	../bash/Download.sh https://ftp.gnu.org/gnu/patch/patch-2.8.tar.xz patch-2.8.tar.xz
 	cp ../Packages/patch-2.8.tar.xz $LFS/sources
 	cd $LFS/sources
 	ls
-            
+
 	echoL "Unpack: Patch (2.8)..."
 	sleep 2
 	rm -fR patch-2.8
 	tar -vxsf patch-2.8.tar.xz
 	cd patch-2.8
-            
+
 	echoL "Building Patch (2.8)..."
-	./configure --prefix=/usr   \
-            --host=$LFS_TGT \
-            --build=$(build-aux/config.guess)
+	./configure --prefix=/usr  \
+		--host=$LFS_TGT        \
+		--build=$(build-aux/config.guess)
 	make
-            
+
 	echoL "Installing Patch (2.8)..."
 	make DESTDIR=$LFS install
-            
+
 	echoL "Install Complete Patch (2.8)"
 	sleep 2
 	cd ..
 	rm -fR patch-2.8
 
-            exit 1
+	exit 1
 }
 
 lfs_identity

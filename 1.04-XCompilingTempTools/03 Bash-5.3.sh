@@ -1,11 +1,11 @@
 #!/bin/bash
 
+source /home/lfs/lfs/lib/menu.lib   # In every script.
+
 #Bash (5.3) - 11,089 KB:
 #Home page: https://www.gnu.org/software/bash/
 #Download: https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz
 #MD5 sum: 977c8c0c5ae6309191e7768e28ebc951
-
-source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
@@ -39,6 +39,7 @@ main () {
 	sleep 2
 	cd ..
 	rm -fR bash-5.3
+
 	exit 1
 }
 

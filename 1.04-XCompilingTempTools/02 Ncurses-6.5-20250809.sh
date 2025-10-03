@@ -27,7 +27,6 @@ main () {
 	cd build
 
 	echoL "Building Ncurses 6.5-20250809..."
-
 	../configure --prefix=$LFS/tools AWK=gawk
 	make -C include
 	make -C progs tic
@@ -56,6 +55,7 @@ main () {
 	sleep 2
 	cd ..
 	rm -fR ncurses-6.5-20250809
+	
 	exit 1
 }
 

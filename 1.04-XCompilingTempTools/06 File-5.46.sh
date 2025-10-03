@@ -46,7 +46,6 @@ main () {
 	rm -fR file-5.46
 
 	exit 1
-
 }
 
 lfs_identity

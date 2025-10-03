@@ -38,6 +38,7 @@ main () {
 	sleep 2
 	cd ..
 	rm -fR diffutils-3.12
+
 	exit 1
 }
 
