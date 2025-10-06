@@ -1,6 +1,0 @@
-prep_wipedisk	*
-prep_newparts	*
-prep_mklfsfs	*
-prep_mountlfs	*
-prep_initdirs	*
-prep_environ	*
