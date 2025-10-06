@@ -3,6 +3,7 @@
 source userID.key
 
 clear
+setfont /usr/share/kdb/latarcyrheb-sun32.psfx.gz
 mkdir /mnt/net/d -p
 mount -t cifs $SHARE_ID $SHARE -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
 lsblk
