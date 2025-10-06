@@ -89,6 +89,31 @@ declare -a MENU_NAMES  # => display label (string)
 declare -a MENU_STATE  # => status char: ' ', '*', or 'E'
 
 
+################################################################################
+# Chroot helpers — LFS Chapter 7
+# REQUIRE: LFS, SHARE_ID, SHARE_USER, SHARE_PASS, SHARE_VERS exported
+# NOTES:
+#  - We mount CIFS at $LFS/root/lfs so that inside chroot it is /root/lfs.
+#  - We never exec; control always returns to the caller.
+#  - chroot_prep() is invoked from within chroot_entry().
+################################################################################
+
+# Prepare the LFS target for chroot (virtual FS, essential dirs/files, etc.)
+# This function runs on the HOST and may invoke chroot for inner tasks.
+#chroot_prep() { }
+
+# Entry: mounts CIFS under the chroot view and calls chroot_prep()
+#chroot_entry() {}
+
+# Run a target script inside chroot (no exec; returns to caller)
+#chroot_run() {}
+
+# Exit: unmount CIFS and virtual FS in safe order
+#chroot_exit() {}
+
+# run shell.  (for use from a running script)
+#chroot_shell() {}
+
 lfs_share_on() {
     # Make CIFS appear owned/writable by lfs:lfs
     mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
