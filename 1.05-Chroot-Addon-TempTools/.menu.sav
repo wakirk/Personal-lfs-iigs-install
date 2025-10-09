@@ -3,9 +3,9 @@ Gettext	*
 Bison	*
 Perl	*
 Python	*
-Texinfo	 
-Utillinux	 
-OpenSSL	 
+Texinfo	*
+Utillinux	*
+OpenSSL	*
 Pkgconf	 
 Libevent	 
 Wget	 

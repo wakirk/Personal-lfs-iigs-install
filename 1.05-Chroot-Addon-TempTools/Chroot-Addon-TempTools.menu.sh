@@ -106,7 +106,16 @@ Python() {
 
 Texinfo() {
 	# 05 Texinfo-7.2.sh	Texinfo 7.2
-	echoL ""
+	# Texinfo (7.2) - 6,259 KB:
+	# Home page: https://www.gnu.org/software/texinfo/
+	# Download: https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz
+	# MD5 sum: 11939a7624572814912a18e76c8d8972
+
+	echoL "Downloading Texinfo (7.2)..."
+	../bash/Download.sh https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz texinfo-7.2.tar.xz
+	cp ../Packages/texinfo-7.2.tar.xz $LFS/sources
+
+	echoL "Installing Texinfo (7.2)..."
 	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
@@ -117,7 +126,16 @@ Texinfo() {
 
 Utillinux() {
 	# 06 Util-linux-2.41.1.sh Util-linux 2.41
-	echoL ""
+	# Util-linux (2.41.1) - 9,382 KB:
+	# Home page: https://git.kernel.org/pub/scm/utils/util-linux/util-linux.git/
+	# Download: https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.1.tar.xz
+	# MD5 sum: 7e5e68845e2f347cf96f5448165f1764
+
+	echoL "Downloading Util-linux (2.41.1)..."
+	../bash/Download.sh https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.1.tar.xz util-linux-2.41.1.tar.xz
+	cp ../Packages/util-linux-2.41.1.tar.xz $LFS/sources
+
+	echoL "Installing Util-linux (2.41.1)..."
 	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
@@ -128,7 +146,12 @@ Utillinux() {
 
 OpenSSL() {
 	# 07 OpenSSL 3.6.0.sh	OpenSSL 3.6.0
-	echoL ""
+
+	echoL "Downloading OpenSSL (3.6.0)..."
+	../bash/Download.sh https://github.com/openssl/openssl/releases/download/openssl-3.6.0/openssl-3.6.0.tar.gz openssl-3.6.0.tar.gz
+	cp ../Packages/openssl-3.6.0.tar.gz $LFS/sources
+	echoL "Installing OpenSSL (3.6.0)..."
+
 	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
@@ -505,10 +528,6 @@ Tcl Documentation (8.6.16) - 1,169 KB:
 Download: https://downloads.sourceforge.net/tcl/tcl8.6.16-html.tar.gz
 MD5 sum: 750c221bcb6f8737a6791c1fbe98b684
 
-Texinfo (7.2) - 6,259 KB:
-Home page: https://www.gnu.org/software/texinfo/
-Download: https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz
-MD5 sum: 11939a7624572814912a18e76c8d8972
 
 Time Zone Data (2025b) - 454 KB:
 Home page: https://www.iana.org/time-zones
@@ -519,10 +538,6 @@ Udev-lfs Tarball (udev-lfs-20230818) - 10 KB:
 Download: https://anduin.linuxfromscratch.org/LFS/udev-lfs-20230818.tar.xz
 MD5 sum: acd4360d8a5c3ef320b9db88d275dae6
 
-Util-linux (2.41.1) - 9,382 KB:
-Home page: https://git.kernel.org/pub/scm/utils/util-linux/util-linux.git/
-Download: https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.1.tar.xz
-MD5 sum: 7e5e68845e2f347cf96f5448165f1764
 
 Vim (9.1.1629) - 18,317 KB:
 Home page: https://www.vim.org

@@ -3,6 +3,7 @@
 source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
+
 	cd /sources
 	rm -fR bison-3.8.2
 	tar -vxsf bison-3.8.2.tar.xz
