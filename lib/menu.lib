@@ -98,21 +98,92 @@ declare -a MENU_STATE  # => status char: ' ', '*', or 'E'
 #  - chroot_prep() is invoked from within chroot_entry().
 ################################################################################
 
-# Prepare the LFS target for chroot (virtual FS, essential dirs/files, etc.)
-# This function runs on the HOST and may invoke chroot for inner tasks.
-#chroot_prep() { }
-
 # Entry: mounts CIFS under the chroot view and calls chroot_prep()
-#chroot_entry() {}
+chroot_entry() {
+	echo "$LFS > chroot_entry()"
+	# Do something if ANY are unset OR empty
+	if [[ -z "${LFS:-}" || -z "${SHARE_ID:-}" || -z "${SHARE_USER:-}" || -z "${SHARE_PASS:-}" || -z "${SHARE_VERS:-}" ]]; then
+		echo "Missing Data"
+		read
+		return 10
+	fi
+	mkdir -p $LFS/mnt/net/d
+	mount -v -t cifs $SHARE_ID $LFS/mnt/net/d -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
+	rm -v $LFS/root/lfs
+	ln -vfs /mnt/net/d/LFS $LFS/root/lfs
+	ls -v $LFS/root/lfs
+
+	chown --from lfs -R root:root $LFS/{usr,var,etc,tools}
+	case $(uname -m) in
+		x86_64) chown --from lfs -R root:root $LFS/lib64 ;;
+	esac
+
+	mkdir -pv $LFS/{dev,proc,sys,run}
+	mountpoint -q $LFS/dev     || mount -v  --bind /dev                      $LFS/dev
+	mountpoint -q $LFS/dev/pts || mount -vt devpts devpts -o gid=5,mode=0620 $LFS/dev/pts
+	mountpoint -q $LFS/proc    || mount -vt proc  proc                       $LFS/proc
+	mountpoint -q $LFS/sys     || mount -vt sysfs sysfs                      $LFS/sys
+	mountpoint -q $LFS/run     || mount -vt tmpfs tmpfs                      $LFS/run
+
+	if [ -h $LFS/dev/shm ]; then
+		install -v -d -m 1777 $LFS$(realpath /dev/shm)
+	else
+		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
+	fi
+	rm -vfR $LFS/usr/lib64
+ 
+}
+
+
+# Exit: unmount CIFS under the chroot view
+chroot_exit() {
+	echo "$LFS > chroot_exit()"
+	mountpoint -q $LFS/dev/pts && umount -v $LFS/dev/pts
+	mountpoint -q $LFS/dev/shm && umount -v $LFS/dev/shm
+	mountpoint -q $LFS/dev     && umount -v $LFS/dev
+	mountpoint -q $LFS/proc    && umount -v $LFS/proc
+	mountpoint -q $LFS/sys     && umount -v $LFS/sys
+	mountpoint -q $LFS/run     && umount -v $LFS/run
+
+	umount -v $LFS/mnt/net/d
+    return 0
+}
+
+
 
 # Run a target script inside chroot (no exec; returns to caller)
-#chroot_run() {}
+chroot_run() {
+    local host_target="$1"
+    shift || true
+	echo "> chroot_run()"
+    # Map like run_as_lfs, but for root-in-chroot
+    local in_target
+    case "$host_target" in
+        /root/lfs/*)
+            in_target="/root/lfs/${host_target#/root/lfs/}"
+            ;;
+        /mnt/net/d/LFS/*)
+            in_target="/root/lfs/${host_target#/mnt/net/d/LFS/}"
+            ;;
+        *)
+            echo "ERROR: chroot_run: unsupported target path: $host_target" >&2
+            return 97
+            ;;
+    esac
 
-# Exit: unmount CIFS and virtual FS in safe order
-#chroot_exit() {}
+    echo "Host Target: $host_target"
+    echo "==> chroot_run: entering chroot to run $in_target"
 
-# run shell.  (for use from a running script)
-#chroot_shell() {}
+	chroot "$LFS" /usr/bin/env -i   \
+		HOME=/root                  \
+		TERM="$TERM"                \
+		PS1='(lfs chroot) \u:\w\$ ' \
+		PATH=/usr/bin:/usr/sbin     \
+		MAKEFLAGS="-j$(nproc)"      \
+		TESTSUITEFLAGS="-j$(nproc)" \
+		/bin/bash "$in_target" "$@"
+
+}
 
 lfs_share_on() {
     # Make CIFS appear owned/writable by lfs:lfs

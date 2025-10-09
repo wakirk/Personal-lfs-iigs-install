@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
 source /root/lfs/USB/userID.key  # Access Keys
 export $SHARE, $SHARE_USER, $SHARE_PASS, $SHARE_VERS, $SHARE_ID
+source /root/lfs/lib/menu.lib   # In every script.
 cd /root/lfs/1.04-XCompilingTempTools
 
 Menu_Pre_Render() {
@@ -13,13 +13,161 @@ Menu_Pre_Render() {
 	echo " "
 }
 
-testing() {
-    echoL "Test Routine Enviornment (chroot)"
-#    chroot_entry
-    chroot_run "$HERE/$EXEC_SCRIPT"
-#    chroot_exit
-    return_wait 1
-    return 1
+sysconfig() {
+	# 00 SysConfig Setup.sh	Ch Root Configuration Setup
+	echoL "Installing Chroot Required Software"
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Gettext() {
+	# 01 Gettext-0.26.sh	Gettext 0.26	echoL "Installing Chroot Required Software"
+	# Gettext (0.26) - 9,926 KB:
+	# Home page: https://www.gnu.org/software/gettext/
+	# Download: https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz
+	# MD5 sum: 8e14e926f088e292f5f2bce95b81d10e
+
+	echoL "Downloading Gettext (0.26)..."
+	echoR "Installing Setup Support"
+	../bash/Download.sh  https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz gettext-0.26.tar.xz
+	cp ../Packages/gettext-0.26.tar.xz $LFS/sources
+
+	echoL "Installing Gettext (0.26)..."
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Bison() {
+	# 02 Bison-3.8.2.sh	Bison 3.8.2
+	# Bison (3.8.2) - 2,752 KB:
+	# Home page: https://www.gnu.org/software/bison/
+	# Download: https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz
+	# MD5 sum: c28f119f405a2304ff0a7ccdcc629713
+
+	echoL "Downloading Bison (3.8.2)..."
+	../bash/Download.sh https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz bison-3.8.2.tar.xz
+	cp ../Packages/bison-3.8.2.tar.xz $LFS/sources
+
+	echoL "Installing Bison (3.8.2)..."
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Perl() {
+	# 03 Perl-5.42.0.sh	Perl 5.42
+	# Perl (5.42.0) - 14,084 KB:
+	# Home page: https://www.perl.org/
+	# Download: https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz
+	# MD5 sum: 7a6950a9f12d01eb96a9d2ed2f4e0072
+
+	echoL "Downloading Perl (5.42)..."
+	../bash/Download.sh https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz perl-5.42.0.tar.xz
+	cp ../Packages/perl-5.42.0.tar.xz $LFS/sources
+
+	echoL "Installing Perl (5.42)..."
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Python() {
+	# 04 Python-3.13.7.sh	Python 3.13.7
+	# Python (3.13.7) - 22,236 KB:
+	# Home page: https://www.python.org/
+	# Download: https://www.python.org/ftp/python/3.13.7/Python-3.13.7.tar.xz
+	# MD5 sum: 256cdb3bbf45cdce7499e52ba6c36ea3
+
+	echoL "Downloading Python (3.13.7)..."
+	../bash/Download.sh https://www.python.org/ftp/python/3.13.7/Python-3.13.7.tar.xz Python-3.13.7.tar.xz
+	cp ../Packages/Python-3.13.7.tar.xz $LFS/sources
+
+	echoL "Installing Python (3.13.7)..."
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Texinfo() {
+	# 05 Texinfo-7.2.sh	Texinfo 7.2
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Utillinux() {
+	# 06 Util-linux-2.41.1.sh Util-linux 2.41
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+OpenSSL() {
+	# 07 OpenSSL 3.6.0.sh	OpenSSL 3.6.0
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Pkgconf() {
+	# 08 Pkgconf 2.5.1.sh	Pkgconf 2.5.1
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Libevent() {
+	# 09 Libevent 2.1.12.sh	Libevent 2.1.12
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Wget() {
+	# 10 Wget 1.25.0.sh	Wget 1.25
+	echoL ""
+	echoR "Installing Setup Support"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
 }
 
 main() {
@@ -73,6 +221,9 @@ exit 0
 #lfs_tmux_entry main  # must be called after the routine it defines.
 #
 
+#lfs_identity
+#lfs_tmux_entry main  # must be called after the routine it defines.
+
 
 Acl (2.3.2) - 363 KB:
 Home page: https://savannah.nongnu.org/projects/acl
@@ -101,10 +252,7 @@ Download: https://github.com/gavinhoward/bc/releases/download/7.0.3/bc-7.0.3.tar
 MD5 sum: ad4db5a0eb4fdbb3f6813be4b6b3da74
 
 
-Bison (3.8.2) - 2,752 KB:
-Home page: https://www.gnu.org/software/bison/
-Download: https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz
-MD5 sum: c28f119f405a2304ff0a7ccdcc629713
+
 
 Bzip2 (1.0.8) - 792 KB:
 Download: https://www.sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
@@ -150,10 +298,6 @@ Home page: https://www.gnu.org/software/gdbm/
 Download: https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz
 MD5 sum: aaa600665bc89e2febb3c7bd90679115
 
-Gettext (0.26) - 9,926 KB:
-Home page: https://www.gnu.org/software/gettext/
-Download: https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz
-MD5 sum: 8e14e926f088e292f5f2bce95b81d10e
 
 [Note] Note
 The Glibc developers maintain a Git branch containing patches considered worthy for Glibc-2.42 but unfortunately developed after Glibc-2.42 release. The LFS editors will issue a security advisory if any security fix is added into the branch, but no actions will be taken for other newly added patches. You may review the patches yourself and incorporate some patches if you consider them important.
@@ -294,11 +438,6 @@ Home page: https://pypi.org/project/packaging/
 Download: https://files.pythonhosted.org/packages/source/p/packaging/packaging-25.0.tar.gz
 MD5 sum: ab0ef21ddebe09d1803575120d3f99f8
 
-Perl (5.42.0) - 14,084 KB:
-Home page: https://www.perl.org/
-Download: https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz
-MD5 sum: 7a6950a9f12d01eb96a9d2ed2f4e0072
-
 Pkgconf (2.5.1) - 321 KB:
 Home page: https://github.com/pkgconf/pkgconf
 Download: https://distfiles.ariadne.space/pkgconf/pkgconf-2.5.1.tar.xz
@@ -314,10 +453,6 @@ Home page: https://gitlab.com/psmisc/psmisc
 Download: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz
 MD5 sum: 53eae841735189a896d614cba440eb10
 
-Python (3.13.7) - 22,236 KB:
-Home page: https://www.python.org/
-Download: https://www.python.org/ftp/python/3.13.7/Python-3.13.7.tar.xz
-MD5 sum: 256cdb3bbf45cdce7499e52ba6c36ea3
 
 Python Documentation (3.13.7) - 10,183 KB:
 Download: https://www.python.org/ftp/python/doc/3.13.7/python-3.13.7-docs-html.tar.bz2

@@ -13,9 +13,15 @@ echo "Download:    $1 to File $PKGDIR/$FILE"
 mkdir -p "$PKGDIR"
 
 # If the file already exists, do nothing
-if [ -f "$PKGDIR/$FILE" ]; then
+if [ -f "$PKGDIR/$FILE" ]; then	
     echo "Already have $FILE in $PKGDIR"
 else
     echo "Fetching $URL -> $PKGDIR/$FILE"
     wget -O "$PKGDIR/$FILE" "$URL"
+	if [ $? -ne 0 ]; then
+		# https or ftps not avalaible. 
+#		URL=${URL/#https:/http:}; URL=${URL/#ftps:/ftp:}
+		wget  --no-check-certificate -O "$PKGDIR/$FILE" "$URL"
+	fi
 fi
+

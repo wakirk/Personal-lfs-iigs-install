@@ -1,0 +1,11 @@
+sysconfig	*
+Gettext	*
+Bison	*
+Perl	*
+Python	*
+Texinfo	 
+Utillinux	 
+OpenSSL	 
+Pkgconf	 
+Libevent	 
+Wget	 

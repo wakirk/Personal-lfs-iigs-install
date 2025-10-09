@@ -1,1 +1,11 @@
-testing	test.sh	Test Enviornment
+sysconfig	00 SysConfig Setup.sh	Ch Root Configuration Setup
+Gettext	01 Gettext-0.26.sh	Gettext 0.26
+Bison	02 Bison-3.8.2.sh	Bison 3.8.2
+Perl	03 Perl-5.42.0.sh	Perl 5.42
+Python	04 Python-3.13.7.sh	Python 3.13.7
+Texinfo	05 Texinfo-7.2.sh	Texinfo 7.2
+Utillinux	06 Util-linux-2.41.1.sh	Util-linux 2.41
+OpenSSL	07 OpenSSL 3.6.0.sh	OpenSSL 3.6.0
+Pkgconf	08 Pkgconf 2.5.1.sh	Pkgconf 2.5.1
+Libevent	09 Libevent 2.1.12.sh	Libevent 2.1.12
+Wget	10 Wget 1.25.0.sh	Wget 1.25
