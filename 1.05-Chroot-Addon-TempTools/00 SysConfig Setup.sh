@@ -101,20 +101,12 @@ exit 0
 	../bash/Download.sh https://gnu.mirror.constant.com/wget/wget-1.25.0.tar.gz wget-1.25.0.tar.gz
 	cp ../Packages/wget-1.25.0.tar.gz $LFS/sources
 
-	echoL "Downloading Pkgconf 2.5.1..."
-	echo "Downloading Pkgconf 2.5.1..."
-	../bash/Download.sh https://distfiles.ariadne.space/pkgconf/pkgconf-2.5.1.tar.xz pkgconf-2.5.1.tar.xz
-	cp ../Packages/pkgconf-2.5.1.tar.xz $LFS/sources
 
 	echoL "Downloading OpenSSL 3.6.0..."
 	echo "Downloading OpenSSL 3.6.0..."
 	../bash/Download.sh https://github.com/openssl/openssl/releases/download/openssl-3.6.0/openssl-3.6.0.tar.gz openssl-3.6.0.tar.gz
 	cp ../Packages/openssl-3.6.0.tar.gz $LFS/sources
 
-	echoL "Downloading libevent 2.1.12..."
-	echo "Downloading libevent 2.1.12..."
-	../bash/Download.sh https://github.com/libevent/libevent/archive/refs/tags/release-2.1.12-stable.tar.gz libevent-2.1.12.tar.gz
-	cp ../Packages/libevent-2.1.12.tar.gz $LFS/sources
 	
 	echoR "Configuring LFS System"
 	echoL "Building Support System"
@@ -129,18 +121,6 @@ exit 0
 
 
 
-#	cd /sources
-#	rm -fR pkgconf-2.5.1
-#	tar -vxsf pkgconf-2.5.1.tar.xz
-#	cd pkgconf-2.5.1
-
-#	./configure --prefix=/usr    \
-#				--disable-static \
-#				--docdir=/usr/share/doc/pkgconf-2.5.1
-#	make
-#	make install
-#	ln -sv pkgconf   /usr/bin/pkg-config
-#	ln -sv pkgconf.1 /usr/share/man/man1/pkg-config.1
 
 #	cd /sources 
 #	rm -fR wget-1.25.0
@@ -153,12 +133,6 @@ exit 0
 	
 	
 	
-#	cd /sources 
-#	rm -fR libevent-release-2.1.12-stable
-#	tar -vxsf libevent-2.1.12.tar.gz
-#	cd libevent-release-2.1.12-stable
-#	./configure --prefix=/usr --sysconfdir=/etc --disable-shared --disable-thread-support
-#	/bin/bash
 
 #	cd /sources
 #	tar -vxsf wget-1.25.0.tar.gz

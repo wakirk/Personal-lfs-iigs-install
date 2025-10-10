@@ -20,8 +20,11 @@ else
     wget -O "$PKGDIR/$FILE" "$URL"
 	if [ $? -ne 0 ]; then
 		# https or ftps not avalaible. 
-#		URL=${URL/#https:/http:}; URL=${URL/#ftps:/ftp:}
+		# URL=${URL/#https:/http:}; URL=${URL/#ftps:/ftp:}
 		wget  --no-check-certificate -O "$PKGDIR/$FILE" "$URL"
+		if [ $? -ne 0 ]; then
+			rm "$PKGDIR/$FILE"
+		fi
 	fi
 fi
 

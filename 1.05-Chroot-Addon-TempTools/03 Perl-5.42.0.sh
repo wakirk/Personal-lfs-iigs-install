@@ -21,6 +21,7 @@ main () {
 	make
 	make install
  
+	cd /sources
 	rm -fR perl-5.42.0
 }
 

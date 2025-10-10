@@ -13,6 +13,7 @@ main () {
 	make
 	make install
 
+	cd /sources
 	rm -fR texinfo-7.2
 }
 

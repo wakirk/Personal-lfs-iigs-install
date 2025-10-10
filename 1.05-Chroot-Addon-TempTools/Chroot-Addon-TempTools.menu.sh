@@ -52,11 +52,11 @@ Bison() {
 	# MD5 sum: c28f119f405a2304ff0a7ccdcc629713
 
 	echoL "Downloading Bison (3.8.2)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz bison-3.8.2.tar.xz
 	cp ../Packages/bison-3.8.2.tar.xz $LFS/sources
 
 	echoL "Installing Bison (3.8.2)..."
-	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -72,11 +72,11 @@ Perl() {
 	# MD5 sum: 7a6950a9f12d01eb96a9d2ed2f4e0072
 
 	echoL "Downloading Perl (5.42)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz perl-5.42.0.tar.xz
 	cp ../Packages/perl-5.42.0.tar.xz $LFS/sources
 
 	echoL "Installing Perl (5.42)..."
-	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -92,11 +92,11 @@ Python() {
 	# MD5 sum: 256cdb3bbf45cdce7499e52ba6c36ea3
 
 	echoL "Downloading Python (3.13.7)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://www.python.org/ftp/python/3.13.7/Python-3.13.7.tar.xz Python-3.13.7.tar.xz
 	cp ../Packages/Python-3.13.7.tar.xz $LFS/sources
 
 	echoL "Installing Python (3.13.7)..."
-	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -112,11 +112,11 @@ Texinfo() {
 	# MD5 sum: 11939a7624572814912a18e76c8d8972
 
 	echoL "Downloading Texinfo (7.2)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://ftp.gnu.org/gnu/texinfo/texinfo-7.2.tar.xz texinfo-7.2.tar.xz
 	cp ../Packages/texinfo-7.2.tar.xz $LFS/sources
 
 	echoL "Installing Texinfo (7.2)..."
-	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -132,11 +132,11 @@ Utillinux() {
 	# MD5 sum: 7e5e68845e2f347cf96f5448165f1764
 
 	echoL "Downloading Util-linux (2.41.1)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.1.tar.xz util-linux-2.41.1.tar.xz
 	cp ../Packages/util-linux-2.41.1.tar.xz $LFS/sources
 
 	echoL "Installing Util-linux (2.41.1)..."
-	echoR "Installing Setup Support"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -148,11 +148,11 @@ OpenSSL() {
 	# 07 OpenSSL 3.6.0.sh	OpenSSL 3.6.0
 
 	echoL "Downloading OpenSSL (3.6.0)..."
+	echoR "Installing Setup Support"
 	../bash/Download.sh https://github.com/openssl/openssl/releases/download/openssl-3.6.0/openssl-3.6.0.tar.gz openssl-3.6.0.tar.gz
 	cp ../Packages/openssl-3.6.0.tar.gz $LFS/sources
-	echoL "Installing OpenSSL (3.6.0)..."
 
-	echoR "Installing Setup Support"
+	echoL "Installing OpenSSL (3.6.0)..."
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -162,8 +162,12 @@ OpenSSL() {
 
 Pkgconf() {
 	# 08 Pkgconf 2.5.1.sh	Pkgconf 2.5.1
-	echoL ""
+	echoL "Downloading Pkgconf (2.5.1)..."
 	echoR "Installing Setup Support"
+	../bash/Download.sh https://distfiles.ariadne.space/pkgconf/pkgconf-2.5.1.tar.xz pkgconf-2.5.1.tar.xz
+	cp ../Packages/pkgconf-2.5.1.tar.xz $LFS/sources
+
+	echoL "Installing Pkgconf (2.5.1)..."
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
@@ -173,8 +177,12 @@ Pkgconf() {
 
 Libevent() {
 	# 09 Libevent 2.1.12.sh	Libevent 2.1.12
-	echoL ""
+	echoL "Downloading libevent (2.1.12)..."
 	echoR "Installing Setup Support"
+	../bash/Download.sh https://github.com/libevent/libevent/archive/refs/tags/release-2.1.12-stable.tar.gz libevent-2.1.12.tar.gz
+	cp ../Packages/libevent-2.1.12.tar.gz $LFS/sources
+
+	echoL "Installing libevent (2.1.12)..."
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit

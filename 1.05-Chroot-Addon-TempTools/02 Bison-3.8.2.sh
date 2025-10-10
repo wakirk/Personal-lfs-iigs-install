@@ -14,6 +14,7 @@ main () {
 	make
 	make install
 
+	cd /sources
 	rm -fR bison-3.8.2
 }
 

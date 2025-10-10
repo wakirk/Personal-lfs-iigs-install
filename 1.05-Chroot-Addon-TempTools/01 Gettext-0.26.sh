@@ -12,7 +12,8 @@ main () {
 	./configure --disable-shared
 	make
 	cp -v gettext-tools/src/{msgfmt,msgmerge,xgettext} /usr/bin
-	cd ..
+
+	cd /sources
 	rm -fR gettext-0.26
 
 }

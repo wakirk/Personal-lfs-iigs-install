@@ -10,10 +10,11 @@ main () {
 	cd openssl-3.6.0
 
 	./Configure --openssldir=/etc/ssl --prefix=/usr
-    make
-    make test
+	make
+	make test
 	make install
-	
+
+	cd /sources
 	rm -fR openssl-3.6.0
 
 }
