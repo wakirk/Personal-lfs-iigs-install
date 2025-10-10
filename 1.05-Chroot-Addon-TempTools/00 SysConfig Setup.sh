@@ -122,14 +122,6 @@ exit 0
 
 
 
-#	cd /sources 
-#	rm -fR wget-1.25.0
-#	tar -vxsf wget-1.25.0.tar.gz
-#	cd wget-1.25.0
-#	./configure --prefix=/usr --sysconfdir=/etc --with-ssl=openssl
-#	make
-#	make install
-#	read
 	
 	
 	

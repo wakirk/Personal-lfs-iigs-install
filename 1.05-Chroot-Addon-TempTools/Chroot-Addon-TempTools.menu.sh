@@ -175,6 +175,64 @@ Pkgconf() {
 	return 1
 }
 
+libtool() {
+	# Libtool-2.5.4	https://www.linuxfromscratch.org/lfs/view/stable/chapter08/libtool.html
+	# Libtool (2.5.4) - 1,033 KB:
+	# Home page: https://www.gnu.org/software/libtool/
+	# Download: https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz
+	# MD5 sum: 22e0a29df8af5fdde276ea3a7d351d30
+	
+	echoL "Downloading Libtool (2.5.4)..."
+	echoR "Installing Setup Support"
+	../bash/Download.sh https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz libtool-2.5.4.tar.xz
+	cp ../Packages/libtool-2.5.4.tar.xz $LFS/sources
+
+	echoL "Installing Libtool (2.5.4)..."
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+autoconfig() {
+	# Autoconf-2.72	https://www.linuxfromscratch.org/lfs/view/stable/chapter08/autoconf.html
+	# Autoconf (2.72) - 1,360 KB:
+	# Home page: https://www.gnu.org/software/autoconf/
+	# Download: https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz
+	# MD5 sum: 1be79f7106ab6767f18391c5e22be701
+	echoL "Downloading Autoconf (2.72)..."
+	echoR "Installing Setup Support"
+	../bash/Download.sh https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz autoconf-2.72.tar.xz
+	cp ../Packages/autoconf-2.72.tar.xz $LFS/sources
+
+	echoL "Installing Autoconf (2.72)..."
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+automak() {
+	# Automake-1.18.1	https://www.linuxfromscratch.org/lfs/view/stable/chapter08/automake.html
+	# Automake (1.18.1) - 1,614 KB:
+	# Home page: https://www.gnu.org/software/automake/
+	# Download: https://ftp.gnu.org/gnu/automake/automake-1.18.1.tar.xz
+	# MD5 sum: cea31dbf1120f890cbf2a3032cfb9a68
+	echoL "Downloading Automake (1.18.1)..."
+	echoR "Installing Setup Support"
+	../bash/Download.sh https://ftp.gnu.org/gnu/automake/automake-1.18.1.tar.xz automake-1.18.1.tar.xz
+	cp ../Packages/automake-1.18.1.tar.xz $LFS/sources
+
+	echoL "Installing Automake (1.18.1)..."
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 Libevent() {
 	# 09 Libevent 2.1.12.sh	Libevent 2.1.12
 	echoL "Downloading libevent (2.1.12)..."
@@ -192,13 +250,26 @@ Libevent() {
 
 Wget() {
 	# 10 Wget 1.25.0.sh	Wget 1.25
-	echoL ""
+	# Wget-1.25.0
+	# Download (HTTP): https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz
+	# Download MD5 sum: c70ba58b36f944e8ba1d655ace552881
+	# Download size: 5.0 MB
+
+	echoL "Downloading Wget (1.25.0)..."
 	echoR "Installing Setup Support"
+	../bash/Download.sh https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz wget-1.25.0.tar.gz
+	cp ../Packages/wget-1.25.0.tar.gz $LFS/sources
+
+	echoL "Installing Wget (1.25.0)..."
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
 	return_wait 1
 	return 1
+}
+
+tmux() {
+	:;
 }
 
 main() {
@@ -266,15 +337,7 @@ Home page: https://savannah.nongnu.org/projects/attr
 Download: https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz
 MD5 sum: 227043ec2f6ca03c0948df5517f9c927
 
-Autoconf (2.72) - 1,360 KB:
-Home page: https://www.gnu.org/software/autoconf/
-Download: https://ftp.gnu.org/gnu/autoconf/autoconf-2.72.tar.xz
-MD5 sum: 1be79f7106ab6767f18391c5e22be701
 
-Automake (1.18.1) - 1,614 KB:
-Home page: https://www.gnu.org/software/automake/
-Download: https://ftp.gnu.org/gnu/automake/automake-1.18.1.tar.xz
-MD5 sum: cea31dbf1120f890cbf2a3032cfb9a68
 
 
 Bc (7.0.3) - 464 KB:
@@ -407,10 +470,6 @@ Home page: https://libpipeline.nongnu.org/
 Download: https://download.savannah.gnu.org/releases/libpipeline/libpipeline-1.5.8.tar.gz
 MD5 sum: 17ac6969b2015386bcb5d278a08a40b5
 
-Libtool (2.5.4) - 1,033 KB:
-Home page: https://www.gnu.org/software/libtool/
-Download: https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz
-MD5 sum: 22e0a29df8af5fdde276ea3a7d351d30
 
 Libxcrypt (4.4.38) - 612 KB:
 Home page: https://github.com/besser82/libxcrypt/

@@ -7,5 +7,8 @@ Texinfo	05 Texinfo-7.2.sh	Texinfo 7.2
 Utillinux	06 Util-linux-2.41.1.sh	Util-linux 2.41
 OpenSSL	07 OpenSSL 3.6.0.sh	OpenSSL 3.6.0
 Pkgconf	08 Pkgconf 2.5.1.sh	Pkgconf 2.5.1
-Libevent	09 Libevent 2.1.12.sh	Libevent 2.1.12
-Wget	10 Wget 1.25.0.sh	Wget 1.25
+libtool	09 Libtool-2.5.4.sh	Libtool 2.5.4
+autoconfig	10 Autoconf-2.72.sh	Autoconf 2.72
+automak	11 Automake-1.18.1.sh	Automake 1.18.1
+Libevent	12 Libevent 2.1.12.sh	Libevent 2.1.12
+Wget	13 Wget 1.25.0.sh	Wget 1.25

@@ -9,7 +9,7 @@ main () {
 	tar -vxsf openssl-3.6.0.tar.gz
 	cd openssl-3.6.0
 
-	./Configure --openssldir=/etc/ssl --prefix=/usr
+	./Configure --prefix=/usr --openssldir=/etc/ssl disable-shared
 	make
 	make test
 	make install
