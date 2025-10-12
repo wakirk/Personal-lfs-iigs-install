@@ -9,10 +9,9 @@ main () {
 	tar -vxsf wget-1.25.0.tar.gz
 	cd wget-1.25.0
 
-	./configure --prefix=/usr --sysconfdir=/etc --with-ssl=openssl
+	./configure --prefix=/usr --with-ssl=openssl
 	make
 	make install
-	read
 
 	cd /sources
 	rm -fR wget-1.25.0

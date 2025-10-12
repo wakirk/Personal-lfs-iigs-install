@@ -4,6 +4,9 @@ source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
+#	/bin/bash
+#	exit 0
+
 	echo "Configuraing System..."
 
 	export PS1='(lfs chroot) \u:\w\$ '
@@ -23,7 +26,7 @@ main () {
 	ln -sfv /run /var/run
 	ln -sfv /run/lock /var/lock
 
-	install -dv -m 0750 /root
+#	install -dv -m 0750 /root
 	install -dv -m 1777 /tmp /var/tmp
 	
 	ln -sv /proc/self/mounts /etc/mtab
@@ -79,9 +82,7 @@ EOF
 	chgrp -v utmp /var/log/lastlog
 	chmod -v 664  /var/log/lastlog
 	chmod -v 600  /var/log/btmp
-
-	/bin/bash
-
+	
 	echo "Exiting..."
 	exit 1
 }

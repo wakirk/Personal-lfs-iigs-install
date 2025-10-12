@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source /root/lfs/USB/userID.key  # Access Keys
-export $SHARE, $SHARE_USER, $SHARE_PASS, $SHARE_VERS, $SHARE_ID
 source /root/lfs/lib/menu.lib   # In every script.
 cd /root/lfs/1.04-XCompilingTempTools
 
@@ -254,12 +253,10 @@ Wget() {
 	# Download (HTTP): https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz
 	# Download MD5 sum: c70ba58b36f944e8ba1d655ace552881
 	# Download size: 5.0 MB
-
 	echoL "Downloading Wget (1.25.0)..."
 	echoR "Installing Setup Support"
 	../bash/Download.sh https://ftp.gnu.org/gnu/wget/wget-1.25.0.tar.gz wget-1.25.0.tar.gz
 	cp ../Packages/wget-1.25.0.tar.gz $LFS/sources
-
 	echoL "Installing Wget (1.25.0)..."
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"

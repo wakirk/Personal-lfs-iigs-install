@@ -11,7 +11,6 @@ main () {
 
 	./autogen.sh
 	./configure --prefix=/usr --sysconfdir=/etc --disable-shared --disable-thread-support --disable-openssl
-	/bin/bash
 	make
 	make install 
 

@@ -136,6 +136,5 @@ main() {
 }
 
 # call_bash  Starts a pre-configured prompt.
-
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.

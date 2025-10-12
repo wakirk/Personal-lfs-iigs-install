@@ -65,7 +65,7 @@
 
 ###############################################################################
 
-
+#echo "Menu Library version 1.0 Inport Begin"
 
 MENU_PAGE=1				# Paging
 MENU_PAGE_COUNT=1
@@ -109,6 +109,7 @@ chroot_entry() {
 	fi
 	mkdir -p $LFS/mnt/net/d
 	mount -v -t cifs $SHARE_ID $LFS/mnt/net/d -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
+	install -dv -m 0750 $LFS/root
 	rm -v $LFS/root/lfs
 	ln -vfs /mnt/net/d/LFS $LFS/root/lfs
 	ls -v $LFS/root/lfs
@@ -130,7 +131,7 @@ chroot_entry() {
 	else
 		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
 	fi
-	rm -vfR $LFS/usr/lib64
+	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
  
 }
 
@@ -274,18 +275,6 @@ echoR() {
 }
 
 
-# SetScreen: keep your original styling intact.
-SetScreen() {
-	# Use a dark blue background and bright white text for active panes
-	tmux set-option -g window-active-style "bg=darkblue,fg=brightwhite"
-	tmux set-option -g status-style "bold,bg=black,fg=brightyellow"
-	tmux set-option -g window-status-format ""
-	tmux set-option -g window-status-current-format ""
-	tmux set-option -g status-left-length 40
-	tmux set-option -g status-right-length 40
-}
-
-
 # lfs_tmux_entry <main_func>
 # - If already in tmux (or bootstrapped), style and run <main_func>.
 # - Else, create a session and re-run this script inside it, with a sentinel.
@@ -316,9 +305,59 @@ lfs_tmux_entry() {
 	# AFTER (keeps all original args):
 	tmux new-session -s "$sess" \
 		"LFS_TMUX_BOOTSTRAPPED=1 TMUX_SESSION_NAME=$sess \"$0\" \"$@\""
-
 }
 
+
+# lfs__in_tmux: true if $TMUX points to a live server.
+lfs__in_tmux() {
+	if [ -n "${TMUX:-}" ]; then
+		local sock="${TMUX%%,*}"
+		tmux -S "$sock" has-session >/dev/null 2>&1 && return 0
+	fi
+	return 1
+}
+
+tmux_init() {
+	# Top-level only: start from a clean slate of depth files
+	rm -f /run/lfs-status.*.left /run/lfs-status.*.right 2>/dev/null || true
+}
+
+# Choose/claim a depth N without locks or extra dirs.
+# Rule: pick max(N) among existing lfs-status.*.left, then try to create N+1.left
+# If a race creates it first, bump and retry. On success, also create N.right.
+tmux_claim_depth() {
+	mkdir -p /run 2>/dev/null || true
+	local max=0 f n left right
+	for f in /run/lfs-status.*.left; do
+		[ -e "$f" ] || continue
+		n="${f#/run/lfs-status.}"; n="${n%.left}"
+		case "$n" in (''|*[!0-9]*) continue;; esac
+		[ "$n" -gt "$max" ] && max="$n"
+	done
+	n=$((max+1))
+	while :; do
+		left="/run/lfs-status.$n.left"
+		right="/run/lfs-status.$n.right"
+		# atomic create for .left (fail if exists), then make .right
+		if ( set -o noclobber; : > "$left" ) 2>/dev/null; then
+			: > "$right"
+			TMUXDEPTH="$n"    # keep it local; writers use ${TMUXDEPTH:-1}
+			return 0
+		fi
+		n=$((n+1))
+	done
+}
+
+# SetScreen: keep your original styling intact.
+SetScreen() {
+	# Use a dark blue background and bright white text for active panes
+	tmux set-option -g window-active-style "bg=darkblue,fg=brightwhite"
+	tmux set-option -g status-style "bold,bg=black,fg=brightyellow"
+	tmux set-option -g window-status-format ""
+	tmux set-option -g window-status-current-format ""
+	tmux set-option -g status-left-length 40
+	tmux set-option -g status-right-length 40
+}
 
 call_bash() {
     # set yellow PS1 and clear any ls alias before each prompt
@@ -715,14 +754,6 @@ lfs_identity() {
 # =============================================================================================================================
 
 
-# lfs__in_tmux: true if $TMUX points to a live server.
-lfs__in_tmux() {
-	if [ -n "${TMUX:-}" ]; then
-		local sock="${TMUX%%,*}"
-		tmux -S "$sock" has-session >/dev/null 2>&1 && return 0
-	fi
-	return 1
-}
 
 
 # internal: the top-level caller file (not this library)
@@ -1426,3 +1457,5 @@ _menu_auto_finish() {
 	done
 	AUTO_STATUS=0
 }
+
+#echo "Menu Library version 1.0 Inport End"
