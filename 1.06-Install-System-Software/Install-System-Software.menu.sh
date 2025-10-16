@@ -87,18 +87,116 @@ bldXz() {
 	return 1
 }
 
+bldLz4() {
+	echoL "Lz4 (1.10.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
 
-bldLz4() { :; }
-bldZstd() { :; }
-bldFile() { :; }
-bldReadline() { :; }
-bldM4() { :; }
-bldBc() { :; }
-bldFlex() { :; }
-bldTcl() { :; }
-bldExpect() { :; }
-bldDejaGNU() { :; }
-bldPkgconf() { :; }
+bldZstd() { 
+	echoL "Zstd (1.5.7)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldFile() {
+	echoL "File (5.46)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldReadline() { 
+	echoL "Readline (8.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+ 
+bldM4() { 
+	echoL "M4 (1.4.20)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldBc() { 
+	echoL "Bc (7.0.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldFlex() {
+	echoL "Flex (2.6.4)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldTcl() {
+	echoL "Tcl (8.6.16)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldExpect() {
+	echoL "Expect (5.45.4)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldDejaGNU() {
+	echoL "DejaGNU (1.6.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldPkgconf() {
+	echoL "Pkgconf (2.5.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldBinutils() { :; }
 bldGMP() { :; }
 bldMPFR() { :; }
@@ -183,25 +281,25 @@ main () {
 	MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
 	echoR "System Software"
 
-	echoL "Downloading package (version)..."
+	echoL "Downloading ------- ( ) ..."
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
 	../bash/Download.sh https://*.tar.xz *.tar.xz
 	cp ../Packages/-.tar.xz /sources
 
-	echoL "Unpack package (version)..."
+	echoL "Unpack ------- ( ) ..."
 	sleep 2
 	cd /sources
 	rm -fR
 	tar -vxsf
 	cd 
 
-	echoL "Building package (version)..."
+	echoL "Building ------- ( ) ..."
 	sleep 2
 	./configure 
 	make
 
-	echoL "Installing package (version)..."
+	echoL "Installing ------- ( ) ..."
 	sleep 2
 	make install
 
@@ -219,17 +317,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 exit 1
 
 
-bldLz4	na.sh	Undefined.
-bldZstd	na.sh	Undefined.
-bldFile	na.sh	Undefined.
-bldReadline	na.sh	Undefined.
-bldM4	na.sh	Undefined.
-bldBc	na.sh	Undefined.
-bldFlex	na.sh	Undefined.
-bldTcl	na.sh	Undefined.
-bldExpect	na.sh	Undefined.
-bldDejaGNU	na.sh	Undefined.
-bldPkgconf	na.sh	Undefined.
 bldBinutils	na.sh	Undefined.
 bldGMP	na.sh	Undefined.
 bldMPFR	na.sh	Undefined.

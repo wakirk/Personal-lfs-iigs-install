@@ -3,7 +3,6 @@
 source /root/lfs/lib/menu.lib   # In every script.
 cd /root/lfs/1.01-Host
 
-
 echoR "Configuring Host"
 echoL "Version Checks...."
 
@@ -23,8 +22,7 @@ grep --version > /dev/null 2> /dev/null || bail "grep does not work"
 sed '' /dev/null || bail "sed does not work"
 sort   /dev/null || bail "sort does not work"
 
-ver_check()
-{
+ver_check() {
    if ! type -p $2 &>/dev/null
    then
      echo "ERROR: Cannot find $2 ($1)"; return 1;
@@ -39,8 +37,7 @@ ver_check()
    fi
 }
 
-ver_kernel()
-{
+ver_kernel() {
    kver=$(uname -r | grep -E -o '^[0-9\.]+')
    if printf '%s\n' $1 $kver | sort --version-sort --check &>/dev/null
    then
@@ -83,6 +80,7 @@ alias_check() {
    then printf "OK:    %-4s is $2\n" "$1";
    else printf "ERROR: %-4s is NOT $2\n" "$1"; fi
 }
+
 echo "Aliases:"
 alias_check awk GNU
 alias_check yacc Bison
