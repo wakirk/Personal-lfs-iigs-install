@@ -13,4 +13,3 @@ automak	11 Automake-1.18.1.sh	Automake 1.18.1
 Libevent	12 Libevent 2.1.12.sh	Libevent 2.1.12
 Wget	13 Wget 1.25.0.sh	Wget 1.25
 maketmux	14 Tmux 3.5a.sh	tmux 3.5a
-postsetup	15 SysConfig Post.sh	Post Tools Cleanup
