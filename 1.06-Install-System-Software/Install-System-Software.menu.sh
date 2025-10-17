@@ -227,7 +227,16 @@ bldMPFR() {
 	return 1
 }
 
-bldMPC() { :; }
+bldMPC() {
+	echoL "MPC (1.3.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldAttr() { :; }
 bldAcl() { :; }
 bldLibcap() { :; }
@@ -344,7 +353,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldMPC	na.sh	Undefined.
 bldAttr	na.sh	Undefined.
 bldAcl	na.sh	Undefined.
 bldLibcap	na.sh	Undefined.
