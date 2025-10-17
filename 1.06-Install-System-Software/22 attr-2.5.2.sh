@@ -13,7 +13,7 @@ main () {
 	echoL "Downloading Attr (2.5.2)..."
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
-	../bash/Download.sh https://https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz attr-2.5.2.tar.gz
+	../bash/Download.sh https://download.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz attr-2.5.2.tar.gz
 	cp ../Packages/attr-2.5.2.tar.gz /sources
 
 	echoL "Unpack Attr (2.5.2)..."
@@ -33,8 +33,7 @@ main () {
 
 	echoL "Testing Attr (2.5.2)..."
 	sleep 2
-	/bin/bash
-	# make check
+	make check
 
 	echoL "Installing Attr (2.5.2)..."
 	sleep 2

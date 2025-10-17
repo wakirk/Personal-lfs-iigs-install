@@ -19,3 +19,4 @@ bldBinutils	*
 bldGMP	*
 bldMPFR	*
 bldMPC	*
+bldAttr	*
