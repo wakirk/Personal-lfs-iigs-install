@@ -287,7 +287,16 @@ bldShadow() {
 	return 1
 }
 
-bldGCC() { :; }
+bldGCC() {
+	echoL "GCC (15.2.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldNcurses() { :; }
 bldSed() { :; }
 bldPsmisc() { :; }
@@ -398,7 +407,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldGCC	na.sh	Undefined.
 bldNcurses	na.sh	Undefined.
 bldSed	na.sh	Undefined.
 bldPsmisc	na.sh	Undefined.
