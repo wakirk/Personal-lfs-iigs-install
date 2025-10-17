@@ -297,7 +297,16 @@ bldGCC() {
 	return 1
 }
 
-bldNcurses() { :; }
+bldNcurses() {
+	echoL "Ncurses (6.5-20250809)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldSed() { :; }
 bldPsmisc() { :; }
 bldGettext() { :; }
@@ -407,7 +416,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldNcurses	na.sh	Undefined.
 bldSed	na.sh	Undefined.
 bldPsmisc	na.sh	Undefined.
 bldGettext	na.sh	Undefined.
