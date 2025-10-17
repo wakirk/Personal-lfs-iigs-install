@@ -247,7 +247,16 @@ bldAttr() {
 	return 1
 }
 
-bldAcl() { :; }
+bldAcl() {
+	echoL "Acl (2.3.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibcap() { :; }
 bldLibxcrypt() { :; }
 bldShadow() { :; }
@@ -362,7 +371,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldAcl	na.sh	Undefined.
 bldLibcap	na.sh	Undefined.
 bldLibxcrypt	na.sh	Undefined.
 bldShadow	na.sh	Undefined.
