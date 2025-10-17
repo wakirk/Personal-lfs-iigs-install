@@ -237,7 +237,16 @@ bldMPC() {
 	return 1
 }
 
-bldAttr() { :; }
+bldAttr() {
+	echoL "Attr (2.5.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldAcl() { :; }
 bldLibcap() { :; }
 bldLibxcrypt() { :; }
@@ -353,7 +362,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldAttr	na.sh	Undefined.
 bldAcl	na.sh	Undefined.
 bldLibcap	na.sh	Undefined.
 bldLibxcrypt	na.sh	Undefined.
