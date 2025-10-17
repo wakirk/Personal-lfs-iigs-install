@@ -20,3 +20,5 @@ bldGMP	*
 bldMPFR	*
 bldMPC	*
 bldAttr	*
+bldAcl	*
+bldLibcap	*
