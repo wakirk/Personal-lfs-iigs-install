@@ -4,10 +4,10 @@ source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-  # MPC (1.3.1) - 756 KB:
-  # Home page: https://www.multiprecision.org/
-  # Download: https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
-  # MD5 sum: 5c9bc658c9fd0f940e8e3e0f09530c62
+	# MPC (1.3.1) - 756 KB:
+	# Home page: https://www.multiprecision.org/
+	# Download: https://ftp.gnu.org/gnu/mpc/mpc-1.3.1.tar.gz
+	# MD5 sum: 5c9bc658c9fd0f940e8e3e0f09530c62
 	echoR "System Software"
 
 	echoL "Downloading MPC (1.3.1)..."
@@ -25,21 +25,20 @@ main () {
 
 	echoL "Building MPC (1.3.1)..."
 	sleep 2
-  ./configure --prefix=/usr \
-    --disable-static        \
-    --docdir=/usr/share/doc/mpc-1.3.1
-  make
-  make html
+	./configure --prefix=/usr \
+		--disable-static      \
+		--docdir=/usr/share/doc/mpc-1.3.1
+	make
+	make html
 
-	echoL "Building MPC (1.3.1)..."
+	echoL "Testing MPC (1.3.1)..."
 	sleep 2
-  /bin/bash
-  # make check
+	make check
 
 	echoL "Installing MPC (1.3.1)..."
 	sleep 2
-  make install
-  make install-html
+	make install
+	make install-html
 
 	echoL "Cleaning up build area...."
 	sleep 2
