@@ -24,3 +24,4 @@ bldAcl	*
 bldLibcap	*
 bldLibxcrypt	*
 bldShadow	*
+bldGCC	*
