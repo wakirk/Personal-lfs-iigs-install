@@ -257,7 +257,16 @@ bldAcl() {
 	return 1
 }
 
-bldLibcap() { :; }
+bldLibcap() {
+	echoL "Libcap (2.76)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibxcrypt() { :; }
 bldShadow() { :; }
 bldGCC() { :; }
@@ -371,7 +380,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldLibcap	na.sh	Undefined.
 bldLibxcrypt	na.sh	Undefined.
 bldShadow	na.sh	Undefined.
 bldGCC	na.sh	Undefined.
