@@ -197,9 +197,36 @@ bldPkgconf() {
 	return 1
 }
 
-bldBinutils() { :; }
-bldGMP() { :; }
-bldMPFR() { :; }
+bldBinutils() {
+	echoL "Binutils (2.45)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldGMP() {
+	echoL "GMP (6.3.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldMPFR() {
+	echoL "MPFR (4.2.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldMPC() { :; }
 bldAttr() { :; }
 bldAcl() { :; }
@@ -265,6 +292,7 @@ lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 0
+
 https://chatgpt.com/g/g-p-68bf3444284c8191937ab3e8dcd8a503-iigs-linux-from-scratch-build/project
 https://www.linuxfromscratch.org/lfs/view/stable/chapter03/packages.html
 https://github.com/wakirk/Personal-lfs-iigs-install/tree/434aeed03f038aff88ac33cee6e32a63b904570d
@@ -316,10 +344,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-
-bldBinutils	na.sh	Undefined.
-bldGMP	na.sh	Undefined.
-bldMPFR	na.sh	Undefined.
 bldMPC	na.sh	Undefined.
 bldAttr	na.sh	Undefined.
 bldAcl	na.sh	Undefined.
