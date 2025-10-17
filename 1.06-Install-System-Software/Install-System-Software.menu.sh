@@ -277,7 +277,16 @@ bldLibxcrypt() {
 	return 1
 }
 
-bldShadow() { :; }
+bldShadow() {
+	echoL "Shadow (4.18.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldGCC() { :; }
 bldNcurses() { :; }
 bldSed() { :; }
@@ -389,7 +398,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldShadow	na.sh	Undefined.
 bldGCC	na.sh	Undefined.
 bldNcurses	na.sh	Undefined.
 bldSed	na.sh	Undefined.
