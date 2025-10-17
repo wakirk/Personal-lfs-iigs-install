@@ -22,3 +22,5 @@ bldMPC	*
 bldAttr	*
 bldAcl	*
 bldLibcap	*
+bldLibxcrypt	*
+bldShadow	*
