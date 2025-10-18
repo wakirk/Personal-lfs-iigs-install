@@ -397,7 +397,16 @@ bldGperf() {
 	return 1
 }
 
-bldExpat() { :; }
+bldExpat() {
+	echoL "Expat (2.7.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldInetutils() { :; }
 bldLess() { :; }
 bldPerl() { :; }
@@ -478,6 +487,10 @@ main () {
 	echoL "Building ------- ( ) ..."
 	sleep 2
 
+	echoL "Testing ------- ( ) ..."
+	sleep 2
+	/bin/bash
+
 	echoL "Installing ------- ( ) ..."
 	sleep 2
 
@@ -494,7 +507,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldExpat	na.sh	Undefined.
 bldInetutils	na.sh	Undefined.
 bldLess	na.sh	Undefined.
 bldPerl	na.sh	Undefined.
