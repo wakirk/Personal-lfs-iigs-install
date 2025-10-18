@@ -487,7 +487,16 @@ bldOpenSSL() {
 	return 1
 }
 
-bldLibelffromElfutils() { :; }
+bldLibelffromElfutils() {
+	echoL "Libelf from Elfutils (0.193)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibffi() { :; }
 bldPython() { :; }
 bldFlitCore() { :; }
@@ -579,7 +588,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldLibelffromElfutils	na.sh	Undefined.
 bldLibffi	na.sh	Undefined.
 bldPython	na.sh	Undefined.
 bldFlitCore	na.sh	Undefined.
