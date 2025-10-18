@@ -26,3 +26,4 @@ bldLibxcrypt	*
 bldShadow	*
 bldGCC	*
 bldNcurses	*
+bldSed	*
