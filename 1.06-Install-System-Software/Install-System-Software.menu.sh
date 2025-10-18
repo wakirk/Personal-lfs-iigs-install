@@ -327,7 +327,16 @@ bldPsmisc() {
 	return 1
 }
 
-bldGettext() { :; }
+bldGettext() {
+	echoL "Gettext (0.26)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldBison() { :; }
 bldGrep() { :; }
 bldBash() { :; }
@@ -434,7 +443,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldGettext	na.sh	Undefined.
 bldBison	na.sh	Undefined.
 bldGrep	na.sh	Undefined.
 bldBash	na.sh	Undefined.
