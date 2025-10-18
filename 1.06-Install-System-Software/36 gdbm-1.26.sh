@@ -10,29 +10,38 @@ main () {
 	# MD5 sum: aaa600665bc89e2febb3c7bd90679115
 	echoR "System Software"
 
-	echoL "Downloading ------- ( ) ..."
+	echoL "Downloading GDBM (1.26)..."
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
-	../bash/Download.sh https://*.tar.xz *.tar.xz
-	cp ../Packages/-.tar.xz /sources
+	../bash/Download.sh https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz gdbm-1.26.tar.gz
+	cp ../Packages/gdbm-1.26.tar.gz /sources
 
-	echoL "Unpack ------- ( ) ..."
+	echoL "Unpack GDBM (1.26)..."
 	sleep 2
 	cd /sources
-	rm -fR
-	tar -vxsf
-	cd 
-
-	echoL "Building ------- ( ) ..."
+	rm -fR gdbm-1.26
+	tar -vxsf gdbm-1.26.tar.gz
+	cd gdbm-1.26
+	
+	echoL "Building GDBM (1.26)..."
 	sleep 2
+	./configure --prefix=/usr \
+		--disable-static      \
+		--enable-libgdbm-compat
+	make
 
-	echoL "Installing ------- ( ) ..."
+	echoL "Testing GDBM (1.26)..."
 	sleep 2
+	make check
+
+	echoL "Installing GDBM (1.26)..."
+	sleep 2
+	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR 
+	rm -fR gdbm-1.26
 
 	echoL "Exiting..."
 }
@@ -41,29 +50,3 @@ lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
-
-
-
-
-
-.38.1. Installation of GDBM
-Prepare GDBM for compilation:
-
-./configure --prefix=/usr    \
-            --disable-static \
-            --enable-libgdbm-compat
-The meaning of the configure option:
-
---enable-libgdbm-compat
-This switch enables building the libgdbm compatibility library. Some packages outside of LFS may require the older DBM routines it provides.
-
-Compile the package:
-
-make
-To test the results, issue:
-
-make check
-Install the package:
-
-make install
-8.38.2. Contents of GDBM
