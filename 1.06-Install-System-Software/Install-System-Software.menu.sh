@@ -377,7 +377,16 @@ bldLibtool() {
 	return 1
 }
 
-bldGDBM() { :; }
+bldGDBM() {
+	echoL "GDBM (1.26)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldGperf() { :; }
 bldExpat() { :; }
 bldInetutils() { :; }
@@ -476,7 +485,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldGDBM	na.sh	Undefined.
 bldGperf	na.sh	Undefined.
 bldExpat	na.sh	Undefined.
 bldInetutils	na.sh	Undefined.
