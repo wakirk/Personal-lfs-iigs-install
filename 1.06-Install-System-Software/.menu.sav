@@ -35,3 +35,4 @@ bldBash	*
 bldLibtool	*
 bldGDBM	*
 bldGperf	*
+bldExpat	*
