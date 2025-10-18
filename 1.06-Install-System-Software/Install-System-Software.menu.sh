@@ -357,7 +357,16 @@ bldGrep() {
 	return 1
 }
 
-bldBash() { :; }
+bldBash() {
+	echoL "Bash (5.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibtool() { :; }
 bldGDBM() { :; }
 bldGperf() { :; }
@@ -441,12 +450,9 @@ main () {
 
 	echoL "Building ------- ( ) ..."
 	sleep 2
-	./configure 
-	make
 
 	echoL "Installing ------- ( ) ..."
 	sleep 2
-	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
@@ -461,7 +467,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldBash	na.sh	Undefined.
 bldLibtool	na.sh	Undefined.
 bldGDBM	na.sh	Undefined.
 bldGperf	na.sh	Undefined.
