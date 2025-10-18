@@ -41,3 +41,4 @@ bldLess	*
 bldPerl	*
 bldXMLParser	*
 bldIntltool	*
+bldAutoconf	*
