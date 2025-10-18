@@ -577,7 +577,16 @@ bldMeson() {
 	return 1
 }
 
-bldKmod() { :; }
+bldKmod() {
+	echoL "Kmod (34.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldCoreutils() { :; }
 bldDiffutils() { :; }
 bldGawk() { :; }
@@ -660,7 +669,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldKmod	na.sh	Undefined.
 bldCoreutils	na.sh	Undefined.
 bldDiffutils	na.sh	Undefined.
 bldGawk	na.sh	Undefined.
