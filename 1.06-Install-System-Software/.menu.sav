@@ -54,3 +54,4 @@ bldSetuptools	*
 bldNinja	*
 bldMeson	*
 bldKmod	*
+bldCoreutils	*
