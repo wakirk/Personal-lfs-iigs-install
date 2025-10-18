@@ -517,7 +517,16 @@ bldPython() {
 	return 1
 }
 
-bldFlitCore() { :; }
+bldFlitCore() {
+	echoL "Flit-core (3.12.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldPackaging() { :; }
 bldWheel() { :; }
 bldSetuptools() { :; }
@@ -606,7 +615,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldFlitCore	na.sh	Undefined.
 bldPackaging	na.sh	Undefined.
 bldWheel	na.sh	Undefined.
 bldSetuptools	na.sh	Undefined.
