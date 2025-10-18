@@ -46,3 +46,5 @@ bldAutomake	*
 bldOpenSSL	*
 bldLibelffromElfutils	*
 bldLibffi	*
+bldPython	*
+bldFlitCore	*
