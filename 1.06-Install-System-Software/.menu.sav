@@ -39,3 +39,5 @@ bldExpat	*
 bldInetutils	*
 bldLess	*
 bldPerl	*
+bldXMLParser	*
+bldIntltool	*
