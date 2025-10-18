@@ -557,7 +557,16 @@ bldSetuptools() {
 	return 1
 }
 
-bldNinja() { :; }
+bldNinja() {
+	echoL "Ninja (1.13.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldMeson() { :; }
 bldKmod() { :; }
 bldCoreutils() { :; }
@@ -642,7 +651,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldNinja	na.sh	Undefined.
 bldMeson	na.sh	Undefined.
 bldKmod	na.sh	Undefined.
 bldCoreutils	na.sh	Undefined.
