@@ -567,7 +567,16 @@ bldNinja() {
 	return 1
 }
 
-bldMeson() { :; }
+bldMeson() {
+	echoL "Meson (1.8.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldKmod() { :; }
 bldCoreutils() { :; }
 bldDiffutils() { :; }
@@ -651,7 +660,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldMeson	na.sh	Undefined.
 bldKmod	na.sh	Undefined.
 bldCoreutils	na.sh	Undefined.
 bldDiffutils	na.sh	Undefined.
