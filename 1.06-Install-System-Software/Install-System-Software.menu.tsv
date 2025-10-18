@@ -43,5 +43,9 @@ bldXMLParser	42 XML-Parser-2.47.sh	XML::Parser (2.47)
 bldIntltool	43 intltool-0.51.0.sh	Intltool (0.51.0)
 bldAutoconf	44 autoconf-2.72.sh	Autoconf (2.72)
 bldAutomake	45 automake-1.18.1.sh	Automake (1.18.1)
+<<<<<<< Updated upstream
 bldOpenSSL	46 openssl-3.5.2.sh	OpenSSL (3.5.2)
 bldLibelffromElfutils	47 elfutils-0.193.sh	Libelf from Elfutils (0.193)
+=======
+bldOpenSSL	46 openssl-3.6.0.sh	OpenSSL (3.6.0)
+>>>>>>> Stashed changes

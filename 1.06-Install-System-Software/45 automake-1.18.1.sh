@@ -34,8 +34,7 @@ main () {
 	# in individual tests. To test the results, issue:
 	make -j$(($(nproc)>4?$(nproc):4)) check
 	# Replace $((...)) with the number of logical cores you want to use if you don't want to use all.
-	/bin/bash
-	
+
 	echoL "Installing Automake (1.18.1)..."
 	sleep 2
 	make install

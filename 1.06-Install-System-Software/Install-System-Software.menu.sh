@@ -478,7 +478,7 @@ bldAutomake() {
 }
 
 bldOpenSSL() {
-	echoL "OpenSSL (3.5.2)"
+	echoL "OpenSSL (3.6.0)"
 	echoR "Install System Software"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
