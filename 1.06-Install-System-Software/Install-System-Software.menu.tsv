@@ -45,4 +45,7 @@ bldAutoconf	44 autoconf-2.72.sh	Autoconf (2.72)
 bldAutomake	45 automake-1.18.1.sh	Automake (1.18.1)
 bldOpenSSL	46 openssl-3.6.0.sh	OpenSSL (3.6.0)
 bldLibelffromElfutils	47 elfutils-0.193.sh	Libelf from Elfutils (0.193)
+<<<<<<< Updated upstream
 bldLibffi	48 libffi-3.5.2.sh	Libffi (3.5.2)
+=======
+>>>>>>> Stashed changes
