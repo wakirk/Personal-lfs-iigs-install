@@ -4,10 +4,10 @@ source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-  Psmisc (23.7) - 423 KB:
-  Home page: https://gitlab.com/psmisc/psmisc
-  Download: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz
-  MD5 sum: 53eae841735189a896d614cba440eb10
+	# Psmisc (23.7) - 423 KB:
+	# Home page: https://gitlab.com/psmisc/psmisc
+	# Download: https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz
+	# MD5 sum: 53eae841735189a896d614cba440eb10
 	echoR "System Software"
 
 	echoL "Downloading Psmisc (23.7)..."
@@ -25,17 +25,16 @@ main () {
 
 	echoL "Building Psmisc (23.7)..."
 	sleep 2
-  ./configure --prefix=/usr
-  make
+	./configure --prefix=/usr
+	make
 
 	echoL "Testing Psmisc (23.7)..."
 	sleep 2
-  make check
-  /bin/bash
+	make check
 
 	echoL "Installing Psmisc (23.7)..."
 	sleep 2
-  make install
+	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
