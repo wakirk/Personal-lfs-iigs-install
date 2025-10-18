@@ -37,3 +37,5 @@ bldGDBM	*
 bldGperf	*
 bldExpat	*
 bldInetutils	*
+bldLess	*
+bldPerl	*
