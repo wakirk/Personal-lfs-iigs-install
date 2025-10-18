@@ -30,3 +30,5 @@ bldSed	*
 bldPsmisc	*
 bldGettext	*
 bldBison	*
+bldGrep	*
+bldBash	*
