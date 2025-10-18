@@ -477,7 +477,16 @@ bldAutomake() {
 	return 1
 }
 
-bldOpenSSL() { :; }
+bldOpenSSL() {
+	echoL "OpenSSL (3.5.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibelffromElfutils() { :; }
 bldLibffi() { :; }
 bldPython() { :; }
@@ -570,7 +579,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldOpenSSL	na.sh	Undefined.
 bldLibelffromElfutils	na.sh	Undefined.
 bldLibffi	na.sh	Undefined.
 bldPython	na.sh	Undefined.
