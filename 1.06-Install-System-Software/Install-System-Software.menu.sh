@@ -457,7 +457,16 @@ bldIntltool() {
 	return 1
 }
 
-bldAutoconf() { :; }
+bldAutoconf() {
+	echoL "Autoconf (2.72)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldAutomake() { :; }
 bldOpenSSL() { :; }
 bldLibelffromElfutils() { :; }
@@ -552,7 +561,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldAutoconf	na.sh	Undefined.
 bldAutomake	na.sh	Undefined.
 bldOpenSSL	na.sh	Undefined.
 bldLibelffromElfutils	na.sh	Undefined.
