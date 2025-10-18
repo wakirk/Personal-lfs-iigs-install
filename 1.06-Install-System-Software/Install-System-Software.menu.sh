@@ -387,7 +387,16 @@ bldGDBM() {
 	return 1
 }
 
-bldGperf() { :; }
+bldGperf() {
+	echoL "Gperf (3.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldExpat() { :; }
 bldInetutils() { :; }
 bldLess() { :; }
@@ -485,7 +494,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldGperf	na.sh	Undefined.
 bldExpat	na.sh	Undefined.
 bldInetutils	na.sh	Undefined.
 bldLess	na.sh	Undefined.
