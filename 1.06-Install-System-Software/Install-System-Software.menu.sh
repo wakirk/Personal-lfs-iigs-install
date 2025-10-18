@@ -507,7 +507,16 @@ bldLibffi() {
 	return 1
 }
 
-bldPython() { :; }
+bldPython() {
+	echoL "Python (3.13.7)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldFlitCore() { :; }
 bldPackaging() { :; }
 bldWheel() { :; }
@@ -597,7 +606,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldPython	na.sh	Undefined.
 bldFlitCore	na.sh	Undefined.
 bldPackaging	na.sh	Undefined.
 bldWheel	na.sh	Undefined.
