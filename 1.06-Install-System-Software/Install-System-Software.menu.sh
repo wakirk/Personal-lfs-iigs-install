@@ -417,7 +417,16 @@ bldInetutils() {
 	return 1
 }
 
-bldLess() { :; }
+bldLess() {
+	echoL "Less (679)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldPerl() { :; }
 bldXMLParser() { :; }
 bldIntltool() { :; }
@@ -516,7 +525,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldLess	na.sh	Undefined.
 bldPerl	na.sh	Undefined.
 bldXMLParser	na.sh	Undefined.
 bldIntltool	na.sh	Undefined.
