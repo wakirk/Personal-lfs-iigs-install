@@ -407,7 +407,16 @@ bldExpat() {
 	return 1
 }
 
-bldInetutils() { :; }
+bldInetutils() {
+	echoL "Inetutils (2.6)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLess() { :; }
 bldPerl() { :; }
 bldXMLParser() { :; }
@@ -507,7 +516,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldInetutils	na.sh	Undefined.
 bldLess	na.sh	Undefined.
 bldPerl	na.sh	Undefined.
 bldXMLParser	na.sh	Undefined.
