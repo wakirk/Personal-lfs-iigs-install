@@ -44,3 +44,4 @@ bldIntltool	*
 bldAutoconf	*
 bldAutomake	*
 bldOpenSSL	*
+bldLibelffromElfutils	*

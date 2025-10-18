@@ -14,7 +14,7 @@ main () {
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
 	../bash/Download.sh https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz libffi-3.5.2.tar.gz
-	cp ../Packages/-.tar.xz /sources
+	cp ../Packages/libffi-3.5.2.tar.gz /sources
 
 	echoL "Unpack Libffi (3.5.2)..."
 	sleep 2
@@ -25,7 +25,6 @@ main () {
 
 	echoL "Building Libffi (3.5.2)..."
 	sleep 2
-
 	# [Note] Note
 	# Like GMP, Libffi builds with optimizations specific to the processor in use. If building for another system,
 	# change the value of the --with-gcc-arch= parameter in the following command to an architecture name
@@ -41,7 +40,6 @@ main () {
 	echoL "Testing Libffi (3.5.2)..."
 	sleep 2
 	make check
-	/bin/bash
 
 	echoL "Installing Libffi (3.5.2)..."
 	sleep 2
