@@ -1,18 +1,13 @@
-GDBM (1.26) - 1,198 KB:
-Home page: https://www.gnu.org/software/gdbm/
-Download: https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz
-MD5 sum: aaa600665bc89e2febb3c7bd90679115
-
-/bin/bash
+#!/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-	Utils (5.8.1) - 1,428 KB:
-	Home page: https://tukaani.org/xz
-	Download: https: .tar.xz
-	MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
+	# GDBM (1.26) - 1,198 KB:
+	# Home page: https://www.gnu.org/software/gdbm/
+	# Download: https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz
+	# MD5 sum: aaa600665bc89e2febb3c7bd90679115
 	echoR "System Software"
 
 	echoL "Downloading ------- ( ) ..."
