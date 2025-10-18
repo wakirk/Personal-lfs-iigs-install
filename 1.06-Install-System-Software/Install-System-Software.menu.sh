@@ -597,7 +597,16 @@ bldCoreutils() {
 	return 1
 }
 
-bldDiffutils() { :; }
+bldDiffutils() {
+	echoL "Diffutils (3.12)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldGawk() { :; }
 bldFindutils() { :; }
 bldGroff() { :; }
@@ -678,7 +687,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldDiffutils	na.sh	Undefined.
 bldGawk	na.sh	Undefined.
 bldFindutils	na.sh	Undefined.
 bldGroff	na.sh	Undefined.
