@@ -467,7 +467,16 @@ bldAutoconf() {
 	return 1
 }
 
-bldAutomake() { :; }
+bldAutomake() {
+	echoL "Automake (1.18.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldOpenSSL() { :; }
 bldLibelffromElfutils() { :; }
 bldLibffi() { :; }
@@ -561,7 +570,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldAutomake	na.sh	Undefined.
 bldOpenSSL	na.sh	Undefined.
 bldLibelffromElfutils	na.sh	Undefined.
 bldLibffi	na.sh	Undefined.
