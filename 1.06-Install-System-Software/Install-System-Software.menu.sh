@@ -427,7 +427,16 @@ bldLess() {
 	return 1
 }
 
-bldPerl() { :; }
+bldPerl() {
+	echoL "Perl (5.42.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldXMLParser() { :; }
 bldIntltool() { :; }
 bldAutoconf() { :; }
@@ -525,7 +534,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldPerl	na.sh	Undefined.
 bldXMLParser	na.sh	Undefined.
 bldIntltool	na.sh	Undefined.
 bldAutoconf	na.sh	Undefined.
