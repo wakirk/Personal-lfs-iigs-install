@@ -547,7 +547,16 @@ bldWheel() {
 	return 1
 }
 
-bldSetuptools() { :; }
+bldSetuptools() {
+	echoL "Setuptools (80.9.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldNinja() { :; }
 bldMeson() { :; }
 bldKmod() { :; }
@@ -633,7 +642,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldSetuptools	na.sh	Undefined.
 bldNinja	na.sh	Undefined.
 bldMeson	na.sh	Undefined.
 bldKmod	na.sh	Undefined.
