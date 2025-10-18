@@ -34,3 +34,4 @@ bldGrep	*
 bldBash	*
 bldLibtool	*
 bldGDBM	*
+bldGperf	*
