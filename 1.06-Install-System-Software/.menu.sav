@@ -45,3 +45,4 @@ bldAutoconf	*
 bldAutomake	*
 bldOpenSSL	*
 bldLibelffromElfutils	*
+bldLibffi	*
