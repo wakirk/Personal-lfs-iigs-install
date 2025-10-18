@@ -307,7 +307,16 @@ bldNcurses() {
 	return 1
 }
 
-bldSed() { :; }
+bldSed() {
+	echoL "Sed (4.9)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldPsmisc() { :; }
 bldGettext() { :; }
 bldBison() { :; }
@@ -416,7 +425,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldSed	na.sh	Undefined.
 bldPsmisc	na.sh	Undefined.
 bldGettext	na.sh	Undefined.
 bldBison	na.sh	Undefined.
