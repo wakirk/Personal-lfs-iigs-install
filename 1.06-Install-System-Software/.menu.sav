@@ -49,3 +49,5 @@ bldLibffi	*
 bldPython	*
 bldFlitCore	*
 bldPackaging	*
+bldWheel	*
+bldSetuptools	*
