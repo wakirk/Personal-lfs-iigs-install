@@ -527,7 +527,7 @@ bldFlitCore() {
 	return 1
 }
 
-bldPackaging() { :; }
+bldPackaging() {
 	echoL "Packaging (25.0)"
 	echoR "Install System Software"
 	chroot_entry
