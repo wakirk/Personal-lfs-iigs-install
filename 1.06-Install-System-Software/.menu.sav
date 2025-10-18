@@ -33,3 +33,4 @@ bldBison	*
 bldGrep	*
 bldBash	*
 bldLibtool	*
+bldGDBM	*
