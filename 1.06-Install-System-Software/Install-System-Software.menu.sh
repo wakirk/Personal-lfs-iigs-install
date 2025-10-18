@@ -447,7 +447,16 @@ bldXMLParser() {
 	return 1
 }
 
-bldIntltool() { :; }
+bldIntltool() {
+	echoL "Intltool (0.51.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldAutoconf() { :; }
 bldAutomake() { :; }
 bldOpenSSL() { :; }
@@ -543,7 +552,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldIntltool	na.sh	Undefined.
 bldAutoconf	na.sh	Undefined.
 bldAutomake	na.sh	Undefined.
 bldOpenSSL	na.sh	Undefined.
