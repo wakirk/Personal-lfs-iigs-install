@@ -1,63 +1,46 @@
-Libtool (2.5.4) - 1,033 KB:
-Home page: https://www.gnu.org/software/libtool/
-Download: https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz
-MD5 sum: 22e0a29df8af5fdde276ea3a7d351d30
-
-
-8.37.1. Installation of Libtool
-Prepare Libtool for compilation:
-
-./configure --prefix=/usr
-Compile the package:
-
-make
-To test the results, issue:
-
-make check
-Install the package:
-
-make install
-Remove a static library only useful for the test suite:
-
-rm -fv /usr/lib/libltdl.a
-8.37.2. Contents of Libtool
-
-
-/bin/bash
+#!/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-	Utils (5.8.1) - 1,428 KB:
-	Home page: https://tukaani.org/xz
-	Download: https: .tar.xz
-	MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
+	# Libtool (2.5.4) - 1,033 KB:
+	# Home page: https://www.gnu.org/software/libtool/
+	# Download: https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz
+	# MD5 sum: 22e0a29df8af5fdde276ea3a7d351d30
 	echoR "System Software"
 
-	echoL "Downloading ------- ( ) ..."
+	echoL "Downloading Libtool (2.5.4)..."
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
-	../bash/Download.sh https://*.tar.xz *.tar.xz
-	cp ../Packages/-.tar.xz /sources
+	../bash/Download.sh https://ftp.gnu.org/gnu/libtool/libtool-2.5.4.tar.xz libtool-2.5.4.tar.xz
+	cp ../Packages/libtool-2.5.4.tar.xz /sources
 
-	echoL "Unpack ------- ( ) ..."
+	echoL "Unpack Libtool (2.5.4)..."
 	sleep 2
 	cd /sources
-	rm -fR
-	tar -vxsf
-	cd 
+	rm -fR libtool-2.5.4
+	tar -vxsf libtool-2.5.4.tar.xz
+	cd libtool-2.5.4
 
-	echoL "Building ------- ( ) ..."
+	echoL "Building Libtool (2.5.4)..."
 	sleep 2
+	./configure --prefix=/usr
+	make
 
-	echoL "Installing ------- ( ) ..."
+	echoL "Testing Libtool (2.5.4)..."
 	sleep 2
+	make check
+
+	echoL "Installing Libtool (2.5.4)..."
+	sleep 2
+	make install
+	rm -fv /usr/lib/libltdl.a
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR 
+	rm -fR libtool-2.5.4
 
 	echoL "Exiting..."
 }
@@ -66,9 +49,3 @@ lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
-
-
-
-
-
-
