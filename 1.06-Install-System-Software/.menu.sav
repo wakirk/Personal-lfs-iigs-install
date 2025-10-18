@@ -28,3 +28,5 @@ bldGCC	*
 bldNcurses	*
 bldSed	*
 bldPsmisc	*
+bldGettext	*
+bldBison	*

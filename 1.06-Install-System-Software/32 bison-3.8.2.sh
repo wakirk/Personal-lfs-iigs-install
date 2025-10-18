@@ -4,10 +4,10 @@ source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-Bison (3.8.2) - 2,752 KB:
-Home page: https://www.gnu.org/software/bison/
-Download: https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz
-MD5 sum: c28f119f405a2304ff0a7ccdcc629713
+	# Bison (3.8.2) - 2,752 KB:
+	# Home page: https://www.gnu.org/software/bison/
+	# Download: https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.xz
+	# MD5 sum: c28f119f405a2304ff0a7ccdcc629713
 	echoR "System Software"
 
 	echoL "Downloading Bison (3.8.2)..."
@@ -25,17 +25,16 @@ MD5 sum: c28f119f405a2304ff0a7ccdcc629713
 
 	echoL "Building Bison (3.8.2)..."
 	sleep 2
-  ./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.8.2
-make
+	./configure --prefix=/usr --docdir=/usr/share/doc/bison-3.8.2
+	make
 
 	echoL "Testing Bison (3.8.2)..."
 	sleep 2
-make check
-/bin/bash
+	make check
 
 	echoL "Installing Bison (3.8.2)..."
 	sleep 2
-make install
+	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
