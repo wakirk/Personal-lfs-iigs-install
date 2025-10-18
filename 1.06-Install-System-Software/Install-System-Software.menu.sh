@@ -437,7 +437,16 @@ bldPerl() {
 	return 1
 }
 
-bldXMLParser() { :; }
+bldXMLParser() {
+	echoL "XML::Parser (2.47)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldIntltool() { :; }
 bldAutoconf() { :; }
 bldAutomake() { :; }
@@ -534,7 +543,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldXMLParser	na.sh	Undefined.
 bldIntltool	na.sh	Undefined.
 bldAutoconf	na.sh	Undefined.
 bldAutomake	na.sh	Undefined.
