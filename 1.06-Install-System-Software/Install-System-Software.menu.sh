@@ -667,7 +667,16 @@ bldIPRoute2() {
 	return 1
 }
 
-bldKbd() { :; }
+bldKbd() {
+	echoL "Kbd (2.8.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldLibpipeline() { :; }
 bldMake() { :; }
 bldPatch() { :; }
@@ -741,7 +750,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldKbd	na.sh	Undefined.
 bldLibpipeline	na.sh	Undefined.
 bldMake	na.sh	Undefined.
 bldPatch	na.sh	Undefined.
