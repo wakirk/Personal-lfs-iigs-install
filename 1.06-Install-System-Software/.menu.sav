@@ -56,3 +56,4 @@ bldMeson	*
 bldKmod	*
 bldCoreutils	*
 bldDiffutils	*
+bldGawk	*

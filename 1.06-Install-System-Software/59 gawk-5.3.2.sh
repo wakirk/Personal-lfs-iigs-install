@@ -33,7 +33,6 @@ main () {
 	sleep 2
 	chown -R tester .
 	su tester -c "PATH=$PATH make check"
-	/bin/bash
 
 	echoL "Installing Gawk (5.3.2)..."
 	sleep 2
