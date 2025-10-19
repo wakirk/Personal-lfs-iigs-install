@@ -647,7 +647,16 @@ bldGRUB() {
 	return 1
 }
 
-bldGzip() { :; }
+bldGzip() {
+	echoL "Gzip (1.14)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldIPRoute2() { :; }
 bldKbd() { :; }
 bldLibpipeline() { :; }
@@ -723,8 +732,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldGRUB	na.sh	Undefined.
-bldGzip	na.sh	Undefined.
 bldIPRoute2	na.sh	Undefined.
 bldKbd	na.sh	Undefined.
 bldLibpipeline	na.sh	Undefined.
