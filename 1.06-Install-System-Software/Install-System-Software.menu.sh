@@ -637,7 +637,16 @@ bldGroff() {
 	return 1
 }
 
-bldGRUB() { :; }
+bldGRUB() {
+	echoL "GRUB (2.12) for EFI (Minimal)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldGzip() { :; }
 bldIPRoute2() { :; }
 bldKbd() { :; }
