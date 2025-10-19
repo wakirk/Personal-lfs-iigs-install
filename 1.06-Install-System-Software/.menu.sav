@@ -58,3 +58,4 @@ bldCoreutils	*
 bldDiffutils	*
 bldGawk	*
 bldFindutils	*
+bldGroff	*
