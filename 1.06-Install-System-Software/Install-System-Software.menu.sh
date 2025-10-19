@@ -617,7 +617,7 @@ bldGawk() {
 	return 1
 }
 
-bldFindutils() { :; }
+bldFindutils() {
 	echoL "Findutils (4.10.0)"
 	echoR "Install System Software"
 	chroot_entry

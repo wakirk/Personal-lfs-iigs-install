@@ -57,3 +57,4 @@ bldKmod	*
 bldCoreutils	*
 bldDiffutils	*
 bldGawk	*
+bldFindutils	*
