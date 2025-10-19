@@ -657,7 +657,16 @@ bldGzip() {
 	return 1
 }
 
-bldIPRoute2() { :; }
+bldIPRoute2() {
+	echoL "IPRoute2 (6.16.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldKbd() { :; }
 bldLibpipeline() { :; }
 bldMake() { :; }
@@ -732,7 +741,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldIPRoute2	na.sh	Undefined.
 bldKbd	na.sh	Undefined.
 bldLibpipeline	na.sh	Undefined.
 bldMake	na.sh	Undefined.
