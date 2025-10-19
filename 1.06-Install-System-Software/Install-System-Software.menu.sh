@@ -618,6 +618,15 @@ bldGawk() {
 }
 
 bldFindutils() { :; }
+	echoL "Findutils (4.10.0)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldGroff() { :; }
 bldGRUB() { :; }
 bldGzip() { :; }
@@ -696,7 +705,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldFindutils	na.sh	Undefined.
 bldGroff	na.sh	Undefined.
 bldGRUB	na.sh	Undefined.
 bldGzip	na.sh	Undefined.
