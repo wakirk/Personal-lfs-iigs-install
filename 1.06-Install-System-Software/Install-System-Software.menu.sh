@@ -787,7 +787,16 @@ bldProcpsng() {
 	return 1
 }
 
-bldUtillinux() { :; }
+bldUtillinux() {
+	echoL "Util-linux (2.41.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldE2fsprogs() { :; }
 bldSysklogd() { :; }
 bldSysVinit() { :; }
@@ -849,7 +858,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldUtillinux	na.sh	Undefined.
 bldE2fsprogs	na.sh	Undefined.
 bldSysklogd	na.sh	Undefined.
 bldSysVinit	na.sh	Undefined.
