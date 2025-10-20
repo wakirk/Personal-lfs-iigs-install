@@ -66,3 +66,5 @@ bldKbd	*
 bldLibpipeline	*
 bldMake	*
 bldPatch	*
+bldTar	*
+bldTexinfo	*
