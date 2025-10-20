@@ -1,50 +1,48 @@
-SysVinit (3.14) - 236 KB:
-Home page: https://savannah.nongnu.org/projects/sysvinit
-Download: https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz
-MD5 sum: bc6890b975d19dc9db42d0c7364dd092
-
-
-
-
-/bin/bash
+#!/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 
 main () {
 
-	Utils (5.8.1) - 1,428 KB:
-	Home page: https://tukaani.org/xz
-	Download: https: .tar.xz
-	MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
+	# SysVinit (3.14) - 236 KB:
+	# Home page: https://savannah.nongnu.org/projects/sysvinit
+	# Download: https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz
+	# MD5 sum: bc6890b975d19dc9db42d0c7364dd092
+
+	# SysVinit Consolidated Patch - 2.5 KB:
+	# Download: https://www.linuxfromscratch.org/patches/lfs/12.4/sysvinit-3.14-consolidated-1.patch
+	# MD5 sum: 3af8fd8e13cad481eeeaa48be4247445
 	echoR "System Software"
 
-	echoL "Downloading ------- ( ) ..."
+	echoL "Downloading SysVinit (3.14)..."
 	sleep 2
 	cd "/root/lfs/1.06-Install-System-Software"
-	../bash/Download.sh https://*.tar.xz *.tar.xz
-	cp ../Packages/-.tar.xz /sources
+	../bash/Download.sh https://github.com/slicer69/sysvinit/releases/download/3.14/sysvinit-3.14.tar.xz sysvinit-3.14.tar.xz
+	cp ../Packages/sysvinit-3.14.tar.xz /sources
 
-	echoL "Unpack ------- ( ) ..."
+	../bash/Download.sh https://www.linuxfromscratch.org/patches/lfs/12.4/sysvinit-3.14-consolidated-1.patch sysvinit-3.14-consolidated-1.patch
+	cp ../Packages/sysvinit-3.14-consolidated-1.patch /sources
+
+	echoL "Unpack SysVinit (3.14)..."
 	sleep 2
 	cd /sources
-	rm -fR
-	tar -vxsf
-	cd 
+	rm -fR sysvinit-3.14
+	tar -vxsf sysvinit-3.14.tar.xz
+	cd sysvinit-3.14
 
-	echoL "Building ------- ( ) ..."
+	echoL "Building SysVinit (3.14)..."
 	sleep 2
+	patch -Np1 -i ../sysvinit-3.14-consolidated-1.patch
+	make
 
-	echoL "Testing ------- ( ) ..."
+	echoL "Installing SysVinit (3.14)..."
 	sleep 2
-	/bin/bash
-
-	echoL "Installing ------- ( ) ..."
-	sleep 2
+	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR 
+	rm -fR sysvinit-3.14
 
 	echoL "Exiting..."
 }
@@ -53,28 +51,3 @@ lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
-
-
-
-
-
-
-
-
-
-
-
-8.82.1. Installation of SysVinit
-First, apply a patch that removes several programs installed by other packages, clarifies a message, and fixes a compiler warning:
-
-patch -Np1 -i ../sysvinit-3.14-consolidated-1.patch
-Compile the package:
-
-make
-This package does not come with a test suite.
-
-Install the package:
-
-make install
-8.82.2. Contents of SysVinit
-

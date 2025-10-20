@@ -76,3 +76,5 @@ bldManDB	*
 bldProcpsng	*
 bldUtillinux	*
 bldE2fsprogs	*
+bldSysklogd	*
+bldSysVinit	*
