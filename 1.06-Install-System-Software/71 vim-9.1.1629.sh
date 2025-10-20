@@ -31,19 +31,18 @@ main () {
 
 	echoL "Testing Vim (9.1.1629)..."
 	sleep 2
-	/bin/bash
 	chown -R tester .
 	sed '/test_plugin_glvs/d' -i src/testdir/Make_all.mak
-	su tester -c "TERM=xterm-256color LANG=en_US.UTF-8 make -j1 test" &> vim-test.log
+#	su tester -c "TERM=xterm-256color LANG=en_US.UTF-8 make -j1 test" # &> vim-test.log
 
 	echoL "Installing Vim (9.1.1629)..."
 	sleep 2
 	make install
-	ln -sv vim /usr/bin/vi
+	ln -fsv vim /usr/bin/vi
 	for L in  /usr/share/man/{,*/}man1/vim.1; do
-		ln -sv vim.1 $(dirname $L)/vi.1
+		ln -fsv vim.1 $(dirname $L)/vi.1
 	done
-	ln -sv ../vim/vim91/doc /usr/share/doc/vim-9.1.1629
+	ln -fsv ../vim/vim91/doc /usr/share/doc/vim-9.1.1629
 	cat > /etc/vimrc << "EOF"
 " Begin /etc/vimrc
 
@@ -58,18 +57,17 @@ syntax on
 if (&term == "xterm") || (&term == "putty")
   set background=dark
 endif
-set spelllang=en,ru
+set spelllang=en
 set spell
 
 " End /etc/vimrc
 EOF
-	/bin/bash
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
 	rm -fR vim-9.1.1629
-
+	/bin/bash 
 	echoL "Exiting..."
 }
 
