@@ -777,7 +777,16 @@ bldManDB() {
 	return 1
 }
 
-bldProcpsng() { :; }
+bldProcpsng() {
+	echoL "Procps (4.0.5)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldUtillinux() { :; }
 bldE2fsprogs() { :; }
 bldSysklogd() { :; }
@@ -840,7 +849,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldProcpsng	na.sh	Undefined.
 bldUtillinux	na.sh	Undefined.
 bldE2fsprogs	na.sh	Undefined.
 bldSysklogd	na.sh	Undefined.
