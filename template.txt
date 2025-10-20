@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 https://chatgpt.com/g/g-p-68bf3444284c8191937ab3e8dcd8a503-iigs-linux-from-scratch-build/project
 https://www.linuxfromscratch.org/lfs/view/stable/chapter03/packages.html
 https://github.com/wakirk/Personal-lfs-iigs-install/tree/434aeed03f038aff88ac33cee6e32a63b904570d
