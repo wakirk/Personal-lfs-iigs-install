@@ -727,7 +727,16 @@ bldTexinfo() {
 	return 1
 }
 
-bldVim() { :; }
+bldVim() {
+	echoL "Vim (9.1.1629)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldMarkupSafe() { :; }
 bldJinja() { :; }
 bldUdevfromSystemd() { :; }
@@ -795,7 +804,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldVim	na.sh	Undefined.
 bldMarkupSafe	na.sh	Undefined.
 bldJinja	na.sh	Undefined.
 bldUdevfromSystemd	na.sh	Undefined.
