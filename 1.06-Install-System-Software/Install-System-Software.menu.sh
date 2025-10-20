@@ -737,7 +737,16 @@ bldVim() {
 	return 1
 }
 
-bldMarkupSafe() { :; }
+bldMarkupSafe() {
+	echoL "MarkupSafe (3.0.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldJinja() { :; }
 bldUdevfromSystemd() { :; }
 bldManDB() { :; }
@@ -804,7 +813,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldMarkupSafe	na.sh	Undefined.
 bldJinja	na.sh	Undefined.
 bldUdevfromSystemd	na.sh	Undefined.
 bldManDB	na.sh	Undefined.
