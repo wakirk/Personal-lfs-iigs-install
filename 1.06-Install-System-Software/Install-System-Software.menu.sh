@@ -717,7 +717,16 @@ bldTar() {
 	return 1
 }
 
-bldTexinfo() { :; }
+bldTexinfo() {
+	echoL "Texinfo (7.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldVim() { :; }
 bldMarkupSafe() { :; }
 bldJinja() { :; }
@@ -786,7 +795,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldTexinfo	na.sh	Undefined.
 bldVim	na.sh	Undefined.
 bldMarkupSafe	na.sh	Undefined.
 bldJinja	na.sh	Undefined.
