@@ -767,7 +767,16 @@ bldUdevfromSystemd() {
 	return 1
 }
 
-bldManDB() { :; }
+bldManDB() {
+	echoL "Man-DB (2.13.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldProcpsng() { :; }
 bldUtillinux() { :; }
 bldE2fsprogs() { :; }
@@ -831,7 +840,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldManDB	na.sh	Undefined.
 bldProcpsng	na.sh	Undefined.
 bldUtillinux	na.sh	Undefined.
 bldE2fsprogs	na.sh	Undefined.
