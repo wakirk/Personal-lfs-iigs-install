@@ -817,7 +817,15 @@ bldSysklogd() {
 	return 1
 }
 
-bldSysVinit() { :; }
+bldSysVinit() {
+	echoL "SysVinit (3.14)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
 
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
@@ -875,6 +883,3 @@ lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
-
-bldSysVinit	na.sh	Undefined.
-
