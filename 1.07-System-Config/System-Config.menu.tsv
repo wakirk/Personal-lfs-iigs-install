@@ -1,3 +1,4 @@
 stripping	00-stripping.sh	Post Build Stripping
 postCleanup	01-Post Cleanup.sh	Post Software Cleanup
 lfsbootscripts	02-lfsBootScripts.sh	LFS BootScripts
+linux616	03 linux-6.16.1.sh	Linux (6.16.1)
