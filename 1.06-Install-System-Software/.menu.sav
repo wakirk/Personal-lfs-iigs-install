@@ -62,3 +62,5 @@ bldGroff	*
 bldGRUB	*
 bldGzip	*
 bldIPRoute2	*
+bldKbd	*
+bldLibpipeline	*
