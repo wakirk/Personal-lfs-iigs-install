@@ -747,7 +747,16 @@ bldMarkupSafe() {
 	return 1
 }
 
-bldJinja() { :; }
+bldJinja() {
+	echoL "Jinja2 (3.1.6)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldUdevfromSystemd() { :; }
 bldManDB() { :; }
 bldProcpsng() { :; }
@@ -813,7 +822,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldJinja	na.sh	Undefined.
 bldUdevfromSystemd	na.sh	Undefined.
 bldManDB	na.sh	Undefined.
 bldProcpsng	na.sh	Undefined.
