@@ -807,7 +807,16 @@ bldE2fsprogs() {
 	return 1
 }
 
-bldSysklogd() { :; }
+bldSysklogd() {
+	echoL "Sysklogd (2.7.2)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldSysVinit() { :; }
 
 lfs_identity
@@ -867,6 +876,5 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldSysklogd	na.sh	Undefined.
 bldSysVinit	na.sh	Undefined.
 
