@@ -797,7 +797,16 @@ bldUtillinux() {
 	return 1
 }
 
-bldE2fsprogs() { :; }
+bldE2fsprogs() {
+	echoL "E2fsprogs (1.47.3)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldSysklogd() { :; }
 bldSysVinit() { :; }
 
@@ -858,7 +867,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldE2fsprogs	na.sh	Undefined.
 bldSysklogd	na.sh	Undefined.
 bldSysVinit	na.sh	Undefined.
 
