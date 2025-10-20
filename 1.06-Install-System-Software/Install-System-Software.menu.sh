@@ -687,7 +687,16 @@ bldLibpipeline() {
 	return 1
 }
 
-bldMake() { :; }
+bldMake() {
+	echoL "Make (4.4.1)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldPatch() { :; }
 bldTar() { :; }
 bldTexinfo() { :; }
@@ -759,7 +768,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldMake	na.sh	Undefined.
 bldPatch	na.sh	Undefined.
 bldTar	na.sh	Undefined.
 bldTexinfo	na.sh	Undefined.
