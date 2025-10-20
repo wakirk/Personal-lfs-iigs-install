@@ -2,7 +2,7 @@
 
 source /root/lfs/USB/userID.key  # Access Keys
 source /root/lfs/lib/menu.lib   # In every script.
-cd /root/lfs/1.04-XCompilingTempTools
+cd /root/lfs/1.05-Chroot-Addon-TempTools
 
 Menu_Pre_Render() {
 	clear

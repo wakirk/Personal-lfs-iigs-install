@@ -1,1 +1,2 @@
-
+stripping	00-stripping.sh	Post Build Stripping
+postCleanup	01-Post Cleanup.sh	Post Software Cleanup
