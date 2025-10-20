@@ -27,7 +27,11 @@ source /root/lfs/lib/menu.lib   # In every script.
 	sleep 2
 	make mrproper
 	make defconfig
+
+	echoL "Configure Linux Kernerl Setup (6.16.1)"
 	make menuconfig
+
+	echoL "Building Linux (6.16.1)..."
 	make
 
 	echoL "Installing Linux (6.16.1)..."
