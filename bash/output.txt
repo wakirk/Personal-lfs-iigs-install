@@ -1,0 +1,1240 @@
+Using .config as base
+Merging Kernel.cfg
+Value of CONFIG_64BIT is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_64BIT is not set
+New value: CONFIG_64BIT=y CONFIG_64BIT=y
+
+Value of CONFIG_ACPI is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_ACPI is not set
+New value: CONFIG_ACPI=y CONFIG_ACPI=y
+
+Value of CONFIG_PCI is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_PCI is not set
+New value: CONFIG_PCI=y CONFIG_PCI=y
+
+Value of CONFIG_INPUT is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_INPUT=y
+New value: CONFIG_INPUT=y CONFIG_INPUT=y
+
+Value of CONFIG_INPUT_EVDEV is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_INPUT_EVDEV is not set
+New value: CONFIG_INPUT_EVDEV=y CONFIG_INPUT_EVDEV=y CONFIG_INPUT_EVDEV=y
+
+Value of CONFIG_INPUT_JOYSTICK is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_INPUT_JOYSTICK is not set
+New value: CONFIG_INPUT_JOYSTICK=y CONFIG_INPUT_JOYSTICK=y
+
+Value of CONFIG_SOUND is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SOUND is not set
+New value: CONFIG_SOUND=y CONFIG_SOUND=y
+
+Value of CONFIG_CRYPTO is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_CRYPTO is not set
+New value: CONFIG_CRYPTO=y CONFIG_CRYPTO=y
+
+Value of CONFIG_DRM is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_DRM is not set
+New value: CONFIG_DRM=y CONFIG_DRM=y
+
+Value of CONFIG_PARTITION_ADVANCED is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_PARTITION_ADVANCED is not set
+New value: CONFIG_PARTITION_ADVANCED=y
+
+Value of CONFIG_ATA is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_ATA is not set
+New value: CONFIG_ATA=y
+
+Value of CONFIG_EXT4_FS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_EXT4_FS is not set
+New value: CONFIG_EXT4_FS=y CONFIG_EXT4_FS=y
+
+Value of CONFIG_DEVTMPFS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_DEVTMPFS is not set
+New value: CONFIG_DEVTMPFS=y
+
+Value of CONFIG_TMPFS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_TMPFS is not set
+New value: CONFIG_TMPFS=y
+
+Value of CONFIG_SERIO is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SERIO is not set
+New value: CONFIG_SERIO=y
+
+Value of CONFIG_NET is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_NET is not set
+New value: CONFIG_NET=y
+
+Value of CONFIG_I2C is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_I2C is not set
+New value: CONFIG_I2C=y
+
+Value of CONFIG_SPI is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SPI is not set
+New value: CONFIG_SPI=y
+
+Value of CONFIG_MTD is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_MTD is not set
+New value: CONFIG_MTD=y
+
+Value of CONFIG_WATCHDOG is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_WATCHDOG is not set
+New value: CONFIG_WATCHDOG=y
+
+Value of CONFIG_FB is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_FB is not set
+New value: CONFIG_FB=y
+
+Value of CONFIG_MSDOS_FS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_MSDOS_FS is not set
+New value: CONFIG_MSDOS_FS=y CONFIG_MSDOS_FS=y
+
+Value of CONFIG_VFAT_FS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_VFAT_FS is not set
+New value: CONFIG_VFAT_FS=y CONFIG_VFAT_FS=y
+
+Value of CONFIG_HWMON is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_HWMON is not set
+New value: CONFIG_HWMON=y
+
+Value of CONFIG_CPU_FREQ is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_CPU_FREQ is not set
+New value: CONFIG_CPU_FREQ=y CONFIG_CPU_FREQ=y
+
+Value of CONFIG_NLS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_NLS is not set
+New value: CONFIG_NLS=y
+
+Value of CONFIG_SMP is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SMP is not set
+New value: CONFIG_SMP=y
+
+Value of CONFIG_NR_CPUS is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_NR_CPUS=1
+New value: CONFIG_NR_CPUS=16
+
+Value of CONFIG_PREEMPT is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_PREEMPT is not set
+New value: CONFIG_PREEMPT=y
+
+Value of CONFIG_NO_HZ_IDLE is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_NO_HZ_IDLE is not set
+New value: CONFIG_NO_HZ_IDLE=y
+
+Value of CONFIG_HIGH_RES_TIMERS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_HIGH_RES_TIMERS is not set
+New value: CONFIG_HIGH_RES_TIMERS=y
+
+Value of CONFIG_HZ_1000 is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_HZ_1000 is not set
+New value: CONFIG_HZ_1000=y
+
+Value of CONFIG_HZ_250 is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_HZ_250=y
+New value: # CONFIG_HZ_250 is not set
+
+Value of CONFIG_TRANSPARENT_HUGEPAGE is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_TRANSPARENT_HUGEPAGE is not set
+New value: CONFIG_TRANSPARENT_HUGEPAGE=y
+
+Value of CONFIG_RTC_CLASS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_RTC_CLASS is not set
+New value: CONFIG_RTC_CLASS=y
+
+Value of CONFIG_SCSI is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SCSI is not set
+New value: CONFIG_SCSI=y
+
+Value of CONFIG_BINFMT_ELF is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_BINFMT_ELF is not set
+New value: CONFIG_BINFMT_ELF=y
+
+Value of CONFIG_BINFMT_SCRIPT is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_BINFMT_SCRIPT is not set
+New value: CONFIG_BINFMT_SCRIPT=y
+
+./.tmp.config.IS26WJmhFJ:1509:warning: override: reassigning to symbol 64BIT
+./.tmp.config.IS26WJmhFJ:1510:warning: override: reassigning to symbol X86_64
+./.tmp.config.IS26WJmhFJ:1511:warning: override: reassigning to symbol ACPI
+./.tmp.config.IS26WJmhFJ:1513:warning: override: reassigning to symbol SOUND
+./.tmp.config.IS26WJmhFJ:1514:warning: override: reassigning to symbol INPUT
+./.tmp.config.IS26WJmhFJ:1515:warning: override: reassigning to symbol HID
+./.tmp.config.IS26WJmhFJ:1516:warning: override: reassigning to symbol USB
+./.tmp.config.IS26WJmhFJ:1517:warning: override: reassigning to symbol USB_HID
+./.tmp.config.IS26WJmhFJ:1518:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.IS26WJmhFJ:1546:warning: override: reassigning to symbol USB
+./.tmp.config.IS26WJmhFJ:1547:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.IS26WJmhFJ:1548:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.IS26WJmhFJ:1550:warning: override: reassigning to symbol HID
+./.tmp.config.IS26WJmhFJ:1551:warning: override: reassigning to symbol USB_HID
+./.tmp.config.IS26WJmhFJ:1552:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.IS26WJmhFJ:1603:warning: override: reassigning to symbol BT
+./.tmp.config.IS26WJmhFJ:1604:warning: override: reassigning to symbol BT_BREDR
+./.tmp.config.IS26WJmhFJ:1621:warning: override: reassigning to symbol DRM
+./.tmp.config.IS26WJmhFJ:1626:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.IS26WJmhFJ:1631:warning: override: reassigning to symbol FB_EFI
+./.tmp.config.IS26WJmhFJ:1636:warning: override: reassigning to symbol DRM_I915
+./.tmp.config.IS26WJmhFJ:1637:warning: override: reassigning to symbol DRM_NOUVEAU
+./.tmp.config.IS26WJmhFJ:1641:warning: override: reassigning to symbol INPUT_EVDEV
+./.tmp.config.IS26WJmhFJ:1672:warning: override: reassigning to symbol INTEL_PCH_THERMAL
+./.tmp.config.IS26WJmhFJ:1673:warning: override: reassigning to symbol I2C_I801
+./.tmp.config.IS26WJmhFJ:1678:warning: override: reassigning to symbol EXT4_FS
+./.tmp.config.IS26WJmhFJ:1681:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.IS26WJmhFJ:1683:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.IS26WJmhFJ:1685:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.IS26WJmhFJ:1726:warning: override: reassigning to symbol CPU_FREQ
+./.tmp.config.IS26WJmhFJ:1727:warning: override: reassigning to symbol X86_INTEL_PSTATE
+./.tmp.config.IS26WJmhFJ:1744:warning: override: reassigning to symbol INPUT_JOYSTICK
+./.tmp.config.IS26WJmhFJ:1746:warning: override: reassigning to symbol INPUT_EVDEV
+./.tmp.config.IS26WJmhFJ:1748:warning: override: reassigning to symbol JOYSTICK_XPAD
+./.tmp.config.IS26WJmhFJ:1750:warning: override: reassigning to symbol HID_SONY
+./.tmp.config.IS26WJmhFJ:1752:warning: override: reassigning to symbol HID_NINTENDO
+./.tmp.config.IS26WJmhFJ:1754:warning: override: reassigning to symbol UHID
+./.tmp.config.IS26WJmhFJ:1777:warning: override: reassigning to symbol CFG80211
+./.tmp.config.IS26WJmhFJ:1778:warning: override: reassigning to symbol MAC80211
+./.tmp.config.IS26WJmhFJ:1782:warning: override: reassigning to symbol BT_HIDP
+./.tmp.config.IS26WJmhFJ:1787:warning: override: reassigning to symbol PCI
+./.tmp.config.IS26WJmhFJ:1788:warning: override: reassigning to symbol PCI_MSI
+./.tmp.config.IS26WJmhFJ:1804:warning: override: reassigning to symbol CRYPTO
+./.tmp.config.IS26WJmhFJ:1805:warning: override: reassigning to symbol CRYPTO_AES
+./.tmp.config.IS26WJmhFJ:1806:warning: override: reassigning to symbol CRYPTO_CCM
+./.tmp.config.IS26WJmhFJ:1807:warning: override: reassigning to symbol CRYPTO_GCM
+./.tmp.config.IS26WJmhFJ:1809:warning: override: reassigning to symbol CRYPTO_SHA256
+#
+# configuration written to .config
+#
+Value requested for CONFIG_BROKEN_ON_SMP not in final .config
+Requested value:  CONFIG_BROKEN_ON_SMP=y
+Actual value:     
+
+Value requested for CONFIG_HZ_PERIODIC not in final .config
+Requested value:  CONFIG_HZ_PERIODIC=y
+Actual value:     # CONFIG_HZ_PERIODIC is not set
+
+Value requested for CONFIG_PREEMPT_NONE_BUILD not in final .config
+Requested value:  CONFIG_PREEMPT_NONE_BUILD=y
+Actual value:     
+
+Value requested for CONFIG_PREEMPT_NONE not in final .config
+Requested value:  CONFIG_PREEMPT_NONE=y
+Actual value:     # CONFIG_PREEMPT_NONE is not set
+
+Value requested for CONFIG_TINY_RCU not in final .config
+Requested value:  CONFIG_TINY_RCU=y
+Actual value:     
+
+Value requested for CONFIG_TINY_SRCU not in final .config
+Requested value:  CONFIG_TINY_SRCU=y
+Actual value:     
+
+Value requested for CONFIG_RELAY not in final .config
+Requested value:  # CONFIG_RELAY is not set
+Actual value:     CONFIG_RELAY=y
+
+Value requested for CONFIG_HAVE_UID16 not in final .config
+Requested value:  CONFIG_HAVE_UID16=y
+Actual value:     
+
+Value requested for CONFIG_UID16 not in final .config
+Requested value:  CONFIG_UID16=y
+Actual value:     
+
+Value requested for CONFIG_X86_32 not in final .config
+Requested value:  CONFIG_X86_32=y
+Actual value:     
+
+Value requested for CONFIG_OUTPUT_FORMAT not in final .config
+Requested value:  CONFIG_OUTPUT_FORMAT="elf32-i386"
+Actual value:     CONFIG_OUTPUT_FORMAT="elf64-x86-64"
+
+Value requested for CONFIG_ARCH_MMAP_RND_BITS_MIN not in final .config
+Requested value:  CONFIG_ARCH_MMAP_RND_BITS_MIN=8
+Actual value:     CONFIG_ARCH_MMAP_RND_BITS_MIN=28
+
+Value requested for CONFIG_ARCH_MMAP_RND_BITS_MAX not in final .config
+Requested value:  CONFIG_ARCH_MMAP_RND_BITS_MAX=16
+Actual value:     CONFIG_ARCH_MMAP_RND_BITS_MAX=32
+
+Value requested for CONFIG_PGTABLE_LEVELS not in final .config
+Requested value:  CONFIG_PGTABLE_LEVELS=2
+Actual value:     CONFIG_PGTABLE_LEVELS=5
+
+Value requested for CONFIG_X86_32_IRIS not in final .config
+Requested value:  # CONFIG_X86_32_IRIS is not set
+Actual value:     
+
+Value requested for CONFIG_M486SX not in final .config
+Requested value:  # CONFIG_M486SX is not set
+Actual value:     
+
+Value requested for CONFIG_M486 not in final .config
+Requested value:  # CONFIG_M486 is not set
+Actual value:     
+
+Value requested for CONFIG_M586 not in final .config
+Requested value:  # CONFIG_M586 is not set
+Actual value:     
+
+Value requested for CONFIG_M586TSC not in final .config
+Requested value:  # CONFIG_M586TSC is not set
+Actual value:     
+
+Value requested for CONFIG_M586MMX not in final .config
+Requested value:  # CONFIG_M586MMX is not set
+Actual value:     
+
+Value requested for CONFIG_M686 not in final .config
+Requested value:  CONFIG_M686=y
+Actual value:     
+
+Value requested for CONFIG_MPENTIUMII not in final .config
+Requested value:  # CONFIG_MPENTIUMII is not set
+Actual value:     
+
+Value requested for CONFIG_MPENTIUMIII not in final .config
+Requested value:  # CONFIG_MPENTIUMIII is not set
+Actual value:     
+
+Value requested for CONFIG_MPENTIUMM not in final .config
+Requested value:  # CONFIG_MPENTIUMM is not set
+Actual value:     
+
+Value requested for CONFIG_MPENTIUM4 not in final .config
+Requested value:  # CONFIG_MPENTIUM4 is not set
+Actual value:     
+
+Value requested for CONFIG_MK6 not in final .config
+Requested value:  # CONFIG_MK6 is not set
+Actual value:     
+
+Value requested for CONFIG_MK7 not in final .config
+Requested value:  # CONFIG_MK7 is not set
+Actual value:     
+
+Value requested for CONFIG_MCRUSOE not in final .config
+Requested value:  # CONFIG_MCRUSOE is not set
+Actual value:     
+
+Value requested for CONFIG_MEFFICEON not in final .config
+Requested value:  # CONFIG_MEFFICEON is not set
+Actual value:     
+
+Value requested for CONFIG_MWINCHIPC6 not in final .config
+Requested value:  # CONFIG_MWINCHIPC6 is not set
+Actual value:     
+
+Value requested for CONFIG_MWINCHIP3D not in final .config
+Requested value:  # CONFIG_MWINCHIP3D is not set
+Actual value:     
+
+Value requested for CONFIG_MELAN not in final .config
+Requested value:  # CONFIG_MELAN is not set
+Actual value:     
+
+Value requested for CONFIG_MGEODEGX1 not in final .config
+Requested value:  # CONFIG_MGEODEGX1 is not set
+Actual value:     
+
+Value requested for CONFIG_MGEODE_LX not in final .config
+Requested value:  # CONFIG_MGEODE_LX is not set
+Actual value:     
+
+Value requested for CONFIG_MCYRIXIII not in final .config
+Requested value:  # CONFIG_MCYRIXIII is not set
+Actual value:     
+
+Value requested for CONFIG_MVIAC3_2 not in final .config
+Requested value:  # CONFIG_MVIAC3_2 is not set
+Actual value:     
+
+Value requested for CONFIG_MVIAC7 not in final .config
+Requested value:  # CONFIG_MVIAC7 is not set
+Actual value:     
+
+Value requested for CONFIG_MATOM not in final .config
+Requested value:  # CONFIG_MATOM is not set
+Actual value:     
+
+Value requested for CONFIG_X86_GENERIC not in final .config
+Requested value:  # CONFIG_X86_GENERIC is not set
+Actual value:     
+
+Value requested for CONFIG_X86_INTERNODE_CACHE_SHIFT not in final .config
+Requested value:  CONFIG_X86_INTERNODE_CACHE_SHIFT=5
+Actual value:     CONFIG_X86_INTERNODE_CACHE_SHIFT=6
+
+Value requested for CONFIG_X86_L1_CACHE_SHIFT not in final .config
+Requested value:  CONFIG_X86_L1_CACHE_SHIFT=5
+Actual value:     CONFIG_X86_L1_CACHE_SHIFT=6
+
+Value requested for CONFIG_X86_USE_PPRO_CHECKSUM not in final .config
+Requested value:  CONFIG_X86_USE_PPRO_CHECKSUM=y
+Actual value:     
+
+Value requested for CONFIG_X86_MINIMUM_CPU_FAMILY not in final .config
+Requested value:  CONFIG_X86_MINIMUM_CPU_FAMILY=6
+Actual value:     CONFIG_X86_MINIMUM_CPU_FAMILY=64
+
+Value requested for CONFIG_CPU_SUP_TRANSMETA_32 not in final .config
+Requested value:  CONFIG_CPU_SUP_TRANSMETA_32=y
+Actual value:     
+
+Value requested for CONFIG_CPU_SUP_VORTEX_32 not in final .config
+Requested value:  CONFIG_CPU_SUP_VORTEX_32=y
+Actual value:     
+
+Value requested for CONFIG_HPET_TIMER not in final .config
+Requested value:  # CONFIG_HPET_TIMER is not set
+Actual value:     CONFIG_HPET_TIMER=y
+
+Value requested for CONFIG_NR_CPUS_RANGE_BEGIN not in final .config
+Requested value:  CONFIG_NR_CPUS_RANGE_BEGIN=1
+Actual value:     CONFIG_NR_CPUS_RANGE_BEGIN=2
+
+Value requested for CONFIG_NR_CPUS_RANGE_END not in final .config
+Requested value:  CONFIG_NR_CPUS_RANGE_END=1
+Actual value:     CONFIG_NR_CPUS_RANGE_END=512
+
+Value requested for CONFIG_NR_CPUS_DEFAULT not in final .config
+Requested value:  CONFIG_NR_CPUS_DEFAULT=1
+Actual value:     CONFIG_NR_CPUS_DEFAULT=64
+
+Value requested for CONFIG_X86_UP_APIC not in final .config
+Requested value:  # CONFIG_X86_UP_APIC is not set
+Actual value:     
+
+Value requested for CONFIG_X86_LEGACY_VM86 not in final .config
+Requested value:  # CONFIG_X86_LEGACY_VM86 is not set
+Actual value:     
+
+Value requested for CONFIG_X86_ESPFIX32 not in final .config
+Requested value:  CONFIG_X86_ESPFIX32=y
+Actual value:     
+
+Value requested for CONFIG_TOSHIBA not in final .config
+Requested value:  # CONFIG_TOSHIBA is not set
+Actual value:     
+
+Value requested for CONFIG_X86_REBOOTFIXUPS not in final .config
+Requested value:  # CONFIG_X86_REBOOTFIXUPS is not set
+Actual value:     
+
+Value requested for CONFIG_HIGHMEM4G not in final .config
+Requested value:  # CONFIG_HIGHMEM4G is not set
+Actual value:     
+
+Value requested for CONFIG_VMSPLIT_3G not in final .config
+Requested value:  CONFIG_VMSPLIT_3G=y
+Actual value:     
+
+Value requested for CONFIG_VMSPLIT_3G_OPT not in final .config
+Requested value:  # CONFIG_VMSPLIT_3G_OPT is not set
+Actual value:     
+
+Value requested for CONFIG_VMSPLIT_2G not in final .config
+Requested value:  # CONFIG_VMSPLIT_2G is not set
+Actual value:     
+
+Value requested for CONFIG_VMSPLIT_2G_OPT not in final .config
+Requested value:  # CONFIG_VMSPLIT_2G_OPT is not set
+Actual value:     
+
+Value requested for CONFIG_VMSPLIT_1G not in final .config
+Requested value:  # CONFIG_VMSPLIT_1G is not set
+Actual value:     
+
+Value requested for CONFIG_PAGE_OFFSET not in final .config
+Requested value:  CONFIG_PAGE_OFFSET=0xC0000000
+Actual value:     
+
+Value requested for CONFIG_X86_PAE not in final .config
+Requested value:  # CONFIG_X86_PAE is not set
+Actual value:     
+
+Value requested for CONFIG_ARCH_FLATMEM_ENABLE not in final .config
+Requested value:  CONFIG_ARCH_FLATMEM_ENABLE=y
+Actual value:     
+
+Value requested for CONFIG_ARCH_SELECT_MEMORY_MODEL not in final .config
+Requested value:  CONFIG_ARCH_SELECT_MEMORY_MODEL=y
+Actual value:     
+
+Value requested for CONFIG_ILLEGAL_POINTER_VALUE not in final .config
+Requested value:  CONFIG_ILLEGAL_POINTER_VALUE=0
+Actual value:     CONFIG_ILLEGAL_POINTER_VALUE=0xdead000000000000
+
+Value requested for CONFIG_HZ not in final .config
+Requested value:  CONFIG_HZ=250
+Actual value:     CONFIG_HZ=1000
+
+Value requested for CONFIG_RELOCATABLE not in final .config
+Requested value:  # CONFIG_RELOCATABLE is not set
+Actual value:     CONFIG_RELOCATABLE=y
+
+Value requested for CONFIG_COMPAT_VDSO not in final .config
+Requested value:  # CONFIG_COMPAT_VDSO is not set
+Actual value:     
+
+Value requested for CONFIG_FUNCTION_PADDING_CFI not in final .config
+Requested value:  CONFIG_FUNCTION_PADDING_CFI=0
+Actual value:     CONFIG_FUNCTION_PADDING_CFI=11
+
+Value requested for CONFIG_FUNCTION_PADDING_BYTES not in final .config
+Requested value:  CONFIG_FUNCTION_PADDING_BYTES=4
+Actual value:     CONFIG_FUNCTION_PADDING_BYTES=16
+
+Value requested for CONFIG_CPU_IDLE not in final .config
+Requested value:  # CONFIG_CPU_IDLE is not set
+Actual value:     CONFIG_CPU_IDLE=y
+
+Value requested for CONFIG_ISA not in final .config
+Requested value:  # CONFIG_ISA is not set
+Actual value:     
+
+Value requested for CONFIG_SCx200 not in final .config
+Requested value:  # CONFIG_SCx200 is not set
+Actual value:     
+
+Value requested for CONFIG_OLPC not in final .config
+Requested value:  # CONFIG_OLPC is not set
+Actual value:     
+
+Value requested for CONFIG_ALIX not in final .config
+Requested value:  # CONFIG_ALIX is not set
+Actual value:     
+
+Value requested for CONFIG_NET5501 not in final .config
+Requested value:  # CONFIG_NET5501 is not set
+Actual value:     
+
+Value requested for CONFIG_GEOS not in final .config
+Requested value:  # CONFIG_GEOS is not set
+Actual value:     
+
+Value requested for CONFIG_COMPAT_32 not in final .config
+Requested value:  CONFIG_COMPAT_32=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_ATOMIC_IOMAP not in final .config
+Requested value:  CONFIG_HAVE_ATOMIC_IOMAP=y
+Actual value:     
+
+Value requested for CONFIG_X86_REQUIRED_FEATURE_UP not in final .config
+Requested value:  CONFIG_X86_REQUIRED_FEATURE_UP=y
+Actual value:     
+
+Value requested for CONFIG_X86_DISABLED_FEATURE_PCID not in final .config
+Requested value:  CONFIG_X86_DISABLED_FEATURE_PCID=y
+Actual value:     
+
+Value requested for CONFIG_X86_DISABLED_FEATURE_PKU not in final .config
+Requested value:  CONFIG_X86_DISABLED_FEATURE_PKU=y
+Actual value:     
+
+Value requested for CONFIG_X86_DISABLED_FEATURE_OSPKE not in final .config
+Requested value:  CONFIG_X86_DISABLED_FEATURE_OSPKE=y
+Actual value:     
+
+Value requested for CONFIG_X86_DISABLED_FEATURE_IBT not in final .config
+Requested value:  CONFIG_X86_DISABLED_FEATURE_IBT=y
+Actual value:     
+
+Value requested for CONFIG_X86_DISABLED_FEATURE_INVLPGB not in final .config
+Requested value:  CONFIG_X86_DISABLED_FEATURE_INVLPGB=y
+Actual value:     
+
+Value requested for CONFIG_ARCH_32BIT_OFF_T not in final .config
+Requested value:  CONFIG_ARCH_32BIT_OFF_T=y
+Actual value:     
+
+Value requested for CONFIG_ARCH_WANT_IPC_PARSE_VERSION not in final .config
+Requested value:  CONFIG_ARCH_WANT_IPC_PARSE_VERSION=y
+Actual value:     
+
+Value requested for CONFIG_MODULES_USE_ELF_REL not in final .config
+Requested value:  CONFIG_MODULES_USE_ELF_REL=y
+Actual value:     
+
+Value requested for CONFIG_ARCH_MMAP_RND_BITS not in final .config
+Requested value:  CONFIG_ARCH_MMAP_RND_BITS=8
+Actual value:     CONFIG_ARCH_MMAP_RND_BITS=28
+
+Value requested for CONFIG_CLONE_BACKWARDS not in final .config
+Requested value:  CONFIG_CLONE_BACKWARDS=y
+Actual value:     
+
+Value requested for CONFIG_OLD_SIGSUSPEND3 not in final .config
+Requested value:  CONFIG_OLD_SIGSUSPEND3=y
+Actual value:     
+
+Value requested for CONFIG_OLD_SIGACTION not in final .config
+Requested value:  CONFIG_OLD_SIGACTION=y
+Actual value:     
+
+Value requested for CONFIG_ARCH_SPLIT_ARG64 not in final .config
+Requested value:  CONFIG_ARCH_SPLIT_ARG64=y
+Actual value:     
+
+Value requested for CONFIG_FUNCTION_ALIGNMENT not in final .config
+Requested value:  CONFIG_FUNCTION_ALIGNMENT=4
+Actual value:     CONFIG_FUNCTION_ALIGNMENT=16
+
+Value requested for CONFIG_INLINE_SPIN_UNLOCK_IRQ not in final .config
+Requested value:  CONFIG_INLINE_SPIN_UNLOCK_IRQ=y
+Actual value:     
+
+Value requested for CONFIG_INLINE_READ_UNLOCK not in final .config
+Requested value:  CONFIG_INLINE_READ_UNLOCK=y
+Actual value:     
+
+Value requested for CONFIG_INLINE_READ_UNLOCK_IRQ not in final .config
+Requested value:  CONFIG_INLINE_READ_UNLOCK_IRQ=y
+Actual value:     
+
+Value requested for CONFIG_INLINE_WRITE_UNLOCK not in final .config
+Requested value:  CONFIG_INLINE_WRITE_UNLOCK=y
+Actual value:     
+
+Value requested for CONFIG_INLINE_WRITE_UNLOCK_IRQ not in final .config
+Requested value:  CONFIG_INLINE_WRITE_UNLOCK_IRQ=y
+Actual value:     
+
+Value requested for CONFIG_SELECT_MEMORY_MODEL not in final .config
+Requested value:  CONFIG_SELECT_MEMORY_MODEL=y
+Actual value:     
+
+Value requested for CONFIG_FLATMEM_MANUAL not in final .config
+Requested value:  CONFIG_FLATMEM_MANUAL=y
+Actual value:     
+
+Value requested for CONFIG_SPARSEMEM_MANUAL not in final .config
+Requested value:  # CONFIG_SPARSEMEM_MANUAL is not set
+Actual value:     
+
+Value requested for CONFIG_FLATMEM not in final .config
+Requested value:  CONFIG_FLATMEM=y
+Actual value:     
+
+Value requested for CONFIG_SPARSEMEM_STATIC not in final .config
+Requested value:  CONFIG_SPARSEMEM_STATIC=y
+Actual value:     
+
+Value requested for CONFIG_COMPACTION not in final .config
+Requested value:  # CONFIG_COMPACTION is not set
+Actual value:     CONFIG_COMPACTION=y
+
+Value requested for CONFIG_NEED_PER_CPU_KM not in final .config
+Requested value:  CONFIG_NEED_PER_CPU_KM=y
+Actual value:     
+
+Value requested for CONFIG_KMAP_LOCAL not in final .config
+Requested value:  CONFIG_KMAP_LOCAL=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_EISA not in final .config
+Requested value:  CONFIG_HAVE_EISA=y
+Actual value:     
+
+Value requested for CONFIG_EISA not in final .config
+Requested value:  # CONFIG_EISA is not set
+Actual value:     
+
+Value requested for CONFIG_VT_HW_CONSOLE_BINDING not in final .config
+Requested value:  # CONFIG_VT_HW_CONSOLE_BINDING is not set
+Actual value:     CONFIG_VT_HW_CONSOLE_BINDING=y
+
+Value requested for CONFIG_SERIAL_TIMBERDALE not in final .config
+Requested value:  # CONFIG_SERIAL_TIMBERDALE is not set
+Actual value:     
+
+Value requested for CONFIG_PC8736x_GPIO not in final .config
+Requested value:  # CONFIG_PC8736x_GPIO is not set
+Actual value:     
+
+Value requested for CONFIG_NSC_GPIO not in final .config
+Requested value:  # CONFIG_NSC_GPIO is not set
+Actual value:     
+
+Value requested for CONFIG_PPS not in final .config
+Requested value:  # CONFIG_PPS is not set
+Actual value:     CONFIG_PPS=y
+
+Value requested for CONFIG_POWER_SUPPLY not in final .config
+Requested value:  # CONFIG_POWER_SUPPLY is not set
+Actual value:     CONFIG_POWER_SUPPLY=y
+
+Value requested for CONFIG_THERMAL not in final .config
+Requested value:  # CONFIG_THERMAL is not set
+Actual value:     CONFIG_THERMAL=y
+
+Value requested for CONFIG_BACKLIGHT_CLASS_DEVICE not in final .config
+Requested value:  # CONFIG_BACKLIGHT_CLASS_DEVICE is not set
+Actual value:     CONFIG_BACKLIGHT_CLASS_DEVICE=y
+
+Value requested for CONFIG_NEW_LEDS not in final .config
+Requested value:  # CONFIG_NEW_LEDS is not set
+Actual value:     CONFIG_NEW_LEDS=y
+
+Value requested for CONFIG_SYNC_FILE not in final .config
+Requested value:  # CONFIG_SYNC_FILE is not set
+Actual value:     CONFIG_SYNC_FILE=y
+
+Value requested for CONFIG_X86_PLATFORM_DEVICES not in final .config
+Requested value:  # CONFIG_X86_PLATFORM_DEVICES is not set
+Actual value:     CONFIG_X86_PLATFORM_DEVICES=y
+
+Value requested for CONFIG_COMMON_CLK not in final .config
+Requested value:  # CONFIG_COMMON_CLK is not set
+Actual value:     CONFIG_COMMON_CLK=y
+
+Value requested for CONFIG_CLKSRC_I8253 not in final .config
+Requested value:  CONFIG_CLKSRC_I8253=y
+Actual value:     
+
+Value requested for CONFIG_MAILBOX not in final .config
+Requested value:  # CONFIG_MAILBOX is not set
+Actual value:     CONFIG_MAILBOX=y
+
+Value requested for CONFIG_NVMEM not in final .config
+Requested value:  # CONFIG_NVMEM is not set
+Actual value:     CONFIG_NVMEM=y
+
+Value requested for CONFIG_KEYS not in final .config
+Requested value:  # CONFIG_KEYS is not set
+Actual value:     CONFIG_KEYS=y
+
+Value requested for CONFIG_CRYPTO_LIB_POLY1305_RSIZE not in final .config
+Requested value:  CONFIG_CRYPTO_LIB_POLY1305_RSIZE=1
+Actual value:     CONFIG_CRYPTO_LIB_POLY1305_RSIZE=11
+
+Value requested for CONFIG_FORCE_NR_CPUS not in final .config
+Requested value:  CONFIG_FORCE_NR_CPUS=y
+Actual value:     
+
+Value requested for CONFIG_GENERIC_VDSO_32 not in final .config
+Requested value:  CONFIG_GENERIC_VDSO_32=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_DEBUG_STACKOVERFLOW not in final .config
+Requested value:  CONFIG_HAVE_DEBUG_STACKOVERFLOW=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_FUNCTION_GRAPH_TRACER not in final .config
+Requested value:  CONFIG_HAVE_FUNCTION_GRAPH_TRACER=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_FUNCTION_GRAPH_FREGS not in final .config
+Requested value:  CONFIG_HAVE_FUNCTION_GRAPH_FREGS=y
+Actual value:     
+
+Value requested for CONFIG_HAVE_FTRACE_GRAPH_FUNC not in final .config
+Requested value:  CONFIG_HAVE_FTRACE_GRAPH_FUNC=y
+Actual value:     
+
+Value requested for CONFIG_64BIT not in final .config
+Requested value:  CONFIG_64BIT=y
+CONFIG_64BIT=y
+Actual value:     CONFIG_64BIT=y
+
+Value requested for CONFIG_X86_64 not in final .config
+Requested value:  CONFIG_X86_64=y
+CONFIG_X86_64=y
+Actual value:     CONFIG_X86_64=y
+
+Value requested for CONFIG_ACPI not in final .config
+Requested value:  CONFIG_ACPI=y
+CONFIG_ACPI=y
+Actual value:     CONFIG_ACPI=y
+
+Value requested for CONFIG_PCI not in final .config
+Requested value:  CONFIG_PCI=y
+CONFIG_PCI=y
+Actual value:     CONFIG_PCI=y
+
+Value requested for CONFIG_PCI_MSI not in final .config
+Requested value:  CONFIG_PCI_MSI=y
+CONFIG_PCI_MSI=y
+Actual value:     CONFIG_PCI_MSI=y
+
+Value requested for CONFIG_USB not in final .config
+Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+Actual value:     
+
+Value requested for CONFIG_USB_HID not in final .config
+Requested value:  CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+Actual value:     
+
+Value requested for CONFIG_HID not in final .config
+Requested value:  CONFIG_HID=y
+CONFIG_HID=y
+CONFIG_HID=y
+Actual value:     
+
+Value requested for CONFIG_HID_GENERIC not in final .config
+Requested value:  CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+Actual value:     
+
+Value requested for CONFIG_USB_XHCI_HCD not in final .config
+Requested value:  CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
+Actual value:     
+
+Value requested for CONFIG_USB_XHCI_PCI not in final .config
+Requested value:  CONFIG_USB_XHCI_PCI=y
+CONFIG_USB_XHCI_PCI=y
+Actual value:     
+
+Value requested for CONFIG_INPUT not in final .config
+Requested value:  CONFIG_INPUT=y
+CONFIG_INPUT=y
+Actual value:     CONFIG_INPUT=y
+
+Value requested for CONFIG_INPUT_EVDEV not in final .config
+Requested value:  CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+Actual value:     CONFIG_INPUT_EVDEV=y
+
+Value requested for CONFIG_INPUT_JOYSTICK not in final .config
+Requested value:  CONFIG_INPUT_JOYSTICK=y
+CONFIG_INPUT_JOYSTICK=y
+Actual value:     CONFIG_INPUT_JOYSTICK=y
+
+Value requested for CONFIG_UINPUT not in final .config
+Requested value:  CONFIG_UINPUT=y
+CONFIG_UINPUT=y
+Actual value:     
+
+Value requested for CONFIG_UHID not in final .config
+Requested value:  CONFIG_UHID=y
+CONFIG_UHID=y
+Actual value:     
+
+Value requested for CONFIG_HID_SONY not in final .config
+Requested value:  CONFIG_HID_SONY=y
+CONFIG_HID_SONY=y
+Actual value:     
+
+Value requested for CONFIG_HID_NINTENDO not in final .config
+Requested value:  CONFIG_HID_NINTENDO=y
+CONFIG_HID_NINTENDO=y
+Actual value:     
+
+Value requested for CONFIG_JOYSTICK_XPAD not in final .config
+Requested value:  CONFIG_JOYSTICK_XPAD=y
+CONFIG_JOYSTICK_XPAD=y
+Actual value:     
+
+Value requested for CONFIG_SOUND not in final .config
+Requested value:  CONFIG_SOUND=y
+CONFIG_SOUND=y
+Actual value:     CONFIG_SOUND=y
+
+Value requested for CONFIG_CFG80211 not in final .config
+Requested value:  CONFIG_CFG80211=y
+CONFIG_CFG80211=y
+Actual value:     CONFIG_CFG80211=y
+
+Value requested for CONFIG_MAC80211 not in final .config
+Requested value:  CONFIG_MAC80211=y
+CONFIG_MAC80211=y
+Actual value:     CONFIG_MAC80211=y
+
+Value requested for CONFIG_CRYPTO not in final .config
+Requested value:  CONFIG_CRYPTO=y
+CONFIG_CRYPTO=y
+Actual value:     CONFIG_CRYPTO=y
+
+Value requested for CONFIG_CRYPTO_AES not in final .config
+Requested value:  CONFIG_CRYPTO_AES=y
+CONFIG_CRYPTO_AES=y
+Actual value:     CONFIG_CRYPTO_AES=y
+
+Value requested for CONFIG_CRYPTO_CCM not in final .config
+Requested value:  CONFIG_CRYPTO_CCM=y
+CONFIG_CRYPTO_CCM=y
+Actual value:     CONFIG_CRYPTO_CCM=y
+
+Value requested for CONFIG_CRYPTO_GCM not in final .config
+Requested value:  CONFIG_CRYPTO_GCM=y
+CONFIG_CRYPTO_GCM=y
+Actual value:     CONFIG_CRYPTO_GCM=y
+
+Value requested for CONFIG_CRYPTO_SHA256 not in final .config
+Requested value:  CONFIG_CRYPTO_SHA256=y
+CONFIG_CRYPTO_SHA256=y
+Actual value:     CONFIG_CRYPTO_SHA256=y
+
+Value requested for CONFIG_BT not in final .config
+Requested value:  CONFIG_BT=y
+CONFIG_BT=y
+Actual value:     CONFIG_BT=y
+
+Value requested for CONFIG_BT_BREDR not in final .config
+Requested value:  CONFIG_BT_BREDR=y
+CONFIG_BT_BREDR=y
+Actual value:     CONFIG_BT_BREDR=y
+
+Value requested for CONFIG_BT_HIDP not in final .config
+Requested value:  CONFIG_BT_HIDP=y
+CONFIG_BT_HIDP=y
+Actual value:     
+
+Value requested for CONFIG_64BIT not in final .config
+Requested value:  CONFIG_64BIT=y
+CONFIG_64BIT=y
+Actual value:     CONFIG_64BIT=y
+
+Value requested for CONFIG_X86_64 not in final .config
+Requested value:  CONFIG_X86_64=y
+CONFIG_X86_64=y
+Actual value:     CONFIG_X86_64=y
+
+Value requested for CONFIG_ACPI not in final .config
+Requested value:  CONFIG_ACPI=y
+CONFIG_ACPI=y
+Actual value:     CONFIG_ACPI=y
+
+Value requested for CONFIG_SOUND not in final .config
+Requested value:  CONFIG_SOUND=y
+CONFIG_SOUND=y
+Actual value:     CONFIG_SOUND=y
+
+Value requested for CONFIG_INPUT not in final .config
+Requested value:  CONFIG_INPUT=y
+CONFIG_INPUT=y
+Actual value:     CONFIG_INPUT=y
+
+Value requested for CONFIG_HID not in final .config
+Requested value:  CONFIG_HID=y
+CONFIG_HID=y
+CONFIG_HID=y
+Actual value:     
+
+Value requested for CONFIG_USB not in final .config
+Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+Actual value:     
+
+Value requested for CONFIG_USB_HID not in final .config
+Requested value:  CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+Actual value:     
+
+Value requested for CONFIG_HID_GENERIC not in final .config
+Requested value:  CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+Actual value:     
+
+Value requested for CONFIG_FB_EFI not in final .config
+Requested value:  CONFIG_FB_EFI=y
+CONFIG_FB_EFI=y
+Actual value:     CONFIG_FB_EFI=y
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_EXT4_FS not in final .config
+Requested value:  CONFIG_EXT4_FS=y
+CONFIG_EXT4_FS=y
+Actual value:     CONFIG_EXT4_FS=y
+
+Value requested for CONFIG_USB not in final .config
+Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+Actual value:     
+
+Value requested for CONFIG_USB_XHCI_HCD not in final .config
+Requested value:  CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
+Actual value:     
+
+Value requested for CONFIG_USB_XHCI_PCI not in final .config
+Requested value:  CONFIG_USB_XHCI_PCI=y
+CONFIG_USB_XHCI_PCI=y
+Actual value:     
+
+Value requested for CONFIG_USB_STORAGE not in final .config
+Requested value:  CONFIG_USB_STORAGE=y
+Actual value:     
+
+Value requested for CONFIG_HID not in final .config
+Requested value:  CONFIG_HID=y
+CONFIG_HID=y
+CONFIG_HID=y
+Actual value:     
+
+Value requested for CONFIG_USB_HID not in final .config
+Requested value:  CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+Actual value:     
+
+Value requested for CONFIG_HID_GENERIC not in final .config
+Requested value:  CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+CONFIG_HID_GENERIC=y
+Actual value:     
+
+Value requested for CONFIG_KEYBOARD_ATKBD not in final .config
+Requested value:  CONFIG_KEYBOARD_ATKBD=y
+Actual value:     
+
+Value requested for CONFIG_DRM_I915 not in final .config
+Requested value:  CONFIG_DRM_I915=y
+CONFIG_DRM_I915=y
+Actual value:     CONFIG_DRM_I915=y
+
+Value requested for CONFIG_DRM_NOUVEAU not in final .config
+Requested value:  CONFIG_DRM_NOUVEAU=y
+CONFIG_DRM_NOUVEAU=y
+Actual value:     CONFIG_DRM_NOUVEAU=y
+
+Value requested for CONFIG_I2C_I801 not in final .config
+Requested value:  CONFIG_I2C_I801=y
+CONFIG_I2C_I801=y
+Actual value:     CONFIG_I2C_I801=y
+
+Value requested for CONFIG_EEPROM not in final .config
+Requested value:  CONFIG_EEPROM=y
+Actual value:     
+
+Value requested for CONFIG_EE1004 not in final .config
+Requested value:  CONFIG_EE1004=y
+CONFIG_EE1004=y
+Actual value:     
+
+Value requested for CONFIG_SPI_NOR not in final .config
+Requested value:  CONFIG_SPI_NOR=y
+Actual value:     
+
+Value requested for CONFIG_INTEL_PCH_THERMAL not in final .config
+Requested value:  CONFIG_INTEL_PCH_THERMAL=y
+CONFIG_INTEL_PCH_THERMAL=y
+Actual value:     CONFIG_INTEL_PCH_THERMAL=y
+
+Value requested for CONFIG_BT not in final .config
+Requested value:  CONFIG_BT=y
+CONFIG_BT=y
+Actual value:     CONFIG_BT=y
+
+Value requested for CONFIG_BT_BREDR not in final .config
+Requested value:  CONFIG_BT_BREDR=y
+CONFIG_BT_BREDR=y
+Actual value:     CONFIG_BT_BREDR=y
+
+Value requested for CONFIG_BT_HCIBTUSB not in final .config
+Requested value:  CONFIG_BT_HCIBTUSB=y
+Actual value:     
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_FB_EFI not in final .config
+Requested value:  CONFIG_FB_EFI=y
+CONFIG_FB_EFI=y
+Actual value:     CONFIG_FB_EFI=y
+
+Value requested for CONFIG_FB_SIMPLE not in final .config
+Requested value:  CONFIG_FB_SIMPLE=y
+Actual value:     
+
+Value requested for CONFIG_DRM_I915 not in final .config
+Requested value:  CONFIG_DRM_I915=y
+CONFIG_DRM_I915=y
+Actual value:     CONFIG_DRM_I915=y
+
+Value requested for CONFIG_DRM_NOUVEAU not in final .config
+Requested value:  CONFIG_DRM_NOUVEAU=y
+CONFIG_DRM_NOUVEAU=y
+Actual value:     CONFIG_DRM_NOUVEAU=y
+
+Value requested for CONFIG_INPUT_EVDEV not in final .config
+Requested value:  CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+Actual value:     CONFIG_INPUT_EVDEV=y
+
+Value requested for CONFIG_HIDRAW not in final .config
+Requested value:  CONFIG_HIDRAW=y
+Actual value:     
+
+Value requested for CONFIG_FAT_FS not in final .config
+Requested value:  CONFIG_FAT_FS=y
+CONFIG_FAT_FS=y
+Actual value:     CONFIG_FAT_FS=y
+
+Value requested for CONFIG_MSDOS_FS not in final .config
+Requested value:  CONFIG_MSDOS_FS=y
+CONFIG_MSDOS_FS=y
+Actual value:     CONFIG_MSDOS_FS=y
+
+Value requested for CONFIG_VFAT_FS not in final .config
+Requested value:  CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
+Actual value:     CONFIG_VFAT_FS=y
+
+Value requested for CONFIG_CPU_FREQ not in final .config
+Requested value:  CONFIG_CPU_FREQ=y
+CONFIG_CPU_FREQ=y
+Actual value:     CONFIG_CPU_FREQ=y
+
+Value requested for CONFIG_X86_INTEL_PSTATE not in final .config
+Requested value:  CONFIG_X86_INTEL_PSTATE=y
+CONFIG_X86_INTEL_PSTATE=y
+Actual value:     CONFIG_X86_INTEL_PSTATE=y
+
+Value requested for CONFIG_INTEL_PCH_THERMAL not in final .config
+Requested value:  CONFIG_INTEL_PCH_THERMAL=y
+CONFIG_INTEL_PCH_THERMAL=y
+Actual value:     CONFIG_INTEL_PCH_THERMAL=y
+
+Value requested for CONFIG_I2C_I801 not in final .config
+Requested value:  CONFIG_I2C_I801=y
+CONFIG_I2C_I801=y
+Actual value:     CONFIG_I2C_I801=y
+
+Value requested for CONFIG_EE1004 not in final .config
+Requested value:  CONFIG_EE1004=y
+CONFIG_EE1004=y
+Actual value:     
+
+Value requested for CONFIG_EXT4_FS not in final .config
+Requested value:  CONFIG_EXT4_FS=y
+CONFIG_EXT4_FS=y
+Actual value:     CONFIG_EXT4_FS=y
+
+Value requested for CONFIG_FAT_FS not in final .config
+Requested value:  CONFIG_FAT_FS=y
+CONFIG_FAT_FS=y
+Actual value:     CONFIG_FAT_FS=y
+
+Value requested for CONFIG_MSDOS_FS not in final .config
+Requested value:  CONFIG_MSDOS_FS=y
+CONFIG_MSDOS_FS=y
+Actual value:     CONFIG_MSDOS_FS=y
+
+Value requested for CONFIG_VFAT_FS not in final .config
+Requested value:  CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
+Actual value:     CONFIG_VFAT_FS=y
+
+Value requested for CONFIG_CPU_FREQ not in final .config
+Requested value:  CONFIG_CPU_FREQ=y
+CONFIG_CPU_FREQ=y
+Actual value:     CONFIG_CPU_FREQ=y
+
+Value requested for CONFIG_X86_INTEL_PSTATE not in final .config
+Requested value:  CONFIG_X86_INTEL_PSTATE=y
+CONFIG_X86_INTEL_PSTATE=y
+Actual value:     CONFIG_X86_INTEL_PSTATE=y
+
+Value requested for CONFIG_INPUT_JOYSTICK not in final .config
+Requested value:  CONFIG_INPUT_JOYSTICK=y
+CONFIG_INPUT_JOYSTICK=y
+Actual value:     CONFIG_INPUT_JOYSTICK=y
+
+Value requested for CONFIG_INPUT_EVDEV not in final .config
+Requested value:  CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+Actual value:     CONFIG_INPUT_EVDEV=y
+
+Value requested for CONFIG_JOYSTICK_XPAD not in final .config
+Requested value:  CONFIG_JOYSTICK_XPAD=y
+CONFIG_JOYSTICK_XPAD=y
+Actual value:     
+
+Value requested for CONFIG_HID_SONY not in final .config
+Requested value:  CONFIG_HID_SONY=y
+CONFIG_HID_SONY=y
+Actual value:     
+
+Value requested for CONFIG_HID_NINTENDO not in final .config
+Requested value:  CONFIG_HID_NINTENDO=y
+CONFIG_HID_NINTENDO=y
+Actual value:     
+
+Value requested for CONFIG_UHID not in final .config
+Requested value:  CONFIG_UHID=y
+CONFIG_UHID=y
+Actual value:     
+
+Value requested for CONFIG_UINPUT not in final .config
+Requested value:  CONFIG_UINPUT=y
+CONFIG_UINPUT=y
+Actual value:     
+
+Value requested for CONFIG_CFG80211 not in final .config
+Requested value:  CONFIG_CFG80211=y
+CONFIG_CFG80211=y
+Actual value:     CONFIG_CFG80211=y
+
+Value requested for CONFIG_MAC80211 not in final .config
+Requested value:  CONFIG_MAC80211=y
+CONFIG_MAC80211=y
+Actual value:     CONFIG_MAC80211=y
+
+Value requested for CONFIG_BT_HIDP not in final .config
+Requested value:  CONFIG_BT_HIDP=y
+CONFIG_BT_HIDP=y
+Actual value:     
+
+Value requested for CONFIG_PCI not in final .config
+Requested value:  CONFIG_PCI=y
+CONFIG_PCI=y
+Actual value:     CONFIG_PCI=y
+
+Value requested for CONFIG_PCI_MSI not in final .config
+Requested value:  CONFIG_PCI_MSI=y
+CONFIG_PCI_MSI=y
+Actual value:     CONFIG_PCI_MSI=y
+
+Value requested for CONFIG_CRYPTO not in final .config
+Requested value:  CONFIG_CRYPTO=y
+CONFIG_CRYPTO=y
+Actual value:     CONFIG_CRYPTO=y
+
+Value requested for CONFIG_CRYPTO_AES not in final .config
+Requested value:  CONFIG_CRYPTO_AES=y
+CONFIG_CRYPTO_AES=y
+Actual value:     CONFIG_CRYPTO_AES=y
+
+Value requested for CONFIG_CRYPTO_CCM not in final .config
+Requested value:  CONFIG_CRYPTO_CCM=y
+CONFIG_CRYPTO_CCM=y
+Actual value:     CONFIG_CRYPTO_CCM=y
+
+Value requested for CONFIG_CRYPTO_GCM not in final .config
+Requested value:  CONFIG_CRYPTO_GCM=y
+CONFIG_CRYPTO_GCM=y
+Actual value:     CONFIG_CRYPTO_GCM=y
+
+Value requested for CONFIG_CRYPTO_SHA256 not in final .config
+Requested value:  CONFIG_CRYPTO_SHA256=y
+CONFIG_CRYPTO_SHA256=y
+Actual value:     CONFIG_CRYPTO_SHA256=y
+
