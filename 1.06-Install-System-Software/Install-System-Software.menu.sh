@@ -707,7 +707,16 @@ bldPatch() {
 	return 1
 }
 
-bldTar() { :; }
+bldTar() {
+	echoL "Tar (1.35)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldTexinfo() { :; }
 bldVim() { :; }
 bldMarkupSafe() { :; }
@@ -777,7 +786,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldTar	na.sh	Undefined.
 bldTexinfo	na.sh	Undefined.
 bldVim	na.sh	Undefined.
 bldMarkupSafe	na.sh	Undefined.
