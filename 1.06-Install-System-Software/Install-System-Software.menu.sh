@@ -677,7 +677,16 @@ bldKbd() {
 	return 1
 }
 
-bldLibpipeline() { :; }
+bldLibpipeline() {
+	echoL "Libpipeline (1.5.8)"
+	echoR "Install System Software"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 bldMake() { :; }
 bldPatch() { :; }
 bldTar() { :; }
@@ -750,7 +759,6 @@ lfs_tmux_entry main  # must be called after the routine it defines.
 
 exit 1
 
-bldLibpipeline	na.sh	Undefined.
 bldMake	na.sh	Undefined.
 bldPatch	na.sh	Undefined.
 bldTar	na.sh	Undefined.
