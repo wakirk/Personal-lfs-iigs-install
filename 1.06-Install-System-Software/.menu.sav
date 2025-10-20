@@ -71,3 +71,4 @@ bldTexinfo	*
 bldVim	*
 bldMarkupSafe	*
 bldJinja	*
+bldUdevfromSystemd	*
