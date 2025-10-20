@@ -69,3 +69,5 @@ bldPatch	*
 bldTar	*
 bldTexinfo	*
 bldVim	*
+bldMarkupSafe	*
+bldJinja	*
