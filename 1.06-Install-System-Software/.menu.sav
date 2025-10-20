@@ -64,3 +64,4 @@ bldGzip	*
 bldIPRoute2	*
 bldKbd	*
 bldLibpipeline	*
+bldMake	*
