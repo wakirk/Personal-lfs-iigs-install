@@ -29,119 +29,164 @@ source /root/lfs/lib/menu.lib   # In every script.
 	make allnoconfig	# everything = n
 	cat > Kernel.cfg << "EOF"
 
-# ==== UEFI / early console ====
-# arch/family guard so 32-bit lines get overridden
+# ==== Arch / base ====
+# Parents that reveal the missing menus
+CONFIG_INPUT=y
+
+CONFIG_USB_SUPPORT=y
+CONFIG_USB=y
+CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_PCI=y
+
+CONFIG_HID_SUPPORT=y
+CONFIG_HID=y
+CONFIG_HID_GENERIC=y
+
+# Optional on PCs (ULPI = external USB PHY bus; usually not needed on x86)
+CONFIG_USB_ULPI_BUS=y
+
+USB_SUPPORT=y
+CONFIG_USB_ULPI_BUS=y
+CONFIG_HID_SUPPORT=y
+
 CONFIG_64BIT=y
 CONFIG_X86_64=y
 CONFIG_ACPI=y
 
-# core buses
+# Monolithic kernel
+# CONFIG_MODULES is not set
+CONFIG_FW_LOADER=y
+# CONFIG_FW_LOADER_USER_HELPER is not set
+
+# Core pseudo filesystems
+CONFIG_PROC_FS=y
+CONFIG_SYSFS=y
+CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS_MOUNT=y
+
+# ==== Buses / block path ====
 CONFIG_PCI=y
 CONFIG_PCI_MSI=y
+CONFIG_SCSI=y
+CONFIG_BLK_DEV_SD=y
+CONFIG_PARTITION_ADVANCED=y
+CONFIG_EFI_PARTITION=y
 
-# USB/HID parents + XHCI
+# ==== Storage ====
+CONFIG_BLK_DEV_NVME=y
+CONFIG_NVME_CORE=y
+CONFIG_ATA=y
+CONFIG_SATA_AHCI=y
+
+# ==== Filesystems ====
+CONFIG_EXT4_FS=y
+CONFIG_EXT4_USE_FOR_EXT2=y
+CONFIG_TMPFS=y
+CONFIG_TMPFS_POSIX_ACL=y
+
+# FAT / DOS
+CONFIG_FAT_FS=y
+CONFIG_MSDOS_FS=y
+CONFIG_VFAT_FS=y
+CONFIG_NLS=y
+CONFIG_NLS_CODEPAGE_437=y
+CONFIG_NLS_ISO8859_1=y
+CONFIG_FAT_DEFAULT_CODEPAGE=437
+CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"
+
+# Exec formats & sockets
+CONFIG_BINFMT_ELF=y
+CONFIG_BINFMT_SCRIPT=y
+CONFIG_UNIX=y
+
+# ==== UEFI / console / graphics ====
+CONFIG_EFI=y
+CONFIG_EFI_STUB=y
+CONFIG_EFIVAR_FS=y
+
+# Text console on framebuffer
+CONFIG_VT=y
+CONFIG_VT_CONSOLE=y
+CONFIG_TTY=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+
+# DRM/KMS + early console
+CONFIG_DRM=y
+CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_DRM_SIMPLEDRM=y
+
+# EFI/simple FB fallbacks
+CONFIG_FB=y
+CONFIG_FB_EFI=y
+CONFIG_FB_SIMPLE=y
+
+# GPUs
+CONFIG_DRM_I915=y
+CONFIG_DRM_NOUVEAU=y
+
+# ==== USB / HID / Input ====
 CONFIG_USB=y
-CONFIG_USB_HID=y
-CONFIG_HID=y
-CONFIG_HID_GENERIC=y
+CONFIG_USB_STORAGE=y
 CONFIG_USB_XHCI_HCD=y
 CONFIG_USB_XHCI_PCI=y
 
-# input/gamepads that were dropping
 CONFIG_INPUT=y
 CONFIG_INPUT_EVDEV=y
 CONFIG_INPUT_JOYSTICK=y
 CONFIG_UINPUT=y
 CONFIG_UHID=y
+
+CONFIG_HID=y
+CONFIG_HID_GENERIC=y
+CONFIG_USB_HID=y
 CONFIG_HID_SONY=y
 CONFIG_HID_NINTENDO=y
 CONFIG_JOYSTICK_XPAD=y
+CONFIG_HIDRAW=y
 
-# sound top-level (needed for SND_* to appear)
-CONFIG_SOUND=y
+# PS/2 fallback
+CONFIG_SERIO=y
+CONFIG_SERIO_I8042=y
+CONFIG_KEYBOARD_ATKBD=y
 
-# wifi/mac80211 parents + basic crypto (WPA2/CCMP)
+# ==== Networking ====
+CONFIG_NET=y
+CONFIG_NETDEVICES=y
+CONFIG_ETHERNET=y
+CONFIG_PACKET=y
+CONFIG_INET=y
+CONFIG_IPV6=y
+
+# Wired NIC
+CONFIG_R8169=y
+
+# Wi-Fi stack + crypto
+CONFIG_WLAN=y
 CONFIG_CFG80211=y
 CONFIG_MAC80211=y
 CONFIG_CRYPTO=y
 CONFIG_CRYPTO_AES=y
 CONFIG_CRYPTO_CCM=y
 CONFIG_CRYPTO_GCM=y
+CONFIG_CRYPTO_CMAC=y
 CONFIG_CRYPTO_SHA256=y
+CONFIG_CRYPTO_SHA1=y
+CONFIG_CRYPTO_MICHAEL_MIC=y
 
-# bluetooth HID path
-CONFIG_BT=y
-CONFIG_BT_BREDR=y
-CONFIG_BT_HIDP=y
-
-
-CONFIG_64BIT=y
-CONFIG_X86_64=y
-CONFIG_ACPI=y
-
-CONFIG_SOUND=y
-CONFIG_INPUT=y
-CONFIG_HID=y
-CONFIG_USB=y
-CONFIG_USB_HID=y
-CONFIG_HID_GENERIC=y
-
-
-CONFIG_EFI=y
-CONFIG_EFI_STUB=y
-CONFIG_EFIVAR_FS=y
-CONFIG_FB_EFI=y
-CONFIG_DRM=y
-CONFIG_DRM_SIMPLEDRM=y
-
-# ==== Partitioning / block ====
-CONFIG_PARTITION_ADVANCED=y
-CONFIG_EFI_PARTITION=y
-
-# ==== Storage controllers (present) ====
-CONFIG_BLK_DEV_NVME=y
-CONFIG_NVME_CORE=y
-CONFIG_ATA=y
-CONFIG_SATA_AHCI=y
-
-# ==== Root filesystem & device nodes ====
-CONFIG_EXT4_FS=y
-CONFIG_DEVTMPFS=y
-CONFIG_DEVTMPFS_MOUNT=y
-CONFIG_TMPFS=y
-CONFIG_TMPFS_POSIX_ACL=y
-
-# ==== USB host / storage / input ====
-CONFIG_USB=y
-CONFIG_USB_XHCI_HCD=y
-CONFIG_USB_XHCI_PCI=y
-CONFIG_USB_STORAGE=y
-CONFIG_HID=y
-CONFIG_USB_HID=y
-CONFIG_HID_GENERIC=y
-
-# ==== PS/2 fallback ====
-CONFIG_SERIO=y
-CONFIG_SERIO_I8042=y
-CONFIG_KEYBOARD_ATKBD=y
-
-# ==== Graphics seen ====
-CONFIG_DRM_I915=y
-CONFIG_DRM_NOUVEAU=y
-
-# ==== Networking seen ====
-CONFIG_NET=y
-CONFIG_PACKET=y
-CONFIG_INET=y
-CONFIG_IPV6=y
-# Realtek PCIe GbE
-CONFIG_R8169=y
-# Intel Wi-Fi
-CONFIG_WLAN=y
+# Intel Wi-Fi driver
 CONFIG_IWLWIFI=y
 CONFIG_IWLMVM=y
 
-# ==== Audio (HDA + codecs) ====
+# Bluetooth (+ HID over BT, USB transport)
+CONFIG_BT=y
+CONFIG_BT_BREDR=y
+CONFIG_BT_LE=y
+CONFIG_BT_HIDP=y
+CONFIG_BT_HCIBTUSB=y
+
+# ==== Audio ====
+CONFIG_SOUND=y
 CONFIG_SND=y
 CONFIG_SND_PCI=y
 CONFIG_SND_HDA_INTEL=y
@@ -149,7 +194,7 @@ CONFIG_SND_HDA_CODEC_REALTEK=y
 CONFIG_SND_HDA_CODEC_HDMI=y
 CONFIG_SND_HDA_GENERIC=y
 
-# ==== Platform / buses in use ====
+# ==== Platform / sensors / RTC ====
 CONFIG_I2C=y
 CONFIG_I2C_I801=y
 CONFIG_EEPROM=y
@@ -159,226 +204,52 @@ CONFIG_SPI=y
 CONFIG_SPI_NOR=y
 CONFIG_MTD=y
 CONFIG_MTD_SPI_NOR=y
-# intel-spi
 CONFIG_SPI_INTEL_PCI=y
-# (Some platforms use these variants—harmless if unused)
+
 CONFIG_MFD_INTEL_LPSS=y
 CONFIG_MFD_INTEL_LPSS_PCI=y
 CONFIG_INTEL_MEI=y
 CONFIG_INTEL_MEI_ME=y
 CONFIG_INTEL_PCH_THERMAL=y
 
-# ==== Bluetooth seen ====
-CONFIG_BT=y
-CONFIG_BT_BREDR=y
-CONFIG_BT_HCIBTUSB=y
-
-# ==== Misc platform helpers ====
 CONFIG_ACPI_WMI=y
 CONFIG_WMI_BMOF=y
 CONFIG_WATCHDOG=y
 CONFIG_ITCO_WDT=y
 
-# ===== Console + framebuffer basics =====
-CONFIG_VT=y
-CONFIG_VT_CONSOLE=y
-CONFIG_TTY=y
-# text console on fb
-CONFIG_FRAMEBUFFER_CONSOLE=y
-
-# ===== DRM/KMS path (preferred) =====
-CONFIG_DRM=y
-CONFIG_DRM_KMS_HELPER=y
-# exposes /dev/fb0 via DRM
-CONFIG_DRM_FBDEV_EMULATION=y
-# early console via EFI GOP
-CONFIG_DRM_SIMPLEDRM=y
-
-# ===== EFI framebuffer fallback =====
-CONFIG_FB=y
-# efifb fallback if DRM isn’t ready yet
-CONFIG_FB_EFI=y
-# simplefb fallback (optional)
-CONFIG_FB_SIMPLE=y
-
-# ===== Your GPUs (built-in, from earlier) =====
-CONFIG_DRM_I915=y
-CONFIG_DRM_NOUVEAU=y
-
-# ===== Input for userspace on the console =====
-# SDL/evdev input without X
-CONFIG_INPUT_EVDEV=y
-# optional: raw HID access if needed
-CONFIG_HIDRAW=y
-
-
-# Samsung 990 Pro 2TB Type 2280 PCIe M.2 Drive for Selected Boards 149.00 1 149.00
-# 32GB DDR4 3200 SODIMM only for selected boards 65.00 1 65.00
-# 32GB DDR4 3200 SODIMM only for selected boards 65.00 1 65.00
-# Samsung 870 EVO 2TB 2.5in SATA SSD 128.00 1 128.00
-# C64x Retro Keyboard Chassis - Original Beige 169.00 1 169.00
-# C64x Ultimate System with Intel i9-9880H, 4GB GTX1650, AC Adapter 649.00 1 649.00
-# CARRIAGE 
-
-
-# Mount the EFI System Partition or FAT sticks without modules (optional)
-CONFIG_FAT_FS=y
-CONFIG_MSDOS_FS=y
-CONFIG_VFAT_FS=y
-
-# Sensors you likely want on this i9-9880H + NVMe
 CONFIG_HWMON=y
-# CPU temps
 CONFIG_SENSORS_CORETEMP=y
-# NVMe temps via hwmon (if offered in your 6.16)
 CONFIG_NVME_HWMON=y
 
-# CPU frequency driver for Intel (nice for thermals/perf)
-CONFIG_CPU_FREQ=y
-CONFIG_X86_INTEL_PSTATE=y
-
-# (You already had these platform bits, but listing in case)
-CONFIG_INTEL_PCH_THERMAL=y
-CONFIG_I2C_I801=y
-# DDR4 SPD over SMBus
-CONFIG_EE1004=y
-
-# === Filesystems (built-in) ===
-CONFIG_EXT4_FS=y
-CONFIG_EXT4_USE_FOR_EXT2=y
-
-CONFIG_FAT_FS=y
-# “DOS” filesystem
-CONFIG_MSDOS_FS=y
-# FAT32 (long filenames)
-CONFIG_VFAT_FS=y
-
-# FAT needs NLS to interpret filenames/codepages
-CONFIG_NLS=y
-# common on FAT media
-CONFIG_NLS_CODEPAGE_437=y
-# reasonable default charset
-CONFIG_NLS_ISO8859_1=y
-CONFIG_FAT_DEFAULT_CODEPAGE=437
-CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"
-
-
-
-# ==== CPU / scheduling ====
-# multi-core/HT
-CONFIG_SMP=y
-# fits 8C/16T, trims tables a bit
-CONFIG_NR_CPUS=16
-# package-level scheduling
-CONFIG_SCHED_MC=y
-# hyperthreading aware
-CONFIG_SCHED_SMT=y
-
-# Preemption / latency (pick one style; this selects full preempt)
-# low-latency kernel (good for interactive/emulators)
-CONFIG_PREEMPT=y
-CONFIG_PREEMPT_COUNT=y
-CONFIG_PREEMPTION=y
-
-# Timer model / tick
-# tickless when idle
-CONFIG_NO_HZ_IDLE=y
-CONFIG_HIGH_RES_TIMERS=y
-# 1000 Hz timer for smoother input/audio
-CONFIG_HZ_1000=y
-# disable other HZ:
-# CONFIG_HZ_250 is not set
-# CONFIG_HZ_300 is not set
-# CONFIG_HZ_100 is not set
-
-# CPU power mgmt for Intel
-CONFIG_CPU_FREQ=y
-CONFIG_X86_INTEL_PSTATE=y
-CONFIG_INTEL_IDLE=y
-
-# ==== Memory management ====
-CONFIG_TRANSPARENT_HUGEPAGE=y
-# only when userspace asks (safer for latency)
-CONFIG_TRANSPARENT_HUGEPAGE_MADVISE=y
-# CONFIG_TRANSPARENT_HUGEPAGE_ALWAYS is not set
-
-# (Optional; leave off unless you plan to use it)
-# CONFIG_ZSWAP=y
-# CONFIG_ZSMALLOC=y
-
-
-# lfs-iigs-extras.cfg — input, console debug, clock
-
-# Game controllers (SDL without X)
-CONFIG_INPUT_JOYSTICK=y
-# (you already set this in fb fragment)
-CONFIG_INPUT_EVDEV=y
-# Xbox pads
-CONFIG_JOYSTICK_XPAD=y
-# DualShock/DualSense
-CONFIG_HID_SONY=y
-# Switch Pro/Joy-Cons
-CONFIG_HID_NINTENDO=y
-# userspace HID helpers
-CONFIG_UHID=y
-# userspace virtual input (mapping tools)
-CONFIG_UINPUT=y
-
-# Real-time clock so time is sane on boot
 CONFIG_RTC_CLASS=y
 CONFIG_RTC_HCTOSYS=y
 CONFIG_RTC_HCTOSYS_DEVICE="rtc0"
 CONFIG_RTC_DRV_CMOS=y
 
-# --- lfs-iigs-delta.cfg ---
+# ==== CPU / scheduler / timers ====
+CONFIG_SMP=y
+CONFIG_NR_CPUS=16
+CONFIG_SCHED_MC=y
+CONFIG_SCHED_SMT=y
 
-# Monolithic: turn off module support entirely
-# (firmware loading still works from /lib/firmware)
-# CONFIG_MODULES is not set
-CONFIG_FW_LOADER=y
-# CONFIG_FW_LOADER_USER_HELPER is not set
+# Low-latency profile
+CONFIG_PREEMPT=y
+CONFIG_PREEMPT_COUNT=y
+CONFIG_PREEMPTION=y
 
-# Core pseudo filesystems (needed by lots of userspace)
-CONFIG_PROC_FS=y
-CONFIG_SYSFS=y
+# Tick / HZ
+CONFIG_NO_HZ_IDLE=y
+CONFIG_HIGH_RES_TIMERS=y
+CONFIG_HZ_1000=y
 
-# Wi-Fi stack pieces iwlwifi needs (built-in)
-CONFIG_CFG80211=y
-CONFIG_MAC80211=y
+# Power mgmt
+CONFIG_CPU_FREQ=y
+CONFIG_X86_INTEL_PSTATE=y
+CONFIG_INTEL_IDLE=y
 
-# Bluetooth LE + HID over BT (for modern pads/keyboards)
-CONFIG_BT_LE=y
-CONFIG_BT_HIDP=y
-
-
-# --- tiny delta to add ---
-# Core buses
-CONFIG_PCI=y
-CONFIG_PCI_MSI=y
-
-# SATA/USB storage paths need SCSI core + sd disk
-CONFIG_SCSI=y
-CONFIG_BLK_DEV_SD=y
-
-# Sockets & basic exec formats (some userspace quietly assumes these)
-CONFIG_UNIX=y
-CONFIG_BINFMT_ELF=y
-CONFIG_BINFMT_SCRIPT=y
-
-# Net device core (r8169 depends on these being on)
-CONFIG_NETDEVICES=y
-CONFIG_ETHERNET=y
-
-# Wi-Fi/mac80211 crypto (for WPA/CCMP etc.)
-CONFIG_CRYPTO=y
-CONFIG_CRYPTO_AES=y
-CONFIG_CRYPTO_CCM=y
-CONFIG_CRYPTO_GCM=y
-CONFIG_CRYPTO_CMAC=y
-CONFIG_CRYPTO_SHA256=y
-CONFIG_CRYPTO_SHA1=y
-# legacy TKIP; harmless to include
-CONFIG_CRYPTO_MICHAEL_MIC=y
+# ==== Memory ====
+CONFIG_TRANSPARENT_HUGEPAGE=y
+CONFIG_TRANSPARENT_HUGEPAGE_MADVISE=y
 
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)
@@ -386,14 +257,23 @@ EOF
 	scripts/kconfig/merge_config.sh .config Kernel.cfg > output.txt 2>&1
 	cp output.txt /root/lfs/bash
 	echo "done."
-	/bin/bash
-	exit 1
 	make olddefconfig 
-	/bin/bash
+	# 1) Confirm the parents really are ON in your final .config
+	for k in CONFIG_USB CONFIG_USB_XHCI_HCD CONFIG_USB_XHCI_PCI \
+		CONFIG_INPUT CONFIG_HID CONFIG_USB_HID CONFIG_HID_GENERIC \
+		CONFIG_BT CONFIG_BT_HIDP ; do
+		scripts/config --state "$k"
+	done
+	# 2) Make sure your fragment has NO lines that turn these off later.
+	# (Order matters in fragments: last assignment wins.)
+	grep -nE '^(# +CONFIG_(USB(|_XHCI_HCD|_XHCI_PCI)|HID(|_GENERIC|_SONY|_NINTENDO)|USB_HID|INPUT|UHID|UINPUT|JOYSTICK_XPAD|BT(|_HIDP)) +is +not +set)' Kernel.cfg
+
 	echoL "Configure Linux Kernerl Setup (6.16.1)"
-	# make nconfig
+#	make nconfig
 	cp .config /root/lfs/bash/config.default
-	
+#	/bin/bash
+#	return 1
+
 	echoL "Building Linux (6.16.1)..."
 	make
 
@@ -403,7 +283,7 @@ EOF
 	cp -fiv System.map /boot/System.map-6.16.1
 	cp -fiv .config /boot/config-6.16.1
 	cp -fr Documentation -T /usr/share/doc/linux-6.16.1
-	install -v -m755 -d /etc/modprobe.d
+# 	install -v -m755 -d /etc/modprobe.d
 
 	echoL "Cleaning up build area...."
 	sleep 2
