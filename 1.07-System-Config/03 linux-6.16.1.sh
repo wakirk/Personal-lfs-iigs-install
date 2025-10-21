@@ -30,6 +30,31 @@ source /root/lfs/lib/menu.lib   # In every script.
 	cat > Kernel.cfg << "EOF"
 
 # ==== Arch / base ====
+
+# BLFS UEFI boot essentials (built-in)
+
+# Processor type and features → EFI runtime + stub
+CONFIG_EFI=y
+CONFIG_EFI_STUB=y
+
+# Block layer + GPT
+CONFIG_BLOCK=y
+CONFIG_PARTITION_ADVANCED=y
+CONFIG_EFI_PARTITION=y
+
+# Filesystems → FAT/VFAT + NLS + efivarfs
+CONFIG_FAT_FS=y
+CONFIG_MSDOS_FS=y
+CONFIG_VFAT_FS=y
+CONFIG_NLS=y
+CONFIG_NLS_CODEPAGE_437=y
+CONFIG_NLS_ISO8859_1=y
+CONFIG_EFIVAR_FS=y
+
+# (Optional but often handy since BLFS mentions EXFAT)
+CONFIG_EXFAT_FS=y
+
+
 # Parents that reveal the missing menus
 CONFIG_INPUT=y
 
@@ -279,10 +304,10 @@ EOF
 
 	echoL "Installing Linux (6.16.1)..."
 	sleep 2
-	cp -fiv arch/x86/boot/bzImage /boot/vmlinuz-6.16.1-lfs-12.4
-	cp -fiv System.map /boot/System.map-6.16.1
-	cp -fiv .config /boot/config-6.16.1
-	cp -fr Documentation -T /usr/share/doc/linux-6.16.1
+	cp -fv arch/x86/boot/bzImage /boot/vmlinuz-6.16.1-lfs-12.4
+	cp -fv System.map /boot/System.map-6.16.1
+	cp -fv .config /boot/config-6.16.1
+	cp -frv Documentation -T /usr/share/doc/linux-6.16.1
 # 	install -v -m755 -d /etc/modprobe.d
 
 	echoL "Cleaning up build area...."
