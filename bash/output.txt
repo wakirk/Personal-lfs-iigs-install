@@ -164,26 +164,26 @@ Value of CONFIG_TRANSPARENT_HUGEPAGE is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_TRANSPARENT_HUGEPAGE is not set
 New value: CONFIG_TRANSPARENT_HUGEPAGE=y
 
-./.tmp.config.AmaUZwKQo1:1503:warning: unexpected data: USB_SUPPORT=y
-./.tmp.config.AmaUZwKQo1:1504:warning: override: reassigning to symbol USB_ULPI_BUS
-./.tmp.config.AmaUZwKQo1:1505:warning: override: reassigning to symbol HID_SUPPORT
-./.tmp.config.AmaUZwKQo1:1527:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.AmaUZwKQo1:1528:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.AmaUZwKQo1:1543:warning: override: reassigning to symbol FAT_FS
-./.tmp.config.AmaUZwKQo1:1544:warning: override: reassigning to symbol MSDOS_FS
-./.tmp.config.AmaUZwKQo1:1545:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.AmaUZwKQo1:1546:warning: override: reassigning to symbol NLS
-./.tmp.config.AmaUZwKQo1:1547:warning: override: reassigning to symbol NLS_CODEPAGE_437
-./.tmp.config.AmaUZwKQo1:1548:warning: override: reassigning to symbol NLS_ISO8859_1
-./.tmp.config.AmaUZwKQo1:1558:warning: override: reassigning to symbol EFI
-./.tmp.config.AmaUZwKQo1:1559:warning: override: reassigning to symbol EFI_STUB
-./.tmp.config.AmaUZwKQo1:1560:warning: override: reassigning to symbol EFIVAR_FS
-./.tmp.config.AmaUZwKQo1:1584:warning: override: reassigning to symbol USB
-./.tmp.config.AmaUZwKQo1:1586:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.AmaUZwKQo1:1587:warning: override: reassigning to symbol USB_XHCI_PCI
-./.tmp.config.AmaUZwKQo1:1589:warning: override: reassigning to symbol INPUT
-./.tmp.config.AmaUZwKQo1:1595:warning: override: reassigning to symbol HID
-./.tmp.config.AmaUZwKQo1:1596:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.IPqrBNjcF1:1503:warning: unexpected data: USB_SUPPORT=y
+./.tmp.config.IPqrBNjcF1:1504:warning: override: reassigning to symbol USB_ULPI_BUS
+./.tmp.config.IPqrBNjcF1:1505:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.IPqrBNjcF1:1527:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.IPqrBNjcF1:1528:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.IPqrBNjcF1:1543:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.IPqrBNjcF1:1544:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.IPqrBNjcF1:1545:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.IPqrBNjcF1:1546:warning: override: reassigning to symbol NLS
+./.tmp.config.IPqrBNjcF1:1547:warning: override: reassigning to symbol NLS_CODEPAGE_437
+./.tmp.config.IPqrBNjcF1:1548:warning: override: reassigning to symbol NLS_ISO8859_1
+./.tmp.config.IPqrBNjcF1:1558:warning: override: reassigning to symbol EFI
+./.tmp.config.IPqrBNjcF1:1559:warning: override: reassigning to symbol EFI_STUB
+./.tmp.config.IPqrBNjcF1:1560:warning: override: reassigning to symbol EFIVAR_FS
+./.tmp.config.IPqrBNjcF1:1584:warning: override: reassigning to symbol USB
+./.tmp.config.IPqrBNjcF1:1586:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.IPqrBNjcF1:1587:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.IPqrBNjcF1:1589:warning: override: reassigning to symbol INPUT
+./.tmp.config.IPqrBNjcF1:1595:warning: override: reassigning to symbol HID
+./.tmp.config.IPqrBNjcF1:1596:warning: override: reassigning to symbol HID_GENERIC
 #
 # configuration written to .config
 #

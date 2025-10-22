@@ -40,7 +40,7 @@ main () {
 	sleep 2
 	make check
 	echo "One test named m_assume_storage_prezeroed is known to fail."
-	/bin/bash
+
 
 	echoL "Installing E2fsprogs (1.47.3)..."
 	sleep 2
@@ -57,7 +57,7 @@ main () {
 	echo "some utilities (not in LFS or BLFS) cannot recognize a ext4 file system with metadata_csum_seed"
 	echo "feature enabled. If you need such a utility, you may remove the feature from the default"
 	echo "ext4 feature list with the command:"
-	/bin/bash
+
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources

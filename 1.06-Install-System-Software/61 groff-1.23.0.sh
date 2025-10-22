@@ -31,7 +31,7 @@ main () {
 	echoL "Testing Groff (1.23.0)..."
 	sleep 2
 	make check
-	/bin/bash
+
 
 	echoL "Installing Groff (1.23.0)..."
 	sleep 2

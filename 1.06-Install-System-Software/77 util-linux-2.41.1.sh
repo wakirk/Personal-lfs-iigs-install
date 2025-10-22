@@ -52,7 +52,7 @@ main () {
 	chown -R tester .
 	su tester -c "make -k check"
 	echo "Some tests are known to fail."
-	/bin/bash
+
 
 	echoL "Installing Util-linux (2.41.1)..."
 	sleep 2

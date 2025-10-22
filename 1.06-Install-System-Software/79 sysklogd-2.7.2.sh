@@ -52,7 +52,7 @@ secure_mode 2
 
 # End /etc/syslog.conf
 EOF
-	/bin/bash
+
 	
 	echoL "Cleaning up build area...."
 	sleep 2
