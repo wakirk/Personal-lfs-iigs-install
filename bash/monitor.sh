@@ -2,6 +2,7 @@
 # fs-watch-tree.sh — per spec
 
 # Files live in the script's directory
+cd /mnt/lfs
 SCRIPT_DIR="$(pwd)"
 PREV_FILE="$SCRIPT_DIR/previous.dat"
 CURR_FILE="$SCRIPT_DIR/current.dat"
@@ -35,10 +36,37 @@ while :; do
   mv -f "$CURR_FILE" "$PREV_FILE"
 
   # 2) Take a new snapshot into current.dat
+  cd /mnt/lfs
   tree /mnt/lfs -f -x > "$CURR_FILE"
 
+   printf '%*s' "$cols" ''
+   # Move to second-to-last line
+   rows=$(tput lines)
+   cols=$(tput cols)
+   tput cup $((rows-4)) 0
+
+   # Clear the line by painting spaces, then return to col 0
+   printf '%*s' "$cols" ''
+   tput cup $((rows-4)) 0
+
+
+
+#  tput el   # optional: clear to end of line
+#  tput cup $((rows-2)) 0
+  printf '\033[2K'             # fallback: CSI 2K clears entire line
   # 3) Show changes from previous -> current
-  diff "$PREV_FILE" "$CURR_FILE" --context
+  diff "$PREV_FILE" "$CURR_FILE" --context 2>/dev/null \
+  | LC_ALL=C grep -E '^[!+-] ' \
+  | grep -Fv -e '/mnt/lfs/sources/' -e '/mnt/lfs/tmp'
+  echo " "
+
+# diff "$PREV_FILE" "$CURR_FILE" --context 2>/dev/null | LC_ALL=C grep -E '^[!+-] '
+#    diff "$PREV_FILE" "$CURR_FILE" --context 2>/dev/null \
+#    | LC_ALL=C grep -E '^[!+-] ' \
+#    | grep -Fv '/mnt/lfs/sources/'
+
+#   diff "$PREV_FILE" "$CURR_FILE" --context 2>/dev/null | LC_ALL=C grep -E '^[!+-]'
+#  diff "$PREV_FILE" "$CURR_FILE" --context | grep -E '^[+\-!]'
   # 4) Wait
-  sleep 1
+  sleep 5
 done

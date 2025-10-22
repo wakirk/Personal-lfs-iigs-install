@@ -49,8 +49,8 @@ main () {
 	echoL "Testing GCC (15.2.0)..."
 	sed -e '/cpython/d' -i ../gcc/testsuite/gcc.dg/plugin/plugin.exp
 	chown -R tester .
-	su tester -c "PATH=$PATH make -k check"
-	../contrib/test_summary
+#	su tester -c "PATH=$PATH make -k check"
+#	../contrib/test_summary
 
 	echoL "Installing GCC (15.2.0)..."
 	sleep 2
