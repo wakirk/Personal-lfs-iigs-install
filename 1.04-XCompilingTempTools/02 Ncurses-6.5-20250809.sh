@@ -53,7 +53,7 @@ main () {
 
 	echoL "Install Complete "
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR ncurses-6.5-20250809
 	
 	exit 1

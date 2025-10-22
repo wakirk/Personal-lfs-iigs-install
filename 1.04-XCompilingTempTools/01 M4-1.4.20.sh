@@ -35,7 +35,7 @@ main () {
 
 	echoL "Install Complete "
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR m4-1.4.20
 
 	exit 1

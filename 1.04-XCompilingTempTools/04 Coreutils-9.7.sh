@@ -41,7 +41,7 @@ main () {
 
 	echoL "Install Complete Coreutils (9.7)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR coreutils-9.7
 
 	exit 1

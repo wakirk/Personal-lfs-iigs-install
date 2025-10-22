@@ -37,7 +37,7 @@ main () {
 
 	echoL "Install Complete Bash (5.3)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR bash-5.3
 
 	exit 1

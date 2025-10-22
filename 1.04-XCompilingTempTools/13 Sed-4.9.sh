@@ -35,7 +35,7 @@ main () {
 
 	echoL "Install Complete Sed (4.9)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR sed-4.9
 
 	exit 1

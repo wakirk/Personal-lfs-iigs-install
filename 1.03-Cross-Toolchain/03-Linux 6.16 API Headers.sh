@@ -34,7 +34,7 @@ main () {
 
 	echoL "Install Linux Kernel (6.16)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR linux-6.16.1
 
 	exit 1

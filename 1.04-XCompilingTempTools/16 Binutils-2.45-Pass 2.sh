@@ -43,8 +43,7 @@ main () {
 
 	echoL "Install Complete Binutils (2.45) Pass 2"
 	sleep 2
-	cd ..
-	cd ..
+	cd $LFS/sources
 	rm -fR binutils-2.45
 	exit 1
 }

@@ -37,7 +37,7 @@ main () {
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR xz-5.8.1.tar.xz
+	rm -fR xz-5.8.1
 
 	echoL "Exiting..."
 }

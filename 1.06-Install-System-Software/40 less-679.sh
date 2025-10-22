@@ -31,7 +31,6 @@ main () {
 	echoL "Testing Less (679)..."
 	sleep 2
 	make check
-	/bin/bash
 
 	echoL "Installing Less (679)..."
 	sleep 2

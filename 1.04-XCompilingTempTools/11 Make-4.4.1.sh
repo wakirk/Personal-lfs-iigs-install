@@ -35,7 +35,7 @@ main () {
 
 	echoL "Install Complete Make (4.4.1)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR make-4.4.1
 
 	exit 1

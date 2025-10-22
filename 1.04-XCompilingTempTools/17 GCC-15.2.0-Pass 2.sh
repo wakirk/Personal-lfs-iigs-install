@@ -13,7 +13,12 @@ main () {
 	cd $LFS/sources
 	ls
 
-	echoL "Unpack: GCC (15.2.0) Pass 2..."
+	cp -fv  /home/lfs/lfs/Packages/gcc-15.2.0.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpfr-4.2.2.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/gmp-6.3.0.tar.xz  $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpc-1.3.1.tar.gz  $LFS/sources
+	cd $LFS/sources
+	echoL "Unpack: GCC (15.2.0)..."
 	sleep 2
 	rm -fR gcc-15.2.0
 	tar -vxsf gcc-15.2.0.tar.xz
@@ -61,7 +66,7 @@ main () {
 
 	echoL "Install Complete GCC (15.2.0) Pass 2"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR gcc-15.2.0
 
 	exit 1

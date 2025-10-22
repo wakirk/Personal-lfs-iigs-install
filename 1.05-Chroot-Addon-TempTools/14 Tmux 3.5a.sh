@@ -15,7 +15,7 @@ main () {
 	localedef -i en_US -f UTF-8 en_US.UTF-8
 
 	cd /sources
-	rm -fR  tmux-3.5a
+	rm -fR tmux-3.5a
 
 }
 

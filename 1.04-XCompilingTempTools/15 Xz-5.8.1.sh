@@ -38,7 +38,7 @@ main () {
 
 	echoL "Install Complete Xz Utils (5.8.1)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR xz-5.8.1
 
 	exit 1

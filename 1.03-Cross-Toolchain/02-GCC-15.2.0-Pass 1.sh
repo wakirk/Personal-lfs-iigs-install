@@ -92,11 +92,9 @@ main () {
 	cat gcc/limitx.h gcc/glimits.h gcc/limity.h > `dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include/limits.h
 
 	echoL "Install Complete GCC (15.2.0)"
+	cd $LFS/sources
+	rm -fR gcc-15.2.0
 	sleep 2
-	cd ..
-	cd ..
-#	rm -fR gcc-15.2.0  nope. we use it later.
-
 	exit 1
 }
 

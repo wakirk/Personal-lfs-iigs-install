@@ -4,9 +4,16 @@ source /home/lfs/lfs/lib/menu.lib   # In every script.
 
 main () {
 	clear
-
-	echoR "Installing Software"
+	cp -fv  /home/lfs/lfs/Packages/gcc-15.2.0.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpfr-4.2.2.tar.xz $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/gmp-6.3.0.tar.xz  $LFS/sources
+	cp -fv  /home/lfs/lfs/Packages/mpc-1.3.1.tar.gz  $LFS/sources
 	cd $LFS/sources
+	echoR "Installing Software"
+	echoL "Unpack: GCC (15.2.0)..."
+	sleep 2
+	rm -fR gcc-15.2.0
+	tar -vxsf gcc-15.2.0.tar.xz
 	cd gcc-15.2.0
 
 	echoL "Building Libstdc++ from GCC-15.2.0..."
@@ -29,8 +36,8 @@ main () {
 
 	echoL "Installed Libstdc++ from GCC-15.2.0..."
 	sleep 2
-	cd ..
-	cd ..
+	cd $LFS/sources
+	cd gcc-15.2.0
 
 	exit 1
 }

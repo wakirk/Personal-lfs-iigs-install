@@ -36,7 +36,7 @@ main () {
 	
 	echoL "Install Complete Tar (1.35)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR tar-1.35
 
 	exit 1

@@ -36,7 +36,7 @@ main () {
 
 	echoL "Install Complete Diffutils (3.12)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR diffutils-3.12
 
 	exit 1

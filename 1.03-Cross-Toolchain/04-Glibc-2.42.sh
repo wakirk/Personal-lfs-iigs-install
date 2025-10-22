@@ -66,8 +66,7 @@ main () {
 	
 	echoL "Installed Glibc (2.42)"
 	sleep 2
-	cd ..
-	cd ..
+	cd $LFS/sources
 	rm -fR glibc-2.42
 	exit 1
 }

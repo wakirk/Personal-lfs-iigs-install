@@ -67,7 +67,6 @@ EOF
 	sleep 2
 	cd /sources
 	rm -fR vim-9.1.1629
-	/bin/bash 
 	echoL "Exiting..."
 }
 

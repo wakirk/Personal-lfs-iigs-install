@@ -35,7 +35,7 @@ main () {
 
 	echoL "Install Complete Patch (2.8)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR patch-2.8
 
 	exit 1

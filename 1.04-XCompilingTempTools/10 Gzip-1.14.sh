@@ -33,7 +33,7 @@ main () {
 
 	echoL "Install Complete Gzip (1.14)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR gzip-1.14
 
 	exit 1

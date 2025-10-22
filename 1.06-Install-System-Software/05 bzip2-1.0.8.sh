@@ -53,7 +53,7 @@ main () {
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR bzip2-1.0.8.tar.gz
+	rm -fR bzip2-1.0.8
 
 	echoL "Exiting..."
 }

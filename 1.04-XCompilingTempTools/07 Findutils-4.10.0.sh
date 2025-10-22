@@ -36,7 +36,7 @@ main () {
 
 	echoL "Install Complete Findutils (4.10.0)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR findutils-4.10.0
 
 	exit 1

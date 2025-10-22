@@ -36,7 +36,7 @@ main () {
 
 	echoL "Install Complete Gawk (5.3.2)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR gawk-5.3.2
 
 	exit 1

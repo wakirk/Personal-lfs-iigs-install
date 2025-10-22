@@ -28,7 +28,7 @@ main () {
 	make install
 
 	cd /sources
-	rm -fR util-linux-2.41.1.tar.xz
+	rm -fR util-linux-2.41.1
 
 }
 

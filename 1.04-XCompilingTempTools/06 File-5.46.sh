@@ -42,7 +42,7 @@ main () {
 
 	echoL "Install Complete File (5.46)"
 	sleep 2
-	cd ..
+	cd $LFS/sources
 	rm -fR file-5.46
 
 	exit 1
