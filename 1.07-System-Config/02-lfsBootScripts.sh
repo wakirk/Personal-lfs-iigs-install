@@ -57,7 +57,6 @@ s1:1:respawn:/sbin/sulogin
 
 # End /etc/inittab
 EOF
-
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
