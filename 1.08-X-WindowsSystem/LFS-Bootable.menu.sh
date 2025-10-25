@@ -47,6 +47,25 @@ WinlibXau() {
 	return 1
 }
 
+WinlibXdmcp() {
+	echoL "libXdmcp (1.1.5)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+Winxtrans() {
+	echoL "xtrans (1.6.0)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
 
 
 lfs_identity

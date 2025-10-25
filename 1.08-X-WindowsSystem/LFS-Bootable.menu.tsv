@@ -1,2 +1,4 @@
 Winxorgproto	01 xorgproto.sh	xorgproto (2024.1)
 WinlibXau	02 libXau.sh	libXau (1.0.12)
+WinlibXdmcp	03 libXdmcp-1.1.5.sh	libXdmcp (1.1.5)
+Winxtrans	04 xtrans-1.6.0.sh	xtrans (1.6.0)
