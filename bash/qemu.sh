@@ -2,7 +2,8 @@
 # umount-lfs-hard.sh — Firmly detach /mnt/lfs (and any submounts).
 # Default: do NOT kill holder processes. Add --kill to terminate them (TERM → KILL).
 
-set -u
+
+umount -v /dev/nvme0n1p*
 
 TARGET="/mnt/lfs"
 DO_KILL=0
@@ -44,7 +45,6 @@ fi
 
 if ! mountpoint -q "$TARGET"; then
   echo "$TARGET is not a mountpoint (already unmounted?)."
-  exit 0
 fi
 
 echo "Inspecting mounts under $TARGET..."
@@ -124,5 +124,82 @@ if mountpoint -q "$TARGET"; then
   exit 1
 else
   echo "SUCCESS: $TARGET is unmounted."
-  exit 0
 fi
+
+while true; do
+    fsck /dev/nvme0n1p1
+    rc=$?
+    [ "$rc" -eq 0 ] && break
+    sleep 1
+done
+
+while true; do
+    fsck /dev/nvme0n1p2
+    rc=$?
+    [ "$rc" -eq 0 ] && break
+    sleep 1
+done
+
+lsblk
+# qemu-boot-lfs.sh — BOOT /dev/nvme0n1 via UEFI in QEMU (WRITEABLE)
+# WARNING: Writing to a disk that is mounted on the host can corrupt it.
+# Set FORCE=1 to bypass the mounted-partitions check.
+
+#pacman -Sy --noconfirm edk2-ovmf
+
+# does load.
+#qemu-system-x86_64 -machine q35 -m 4096 \
+#  -drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2-ovmf/x64/OVMF_CODE.4m.fd \
+#  -drive if=pflash,format=raw,file=/usr/share/edk2-ovmf/x64/OVMF_VARS.4m.fd \
+#  -drive file=/dev/nvme0n1,format=raw,if=virtio,cache=none
+
+blockdev --getro /dev/nvme0n1
+blockdev --setrw /dev/nvme0n1
+qemu-system-x86_64 -machine q35 -enable-kvm -cpu host -m 4096 \
+  -drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2-ovmf/x64/OVMF_CODE.4m.fd \
+  -drive if=pflash,format=raw,file=/usr/share/edk2-ovmf/x64/OVMF_VARS.4m.fd \
+  -drive file=/dev/nvme0n1,format=raw,if=ide,cache=none,discard=unmap \
+  -boot order=c,menu=on,splash-time=5 -device virtio-vga \
+  -netdev tap,id=n0,ifname=tap0,script=no,downscript=no \
+  -device virtio-net-pci,netdev=n0 \
+  -device qemu-xhci \
+  -device usb-kbd \
+  -device usb-mouse \
+  -blockdev driver=host_device,filename=/dev/sdc,node-name=usbstick,cache.direct=on,cache.no-flush=off \
+  -device usb-storage,drive=usbstick \
+  -netdev user,id=net0      \
+  -device e1000,netdev=net0 \
+  -vga virtio \
+  -display gtk,zoom-to-fit=on,full-screen=on
+
+#    -enable-kvm        \
+#    -cpu host -m 2048  \
+#    -netdev user,id=net0      \
+#    -device e1000,netdev=net0 \
+#    -vga virtio \
+#    -kernel /mnt/lfs/boot/vmlinuz-6.10.5-lfs-12.2    \
+#    -append "root=/dev/vda video=1067x600 video=virtiofb:1067x600 rw fbcon=font:VGA8x16 consoleblank=0" \
+#    -drive file=/dev/nvme0n1p3,format=raw,if=virtio \
+#    -display gtk,zoom-to-fit=on,full-screen=on
+
+
+#  -drive file=/dev/nvme0n1,format=raw,if=virtio,cache=none,discard=unmap \
+
+
+# Prepare mountpoints
+echo "Making mount points..."
+mkdir -pv /mnt/lfs
+
+# Mount root
+echo "Mounting root..."
+mount -v /dev/nvme0n1p2 /mnt/lfs
+
+# Prepare mountpoints
+echo "Making mount points..."
+mkdir -pv /mnt/lfs/boot/efi
+
+# Mount EFI
+echo "Mounting EFI..."
+mount -v /dev/nvme0n1p1 /mnt/lfs/boot/efi
+
+

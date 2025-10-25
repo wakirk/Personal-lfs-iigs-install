@@ -40,6 +40,8 @@ main () {
 	echoL "Installing Kbd (2.8.0)..."
 	sleep 2
 	make install
+	make -C data install
+	
 	cp -R -v docs/doc -T /usr/share/doc/kbd-2.8.0
 
 	echoL "Cleaning up build area...."

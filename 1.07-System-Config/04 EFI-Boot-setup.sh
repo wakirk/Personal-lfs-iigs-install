@@ -49,15 +49,18 @@ set timeout=5
 insmod part_gpt
 search --no-floppy --partuuid --set=root $ROOT_PARTUUID
 insmod ext2
-
 insmod efi_gop
 insmod efi_uga
 if loadfont /boot/grub/fonts/unicode.pf2; then
   terminal_output gfxterm
 fi
+insmod gfxterm
+set gfxmode=800x600
+set gfxpayload=keep     # hand off 800x600 to the kernel
+
 
 menuentry "GNU/Linux, Linux 6.16.1-lfs-12.4" {
-  linux /boot/vmlinuz-6.16.1-lfs-12.4 root=PARTUUID=$ROOT_PARTUUID rootfstype=ext4 rw
+  linux /boot/vmlinuz-6.16.1-lfs-12.4 root=PARTUUID=$ROOT_PARTUUID rootfstype=ext4 ro console=tty1 video=800x600
 }
 
 menuentry "Firmware Setup" {
@@ -68,46 +71,27 @@ EOF
 # ---------------------------
 # /mnt/lfs/etc/fstab (your style: PARTUUID for all three)
 # ---------------------------
-cat > /mnt/lfs/etc/fstab <<'EOF'
-# <fs>                                               <mount>     <type>  <opts>       <dump> <pass>
-PARTUUID='"$ROOT_PARTUUID"'        /           ext4    defaults     0      1
-PARTUUID='"$EFI_PARTUUID"'         /boot/efi   vfat    umask=0077   0      1
-PARTUUID='"$SWAP_PARTUUID"'        none        swap    pri=1        0      0
-
-# The virtual mounts below are OPTIONAL (LFS bootscripts mount these anyway):
-proc         /proc                     proc     nosuid,noexec,nodev            0 0
-sysfs        /sys                      sysfs    nosuid,noexec,nodev            0 0
-devpts       /dev/pts                  devpts   gid=5,mode=620                 0 0
-tmpfs        /run                      tmpfs    mode=0755,nosuid,nodev         0 0
-tmpfs        /dev/shm                  tmpfs    mode=1777,nosuid,nodev         0 0
-cgroup2      /sys/fs/cgroup            cgroup2  defaults                       0 0
-efivarfs     /sys/firmware/efi/efivars efivarfs defaults                       0 0
+cat > /etc/fstab << EOF
+# <fs>                                               <mount>       <type>   <opts>                  <dump> <pass>
+PARTUUID=$ROOT_PARTUUID        /              ext4      defaults                0      0
+PARTUUID=$EFI_PARTUUID        /boot/efi      vfat      umask=0077              0      0
+PARTUUID=$SWAP_PARTUUID        none           swap      pri=1                   0      0
+proc                                                 /proc          proc      nosuid,noexec,nodev     0      0
+sysfs                                                /sys           sysfs     nosuid,noexec,nodev     0      0
+devpts                                               /dev/pts       devpts    gid=5,mode=620          0      0
+tmpfs                                                /run           tmpfs     mode=0755,nosuid,nodev  0      0
+tmpfs                                                /dev/shm       tmpfs     mode=1776,nosuid,nodev  0      0
+cgroup2                                              /sys/fs/cgroup cgroup2   defaults                0      0
+efivarfs                                  /sys/firmware/efi/efivars efivarfs  defaults                0      0
 EOF
 
-#--------------------------------------------------------------------------
-echo 12.4 > /etc/lfs-release
 
-cat > /etc/lsb-release << "EOF"
-DISTRIB_ID="Linux From Scratch"
-DISTRIB_RELEASE="12.4"
-DISTRIB_CODENAME="<your name here>"
-DISTRIB_DESCRIPTION="Linux From Scratch"
-EOF
-
-cat > /etc/os-release << "EOF"
-NAME="Linux From Scratch"
-VERSION="12.4"
-ID=lfs
-PRETTY_NAME="Linux From Scratch 12.4"
-VERSION_CODENAME="<your name here>"
-HOME_URL="https://www.linuxfromscratch.org/lfs/"
-RELEASE_TYPE="stable"
-EOF
-
+	clear
 	cat /boot/grub/grub.cfg
-	/bin/bash
+	sleep 10
+	clear
 	cat /etc/fstab
-	/bin/bash
+	sleep 10
 	echoL "Exiting..."
 	sleep 2
 

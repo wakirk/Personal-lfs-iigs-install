@@ -70,7 +70,6 @@ CONFIG_HID_GENERIC=y
 # Optional on PCs (ULPI = external USB PHY bus; usually not needed on x86)
 CONFIG_USB_ULPI_BUS=y
 
-USB_SUPPORT=y
 CONFIG_USB_ULPI_BUS=y
 CONFIG_HID_SUPPORT=y
 
@@ -350,17 +349,64 @@ CONFIG_ATA_PIIX=y
 CONFIG_NVME_CORE=y
 CONFIG_BLK_DEV_NVME=y
 
+CONFIG_USB_STORAGE=y
 CONFIG_USB_XHCI_HCD=y
 CONFIG_USB_EHCI_HCD=y
 CONFIG_USB_OHCI_HCD=y
 CONFIG_USB_UHCI_HCD=y
-CONFIG_USB_STORAGE=y
 CONFIG_USB_UAS=y
 
 CONFIG_EXT4_FS=y
 CONFIG_VFAT_FS=y
 CONFIG_EXFAT_FS=y
 CONFIG_NTFS3_FS=y
+
+# NTFS3 POSIX Access Control Lists
+CONFIG_NTFS3_FS_POSIX_ACL=y
+# NTFS3 LZX/Xpress compression 
+CONFIG_NTFS3_LZX_XPRESS=y
+
+CONFIG_PROC_FS=y
+CONFIG_SYSFS=y
+CONFIG_UNIX=y
+CONFIG_NLS_UTF8=y
+
+# File systems → Inotify support for userspace
+CONFIG_INOTIFY_USER=y
+# Device Drivers → Generic Driver Options
+CONFIG_DEVTMPFS=y
+# (auto-mount /dev at boot)
+CONFIG_DEVTMPFS_MOUNT=y
+
+CONFIG_SWAP=y
+
+# File systems --->
+CONFIG_FUSE_FS=y
+# FUSE (Filesystem in Userspace) support
+CONFIG_FUSE_FS=y
+#  Character device in Userspace support
+CONFIG_CUSE=y
+
+CONFIG_NTSYNC=y
+
+  # Device Drivers → Graphics support:
+  CONFIG_DRM=y
+  CONFIG_DRM_KMS_HELPER=y
+  # early console from EFI GOP
+  CONFIG_DRM_SIMPLEDRM=y
+  # for your -device virtio-vga
+  CONFIG_DRM_VIRTIO_GPU=y
+
+  # Device Drivers → Graphics support → Console display driver support:
+  CONFIG_FRAMEBUFFER_CONSOLE=y
+  # optional
+  CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
+
+  # Device Drivers → Character devices:
+  CONFIG_VT=y
+  CONFIG_VT_CONSOLE=y
+  CONFIG_HW_CONSOLE=y
+
 
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)
@@ -397,7 +443,7 @@ EOF
 # 	install -v -m755 -d /etc/modprobe.d
 
 	echoL "Cleaning up build area...."
-	sleep 2
+	sleep 8
 	cd /sources
 	rm -fR linux-6.16.1
 

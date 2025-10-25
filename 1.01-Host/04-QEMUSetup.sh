@@ -10,6 +10,7 @@ echoL "Installing and Confuring QEMU..."
 # QEMU + OVMF (Arch package names; choose JACK provider to avoid prompt)
 pacman -S --noconfirm libcbor libfido2 qemu-system-x86 qemu-desktop qemu-ui-gtk edk2-ovmf pipewire-jack
 pacman -S --noconfirm fuse3
+pacman -Sy --noconfirm edk2-ovmf
 
 # Refresh linker cache (belt-and-suspenders)
 ldconfig

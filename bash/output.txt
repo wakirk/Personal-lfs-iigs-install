@@ -2,11 +2,11 @@ Using .config as base
 Merging Kernel.cfg
 Value of CONFIG_PARTITION_ADVANCED is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_PARTITION_ADVANCED is not set
-New value: CONFIG_PARTITION_ADVANCED=y CONFIG_PARTITION_ADVANCED=y
+New value: CONFIG_PARTITION_ADVANCED=y CONFIG_PARTITION_ADVANCED=y CONFIG_PARTITION_ADVANCED=y
 
 Value of CONFIG_EFI_PARTITION is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_EFI_PARTITION=y
-New value: CONFIG_EFI_PARTITION=y CONFIG_EFI_PARTITION=y
+New value: CONFIG_EFI_PARTITION=y CONFIG_EFI_PARTITION=y CONFIG_EFI_PARTITION=y
 
 Value of CONFIG_MSDOS_FS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_MSDOS_FS is not set
@@ -14,7 +14,7 @@ New value: CONFIG_MSDOS_FS=y CONFIG_MSDOS_FS=y
 
 Value of CONFIG_VFAT_FS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_VFAT_FS is not set
-New value: CONFIG_VFAT_FS=y CONFIG_VFAT_FS=y
+New value: CONFIG_VFAT_FS=y CONFIG_VFAT_FS=y CONFIG_VFAT_FS=y
 
 Value of CONFIG_NLS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_NLS is not set
@@ -22,7 +22,7 @@ New value: CONFIG_NLS=y CONFIG_NLS=y
 
 Value of CONFIG_EXFAT_FS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_EXFAT_FS is not set
-New value: CONFIG_EXFAT_FS=y
+New value: CONFIG_EXFAT_FS=y CONFIG_EXFAT_FS=y
 
 Value of CONFIG_INPUT is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_INPUT=y
@@ -44,9 +44,17 @@ Value of CONFIG_ACPI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_ACPI is not set
 New value: CONFIG_ACPI=y
 
+Value of CONFIG_PROC_FS is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_PROC_FS=y
+New value: CONFIG_PROC_FS=y CONFIG_PROC_FS=y
+
+Value of CONFIG_SYSFS is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_SYSFS=y
+New value: CONFIG_SYSFS=y CONFIG_SYSFS=y
+
 Value of CONFIG_DEVTMPFS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_DEVTMPFS is not set
-New value: CONFIG_DEVTMPFS=y
+New value: CONFIG_DEVTMPFS=y CONFIG_DEVTMPFS=y
 
 Value of CONFIG_PCI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_PCI is not set
@@ -54,15 +62,15 @@ New value: CONFIG_PCI=y
 
 Value of CONFIG_SCSI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_SCSI is not set
-New value: CONFIG_SCSI=y
+New value: CONFIG_SCSI=y CONFIG_SCSI=y
 
 Value of CONFIG_ATA is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_ATA is not set
-New value: CONFIG_ATA=y
+New value: CONFIG_ATA=y CONFIG_ATA=y
 
 Value of CONFIG_EXT4_FS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_EXT4_FS is not set
-New value: CONFIG_EXT4_FS=y
+New value: CONFIG_EXT4_FS=y CONFIG_EXT4_FS=y
 
 Value of CONFIG_TMPFS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_TMPFS is not set
@@ -76,9 +84,17 @@ Value of CONFIG_BINFMT_SCRIPT is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_BINFMT_SCRIPT is not set
 New value: CONFIG_BINFMT_SCRIPT=y
 
+Value of CONFIG_VT is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_VT=y
+New value: CONFIG_VT=y CONFIG_VT=y
+
+Value of CONFIG_VT_CONSOLE is redefined by fragment Kernel.cfg:
+Previous value: CONFIG_VT_CONSOLE=y
+New value: CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y
+
 Value of CONFIG_DRM is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_DRM is not set
-New value: CONFIG_DRM=y
+New value: CONFIG_DRM=y CONFIG_DRM=y
 
 Value of CONFIG_FB is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_FB is not set
@@ -164,26 +180,99 @@ Value of CONFIG_TRANSPARENT_HUGEPAGE is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_TRANSPARENT_HUGEPAGE is not set
 New value: CONFIG_TRANSPARENT_HUGEPAGE=y
 
-./.tmp.config.IPqrBNjcF1:1503:warning: unexpected data: USB_SUPPORT=y
-./.tmp.config.IPqrBNjcF1:1504:warning: override: reassigning to symbol USB_ULPI_BUS
-./.tmp.config.IPqrBNjcF1:1505:warning: override: reassigning to symbol HID_SUPPORT
-./.tmp.config.IPqrBNjcF1:1527:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.IPqrBNjcF1:1528:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.IPqrBNjcF1:1543:warning: override: reassigning to symbol FAT_FS
-./.tmp.config.IPqrBNjcF1:1544:warning: override: reassigning to symbol MSDOS_FS
-./.tmp.config.IPqrBNjcF1:1545:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.IPqrBNjcF1:1546:warning: override: reassigning to symbol NLS
-./.tmp.config.IPqrBNjcF1:1547:warning: override: reassigning to symbol NLS_CODEPAGE_437
-./.tmp.config.IPqrBNjcF1:1548:warning: override: reassigning to symbol NLS_ISO8859_1
-./.tmp.config.IPqrBNjcF1:1558:warning: override: reassigning to symbol EFI
-./.tmp.config.IPqrBNjcF1:1559:warning: override: reassigning to symbol EFI_STUB
-./.tmp.config.IPqrBNjcF1:1560:warning: override: reassigning to symbol EFIVAR_FS
-./.tmp.config.IPqrBNjcF1:1584:warning: override: reassigning to symbol USB
-./.tmp.config.IPqrBNjcF1:1586:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.IPqrBNjcF1:1587:warning: override: reassigning to symbol USB_XHCI_PCI
-./.tmp.config.IPqrBNjcF1:1589:warning: override: reassigning to symbol INPUT
-./.tmp.config.IPqrBNjcF1:1595:warning: override: reassigning to symbol HID
-./.tmp.config.IPqrBNjcF1:1596:warning: override: reassigning to symbol HID_GENERIC
+Value of CONFIG_CGROUPS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_CGROUPS is not set
+New value: CONFIG_CGROUPS=y
+
+Value of CONFIG_VFIO is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_VFIO is not set
+New value: CONFIG_VFIO=y
+
+Value of CONFIG_IOMMU_SUPPORT is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_IOMMU_SUPPORT is not set
+New value: CONFIG_IOMMU_SUPPORT=y
+
+Value of CONFIG_HUGETLBFS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_HUGETLBFS is not set
+New value: CONFIG_HUGETLBFS=y
+
+Value of CONFIG_KSM is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_KSM is not set
+New value: CONFIG_KSM=y
+
+Value of CONFIG_NTFS3_FS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_NTFS3_FS is not set
+New value: CONFIG_NTFS3_FS=y
+
+Value of CONFIG_INOTIFY_USER is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_INOTIFY_USER is not set
+New value: CONFIG_INOTIFY_USER=y
+
+Value of CONFIG_SWAP is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SWAP is not set
+New value: CONFIG_SWAP=y
+
+Value of CONFIG_FUSE_FS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_FUSE_FS is not set
+New value: CONFIG_FUSE_FS=y CONFIG_FUSE_FS=y
+
+Value of CONFIG_NTSYNC is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_NTSYNC is not set
+New value: CONFIG_NTSYNC=y
+
+./.tmp.config.nTm8v6s2ug:1493:warning: override: reassigning to symbol USB_ULPI_BUS
+./.tmp.config.nTm8v6s2ug:1494:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.nTm8v6s2ug:1516:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.nTm8v6s2ug:1517:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.nTm8v6s2ug:1532:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.nTm8v6s2ug:1533:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.nTm8v6s2ug:1534:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.nTm8v6s2ug:1535:warning: override: reassigning to symbol NLS
+./.tmp.config.nTm8v6s2ug:1536:warning: override: reassigning to symbol NLS_CODEPAGE_437
+./.tmp.config.nTm8v6s2ug:1537:warning: override: reassigning to symbol NLS_ISO8859_1
+./.tmp.config.nTm8v6s2ug:1547:warning: override: reassigning to symbol EFI
+./.tmp.config.nTm8v6s2ug:1548:warning: override: reassigning to symbol EFI_STUB
+./.tmp.config.nTm8v6s2ug:1549:warning: override: reassigning to symbol EFIVAR_FS
+./.tmp.config.nTm8v6s2ug:1573:warning: override: reassigning to symbol USB
+./.tmp.config.nTm8v6s2ug:1575:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.nTm8v6s2ug:1576:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.nTm8v6s2ug:1578:warning: override: reassigning to symbol INPUT
+./.tmp.config.nTm8v6s2ug:1584:warning: override: reassigning to symbol HID
+./.tmp.config.nTm8v6s2ug:1585:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.nTm8v6s2ug:1754:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.nTm8v6s2ug:1755:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.nTm8v6s2ug:1760:warning: override: reassigning to symbol SCSI
+./.tmp.config.nTm8v6s2ug:1763:warning: override: reassigning to symbol BLK_DEV_SD
+./.tmp.config.nTm8v6s2ug:1765:warning: override: reassigning to symbol ATA
+./.tmp.config.nTm8v6s2ug:1766:warning: override: reassigning to symbol SATA_AHCI
+./.tmp.config.nTm8v6s2ug:1769:warning: override: reassigning to symbol NVME_CORE
+./.tmp.config.nTm8v6s2ug:1770:warning: override: reassigning to symbol BLK_DEV_NVME
+./.tmp.config.nTm8v6s2ug:1772:warning: override: reassigning to symbol USB_STORAGE
+./.tmp.config.nTm8v6s2ug:1773:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.nTm8v6s2ug:1779:warning: override: reassigning to symbol EXT4_FS
+./.tmp.config.nTm8v6s2ug:1780:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.nTm8v6s2ug:1781:warning: override: reassigning to symbol EXFAT_FS
+./.tmp.config.nTm8v6s2ug:1789:warning: override: reassigning to symbol PROC_FS
+./.tmp.config.nTm8v6s2ug:1790:warning: override: reassigning to symbol SYSFS
+./.tmp.config.nTm8v6s2ug:1791:warning: override: reassigning to symbol UNIX
+./.tmp.config.nTm8v6s2ug:1797:warning: override: reassigning to symbol DEVTMPFS
+./.tmp.config.nTm8v6s2ug:1799:warning: override: reassigning to symbol DEVTMPFS_MOUNT
+./.tmp.config.nTm8v6s2ug:1806:warning: override: reassigning to symbol FUSE_FS
+./.tmp.config.nTm8v6s2ug:1812:warning: unexpected data:   # Device Drivers → Graphics support:
+./.tmp.config.nTm8v6s2ug:1813:warning: unexpected data:   CONFIG_DRM=y
+./.tmp.config.nTm8v6s2ug:1814:warning: unexpected data:   CONFIG_DRM_KMS_HELPER=y
+./.tmp.config.nTm8v6s2ug:1815:warning: unexpected data:   # early console from EFI GOP
+./.tmp.config.nTm8v6s2ug:1816:warning: unexpected data:   CONFIG_DRM_SIMPLEDRM=y
+./.tmp.config.nTm8v6s2ug:1817:warning: unexpected data:   # for your -device virtio-vga
+./.tmp.config.nTm8v6s2ug:1818:warning: unexpected data:   CONFIG_DRM_VIRTIO_GPU=y
+./.tmp.config.nTm8v6s2ug:1820:warning: unexpected data:   # Device Drivers → Graphics support → Console display driver support:
+./.tmp.config.nTm8v6s2ug:1821:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE=y
+./.tmp.config.nTm8v6s2ug:1822:warning: unexpected data:   # optional
+./.tmp.config.nTm8v6s2ug:1823:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
+./.tmp.config.nTm8v6s2ug:1825:warning: unexpected data:   # Device Drivers → Character devices:
+./.tmp.config.nTm8v6s2ug:1826:warning: unexpected data:   CONFIG_VT=y
+./.tmp.config.nTm8v6s2ug:1827:warning: unexpected data:   CONFIG_VT_CONSOLE=y
+./.tmp.config.nTm8v6s2ug:1828:warning: unexpected data:   CONFIG_HW_CONSOLE=y
 #
 # configuration written to .config
 #
@@ -736,10 +825,12 @@ Actual value:     CONFIG_EFI_STUB=y
 Value requested for CONFIG_PARTITION_ADVANCED not in final .config
 Requested value:  CONFIG_PARTITION_ADVANCED=y
 CONFIG_PARTITION_ADVANCED=y
+CONFIG_PARTITION_ADVANCED=y
 Actual value:     CONFIG_PARTITION_ADVANCED=y
 
 Value requested for CONFIG_EFI_PARTITION not in final .config
 Requested value:  CONFIG_EFI_PARTITION=y
+CONFIG_EFI_PARTITION=y
 CONFIG_EFI_PARTITION=y
 Actual value:     CONFIG_EFI_PARTITION=y
 
@@ -755,6 +846,7 @@ Actual value:     CONFIG_MSDOS_FS=y
 
 Value requested for CONFIG_VFAT_FS not in final .config
 Requested value:  CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
 CONFIG_VFAT_FS=y
 Actual value:     CONFIG_VFAT_FS=y
 
@@ -778,6 +870,11 @@ Requested value:  CONFIG_EFIVAR_FS=y
 CONFIG_EFIVAR_FS=y
 Actual value:     CONFIG_EFIVAR_FS=y
 
+Value requested for CONFIG_EXFAT_FS not in final .config
+Requested value:  CONFIG_EXFAT_FS=y
+CONFIG_EXFAT_FS=y
+Actual value:     CONFIG_EXFAT_FS=y
+
 Value requested for CONFIG_INPUT not in final .config
 Requested value:  CONFIG_INPUT=y
 CONFIG_INPUT=y
@@ -790,6 +887,7 @@ Actual value:     CONFIG_USB=y
 
 Value requested for CONFIG_USB_XHCI_HCD not in final .config
 Requested value:  CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
 CONFIG_USB_XHCI_HCD=y
 Actual value:     CONFIG_USB_XHCI_HCD=y
 
@@ -828,15 +926,72 @@ Requested value:  CONFIG_HID_SUPPORT=y
 CONFIG_HID_SUPPORT=y
 Actual value:     CONFIG_HID_SUPPORT=y
 
+Value requested for CONFIG_PROC_FS not in final .config
+Requested value:  CONFIG_PROC_FS=y
+CONFIG_PROC_FS=y
+Actual value:     CONFIG_PROC_FS=y
+
+Value requested for CONFIG_SYSFS not in final .config
+Requested value:  CONFIG_SYSFS=y
+CONFIG_SYSFS=y
+Actual value:     CONFIG_SYSFS=y
+
+Value requested for CONFIG_DEVTMPFS not in final .config
+Requested value:  CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS=y
+Actual value:     CONFIG_DEVTMPFS=y
+
+Value requested for CONFIG_DEVTMPFS_MOUNT not in final .config
+Requested value:  CONFIG_DEVTMPFS_MOUNT=y
+CONFIG_DEVTMPFS_MOUNT=y
+Actual value:     CONFIG_DEVTMPFS_MOUNT=y
+
+Value requested for CONFIG_SCSI not in final .config
+Requested value:  CONFIG_SCSI=y
+CONFIG_SCSI=y
+Actual value:     CONFIG_SCSI=y
+
+Value requested for CONFIG_BLK_DEV_SD not in final .config
+Requested value:  CONFIG_BLK_DEV_SD=y
+CONFIG_BLK_DEV_SD=y
+Actual value:     CONFIG_BLK_DEV_SD=y
+
 Value requested for CONFIG_PARTITION_ADVANCED not in final .config
 Requested value:  CONFIG_PARTITION_ADVANCED=y
+CONFIG_PARTITION_ADVANCED=y
 CONFIG_PARTITION_ADVANCED=y
 Actual value:     CONFIG_PARTITION_ADVANCED=y
 
 Value requested for CONFIG_EFI_PARTITION not in final .config
 Requested value:  CONFIG_EFI_PARTITION=y
 CONFIG_EFI_PARTITION=y
+CONFIG_EFI_PARTITION=y
 Actual value:     CONFIG_EFI_PARTITION=y
+
+Value requested for CONFIG_BLK_DEV_NVME not in final .config
+Requested value:  CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
+Actual value:     CONFIG_BLK_DEV_NVME=y
+
+Value requested for CONFIG_NVME_CORE not in final .config
+Requested value:  CONFIG_NVME_CORE=y
+CONFIG_NVME_CORE=y
+Actual value:     CONFIG_NVME_CORE=y
+
+Value requested for CONFIG_ATA not in final .config
+Requested value:  CONFIG_ATA=y
+CONFIG_ATA=y
+Actual value:     CONFIG_ATA=y
+
+Value requested for CONFIG_SATA_AHCI not in final .config
+Requested value:  CONFIG_SATA_AHCI=y
+CONFIG_SATA_AHCI=y
+Actual value:     CONFIG_SATA_AHCI=y
+
+Value requested for CONFIG_EXT4_FS not in final .config
+Requested value:  CONFIG_EXT4_FS=y
+CONFIG_EXT4_FS=y
+Actual value:     CONFIG_EXT4_FS=y
 
 Value requested for CONFIG_FAT_FS not in final .config
 Requested value:  CONFIG_FAT_FS=y
@@ -850,6 +1005,7 @@ Actual value:     CONFIG_MSDOS_FS=y
 
 Value requested for CONFIG_VFAT_FS not in final .config
 Requested value:  CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
 CONFIG_VFAT_FS=y
 Actual value:     CONFIG_VFAT_FS=y
 
@@ -868,6 +1024,11 @@ Requested value:  CONFIG_NLS_ISO8859_1=y
 CONFIG_NLS_ISO8859_1=y
 Actual value:     CONFIG_NLS_ISO8859_1=y
 
+Value requested for CONFIG_UNIX not in final .config
+Requested value:  CONFIG_UNIX=y
+CONFIG_UNIX=y
+Actual value:     CONFIG_UNIX=y
+
 Value requested for CONFIG_EFI not in final .config
 Requested value:  CONFIG_EFI=y
 CONFIG_EFI=y
@@ -883,6 +1044,36 @@ Requested value:  CONFIG_EFIVAR_FS=y
 CONFIG_EFIVAR_FS=y
 Actual value:     CONFIG_EFIVAR_FS=y
 
+Value requested for CONFIG_VT not in final .config
+Requested value:  CONFIG_VT=y
+  CONFIG_VT=y
+Actual value:     CONFIG_VT=y
+
+Value requested for CONFIG_VT_CONSOLE not in final .config
+Requested value:  CONFIG_VT_CONSOLE=y
+  CONFIG_VT_CONSOLE=y
+Actual value:     CONFIG_VT_CONSOLE=y
+
+Value requested for CONFIG_FRAMEBUFFER_CONSOLE not in final .config
+Requested value:  CONFIG_FRAMEBUFFER_CONSOLE=y
+  CONFIG_FRAMEBUFFER_CONSOLE=y
+Actual value:     CONFIG_FRAMEBUFFER_CONSOLE=y
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+  CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_KMS_HELPER not in final .config
+Requested value:  CONFIG_DRM_KMS_HELPER=y
+  CONFIG_DRM_KMS_HELPER=y
+Actual value:     CONFIG_DRM_KMS_HELPER=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+  CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
 Value requested for CONFIG_FB_SIMPLE not in final .config
 Requested value:  CONFIG_FB_SIMPLE=y
 Actual value:     
@@ -892,8 +1083,14 @@ Requested value:  CONFIG_USB=y
 CONFIG_USB=y
 Actual value:     CONFIG_USB=y
 
+Value requested for CONFIG_USB_STORAGE not in final .config
+Requested value:  CONFIG_USB_STORAGE=y
+CONFIG_USB_STORAGE=y
+Actual value:     CONFIG_USB_STORAGE=y
+
 Value requested for CONFIG_USB_XHCI_HCD not in final .config
 Requested value:  CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
 CONFIG_USB_XHCI_HCD=y
 Actual value:     CONFIG_USB_XHCI_HCD=y
 
@@ -936,4 +1133,188 @@ Actual value:
 Value requested for CONFIG_SPI_NOR not in final .config
 Requested value:  CONFIG_SPI_NOR=y
 Actual value:     
+
+Value requested for CONFIG_CGROUP_BPF not in final .config
+Requested value:  CONFIG_CGROUP_BPF=y
+Actual value:     
+
+Value requested for CONFIG_KVM not in final .config
+Requested value:  CONFIG_KVM=y
+Actual value:     
+
+Value requested for CONFIG_KVM_INTEL not in final .config
+Requested value:  CONFIG_KVM_INTEL=y
+Actual value:     
+
+Value requested for CONFIG_NF_TABLES not in final .config
+Requested value:  CONFIG_NF_TABLES=y
+Actual value:     
+
+Value requested for CONFIG_NF_TABLES_IPV4 not in final .config
+Requested value:  CONFIG_NF_TABLES_IPV4=y
+Actual value:     
+
+Value requested for CONFIG_NF_TABLES_IPV6 not in final .config
+Requested value:  CONFIG_NF_TABLES_IPV6=y
+Actual value:     
+
+Value requested for CONFIG_NFT_REDIR not in final .config
+Requested value:  CONFIG_NFT_REDIR=y
+Actual value:     
+
+Value requested for CONFIG_NFT_NAT not in final .config
+Requested value:  CONFIG_NFT_NAT=y
+Actual value:     
+
+Value requested for CONFIG_NFT_MASQ not in final .config
+Requested value:  CONFIG_NFT_MASQ=y
+Actual value:     
+
+Value requested for CONFIG_VHOST_NET not in final .config
+Requested value:  CONFIG_VHOST_NET=y
+Actual value:     
+
+Value requested for CONFIG_VHOST_VSOCK not in final .config
+Requested value:  CONFIG_VHOST_VSOCK=y
+Actual value:     
+
+Value requested for CONFIG_VHOST_SCSI not in final .config
+Requested value:  CONFIG_VHOST_SCSI=y
+Actual value:     
+
+Value requested for CONFIG_VHOST_VDPA not in final .config
+Requested value:  CONFIG_VHOST_VDPA=y
+Actual value:     
+
+Value requested for CONFIG_BLK_DEV_LOOP not in final .config
+Requested value:  CONFIG_BLK_DEV_LOOP=y
+Actual value:     
+
+Value requested for CONFIG_BLK_DEV_NBD not in final .config
+Requested value:  CONFIG_BLK_DEV_NBD=y
+Actual value:     
+
+Value requested for CONFIG_PARTITION_ADVANCED not in final .config
+Requested value:  CONFIG_PARTITION_ADVANCED=y
+CONFIG_PARTITION_ADVANCED=y
+CONFIG_PARTITION_ADVANCED=y
+Actual value:     CONFIG_PARTITION_ADVANCED=y
+
+Value requested for CONFIG_EFI_PARTITION not in final .config
+Requested value:  CONFIG_EFI_PARTITION=y
+CONFIG_EFI_PARTITION=y
+CONFIG_EFI_PARTITION=y
+Actual value:     CONFIG_EFI_PARTITION=y
+
+Value requested for CONFIG_VIRTIO not in final .config
+Requested value:  CONFIG_VIRTIO=y
+Actual value:     
+
+Value requested for CONFIG_VIRTIO_PCI not in final .config
+Requested value:  CONFIG_VIRTIO_PCI=y
+Actual value:     
+
+Value requested for CONFIG_VIRTIO_BLK not in final .config
+Requested value:  CONFIG_VIRTIO_BLK=y
+Actual value:     
+
+Value requested for CONFIG_SCSI not in final .config
+Requested value:  CONFIG_SCSI=y
+CONFIG_SCSI=y
+Actual value:     CONFIG_SCSI=y
+
+Value requested for CONFIG_SCSI_VIRTIO not in final .config
+Requested value:  CONFIG_SCSI_VIRTIO=y
+Actual value:     
+
+Value requested for CONFIG_BLK_DEV_SD not in final .config
+Requested value:  CONFIG_BLK_DEV_SD=y
+CONFIG_BLK_DEV_SD=y
+Actual value:     CONFIG_BLK_DEV_SD=y
+
+Value requested for CONFIG_ATA not in final .config
+Requested value:  CONFIG_ATA=y
+CONFIG_ATA=y
+Actual value:     CONFIG_ATA=y
+
+Value requested for CONFIG_SATA_AHCI not in final .config
+Requested value:  CONFIG_SATA_AHCI=y
+CONFIG_SATA_AHCI=y
+Actual value:     CONFIG_SATA_AHCI=y
+
+Value requested for CONFIG_ATA_PIIX not in final .config
+Requested value:  CONFIG_ATA_PIIX=y  
+Actual value:     CONFIG_ATA_PIIX=y
+
+Value requested for CONFIG_NVME_CORE not in final .config
+Requested value:  CONFIG_NVME_CORE=y
+CONFIG_NVME_CORE=y
+Actual value:     CONFIG_NVME_CORE=y
+
+Value requested for CONFIG_BLK_DEV_NVME not in final .config
+Requested value:  CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
+Actual value:     CONFIG_BLK_DEV_NVME=y
+
+Value requested for CONFIG_USB_STORAGE not in final .config
+Requested value:  CONFIG_USB_STORAGE=y
+CONFIG_USB_STORAGE=y
+Actual value:     CONFIG_USB_STORAGE=y
+
+Value requested for CONFIG_USB_XHCI_HCD not in final .config
+Requested value:  CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_XHCI_HCD=y
+Actual value:     CONFIG_USB_XHCI_HCD=y
+
+Value requested for CONFIG_EXT4_FS not in final .config
+Requested value:  CONFIG_EXT4_FS=y
+CONFIG_EXT4_FS=y
+Actual value:     CONFIG_EXT4_FS=y
+
+Value requested for CONFIG_VFAT_FS not in final .config
+Requested value:  CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
+CONFIG_VFAT_FS=y
+Actual value:     CONFIG_VFAT_FS=y
+
+Value requested for CONFIG_EXFAT_FS not in final .config
+Requested value:  CONFIG_EXFAT_FS=y
+CONFIG_EXFAT_FS=y
+Actual value:     CONFIG_EXFAT_FS=y
+
+Value requested for CONFIG_PROC_FS not in final .config
+Requested value:  CONFIG_PROC_FS=y
+CONFIG_PROC_FS=y
+Actual value:     CONFIG_PROC_FS=y
+
+Value requested for CONFIG_SYSFS not in final .config
+Requested value:  CONFIG_SYSFS=y
+CONFIG_SYSFS=y
+Actual value:     CONFIG_SYSFS=y
+
+Value requested for CONFIG_UNIX not in final .config
+Requested value:  CONFIG_UNIX=y
+CONFIG_UNIX=y
+Actual value:     CONFIG_UNIX=y
+
+Value requested for CONFIG_DEVTMPFS not in final .config
+Requested value:  CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS=y
+Actual value:     CONFIG_DEVTMPFS=y
+
+Value requested for CONFIG_DEVTMPFS_MOUNT not in final .config
+Requested value:  CONFIG_DEVTMPFS_MOUNT=y
+CONFIG_DEVTMPFS_MOUNT=y
+Actual value:     CONFIG_DEVTMPFS_MOUNT=y
+
+Value requested for CONFIG_FUSE_FS not in final .config
+Requested value:  CONFIG_FUSE_FS=y
+CONFIG_FUSE_FS=y
+Actual value:     CONFIG_FUSE_FS=y
+
+Value requested for CONFIG_FUSE_FS not in final .config
+Requested value:  CONFIG_FUSE_FS=y
+CONFIG_FUSE_FS=y
+Actual value:     CONFIG_FUSE_FS=y
 

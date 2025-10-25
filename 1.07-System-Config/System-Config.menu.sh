@@ -76,6 +76,36 @@ efiboot() {
 	return 1
 }
 
+OSconfig() {
+	echoL "System OS Configuration"
+	echoR "System Configuration"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldFUSE() {
+	echoL "FUSE Filesystem Tools"
+	echoR "System Configuration"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+bldTerminusfont() {
+	echoL "Terminus Font (4.49.1)"
+	echoR "System Configuration"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 
