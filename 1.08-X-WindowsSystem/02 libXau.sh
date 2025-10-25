@@ -1,50 +1,47 @@
-	2. libXau	libXau — X11 “MIT-MAGIC-COOKIE” authentication helpers used by X clients.
-
-https://chatgpt.com/g/g-p-68bf3444284c8191937ab3e8dcd8a503-iigs-linux-from-scratch-build/project
-https://www.linuxfromscratch.org/lfs/view/stable/chapter03/packages.html
-https://github.com/wakirk/Personal-lfs-iigs-install/tree/434aeed03f038aff88ac33cee6e32a63b904570d
-
-https://www.linuxfromscratch.org/blfs/view/stable/x/libXau.html
-
-/bin/bash
+#!/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 
- main () {
+main () {
 
-	Utils (5.8.1) - 1,428 KB:
-	Home page: https://tukaani.org/xz
-	Download: https: .tar.xz
-	MD5 sum: cf5e1feb023d22c6bdaa30e84ef3abe3
-	echoR "System Software"
+	# 2. libXau	libXau — X11 “MIT-MAGIC-COOKIE” authentication helpers used by X clients.
+	# https://www.linuxfromscratch.org/blfs/view/stable/x/libXau.html
+	# Download (HTTP): https://www.x.org/pub/individual/lib/libXau-1.0.12.tar.xz
+	# Download MD5 sum: 4c9f81acf00b62e5de56a912691bd737
+	# Download size: 276 KB
+	# Estimated disk space required: 2.9 MB (with test)
+	# Estimated build time: less than 0.1 SBU (with test)
+	echoR "X Windows Software"
 
-	echoL "Downloading ------- ( ) ..."
+	echoL "Downloading libXau (1.0.12)..."
 	sleep 2
 	cd "/root/lfs/1.08-X-WindowsSystem"
-	../bash/Download.sh https://*.tar.xz *.tar.xz
-	cp ../Packages/-.tar.xz /sources
+	../bash/Download.sh https://www.x.org/pub/individual/lib/libXau-1.0.12.tar.xz libXau-1.0.12.tar.xz
+	cp ../Packages/libXau-1.0.12.tar.xz /sources
 
-	echoL "Unpack ------- ( ) ..."
+	export XORG_PREFIX="/usr"
+	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+
+	echoL "Unpack libXau (1.0.12)..."
 	sleep 2
 	cd /sources
-	rm -fR
-	tar -vxsf
-	cd 
+	rm -fR libXau-1.0.12
+	tar -vxsf libXau-1.0.12.tar.xz
+	cd libXau-1.0.12
 
-	echoL "Building ------- ( ) ..."
+	echoL "Building libXau (1.0.12)..."
 	sleep 2
+	./configure $XORG_CONFIG
+	make
 
-	echoL "Testing ------- ( ) ..."
+	echoL "Installing libXau (1.0.12)..."
 	sleep 2
-	/bin/bash
-
-	echoL "Installing ------- ( ) ..."
-	sleep 2
+	make install
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR 
+	rm -fR libXau-1.0.12
 
 	echoL "Exiting..."
 }

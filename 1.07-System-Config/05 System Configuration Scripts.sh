@@ -32,6 +32,7 @@ main () {
 	unset ZONEINFO
 
 	echoL "Configuring System Core..."
+
 cat > /etc/passwd << "EOF"
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/dev/null:/usr/bin/false
@@ -40,6 +41,7 @@ messagebus:x:18:18:D-Bus Message Daemon User:/run/dbus:/usr/bin/false
 uuidd:x:80:80:UUID Generation Daemon User:/dev/null:/usr/bin/false
 nobody:x:65534:65534:Unprivileged User:/dev/null:/usr/bin/false
 EOF
+
 printf 'root:%s\n' 'password' | chpasswd
 
 cat > /etc/group << "EOF"
@@ -210,6 +212,7 @@ s1:1:respawn:/sbin/sulogin
 
 # End /etc/inittab
 EOF
+
 
 cat > /etc/sysconfig/clock << "EOF"
 # Begin /etc/sysconfig/clock
@@ -421,15 +424,6 @@ VERSION_CODENAME="iiGS Private Build"
 HOME_URL="https://www.linuxfromscratch.org/lfs/"
 EOF
 
-	echoL "Cleaning up..."
-	sleep 2
-	cd /sources
-	rm -fR tzdata2025b
-	echoL "Exiting..."
-	sleep 2
-
-}
-
 cat > /root/.bashrc << "EOF"
 #
 # ~/.bashrc
@@ -475,6 +469,213 @@ alias mylsblk='lsblk -o name,size,fstype,label,model'
 
 setfont /usr/share/consolefonts/ter-v22b.psf
 EOF
+
+mkdir -p /etc/profile.d
+
+cat > /etc/profile.d/dircolors.sh << 'EOF'
+# Setup for /bin/ls and /bin/grep to support color, the alias is in /etc/bashrc.
+if [ -f "/etc/dircolors" ] ; then
+        eval $(dircolors -b /etc/dircolors)
+fi
+
+if [ -f "$HOME/.dircolors" ] ; then
+        eval $(dircolors -b $HOME/.dircolors)
+fi
+EOF
+
+cat > /etc/profile.d/extrapaths.sh << 'EOF'
+if [ -d /usr/local/lib/pkgconfig ] ; then
+        pathappend /usr/local/lib/pkgconfig PKG_CONFIG_PATH
+fi
+if [ -d /usr/local/bin ]; then
+        pathprepend /usr/local/bin
+fi
+if [ -d /usr/local/sbin -a $EUID -eq 0 ]; then
+        pathprepend /usr/local/sbin
+fi
+
+if [ -d /usr/local/share ]; then
+        pathprepend /usr/local/share XDG_DATA_DIRS
+fi
+
+# Set some defaults before other applications add to these paths.
+pathappend /usr/share/info INFOPATH
+EOF
+
+cat > /etc/profile.d/readline.sh << 'EOF'
+# Set up the INPUTRC environment variable.
+if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ] ; then
+        INPUTRC=/etc/inputrc
+fi
+export INPUTRC
+EOF
+
+cat > /etc/profile.d/umask.sh << 'EOF'
+# By default, the umask should be set.
+if [ "$(id -gn)" = "$(id -un)" -a $EUID -gt 99 ] ; then
+  umask 002
+else
+  umask 022
+fi
+EOF
+
+cat > /etc/profile.d/i18n.sh << 'EOF'
+# Set up i18n variables
+for i in $(locale); do
+  unset ${i%=*}
+done
+
+if [[ "$TERM" = linux ]]; then
+  export LANG=C.UTF-8
+else
+  export LANG=<ll>_<CC>.<charmap><@modifiers>
+fi
+EOF
+
+cat > /etc/bashrc << 'EOF'
+# Begin /etc/bashrc
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+# updated by Bruce Dubbs <bdubbs@linuxfromscratch.org>
+
+# System wide aliases and functions.
+
+# System wide environment variables and startup programs should go into
+# /etc/profile.  Personal environment variables and startup programs
+# should go into ~/.bash_profile.  Personal aliases and functions should
+# go into ~/.bashrc
+
+# Provides colored /bin/ls and /bin/grep commands.  Used in conjunction
+# with code in /etc/profile.
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# Provides prompt for interactive shells, specifically shells started
+# in the X environment. [Review the LFS archive thread titled
+# PS1 Environment Variable for a great case study behind this script
+# addendum.]
+
+NORMAL="\[\e[0m\]"
+RED="\[\e[1;31m\]"
+GREEN="\[\e[1;32m\]"
+if [[ $EUID == 0 ]] ; then
+  PS1="$RED\u [ $NORMAL\w$RED ]# $NORMAL"
+else
+  PS1="$GREEN\u [ $NORMAL\w$GREEN ]\$ $NORMAL"
+fi
+
+unset RED GREEN NORMAL
+
+# GnuPG wants this or it'll fail with pinentry-curses under some
+# circumstances (for example signing a Git commit)
+tty -s && export GPG_TTY=$(tty)
+
+# End /etc/bashrc
+EOF
+
+cat > ~/.bash_profile << 'EOF'
+# Begin ~/.bash_profile
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+# updated by Bruce Dubbs <bdubbs@linuxfromscratch.org>
+
+# Personal environment variables and startup programs.
+
+# Personal aliases and functions should go in ~/.bashrc.  System wide
+# environment variables and startup programs are in /etc/profile.
+# System wide aliases and functions are in /etc/bashrc.
+
+if [ -f "$HOME/.bashrc" ] ; then
+  source $HOME/.bashrc
+fi
+
+if [ -d "$HOME/bin" ] ; then
+  pathprepend $HOME/bin
+fi
+
+# Having . in the PATH is dangerous
+#if [ $EUID -gt 99 ]; then
+#  pathappend .
+#fi
+
+# End ~/.bash_profile
+EOF
+
+cat > ~/.profile << 'EOF'
+# Begin ~/.profile
+# Personal environment variables and startup programs.
+
+if [ -d "$HOME/bin" ] ; then
+  pathprepend $HOME/bin
+fi
+
+# Set up user specific i18n variables
+#export LANG=<ll>_<CC>.<charmap><@modifiers>
+
+# End ~/.profile
+EOF
+
+cat > ~/.bashrc << 'EOF'
+# Begin ~/.bashrc
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+
+# Personal aliases and functions.
+
+# Personal environment variables and startup programs should go in
+# ~/.bash_profile.  System wide environment variables and startup
+# programs are in /etc/profile.  System wide aliases and functions are
+# in /etc/bashrc.
+
+if [ -f "/etc/bashrc" ] ; then
+  source /etc/bashrc
+fi
+
+# Set up user specific i18n variables
+#export LANG=<ll>_<CC>.<charmap><@modifiers>
+
+PS1="\[\e[1;94m\][\u@\h \w]\\$\[\e[0m\] "
+
+alias ls='ls --color=auto'
+alias ll='ls --color=auto -lah'
+alias mydf='df -hPT | column -t'
+alias mylsblk='lsblk -o name,size,fstype,label,model'
+EOF
+
+cat > ~/.bash_logout << 'EOF'
+# Begin ~/.bash_logout
+# Written for Beyond Linux From Scratch
+# by James Robertson <jameswrobertson@earthlink.net>
+
+# Personal items to perform on logout.
+
+# End ~/.bash_logout
+EOF
+
+dircolors -p > /etc/dircolors
+
+cat > /etc/profile.d/xorg.sh << 'EOF'
+XORG_PREFIX="/usr"
+XORG_CONFIG="--prefix=\$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+export XORG_PREFIX XORG_CONFIG
+EOF
+
+chmod 644 /etc/profile.d/xorg.sh
+
+cat > /etc/sudoers.d/xorg << EOF
+Defaults env_keep += XORG_PREFIX
+Defaults env_keep += XORG_CONFIG
+EOF
+
+	echoL "Cleaning up..."
+	sleep 2
+	cd /sources
+	rm -fR tzdata2025b
+	echoL "Exiting..."
+	sleep 2
+
+}
 
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.

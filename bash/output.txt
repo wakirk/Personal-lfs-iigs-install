@@ -220,59 +220,59 @@ Value of CONFIG_NTSYNC is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_NTSYNC is not set
 New value: CONFIG_NTSYNC=y
 
-./.tmp.config.nTm8v6s2ug:1493:warning: override: reassigning to symbol USB_ULPI_BUS
-./.tmp.config.nTm8v6s2ug:1494:warning: override: reassigning to symbol HID_SUPPORT
-./.tmp.config.nTm8v6s2ug:1516:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.nTm8v6s2ug:1517:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.nTm8v6s2ug:1532:warning: override: reassigning to symbol FAT_FS
-./.tmp.config.nTm8v6s2ug:1533:warning: override: reassigning to symbol MSDOS_FS
-./.tmp.config.nTm8v6s2ug:1534:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.nTm8v6s2ug:1535:warning: override: reassigning to symbol NLS
-./.tmp.config.nTm8v6s2ug:1536:warning: override: reassigning to symbol NLS_CODEPAGE_437
-./.tmp.config.nTm8v6s2ug:1537:warning: override: reassigning to symbol NLS_ISO8859_1
-./.tmp.config.nTm8v6s2ug:1547:warning: override: reassigning to symbol EFI
-./.tmp.config.nTm8v6s2ug:1548:warning: override: reassigning to symbol EFI_STUB
-./.tmp.config.nTm8v6s2ug:1549:warning: override: reassigning to symbol EFIVAR_FS
-./.tmp.config.nTm8v6s2ug:1573:warning: override: reassigning to symbol USB
-./.tmp.config.nTm8v6s2ug:1575:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.nTm8v6s2ug:1576:warning: override: reassigning to symbol USB_XHCI_PCI
-./.tmp.config.nTm8v6s2ug:1578:warning: override: reassigning to symbol INPUT
-./.tmp.config.nTm8v6s2ug:1584:warning: override: reassigning to symbol HID
-./.tmp.config.nTm8v6s2ug:1585:warning: override: reassigning to symbol HID_GENERIC
-./.tmp.config.nTm8v6s2ug:1754:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.nTm8v6s2ug:1755:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.nTm8v6s2ug:1760:warning: override: reassigning to symbol SCSI
-./.tmp.config.nTm8v6s2ug:1763:warning: override: reassigning to symbol BLK_DEV_SD
-./.tmp.config.nTm8v6s2ug:1765:warning: override: reassigning to symbol ATA
-./.tmp.config.nTm8v6s2ug:1766:warning: override: reassigning to symbol SATA_AHCI
-./.tmp.config.nTm8v6s2ug:1769:warning: override: reassigning to symbol NVME_CORE
-./.tmp.config.nTm8v6s2ug:1770:warning: override: reassigning to symbol BLK_DEV_NVME
-./.tmp.config.nTm8v6s2ug:1772:warning: override: reassigning to symbol USB_STORAGE
-./.tmp.config.nTm8v6s2ug:1773:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.nTm8v6s2ug:1779:warning: override: reassigning to symbol EXT4_FS
-./.tmp.config.nTm8v6s2ug:1780:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.nTm8v6s2ug:1781:warning: override: reassigning to symbol EXFAT_FS
-./.tmp.config.nTm8v6s2ug:1789:warning: override: reassigning to symbol PROC_FS
-./.tmp.config.nTm8v6s2ug:1790:warning: override: reassigning to symbol SYSFS
-./.tmp.config.nTm8v6s2ug:1791:warning: override: reassigning to symbol UNIX
-./.tmp.config.nTm8v6s2ug:1797:warning: override: reassigning to symbol DEVTMPFS
-./.tmp.config.nTm8v6s2ug:1799:warning: override: reassigning to symbol DEVTMPFS_MOUNT
-./.tmp.config.nTm8v6s2ug:1806:warning: override: reassigning to symbol FUSE_FS
-./.tmp.config.nTm8v6s2ug:1812:warning: unexpected data:   # Device Drivers → Graphics support:
-./.tmp.config.nTm8v6s2ug:1813:warning: unexpected data:   CONFIG_DRM=y
-./.tmp.config.nTm8v6s2ug:1814:warning: unexpected data:   CONFIG_DRM_KMS_HELPER=y
-./.tmp.config.nTm8v6s2ug:1815:warning: unexpected data:   # early console from EFI GOP
-./.tmp.config.nTm8v6s2ug:1816:warning: unexpected data:   CONFIG_DRM_SIMPLEDRM=y
-./.tmp.config.nTm8v6s2ug:1817:warning: unexpected data:   # for your -device virtio-vga
-./.tmp.config.nTm8v6s2ug:1818:warning: unexpected data:   CONFIG_DRM_VIRTIO_GPU=y
-./.tmp.config.nTm8v6s2ug:1820:warning: unexpected data:   # Device Drivers → Graphics support → Console display driver support:
-./.tmp.config.nTm8v6s2ug:1821:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE=y
-./.tmp.config.nTm8v6s2ug:1822:warning: unexpected data:   # optional
-./.tmp.config.nTm8v6s2ug:1823:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
-./.tmp.config.nTm8v6s2ug:1825:warning: unexpected data:   # Device Drivers → Character devices:
-./.tmp.config.nTm8v6s2ug:1826:warning: unexpected data:   CONFIG_VT=y
-./.tmp.config.nTm8v6s2ug:1827:warning: unexpected data:   CONFIG_VT_CONSOLE=y
-./.tmp.config.nTm8v6s2ug:1828:warning: unexpected data:   CONFIG_HW_CONSOLE=y
+./.tmp.config.CcvNxAQJ8B:1493:warning: override: reassigning to symbol USB_ULPI_BUS
+./.tmp.config.CcvNxAQJ8B:1494:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.CcvNxAQJ8B:1516:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.CcvNxAQJ8B:1517:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.CcvNxAQJ8B:1532:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.CcvNxAQJ8B:1533:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.CcvNxAQJ8B:1534:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.CcvNxAQJ8B:1535:warning: override: reassigning to symbol NLS
+./.tmp.config.CcvNxAQJ8B:1536:warning: override: reassigning to symbol NLS_CODEPAGE_437
+./.tmp.config.CcvNxAQJ8B:1537:warning: override: reassigning to symbol NLS_ISO8859_1
+./.tmp.config.CcvNxAQJ8B:1547:warning: override: reassigning to symbol EFI
+./.tmp.config.CcvNxAQJ8B:1548:warning: override: reassigning to symbol EFI_STUB
+./.tmp.config.CcvNxAQJ8B:1549:warning: override: reassigning to symbol EFIVAR_FS
+./.tmp.config.CcvNxAQJ8B:1573:warning: override: reassigning to symbol USB
+./.tmp.config.CcvNxAQJ8B:1575:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.CcvNxAQJ8B:1576:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.CcvNxAQJ8B:1578:warning: override: reassigning to symbol INPUT
+./.tmp.config.CcvNxAQJ8B:1584:warning: override: reassigning to symbol HID
+./.tmp.config.CcvNxAQJ8B:1585:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.CcvNxAQJ8B:1754:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.CcvNxAQJ8B:1755:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.CcvNxAQJ8B:1760:warning: override: reassigning to symbol SCSI
+./.tmp.config.CcvNxAQJ8B:1763:warning: override: reassigning to symbol BLK_DEV_SD
+./.tmp.config.CcvNxAQJ8B:1765:warning: override: reassigning to symbol ATA
+./.tmp.config.CcvNxAQJ8B:1766:warning: override: reassigning to symbol SATA_AHCI
+./.tmp.config.CcvNxAQJ8B:1769:warning: override: reassigning to symbol NVME_CORE
+./.tmp.config.CcvNxAQJ8B:1770:warning: override: reassigning to symbol BLK_DEV_NVME
+./.tmp.config.CcvNxAQJ8B:1772:warning: override: reassigning to symbol USB_STORAGE
+./.tmp.config.CcvNxAQJ8B:1773:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.CcvNxAQJ8B:1779:warning: override: reassigning to symbol EXT4_FS
+./.tmp.config.CcvNxAQJ8B:1780:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.CcvNxAQJ8B:1781:warning: override: reassigning to symbol EXFAT_FS
+./.tmp.config.CcvNxAQJ8B:1789:warning: override: reassigning to symbol PROC_FS
+./.tmp.config.CcvNxAQJ8B:1790:warning: override: reassigning to symbol SYSFS
+./.tmp.config.CcvNxAQJ8B:1791:warning: override: reassigning to symbol UNIX
+./.tmp.config.CcvNxAQJ8B:1797:warning: override: reassigning to symbol DEVTMPFS
+./.tmp.config.CcvNxAQJ8B:1799:warning: override: reassigning to symbol DEVTMPFS_MOUNT
+./.tmp.config.CcvNxAQJ8B:1806:warning: override: reassigning to symbol FUSE_FS
+./.tmp.config.CcvNxAQJ8B:1812:warning: unexpected data:   # Device Drivers → Graphics support:
+./.tmp.config.CcvNxAQJ8B:1813:warning: unexpected data:   CONFIG_DRM=y
+./.tmp.config.CcvNxAQJ8B:1814:warning: unexpected data:   CONFIG_DRM_KMS_HELPER=y
+./.tmp.config.CcvNxAQJ8B:1815:warning: unexpected data:   # early console from EFI GOP
+./.tmp.config.CcvNxAQJ8B:1816:warning: unexpected data:   CONFIG_DRM_SIMPLEDRM=y
+./.tmp.config.CcvNxAQJ8B:1817:warning: unexpected data:   # for your -device virtio-vga
+./.tmp.config.CcvNxAQJ8B:1818:warning: unexpected data:   CONFIG_DRM_VIRTIO_GPU=y
+./.tmp.config.CcvNxAQJ8B:1820:warning: unexpected data:   # Device Drivers → Graphics support → Console display driver support:
+./.tmp.config.CcvNxAQJ8B:1821:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE=y
+./.tmp.config.CcvNxAQJ8B:1822:warning: unexpected data:   # optional
+./.tmp.config.CcvNxAQJ8B:1823:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
+./.tmp.config.CcvNxAQJ8B:1825:warning: unexpected data:   # Device Drivers → Character devices:
+./.tmp.config.CcvNxAQJ8B:1826:warning: unexpected data:   CONFIG_VT=y
+./.tmp.config.CcvNxAQJ8B:1827:warning: unexpected data:   CONFIG_VT_CONSOLE=y
+./.tmp.config.CcvNxAQJ8B:1828:warning: unexpected data:   CONFIG_HW_CONSOLE=y
 #
 # configuration written to .config
 #

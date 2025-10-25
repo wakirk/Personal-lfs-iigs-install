@@ -110,19 +110,19 @@ lfs_System_Config () {
 	return 1
 }
 
-lfs_bootable () {
-	echo "Making the LFS System Bootable"
-	"$HERE/1.18-LFS-Bootable/$EXEC_SCRIPT"
-	echo "Making the LFS System Bootable Complete"
+lfs_Xwindows () {
+	echo "X Windows System"
+	"$HERE/1.08-X-WindowsSystem/$EXEC_SCRIPT"
+	echo "X Windows System Software"
 	return 1
 }
 
-lfs_Cleanup () {
-	echo "Cleanup and Final Steps"
-	"$HERE/1.09-Cleanup/$EXEC_SCRIPT"
-	echo "Cleanup and Final Steps Complete"
-	return 1
-}
+#lfs_Cleanup () {
+#	echo "Cleanup and Final Steps"
+#	"$HERE/1.09-Cleanup/$EXEC_SCRIPT"
+#	echo "Cleanup and Final Steps Complete"
+#	return 1
+#}
 
 main() {
 	export LFS=/mnt/lfs

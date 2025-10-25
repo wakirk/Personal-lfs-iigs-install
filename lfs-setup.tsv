@@ -5,5 +5,4 @@ lfs_Cross_TempTools	XCompilingTempTools.sh	Cross Compiling Temporary Tools
 lfs_Cross_adddon_tempTools	Chroot-Addon-TempTools.menu.sh	Entering Chroot and Building Additional Temporary Tools
 lfs_System_Software	Install-System-Software.menu.sh	Installing Basic System Software
 lfs_System_Config	System-Config.menu.sh	System Configuration
-lfs_bootable	LFS-Bootable.menu.sh	Making the LFS System Bootable
-lfs_Cleanup	Cleanup.menu.sh	Cleanup and Final Steps
+lfs_Xwindows	LFS-Bootable.menu.sh	X Windows System

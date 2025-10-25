@@ -1,16 +1,8 @@
-
-https://chatgpt.com/g/g-p-68bf3444284c8191937ab3e8dcd8a503-iigs-linux-from-scratch-build/project
-https://www.linuxfromscratch.org/lfs/view/stable/chapter03/packages.html
-https://github.com/wakirk/Personal-lfs-iigs-install/tree/434aeed03f038aff88ac33cee6e32a63b904570d
-
-
-/bin/bash
-
-
+#/bin/bash
 
 source /root/lfs/lib/menu.lib   # In every script.
 
- main () {
+main () {
 
 	# 1. xorgproto	— Header files describing X11/extension protocols; needed to build X libraries.
 	# xorgproto (2024.1)
@@ -23,33 +15,56 @@ source /root/lfs/lib/menu.lib   # In every script.
 	# Estimated build time: less than 0.1 SBU
 	echoR "System Software"
 
+	echoL "Downloading util-macros 1.20.2..."
+	cd "/root/lfs/1.08-X-WindowsSystem"
+	# https://www.x.org/pub/individual/util/util-macros-1.20.2.tar.xz
+	../bash/Download.sh https://www.x.org/pub/individual/util/util-macros-1.20.2.tar.xz util-macros-1.20.2.tar.xz
+	cp ../Packages/util-macros-1.20.2.tar.xz /sources
+
 	echoL "Downloading xorgproto (2024.1)..."
 	sleep 2
-	cd "/root/lfs/1.08-X-WindowsSystem"
-	../bash/Download.sh https://*.tar.xz *.tar.xz
-	cp ../Packages/-.tar.xz /sources
+	../bash/Download.sh https://xorg.freedesktop.org/archive/individual/proto/xorgproto-2024.1.tar.xz xorgproto-2024.1.tar.xz
+	cp ../Packages/xorgproto-2024.1.tar.xz /sources
 
-	echoL "Unpack ------- ( ) ..."
+	export XORG_PREFIX="/usr"
+	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+
+	cd /sources
+	echoL "Unpack util-macros 1.20.2..."
+	rm -fR util-macros-1.20.2
+	tar -vxsf util-macros-1.20.2.tar.xz
+	cd util-macros-1.20.2
+
+	echoL "Building util-macros 1.20.2..."
+	./configure $XORG_CONFIG
+
+	echoL "Installing util-macros 1.20.2..."
+	make install
+
+	echoL "Unpack xorgproto (2024.1)..."
 	sleep 2
 	cd /sources
-	rm -fR
-	tar -vxsf
-	cd 
+	rm -fR xorgproto-2024.1
+	tar -vxsf xorgproto-2024.1.tar.xz
+	cd xorgproto-2024.1
 
-	echoL "Building ------- ( ) ..."
+	echoL "Building xorgproto (2024.1)..."
 	sleep 2
+	mkdir build
+	cd    build
+	meson setup --prefix=$XORG_PREFIX ..
+	ninja
 
-	echoL "Testing ------- ( ) ..."
+	echoL "Installing xorgproto (2024.1)..."
 	sleep 2
-	/bin/bash
-
-	echoL "Installing ------- ( ) ..."
-	sleep 2
+	ninja install
+	mv -fv $XORG_PREFIX/share/doc/xorgproto{,-2024.1}
 
 	echoL "Cleaning up build area...."
 	sleep 2
 	cd /sources
-	rm -fR 
+	rm -fR util-macros-1.20.2
+	rm -fR xorgproto-2024.1
 
 	echoL "Exiting..."
 }
