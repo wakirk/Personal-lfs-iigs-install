@@ -1,0 +1,46 @@
+
+1). X client bits (needed to compile/run xkegs)
+	1. xorgproto	xorgproto — Header files describing X11/extension protocols; needed to build X libraries.
+	2. libXau	libXau — X11 “MIT-MAGIC-COOKIE” authentication helpers used by X clients.
+	3. libXdmcp	libXdmcp — X Display Manager Control Protocol support (client side) for X11.
+	4. xtrans	xtrans — Transport-abstraction macros used by X libs for TCP/Unix-socket I/O.
+	5. python3	python3 — Required to generate code from xcb-proto during libxcb builds.  (for the next step’s generator)
+	6. xcb-proto	xcb-proto — XML protocol specs used to auto-generate the XCB client APIs.
+	7. libxcb	libxcb — Low-level X11 C binding (async, efficient) used by libX11 and apps.
+	8. libX11	libX11 — Core X11 client library; basic windowing/graphics calls.
+	9. libXext	libXext — Common X11 extensions (e.g., MIT-SHM) used by many X apps.
+
+After these are in place, you can usually build xkegs.
+2) X server (to draw on your monitor)
+
+	10. pixman	pixman — Pixel manipulation library (compositing) required by the Xorg server.
+	11. libxcvt	libxcvt — Modeline generator for CVT display modes used by Xorg.
+	12. xkeyboard-config	xkeyboard-config — Keyboard layouts/keymaps used at runtime by Xorg.
+	13. font-util	font-util — Utilities/encodings used when installing legacy X bitmap fonts. (Fonts, minimal, aka xorg-font-util)
+	14. libdrm	libdrm — Userspace interface to the kernel’s DRM/KMS (display/GPU) subsystem.
+	15. mesa	mesa — OpenGL/graphics implementation; provides 2D/3D accel (glamor) for modesetting. (provides OpenGL + glamor accel for modesetting)
+	16. libepoxy	libepoxy — GL function loader/dispatch library used by the Xorg server’s glamor path.
+	17. libevdev	libevdev — Wrapper for Linux evdev input devices (keyboards/mice/gamepads).
+	18. libinput	libinput — High-level input handling (pointer/keyboard/touch) built on libevdev.
+	19. xf86-input-libinput	xf86-input-libinput — Xorg input driver that connects Xorg to libinput.
+	20. dbus	dbus — System message bus; enables input/session services to talk to X/elogind.
+	21. elogind	elogind — logind-compatible seat/session manager so Xorg can run as non-root.	(so you can run Xorg as non-root; you can skip initially and test as root)
+	22. xorg-server	xorg-server — The X display server (“Xorg”) that draws windows on your GPU/monitor. xorg-server (use the built-in modesetting driver; works with kernel DRM)	Start X without a desktop
+
+3) Start X without a desktop
+	23. xinit	xinit — Minimal launcher (startx) to start an X session without a desktop.  (for startx)
+			Create ~/.xinitrc with just:
+			exec /usr/bin/xkegs
+			From a TTY: startx
+
+4) Audio (minimal)
+	24. alsa-lib	alsa-lib — ALSA userspace audio API for sound output/input.
+	25. alsa-utils	alsa-utils — Basic ALSA tools (e.g., alsamixer, aplay) to set volumes/test audio. (so you can unmute/set volume with alsamixer)
+
+Notes tailored to your LFS/BLFS rules
+	Install everything under /usr (no /usr/local), consistent with your LFS policy.
+	Kernel: enable DRM/KMS for your GPU. Start with nouveau for the GTX 1650 to keep it simple with Xorg’s modesetting driver.
+	Build xkegs in the KEGS src/ dir. If your system’s X libs aren’t in /usr/X11/lib, pass a proper XLIBS:
+		make XLIBS="-L/usr/lib" xkegs
+		(or /usr/lib/x86_64-linux-gnu on Debian-like setups).
+	That’s the whole minimal set to “make it tick” on a single machine, no desktop environment.
