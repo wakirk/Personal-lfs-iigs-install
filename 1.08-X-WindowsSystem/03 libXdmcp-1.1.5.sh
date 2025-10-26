@@ -18,6 +18,9 @@ main () {
 	../bash/Download.sh https://www.x.org/pub/individual/lib/libXdmcp-1.1.5.tar.xz libXdmcp-1.1.5.tar.xz
 	cp ../Packages/libXdmcp-1.1.5.tar.xz /sources
 
+	export XORG_PREFIX="/usr"
+	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+
 	echoL "Unpack libXdmcp (1.1.5)..."
 	sleep 2
 	cd /sources

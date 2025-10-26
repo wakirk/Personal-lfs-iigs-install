@@ -77,6 +77,39 @@ Winxcbproto() {
 	return 1
 }
 
+Winlibxcb() {
+	echoL "libxcb (1.17.0)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+WinlibX11() {
+	echoL "libX11 (1.8.12)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+WinlibXext() {
+	echoL "libXext (1.3.6)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+#	export XORG_PREFIX="/usr"
+#	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+
 lfs_identity
 lfs_tmux_entry main  # must be called after the routine it defines.
 

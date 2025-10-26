@@ -16,6 +16,9 @@ main () {
 	../bash/Download.sh https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-1.17.0.tar.xz xcb-proto-1.17.0.tar.xz
 	cp ../Packages/xcb-proto-1.17.0.tar.xz /sources
 
+	export XORG_PREFIX="/usr"
+	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
+
 	echoL "Unpack xcb-proto (1.17.0)..."
 	sleep 2
 	cd /sources
