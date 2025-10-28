@@ -455,21 +455,6 @@ xfs
 btrfs
 EOF
 
-cat > /root/.bashrc << 'EOF'
-#
-# ~/.bashrc
-#
-
-PS1="\[\e[1;94m\][\u@\h \w]\\$\[\e[0m\] "
-
-alias ls='ls --color=auto'
-alias ll='ls --color=auto -lah'
-alias mydf='df -hPT | column -t'
-alias mylsblk='lsblk -o name,size,fstype,label,model'
-
-setfont /usr/share/consolefonts/ter-v22b.psf
-EOF
-
 mkdir -p /etc/profile.d
 
 cat > /etc/profile.d/dircolors.sh << 'EOF'
@@ -641,9 +626,11 @@ alias ls='ls --color=auto'
 alias ll='ls --color=auto -lah'
 alias mydf='df -hPT | column -t'
 alias mylsblk='lsblk -o name,size,fstype,label,model'
+
+setfont /usr/share/consolefonts/ter-v22b.psf
 EOF
 
-cat > ~/.bash_logout << 'EOF'
+cat > /root/.bash_logout << 'EOF'
 # Begin ~/.bash_logout
 # Written for Beyond Linux From Scratch
 # by James Robertson <jameswrobertson@earthlink.net>

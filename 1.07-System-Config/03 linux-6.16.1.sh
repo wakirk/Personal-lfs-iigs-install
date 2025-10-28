@@ -389,24 +389,51 @@ CONFIG_CUSE=y
 
 CONFIG_NTSYNC=y
 
-  # Device Drivers → Graphics support:
-  CONFIG_DRM=y
-  CONFIG_DRM_KMS_HELPER=y
-  # early console from EFI GOP
-  CONFIG_DRM_SIMPLEDRM=y
-  # for your -device virtio-vga
-  CONFIG_DRM_VIRTIO_GPU=y
+# Device Drivers → Graphics support:
+CONFIG_DRM=y
+CONFIG_DRM_KMS_HELPER=y
+# early console from EFI GOP
+CONFIG_DRM_SIMPLEDRM=y
+# for your -device virtio-vga
+CONFIG_DRM_VIRTIO_GPU=y
 
-  # Device Drivers → Graphics support → Console display driver support:
-  CONFIG_FRAMEBUFFER_CONSOLE=y
-  # optional
-  CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
+# Device Drivers → Graphics support → Console display driver support:
+CONFIG_FRAMEBUFFER_CONSOLE=y
+# optional
+CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
 
-  # Device Drivers → Character devices:
-  CONFIG_VT=y
-  CONFIG_VT_CONSOLE=y
-  CONFIG_HW_CONSOLE=y
+# Device Drivers → Character devices:
+CONFIG_VT=y
+CONFIG_VT_CONSOLE=y
+CONFIG_HW_CONSOLE=y
 
+# Core DRM/KMS
+CONFIG_DRM=y
+CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_FBDEV_EMULATION=y
+
+# Early/Generic display + console
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_FB=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_VT=y
+CONFIG_VT_CONSOLE=y
+CONFIG_FB_EFI=y
+
+# Bus dependencies
+CONFIG_PCI=y
+CONFIG_PCI_MSI=y
+CONFIG_VIRTIO_PCI=y
+
+# QEMU GPU drivers (keep all; only the active one will bind)
+CONFIG_VIRTIO_MENU=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_INPUT=y
+VIRTIO_RTC_CLASS=y
+DRM_VIRTIO_GPU=y
+CONFIG_DRM_VIRTIO_GPU=y
+CONFIG_DRM_BOCHS=y
+CONFIG_DRM_QXL=y
 
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)

@@ -165,12 +165,14 @@ qemu-system-x86_64 -machine q35 -enable-kvm -cpu host -m 4096 \
   -device qemu-xhci \
   -device usb-kbd \
   -device usb-mouse \
-  -blockdev driver=host_device,filename=/dev/sdc,node-name=usbstick,cache.direct=on,cache.no-flush=off \
-  -device usb-storage,drive=usbstick \
-  -netdev user,id=net0      \
-  -device e1000,netdev=net0 \
   -vga virtio \
   -display gtk,zoom-to-fit=on,full-screen=on
+
+
+#  -netdev user,id=net0      \
+#  -device e1000,netdev=net0 \
+#  -device usb-storage,drive=usbstick \
+#  -blockdev driver=host_device,filename=/dev/sdc,node-name=usbstick,cache.direct=on,cache.no-flush=off \
 
 #    -enable-kvm        \
 #    -cpu host -m 2048  \

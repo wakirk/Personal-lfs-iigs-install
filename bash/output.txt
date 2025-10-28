@@ -58,7 +58,7 @@ New value: CONFIG_DEVTMPFS=y CONFIG_DEVTMPFS=y
 
 Value of CONFIG_PCI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_PCI is not set
-New value: CONFIG_PCI=y
+New value: CONFIG_PCI=y CONFIG_PCI=y
 
 Value of CONFIG_SCSI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_SCSI is not set
@@ -86,19 +86,19 @@ New value: CONFIG_BINFMT_SCRIPT=y
 
 Value of CONFIG_VT is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_VT=y
-New value: CONFIG_VT=y CONFIG_VT=y
+New value: CONFIG_VT=y CONFIG_VT=y CONFIG_VT=y
 
 Value of CONFIG_VT_CONSOLE is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_VT_CONSOLE=y
-New value: CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y
+New value: CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y
 
 Value of CONFIG_DRM is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_DRM is not set
-New value: CONFIG_DRM=y CONFIG_DRM=y
+New value: CONFIG_DRM=y CONFIG_DRM=y CONFIG_DRM=y
 
 Value of CONFIG_FB is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_FB is not set
-New value: CONFIG_FB=y
+New value: CONFIG_FB=y CONFIG_FB=y
 
 Value of CONFIG_INPUT_EVDEV is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_INPUT_EVDEV is not set
@@ -220,59 +220,70 @@ Value of CONFIG_NTSYNC is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_NTSYNC is not set
 New value: CONFIG_NTSYNC=y
 
-./.tmp.config.CcvNxAQJ8B:1493:warning: override: reassigning to symbol USB_ULPI_BUS
-./.tmp.config.CcvNxAQJ8B:1494:warning: override: reassigning to symbol HID_SUPPORT
-./.tmp.config.CcvNxAQJ8B:1516:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.CcvNxAQJ8B:1517:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.CcvNxAQJ8B:1532:warning: override: reassigning to symbol FAT_FS
-./.tmp.config.CcvNxAQJ8B:1533:warning: override: reassigning to symbol MSDOS_FS
-./.tmp.config.CcvNxAQJ8B:1534:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.CcvNxAQJ8B:1535:warning: override: reassigning to symbol NLS
-./.tmp.config.CcvNxAQJ8B:1536:warning: override: reassigning to symbol NLS_CODEPAGE_437
-./.tmp.config.CcvNxAQJ8B:1537:warning: override: reassigning to symbol NLS_ISO8859_1
-./.tmp.config.CcvNxAQJ8B:1547:warning: override: reassigning to symbol EFI
-./.tmp.config.CcvNxAQJ8B:1548:warning: override: reassigning to symbol EFI_STUB
-./.tmp.config.CcvNxAQJ8B:1549:warning: override: reassigning to symbol EFIVAR_FS
-./.tmp.config.CcvNxAQJ8B:1573:warning: override: reassigning to symbol USB
-./.tmp.config.CcvNxAQJ8B:1575:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.CcvNxAQJ8B:1576:warning: override: reassigning to symbol USB_XHCI_PCI
-./.tmp.config.CcvNxAQJ8B:1578:warning: override: reassigning to symbol INPUT
-./.tmp.config.CcvNxAQJ8B:1584:warning: override: reassigning to symbol HID
-./.tmp.config.CcvNxAQJ8B:1585:warning: override: reassigning to symbol HID_GENERIC
-./.tmp.config.CcvNxAQJ8B:1754:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.CcvNxAQJ8B:1755:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.CcvNxAQJ8B:1760:warning: override: reassigning to symbol SCSI
-./.tmp.config.CcvNxAQJ8B:1763:warning: override: reassigning to symbol BLK_DEV_SD
-./.tmp.config.CcvNxAQJ8B:1765:warning: override: reassigning to symbol ATA
-./.tmp.config.CcvNxAQJ8B:1766:warning: override: reassigning to symbol SATA_AHCI
-./.tmp.config.CcvNxAQJ8B:1769:warning: override: reassigning to symbol NVME_CORE
-./.tmp.config.CcvNxAQJ8B:1770:warning: override: reassigning to symbol BLK_DEV_NVME
-./.tmp.config.CcvNxAQJ8B:1772:warning: override: reassigning to symbol USB_STORAGE
-./.tmp.config.CcvNxAQJ8B:1773:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.CcvNxAQJ8B:1779:warning: override: reassigning to symbol EXT4_FS
-./.tmp.config.CcvNxAQJ8B:1780:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.CcvNxAQJ8B:1781:warning: override: reassigning to symbol EXFAT_FS
-./.tmp.config.CcvNxAQJ8B:1789:warning: override: reassigning to symbol PROC_FS
-./.tmp.config.CcvNxAQJ8B:1790:warning: override: reassigning to symbol SYSFS
-./.tmp.config.CcvNxAQJ8B:1791:warning: override: reassigning to symbol UNIX
-./.tmp.config.CcvNxAQJ8B:1797:warning: override: reassigning to symbol DEVTMPFS
-./.tmp.config.CcvNxAQJ8B:1799:warning: override: reassigning to symbol DEVTMPFS_MOUNT
-./.tmp.config.CcvNxAQJ8B:1806:warning: override: reassigning to symbol FUSE_FS
-./.tmp.config.CcvNxAQJ8B:1812:warning: unexpected data:   # Device Drivers → Graphics support:
-./.tmp.config.CcvNxAQJ8B:1813:warning: unexpected data:   CONFIG_DRM=y
-./.tmp.config.CcvNxAQJ8B:1814:warning: unexpected data:   CONFIG_DRM_KMS_HELPER=y
-./.tmp.config.CcvNxAQJ8B:1815:warning: unexpected data:   # early console from EFI GOP
-./.tmp.config.CcvNxAQJ8B:1816:warning: unexpected data:   CONFIG_DRM_SIMPLEDRM=y
-./.tmp.config.CcvNxAQJ8B:1817:warning: unexpected data:   # for your -device virtio-vga
-./.tmp.config.CcvNxAQJ8B:1818:warning: unexpected data:   CONFIG_DRM_VIRTIO_GPU=y
-./.tmp.config.CcvNxAQJ8B:1820:warning: unexpected data:   # Device Drivers → Graphics support → Console display driver support:
-./.tmp.config.CcvNxAQJ8B:1821:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE=y
-./.tmp.config.CcvNxAQJ8B:1822:warning: unexpected data:   # optional
-./.tmp.config.CcvNxAQJ8B:1823:warning: unexpected data:   CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
-./.tmp.config.CcvNxAQJ8B:1825:warning: unexpected data:   # Device Drivers → Character devices:
-./.tmp.config.CcvNxAQJ8B:1826:warning: unexpected data:   CONFIG_VT=y
-./.tmp.config.CcvNxAQJ8B:1827:warning: unexpected data:   CONFIG_VT_CONSOLE=y
-./.tmp.config.CcvNxAQJ8B:1828:warning: unexpected data:   CONFIG_HW_CONSOLE=y
+Value of CONFIG_VIRTIO_MENU is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_VIRTIO_MENU is not set
+New value: CONFIG_VIRTIO_MENU=y
+
+./.tmp.config.OL2nBu4QCX:1492:warning: override: reassigning to symbol USB_ULPI_BUS
+./.tmp.config.OL2nBu4QCX:1493:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.OL2nBu4QCX:1515:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.OL2nBu4QCX:1516:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.OL2nBu4QCX:1531:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.OL2nBu4QCX:1532:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.OL2nBu4QCX:1533:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.OL2nBu4QCX:1534:warning: override: reassigning to symbol NLS
+./.tmp.config.OL2nBu4QCX:1535:warning: override: reassigning to symbol NLS_CODEPAGE_437
+./.tmp.config.OL2nBu4QCX:1536:warning: override: reassigning to symbol NLS_ISO8859_1
+./.tmp.config.OL2nBu4QCX:1546:warning: override: reassigning to symbol EFI
+./.tmp.config.OL2nBu4QCX:1547:warning: override: reassigning to symbol EFI_STUB
+./.tmp.config.OL2nBu4QCX:1548:warning: override: reassigning to symbol EFIVAR_FS
+./.tmp.config.OL2nBu4QCX:1572:warning: override: reassigning to symbol USB
+./.tmp.config.OL2nBu4QCX:1574:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.OL2nBu4QCX:1575:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.OL2nBu4QCX:1577:warning: override: reassigning to symbol INPUT
+./.tmp.config.OL2nBu4QCX:1583:warning: override: reassigning to symbol HID
+./.tmp.config.OL2nBu4QCX:1584:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.OL2nBu4QCX:1753:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.OL2nBu4QCX:1754:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.OL2nBu4QCX:1759:warning: override: reassigning to symbol SCSI
+./.tmp.config.OL2nBu4QCX:1762:warning: override: reassigning to symbol BLK_DEV_SD
+./.tmp.config.OL2nBu4QCX:1764:warning: override: reassigning to symbol ATA
+./.tmp.config.OL2nBu4QCX:1765:warning: override: reassigning to symbol SATA_AHCI
+./.tmp.config.OL2nBu4QCX:1768:warning: override: reassigning to symbol NVME_CORE
+./.tmp.config.OL2nBu4QCX:1769:warning: override: reassigning to symbol BLK_DEV_NVME
+./.tmp.config.OL2nBu4QCX:1771:warning: override: reassigning to symbol USB_STORAGE
+./.tmp.config.OL2nBu4QCX:1772:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.OL2nBu4QCX:1778:warning: override: reassigning to symbol EXT4_FS
+./.tmp.config.OL2nBu4QCX:1779:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.OL2nBu4QCX:1780:warning: override: reassigning to symbol EXFAT_FS
+./.tmp.config.OL2nBu4QCX:1788:warning: override: reassigning to symbol PROC_FS
+./.tmp.config.OL2nBu4QCX:1789:warning: override: reassigning to symbol SYSFS
+./.tmp.config.OL2nBu4QCX:1790:warning: override: reassigning to symbol UNIX
+./.tmp.config.OL2nBu4QCX:1796:warning: override: reassigning to symbol DEVTMPFS
+./.tmp.config.OL2nBu4QCX:1798:warning: override: reassigning to symbol DEVTMPFS_MOUNT
+./.tmp.config.OL2nBu4QCX:1805:warning: override: reassigning to symbol FUSE_FS
+./.tmp.config.OL2nBu4QCX:1812:warning: override: reassigning to symbol DRM
+./.tmp.config.OL2nBu4QCX:1813:warning: override: reassigning to symbol DRM_KMS_HELPER
+./.tmp.config.OL2nBu4QCX:1815:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.OL2nBu4QCX:1820:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
+./.tmp.config.OL2nBu4QCX:1825:warning: override: reassigning to symbol VT
+./.tmp.config.OL2nBu4QCX:1826:warning: override: reassigning to symbol VT_CONSOLE
+./.tmp.config.OL2nBu4QCX:1830:warning: override: reassigning to symbol DRM
+./.tmp.config.OL2nBu4QCX:1831:warning: override: reassigning to symbol DRM_KMS_HELPER
+./.tmp.config.OL2nBu4QCX:1832:warning: override: reassigning to symbol DRM_FBDEV_EMULATION
+./.tmp.config.OL2nBu4QCX:1835:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.OL2nBu4QCX:1836:warning: override: reassigning to symbol FB
+./.tmp.config.OL2nBu4QCX:1837:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
+./.tmp.config.OL2nBu4QCX:1838:warning: override: reassigning to symbol VT
+./.tmp.config.OL2nBu4QCX:1839:warning: override: reassigning to symbol VT_CONSOLE
+./.tmp.config.OL2nBu4QCX:1840:warning: override: reassigning to symbol FB_EFI
+./.tmp.config.OL2nBu4QCX:1843:warning: override: reassigning to symbol PCI
+./.tmp.config.OL2nBu4QCX:1844:warning: override: reassigning to symbol PCI_MSI
+./.tmp.config.OL2nBu4QCX:1845:warning: override: reassigning to symbol VIRTIO_PCI
+./.tmp.config.OL2nBu4QCX:1849:warning: override: reassigning to symbol VIRTIO_PCI
+./.tmp.config.OL2nBu4QCX:1851:warning: unexpected data: VIRTIO_RTC_CLASS=y
+./.tmp.config.OL2nBu4QCX:1852:warning: unexpected data: DRM_VIRTIO_GPU=y
+./.tmp.config.OL2nBu4QCX:1853:warning: override: reassigning to symbol DRM_VIRTIO_GPU
 #
 # configuration written to .config
 #
@@ -946,6 +957,16 @@ Requested value:  CONFIG_DEVTMPFS_MOUNT=y
 CONFIG_DEVTMPFS_MOUNT=y
 Actual value:     CONFIG_DEVTMPFS_MOUNT=y
 
+Value requested for CONFIG_PCI not in final .config
+Requested value:  CONFIG_PCI=y
+CONFIG_PCI=y
+Actual value:     CONFIG_PCI=y
+
+Value requested for CONFIG_PCI_MSI not in final .config
+Requested value:  CONFIG_PCI_MSI=y
+CONFIG_PCI_MSI=y
+Actual value:     CONFIG_PCI_MSI=y
+
 Value requested for CONFIG_SCSI not in final .config
 Requested value:  CONFIG_SCSI=y
 CONFIG_SCSI=y
@@ -1046,33 +1067,54 @@ Actual value:     CONFIG_EFIVAR_FS=y
 
 Value requested for CONFIG_VT not in final .config
 Requested value:  CONFIG_VT=y
-  CONFIG_VT=y
+CONFIG_VT=y
+CONFIG_VT=y
 Actual value:     CONFIG_VT=y
 
 Value requested for CONFIG_VT_CONSOLE not in final .config
 Requested value:  CONFIG_VT_CONSOLE=y
-  CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
 Actual value:     CONFIG_VT_CONSOLE=y
 
 Value requested for CONFIG_FRAMEBUFFER_CONSOLE not in final .config
 Requested value:  CONFIG_FRAMEBUFFER_CONSOLE=y
-  CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
 Actual value:     CONFIG_FRAMEBUFFER_CONSOLE=y
 
 Value requested for CONFIG_DRM not in final .config
 Requested value:  CONFIG_DRM=y
-  CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
 Actual value:     CONFIG_DRM=y
 
 Value requested for CONFIG_DRM_KMS_HELPER not in final .config
 Requested value:  CONFIG_DRM_KMS_HELPER=y
-  CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
 Actual value:     CONFIG_DRM_KMS_HELPER=y
+
+Value requested for CONFIG_DRM_FBDEV_EMULATION not in final .config
+Requested value:  CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_DRM_FBDEV_EMULATION=y
+Actual value:     CONFIG_DRM_FBDEV_EMULATION=y
 
 Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
 Requested value:  CONFIG_DRM_SIMPLEDRM=y
-  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
 Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_FB not in final .config
+Requested value:  CONFIG_FB=y
+CONFIG_FB=y
+Actual value:     CONFIG_FB=y
+
+Value requested for CONFIG_FB_EFI not in final .config
+Requested value:  CONFIG_FB_EFI=y
+CONFIG_FB_EFI=y
+Actual value:     CONFIG_FB_EFI=y
 
 Value requested for CONFIG_FB_SIMPLE not in final .config
 Requested value:  CONFIG_FB_SIMPLE=y
@@ -1206,13 +1248,11 @@ CONFIG_EFI_PARTITION=y
 CONFIG_EFI_PARTITION=y
 Actual value:     CONFIG_EFI_PARTITION=y
 
-Value requested for CONFIG_VIRTIO not in final .config
-Requested value:  CONFIG_VIRTIO=y
-Actual value:     
-
 Value requested for CONFIG_VIRTIO_PCI not in final .config
 Requested value:  CONFIG_VIRTIO_PCI=y
-Actual value:     
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI=y
+Actual value:     CONFIG_VIRTIO_PCI=y
 
 Value requested for CONFIG_VIRTIO_BLK not in final .config
 Requested value:  CONFIG_VIRTIO_BLK=y
@@ -1222,10 +1262,6 @@ Value requested for CONFIG_SCSI not in final .config
 Requested value:  CONFIG_SCSI=y
 CONFIG_SCSI=y
 Actual value:     CONFIG_SCSI=y
-
-Value requested for CONFIG_SCSI_VIRTIO not in final .config
-Requested value:  CONFIG_SCSI_VIRTIO=y
-Actual value:     
 
 Value requested for CONFIG_BLK_DEV_SD not in final .config
 Requested value:  CONFIG_BLK_DEV_SD=y
@@ -1317,4 +1353,127 @@ Value requested for CONFIG_FUSE_FS not in final .config
 Requested value:  CONFIG_FUSE_FS=y
 CONFIG_FUSE_FS=y
 Actual value:     CONFIG_FUSE_FS=y
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_KMS_HELPER not in final .config
+Requested value:  CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
+Actual value:     CONFIG_DRM_KMS_HELPER=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_DRM_VIRTIO_GPU not in final .config
+Requested value:  CONFIG_DRM_VIRTIO_GPU=y
+CONFIG_DRM_VIRTIO_GPU=y
+Actual value:     CONFIG_DRM_VIRTIO_GPU=y
+
+Value requested for CONFIG_FRAMEBUFFER_CONSOLE not in final .config
+Requested value:  CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+Actual value:     CONFIG_FRAMEBUFFER_CONSOLE=y
+
+Value requested for CONFIG_VT not in final .config
+Requested value:  CONFIG_VT=y
+CONFIG_VT=y
+CONFIG_VT=y
+Actual value:     CONFIG_VT=y
+
+Value requested for CONFIG_VT_CONSOLE not in final .config
+Requested value:  CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
+Actual value:     CONFIG_VT_CONSOLE=y
+
+Value requested for CONFIG_HW_CONSOLE not in final .config
+Requested value:  CONFIG_HW_CONSOLE=y
+Actual value:     
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_KMS_HELPER not in final .config
+Requested value:  CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
+CONFIG_DRM_KMS_HELPER=y
+Actual value:     CONFIG_DRM_KMS_HELPER=y
+
+Value requested for CONFIG_DRM_FBDEV_EMULATION not in final .config
+Requested value:  CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_DRM_FBDEV_EMULATION=y
+Actual value:     CONFIG_DRM_FBDEV_EMULATION=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_FB not in final .config
+Requested value:  CONFIG_FB=y
+CONFIG_FB=y
+Actual value:     CONFIG_FB=y
+
+Value requested for CONFIG_FRAMEBUFFER_CONSOLE not in final .config
+Requested value:  CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+Actual value:     CONFIG_FRAMEBUFFER_CONSOLE=y
+
+Value requested for CONFIG_VT not in final .config
+Requested value:  CONFIG_VT=y
+CONFIG_VT=y
+CONFIG_VT=y
+Actual value:     CONFIG_VT=y
+
+Value requested for CONFIG_VT_CONSOLE not in final .config
+Requested value:  CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
+CONFIG_VT_CONSOLE=y
+Actual value:     CONFIG_VT_CONSOLE=y
+
+Value requested for CONFIG_FB_EFI not in final .config
+Requested value:  CONFIG_FB_EFI=y
+CONFIG_FB_EFI=y
+Actual value:     CONFIG_FB_EFI=y
+
+Value requested for CONFIG_PCI not in final .config
+Requested value:  CONFIG_PCI=y
+CONFIG_PCI=y
+Actual value:     CONFIG_PCI=y
+
+Value requested for CONFIG_PCI_MSI not in final .config
+Requested value:  CONFIG_PCI_MSI=y
+CONFIG_PCI_MSI=y
+Actual value:     CONFIG_PCI_MSI=y
+
+Value requested for CONFIG_VIRTIO_PCI not in final .config
+Requested value:  CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI=y
+Actual value:     CONFIG_VIRTIO_PCI=y
+
+Value requested for CONFIG_VIRTIO_PCI not in final .config
+Requested value:  CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI=y
+Actual value:     CONFIG_VIRTIO_PCI=y
+
+Value requested for CONFIG_DRM_VIRTIO_GPU not in final .config
+Requested value:  CONFIG_DRM_VIRTIO_GPU=y
+CONFIG_DRM_VIRTIO_GPU=y
+Actual value:     CONFIG_DRM_VIRTIO_GPU=y
 
