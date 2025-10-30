@@ -1,5 +1,5 @@
-BinutilsPass1	 
-GCCPass1	 
-LinuxHeaders	 
-Glibc	 
-Libstdc	 
+BinutilsPass1	*
+GCCPass1	*
+LinuxHeaders	*
+Glibc	*
+Libstdc	*

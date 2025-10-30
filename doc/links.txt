@@ -1,0 +1,687 @@
+
+
+
+
+See [title](#link).
+<a id="link">[title](http)
+
+
+
+See [Xorg Libraries](#XorgLibraries).
+<a id="XorgLibraries">[Xorg Libraries](https://www.linuxfromscratch.org/blfs/view/stable/x/x7lib.html)
+
+
+
+xinit-1.4.4				https://www.linuxfromscratch.org/blfs/view/stable/x/xinit.html
+Required
+>	Xorg Libraries
+Recommended (runtime only)
+>	twm-1.0.13.1
+>	xclock-1.1.1
+>	xterm-401
+
+Xorg Libraries			https://www.linuxfromscratch.org/blfs/view/stable/x/x7lib.html
+Required
+>	Fontconfig-2.17.1
+>	libxcb-1.17.0
+Optional
+/	asciidoc-10.2.1
+/	xmlto-0.0.29
+/	fop-2.11
+/	Links-2.30
+/	Lynx-2.9.2
+/	ncompress
+/	W3m
+
+twm-1.0.13.1			https://www.linuxfromscratch.org/blfs/view/stable/x/twm.html
+Required
+>	Xorg-Server-21.1.18
+
+xclock-1.1.1			https://www.linuxfromscratch.org/blfs/view/stable/x/xclock.html
+Required
+>	Xorg Libraries
+
+xterm-401				https://www.linuxfromscratch.org/blfs/view/stable/x/xterm.html
+Required
+>	luit-20240910
+
+Fontconfig-2.17.1		https://www.linuxfromscratch.org/blfs/view/stable/general/fontconfig.html
+Required
+>	FreeType-2.13.3
+>	make-ca-1.16.1
+Optional
+/	bubblewrap-0.11.0
+>	cURL-8.15.0 
+>	libarchive-3.8.1 
+/	JSON-C-0.18
+/	DocBook-utils-0.6.14
+>	libxml2-2.14.5
+/	texlive-20250308
+/	install-tl-unx
+/	SGMLSpm-1.1 
+
+libxcb-1.17.0			https://www.linuxfromscratch.org/blfs/view/stable/x/libxcb.html
+Required
+>	libXau-1.0.12
+>	xcb-proto-1.17.0
+Recommended
+>	libXdmcp-1.1.5
+Optional
+/	Doxygen-1.14.0
+>	libxslt-1.1.43
+
+Xorg-Server-21.1.18		https://www.linuxfromscratch.org/blfs/view/stable/x/xorg-server.html
+Required
+>	libxcvt-0.1.3
+>	Pixman-0.46.4
+>	Xorg Fonts
+>	xkeyboard-config-2.45
+Recommended
+>	dbus-1.16.2
+>	elogind-255.17
+>	libepoxy-1.5.10
+>	libtirpc-1.3.6
+>	xorg-libinput-1.5.0  (Xorg Input Drivers)
+>	dbus-1.16.2
+>	elogind-255.17
+Optional
+/	acpid-2.0.34
+/	Doxygen-1.14.0
+/	fop-2.11
+/	libunwind-1.8.2
+/	Nettle-3.10.2
+/	libgcrypt-1.11.2
+/	xmlto-0.0.29
+/	xkeyboard-config-2.45 
+/	rendercheck 
+/	xorg-sgml-doctools
+
+luit-20240910			https://www.linuxfromscratch.org/blfs/view/stable/x/luit.html
+Required
+>	Xorg Applications 
+
+Xorg Applications		https://www.linuxfromscratch.org/blfs/view/stable/x/x7app.html
+Required
+>	libpng-1.6.50
+>	Mesa-25.1.8
+>	xbitmaps-1.1.3
+>	xcb-util-0.4.1
+Optional
+>	Linux-PAM-1.7.1
+/	cairo-5c
+/	Nickle
+
+FreeType-2.13.3			https://www.linuxfromscratch.org/blfs/view/stable/general/freetype2.html
+Recommended
+>	harfBuzz-11.4.1
+>	libpng-1.6.50
+>	Which-2.23
+Optional
+/	Brotli-1.1.0
+/	librsvg-2.61.0
+Optional
+/	docwriter
+
+make-ca-1.16.1			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/make-ca.html
+Required
+>	p11-kit-0.25.5
+>	libtasn1-4.20.0
+Optional (runtime)
+/	nss-3.115
+
+libXau-1.0.12			https://www.linuxfromscratch.org/blfs/view/stable/x/libXau.html
+Required
+>	xorgproto-2024.1
+
+xcb-proto-1.17.0		https://www.linuxfromscratch.org/blfs/view/stable/x/xcb-proto.html
+Recommended
+>	Xorg build environment (needed for the instructions below)
+Optional
+>	libxml2-2.14.5
+
+libXdmcp-1.1.5			https://www.linuxfromscratch.org/blfs/view/stable/x/libXdmcp.html
+Required
+>	xorgproto-2024.1
+Optional
+/	xmlto-0.0.29
+/	fop-2.11
+>	libxslt-1.1.43
+/	Xorg-SGML-doctools
+
+
+
+Pixman-0.46.4			https://www.linuxfromscratch.org/blfs/view/stable/general/pixman.html
+Optional
+>	libpng-1.6.50
+/	GTK-3.24.50
+
+Xorg Fonts				https://www.linuxfromscratch.org/blfs/view/stable/x/x7font.html
+Required
+>	xcursor-themes-1.0.7
+
+XKeyboardConfig-2.45	https://www.linuxfromscratch.org/blfs/view/stable/x/xkeyboard-config.html
+Required
+>	Xorg Libraries
+Optional (required for tests)
+/	libxkbcommon-1.11.0
+/	pytest-8.4.1
+/	Xorg Applications
+
+dbus-1.16.2				https://www.linuxfromscratch.org/blfs/view/stable/general/dbus.html
+Recommended
+>	Xorg Libraries (for dbus-launch program)
+Optional
+/	D-Bus Python-1.4.0
+/	PyGObject-3.52.3
+/	Valgrind-3.25.1
+/	Doxygen-1.14.0
+/	xmlto-0.0.29
+/	Ducktype
+/	Yelp Tools
+
+elogind-255.17			https://www.linuxfromscratch.org/blfs/view/stable/general/elogind.html
+Recommended
+>	dbus-1.16.2 (runtime)
+>	Linux-PAM-1.7.1 (required for Xorg)
+>	Polkit-126 (runtime)
+>	docbook-xml-4.5
+>	docbook-xsl-nons-1.79.2
+>	libxslt-1.1.43 (all three to build the man pages)
+Optional
+/	lxml-6.0.0
+/	zsh-5.9
+/	Valgrind-3.25.1 (needed for tests)
+/	audit-userspace
+/	bash-completion
+/	kexec
+/	SELinux
+Editor Notes: https://wiki.linuxfromscratch.org/blfs/wiki/Logind
+
+libepoxy-1.5.10			https://www.linuxfromscratch.org/blfs/view/stable/x/libepoxy.html
+Required
+>	Mesa-25.1.8
+Optional
+/	Doxygen-1.14.0 (for documentation)
+
+libtirpc-1.3.6			https://www.linuxfromscratch.org/blfs/view/stable/basicnet/libtirpc.html
+Optional
+/	MIT Kerberos V5-1.22.1 for GSSAPI support
+
+Xorg Input Drivers		https://www.linuxfromscratch.org/blfs/view/stable/x/x7driver.html#xorg-libinput-driver
+Optional
+/	Doxygen-1.14.0
+/	Valgrind-3.25.1 (optional for tests)
+/	check (required for tests)
+
+
+Mesa-25.1.8				https://www.linuxfromscratch.org/blfs/view/stable/x/mesa.html
+Required
+>	Xorg Libraries
+>	libdrm-2.4.125
+>	Mako-1.3.10
+>	PyYAML-6.0.2
+Optional
+/	libgcrypt-1.11.2
+/	libunwind-1.8.2
+/	lm-sensors-3-6-2
+/	Nettle-3.10.2
+/	Valgrind-3.25.1
+/	mesa-demos (provides more than 300 extra demos to test Mesa; this includes the same programs added by the patch above),
+/	Bellagio OpenMAX Integration Layer (for mobile platforms)
+/	libtizonia
+Required to function:
+(needed by iris)
+>	LLVM 			LLVM-20.1.8 (required for the llvmpipe, r300, r600, and radeonsi drivers)
+>	libclc 			libclc-20.1.8 (required for the Intel iris gallium driver)
+(you enabled Vulkan: intel,intel_hasvk,nouveau,swrast)
+>	Vulkan-Loader 	Vulkan-Loader-1.4.321 (required for Vulkan support)
+>	glslang 		Glslang-15.4.0 (required for Vulkan support)
+>	ply				ply-3.11 (required for the Intel vulkan driver)
+(required for the Nouveau Vulkan driver)
+>	Cbindgen-0.29.0
+>	make-ca-1.16.1
+>	rust-bindgen-0.72.0
+(libva/libvdpau are optional (video decode)).
+>	libva-2.22.0		(to provide VA-API support for some gallium drivers. Note that there is a circular dependency. You must build libva first without mesa's EGL and GLX support, install this package, and rebuild libva)
+>	libvdpau-1.5		(to build VDPAU drivers)
+Configuration:
+	meson setup build \
+	--prefix=/usr \
+	-D platforms=x11,drm \
+	-D glx=dri -D egl=enabled -D gbm=enabled \
+	-D gallium-drivers=iris,crocus,nouveau,virgl,swrast \
+	-D vulkan-drivers=intel,intel_hasvk,nouveau,swrast
+	ninja -C build
+	ninja -C build install
+Why these:
+	iris (Intel Gen8+ OpenGL) and crocus (older Intel fallback).
+	nouveau (OpenGL for the 1650) + nvk via -Dvulkan-drivers=nouveau (that’s NVK).
+	swrast gives software fallback; virgl helps when you boot under QEMU.
+	BLFS recommends auto + adding swrast; above just pins exactly what you own.  Linux From Scratch
+	Valid driver names come straight from Mesa’s meson_options.txt (e.g., iris, crocus, nouveau, and Vulkan intel, intel_hasvk, nouveau, swrast). 
+
+xbitmaps-1.1.3			https://www.linuxfromscratch.org/blfs/view/stable/x/xbitmaps.html
+Required
+>	util-macros-1.20.2
+
+xcb-util-0.4.1
+Required
+>	libxcb-1.17.0
+Optional
+/	Doxygen-1.14.0 (for documentation)
+
+harfBuzz-11.4.1			https://www.linuxfromscratch.org/blfs/view/stable/general/harfbuzz.html
+Recommended
+>	GLib-2.84.4 (required for Pango; GObject Introspection required for building GNOME)
+>	Graphite2-1.3.14 (required for building texlive-20250308 or LibreOffice-25.8.1.1 with system harfbuzz)
+>	ICU-77.1 and
+>	FreeType-2.13.3 (after harfbuzz is installed, reinstall freetype)
+Optional
+/	Cairo-1.18.4 (circular: build cairo and all its recommended dependencies, including harfbuzz, first, then rebuild harfbuzz if the cairo backend is needed), 
+/	git-2.50.1
+/	GTK-Doc-1.34.0
+/	FontTools (Python 3 module, for the test suite)
+/	ragel
+/	wasm-micro-runtime
+
+
+p11-kit-0.25.5			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
+Recommended
+>	libtasn1-4.20.0
+Recommended (runtime)
+>	make-ca-1.16.1
+Optional
+/	GTK-Doc-1.34.0
+>	libxslt-1.1.43
+/	and nss-3.115 (runtime)
+
+
+
+xorgproto-2024.1		https://www.linuxfromscratch.org/blfs/view/stable/x/xorgproto.html
+Required
+>	util-macros-1.20.2
+Optional
+/	fop-2.11
+>	libxslt-1.1.43
+/	xmlto-0.0.29
+/	asciidoc-10.2.1 (to build additional documentation)
+
+xcursor-themes-1.0.7	https://www.linuxfromscratch.org/blfs/view/stable/x/xcursor-themes.html
+Required
+>	Xorg Applications
+
+Linux-PAM-1.7.1
+Required
+>	Shadow-4.18.0 (reinstall)	(BLFS) https://www.linuxfromscratch.org/blfs/view/stable/postlfs/shadow.html
+Optional
+/	libnsl-2.0.1
+/	libtirpc-1.3.6
+/	rpcsvc-proto-1.4.4
+/	Berkeley DB (deprecated)
+/	libaudit
+/	libeconf
+Optional (To build the Documentation and Man Pages)
+/	docbook-xml-5.0
+/	docbook-xsl-ns-1.79.2
+/	fop-2.11 (for the PDF format)
+>	libxslt-1.1.43
+/	Lynx-2.9.2 (for the plain text format)
+
+Polkit-126				https://www.linuxfromscratch.org/blfs/view/stable/postlfs/polkit.html
+Required
+>	duktape-2.7.0
+>	GLib-2.84.4 (GObject Introspection recommended)
+Recommended
+>	libxslt-1.1.43
+>	Linux-PAM-1.7.1
+>	elogind-255.17
+Optional
+/	GTK-Doc-1.34.0
+/	dbusmock-0.36.0 (required for tests)
+Optional Runtime Dependencies
+/	One polkit authentication agent for using polkit in the graphical environment:
+/	polkit-kde-agent in Plasma-6.4.4 for KDE
+/	the agent built in gnome-shell-48.4 for GNOME3
+/	polkit-gnome-0.105 for XFCE
+/	and lxqt-policykit-2.2.0 for LXQt
+
+docbook-xml-4.5			https://www.linuxfromscratch.org/blfs/view/stable/pst/docbook.html
+Required
+>	libarchive-3.8.1 
+>	libxml2-2.14.5
+
+docbook-xsl-nons-1.79.2	https://www.linuxfromscratch.org/blfs/view/stable/pst/docbook-xsl.html
+Recommended (at runtime)
+>	libxml2-2.14.5
+Optional (all used at runtime)
+/	apache-ant-1.10.15 (to produce “webhelp” documents)
+/	libxslt-1.1.43 (or any other XSLT processor), to process Docbook documents
+/	Ruby-3.4.5 (to utilize the “epub” stylesheets)
+/	Zip-3.0 (to produce “epub3” documents)
+/	Saxon6 and Xerces2 Java (used with apache-ant-1.10.15 to produce “webhelp” documents)
+
+libxslt-1.1.43
+Required
+>	libxml2-2.14.5
+Recommended (at runtime)
+>	docbook-xml-4.5
+>	docbook-xsl-nons-1.79.2
+
+Libdrm-2.4.125			https://www.linuxfromscratch.org/blfs/view/stable/x/libdrm.html
+Recommended
+>	Xorg Libraries (for Intel KMS API support required by Mesa)
+Optional
+/	Cairo-1.18.4 (for tests)
+>	CMake-4.1.0 (could be used to find dependencies without pkgconfig files)
+>	docbook-xml-4.5
+>	docbook-xsl-nons-1.79.2
+/	docutils-0.21.2
+>	libxslt-1.1.43 (to build manual pages)
+/	libatomic_ops-7.8.2 (required by architectures without native atomic operations)
+/	Valgrind-3.25.1
+/	CUnit (for AMDGPU tests)
+
+
+PyYAML-6.0.2			https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#PyYAML
+Required
+>	cython-3.1.3
+>	libyaml-0.2.5
+Optional
+/	pytest-8.4.1 (for testing)
+
+LLVM-20.1.8				https://www.linuxfromscratch.org/blfs/view/stable/general/llvm.html
+Required
+>	CMake-4.1.0
+Optional
+/	Doxygen-1.14.0
+/	git-2.50.1
+/	Graphviz-13.1.2
+/	libunwind-1.8.2
+>	libxml2-2.14.5
+/	psutil-7.0.0 (for tests)
+/	Pygments-2.19.2
+>	PyYAML-6.0.2 (for tests)
+/	rsync-3.4.1 (for tests)
+/	sphinx-8.2.3
+/	texlive-20250308 (or install-tl-unx)
+/	Valgrind-3.25.1
+/	Zip-3.0
+/	myst-parser (for building documentation)
+/	OCaml
+/	Z3
+
+libclc-20.1.8			https://www.linuxfromscratch.org/blfs/view/stable/general/libclc.html
+Required
+>	SPIRV-LLVM-Translator-20.1.5
+
+Vulkan-Loader-1.4.321
+Required
+>	CMake-4.1.0
+>	Vulkan-Headers-1.4.321
+>	Xorg Libraries
+Recommended
+/	Wayland-1.24.0
+Recommended (Runtime)
+/	Mesa-25.1.8 (for Vulkan drivers)
+Optional (for testing)
+/	git-2.50.1
+
+glslang-15.4.0			https://www.linuxfromscratch.org/blfs/view/stable/x/glslang.html
+Required
+>	CMake-4.1.0
+>	SPIRV-Tools-1.4.321.0
+
+
+Cbindgen-0.29.0			https://www.linuxfromscratch.org/blfs/view/stable/general/cbindgen.html
+Required
+>	rustc-1.89.0
+
+make-ca-1.16.1			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/make-ca.html
+Required
+>	p11-kit-0.25.5 (runtime, built after libtasn1-4.20.0, required in the following instructions to generate certificate stores from trust anchors, and each time make-ca is run)
+>	libtasn1-4.20.0
+Optional (runtime)
+/	nss-3.115 (to generate a shared NSSDB)
+
+rust-bindgen-0.72.0		https://www.linuxfromscratch.org/blfs/view/stable/general/rust-bindgen.html
+Required
+>	rustc-1.89.0
+>	LLVM-20.1.8 (with Clang, runtime)
+
+libva-2.22.0			https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libva.html
+Required
+>	Xorg build environment
+>	libdrm-2.4.125
+Recommended
+?	Mesa-25.1.8
+Recommended (Runtime)
+	The VA API driver suitable for the hardware in your system:
+	intel-vaapi-driver-2.4.1 (for Intel GPUs provided with Haswell CPUs or earlier),
+	intel-media-driver-25.2.6 (for Intel GPUs provided with Broadwell CPUs or later),
+	Mesa-25.1.8 (providing the r600, radeonsi, and nouveau VA API drivers, 
+		for the ATI/AMD Radeon HD 2xxx GPUs and later, and supported NVIDIA GPUs;
+		there is a circular dependency, read the Mesa page for information on how to break it)
+Optional
+/	Doxygen-1.14.0
+/	Wayland-1.24.0
+/	intel-gpu-tools
+
+libvdpau-1.5			https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libvdpau.html
+Required
+>	Xorg Libraries
+Recommended (Runtime)
+	The VDPAU driver suitable for the hardware in your system:
+>		libvdpau-va-gl-0.4.2 (for Intel GPUs)
+>		Mesa-25.1.8 (providing the r600, radeonsi, 
+>		nouveau VDPAU drivers for the ATI/AMD Radeon HD 2xxx GPUs and later, and supported NVIDIA GPUs 
+>		Mesa must be built after this package for these drivers)
+Optional
+/	Doxygen-1.14.0
+/	Graphviz-13.1.2
+/	texlive-20250308 or install-tl-unx
+
+
+GLib-2.84.4				https://www.linuxfromscratch.org/blfs/view/stable/general/glib2.html
+Recommended
+>	docutils-0.21.2
+>	libxslt-1.1.43
+>	pcre2-10.45
+Optional
+/	Cairo-1.18.4
+>	dbus-1.16.2
+>	Fuse-3.17.4
+/	bindfs
+/	GDB-16.3
+/	Gjs-1.84.2
+/	GTK-Doc-1.34.0
+>	docbook-xml-4.5
+>	docbook-xsl-nons-1.79.2
+/	Gi-DocGen-2025.4 (to build API documentation)
+/	glib-networking-2.80.1
+>	Mako-1.3.10
+/	Markdown-3.8.2
+/	sysprof
+
+Graphite2-1.3.14	https://www.linuxfromscratch.org/blfs/view/stable/general/graphite2.html
+Required
+>	CMake-4.1.0
+Optional
+>	FreeType-2.13.3
+/	silgraphite to build the comparerender test and benchmarking tool, and if that is present, and
+/	harfBuzz-11.4.1 to add more functionality to it (this is a circular dependency,
+/		you would need to first build graphite2 without harfbuzz).
+To build the documentation:
+/	asciidoc-10.2.1,
+/	Doxygen-1.14.0,
+/	texlive-20250308 (or install-tl-unx)
+/	dblatex (for PDF docs)
+To execute the test suite you will need 
+/	FontTools (Python 3 module), otherwise, the "cmp" tests fail.
+Optional (at runtime)
+/	You will need at least one suitable graphite font for the package to be useful.
+
+
+
+
+
+
+
+
+
+
+SPIRV-LLVM-Translator-20.1.5	https://www.linuxfromscratch.org/blfs/view/stable/general/spirv-llvm-translator.html
+Required
+>	libxml2-2.14.5
+>	LLVM-20.1.8
+>	SPIRV-Tools-1.4.321.0
+
+Vulkan-Headers-1.4.321			https://www.linuxfromscratch.org/blfs/view/stable/x/vulkan-headers.html
+Required
+>	CMake-4.1.0
+
+SPIRV-Tools-1.4.321.0			https://www.linuxfromscratch.org/blfs/view/stable/general/spirv-tools.html
+Required
+>	CMake-4.1.0
+>	SPIRV-Headers-1.4.321.0
+
+rustc-1.89.0		https://www.linuxfromscratch.org/blfs/view/stable/general/rust.html
+>	CMake-4.1.0
+>	cURL-8.15.0
+>	make-ca-1.16.1
+Recommended
+/	libssh2-1.11.1
+>	LLVM-20.1.8
+/	SQLite-3.50.4
+
+libvdpau-va-gl-0.4.2			https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libvdpau-va-gl.html
+Required
+>	CMake-4.1.0
+>	libvdpau-1.5
+>	libva-2.22.0
+>	Mesa-25.1.8
+Optional
+/	Doxygen-1.14.0
+/	Graphviz-13.1.2
+/	texlive-20250308 or install-tl-unx
+
+
+
+
+ICU-77.1				https://www.linuxfromscratch.org/blfs/view/stable/general/icu.html
+Optional
+/	Doxygen-1.14.0 (for documentation)
+
+
+libxml2-2.14.5			https://www.linuxfromscratch.org/blfs/view/stable/general/libxml2.html
+Recommended
+>	ICU-77.1
+Optional
+/	Valgrind-3.25.1 (may be used in the tests)
+
+
+
+nghttp2-1.66.0			https://www.linuxfromscratch.org/blfs/view/stable/basicnet/nghttp2.html
+Recommended
+>	libxml2-2.14.5
+Optional
+	The following are only used if building the full package instead of only the main libraries:
+/	Boost-1.89.0
+/	c-ares-1.34.5
+/	cython-3.1.3
+/	jansson-2.14.1
+/	libevent-2.1.12
+/	sphinx-8.2.3
+/	jemalloc
+/	libev
+/	mruby
+/	Spdylay.
+
+
+libarchive-3.8.1	https://www.linuxfromscratch.org/blfs/view/stable/general/libarchive.html
+Optional
+>	libxml2-2.14.5
+/	LZO-2.10
+/	Nettle-3.10.2
+/	pcre2-10.45
+
+libuv-1.51.0			https://www.linuxfromscratch.org/blfs/view/stable/general/libuv.html
+Optional
+/	sphinx-8.2.3
+
+
+libunistring-1.3
+Optional
+/	texlive-20250308 (or install-tl-unx) (to rebuild the documentation)
+
+
+libidn2-2.3.8			https://www.linuxfromscratch.org/blfs/view/stable/general/libidn2.html
+Recommended
+>	libunistring-1.3
+Optional
+/	git-2.50.1
+/	GTK-Doc-1.34.0
+
+
+libpsl-0.21.5				https://www.linuxfromscratch.org/blfs/view/stable/basicnet/libpsl.html
+Recommended
+>	libidn2-2.3.8
+>	libunistring-1.3
+Optional
+/	GTK-Doc-1.34.0 (for documentation)
+>	ICU-77.1 (may be used instead of libidn2)
+/	libidn-1.43 (may be used instead of libidn2)
+/	Valgrind-3.25.1 (for tests)
+
+
+cURL-8.15.0				https://www.linuxfromscratch.org/blfs/view/stable/basicnet/curl.html
+Recommended
+>	libpsl-0.21.5
+	Note
+	While there is an option to build the package without libpsl,
+	both the upstream developers and the BLFS editors alike highly recommend not disabling
+	support for libpsl due to severe security implications.
+Recommended at runtime
+>	make-ca-1.16.1
+Optional
+/	Brotli-1.1.0
+/	c-ares-1.34.5
+/	GnuTLS-3.8.10
+>	libidn2-2.3.8
+/	libssh2-1.11.1
+/	MIT Kerberos V5-1.22.1
+/	nghttp2-1.66.0
+/	OpenLDAP-2.6.10
+/	Samba-4.22.4 (runtime, for NTLM authentication)
+/	gsasl
+/	impacket
+/	libmetalink
+/	librtmp
+/	ngtcp2
+/	quiche
+/	SPNEGO
+Optional if Running the Test Suite
+/	Apache-2.4.65
+/	stunnel-5.75 (for the HTTPS and FTPS tests)
+/	OpenSSH-10.0p1
+/	Valgrind-3.25.1 (this will slow the tests down and may cause failures)
+
+
+CMake-4.1.0			https://www.linuxfromscratch.org/blfs/view/stable/general/cmake.html
+Recommended
+>	cURL-8.15.0
+>	libarchive-3.8.1
+>	libuv-1.51.0
+>	nghttp2-1.66.0
+Optional
+	GCC-15.2.0 (for gfortran)
+/	git-2.50.1 (for use during tests)
+/	mercurial-7.1 (for use during tests)
+/	OpenJDK-24.0.2 (for use during tests)
+/	Qt-6.9.2 (for the Qt-based GUI)
+/	sphinx-8.2.3 (for building documents)
+/	Subversion-1.14.5 (for testing)
+/	cppdap
+/	jsoncpp
+/	rhash
+
+

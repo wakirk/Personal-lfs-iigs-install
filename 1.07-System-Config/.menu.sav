@@ -1,8 +1,8 @@
-stripping	 
-postCleanup	 
-lfsbootscripts	 
-linux616	 
-efiboot	 
-OSconfig	 
-bldFUSE	 
-bldTerminusfont	 
+stripping	*
+postCleanup	*
+lfsbootscripts	*
+linux616	*
+efiboot	*
+OSconfig	*
+bldFUSE	*
+bldTerminusfont	*
