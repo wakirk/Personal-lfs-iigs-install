@@ -34,3 +34,6 @@ winxorglibinput	*
 winelogind	*
 winxinit	*
 winxkbcomp	*
+winlibXaw	*
+winluit	*
+winxterm	*

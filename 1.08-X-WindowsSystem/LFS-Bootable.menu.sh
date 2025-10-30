@@ -387,6 +387,37 @@ winxkbcomp() {
 	return 1
 }
 
+winlibXaw() {
+	echoL "libXaw (1.0.16)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+winluit() {
+	echoL "luit (20240910)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+winxterm() {
+	echoL "xterm (401)"
+	echoR "Client Components"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+
 
 #	export XORG_PREFIX="/usr"
 #	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
