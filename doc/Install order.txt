@@ -1,94 +1,79 @@
-Non X
-
-GCC-15.2.0				https://www.linuxfromscratch.org/blfs/view/stable/general/gcc.html
-Optional
-/	GDB-16.3
-/	Graphviz-13.1.2 (some tests use it if installed; note that if it's installed but not built with libpng-1.6.50 these tests will fail)
-/	Valgrind-3.25.1 (for tests), and ISL (to enable graphite optimization)
-
-Which-2.23				https://www.linuxfromscratch.org/blfs/view/stable/general/which.html
---
-
-duktape-2.7.0			https://www.linuxfromscratch.org/blfs/view/stable/general/duktape.html
---
-
-ply-3.11				https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#ply
---
-
-Cython-3.1.3			https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#cython
---
-
-docutils-0.21.2			https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#docutils
---
+See [Xorg Libraries](#XorgLibraries).
+<a id="XorgLibraries">[Xorg Libraries](https://www.linuxfromscratch.org/blfs/view/stable/x/x7lib.html)
+See [title](#link).
+<a id="link">[title](http)
 
 
 
-Basic X 
-
-Xorg build environment
---
-
-libpng-1.6.50			https://www.linuxfromscratch.org/blfs/view/stable/general/libpng.html
---
-
-libxcvt-0.1.3			https://www.linuxfromscratch.org/blfs/view/stable/x/libxcvt.html
-Required
->	Xorg build environment
-
-util-macros-1.20.2		https://www.linuxfromscratch.org/blfs/view/stable/x/util-macros.html
-Required
->	Xorg build environment
-
-
-
-X with Unused Optionals
-
-Mako-1.3.10				https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#Mako
-Optional (for Testing)
-/	pytest-8.4.1
-
-
-libyaml-0.2.5			https://www.linuxfromscratch.org/blfs/view/stable/general/libyaml.html
-Optional
-/	Doxygen-1.14.0
-
-PCRE2-10.45				https://www.linuxfromscratch.org/blfs/view/stable/general/pcre2.html
-Optional
-/	Valgrind-3.25.1
-/	libedit
-
-
-
-libtasn1-4.20.0			https://www.linuxfromscratch.org/blfs/view/stable/general/libtasn1.html
-Optional
-/	GTK-Doc-1.34.0
-/	Valgrind-3.25.1
-
-p11-kit-0.25.5			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
-Recommended
->	libtasn1-4.20.0
-Recommended (runtime)
->	make-ca-1.16.1
-Optional
-/	GTK-Doc-1.34.0
->	libxslt-1.1.43
-/	and nss-3.115 (runtime)
-
-make-ca-1.16.1			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/make-ca.html
-Required
->	p11-kit-0.25.5 (runtime, built after libtasn1-4.20.0, required in the following instructions to generate certificate stores from trust anchors, and each time make-ca is run)
->	libtasn1-4.20.0
-Optional (runtime)
-/	nss-3.115 (to generate a shared NSSDB)
-
-
-X with Simple Dependencies
-
-
-
-
-
-
-X with Complex Dependencies
-
+* [Cbindgen-0.29.0](#Cbindgen0290)					<a id="Cbindgen0290">[Cbindgen-0.29.0](https://www.linuxfromscratch.org/blfs/view/stable/general/cbindgen.html)
+* [CMake-4.1.0](#CMake410)							<a id="CMake410">[CMake-4.1.0](https://www.linuxfromscratch.org/blfs/view/stable/general/cmake.html)
+* [cURL-8.15.0](#cURL8150)							<a id="cURL8150">[cURL-8.15.0](https://www.linuxfromscratch.org/blfs/view/stable/basicnet/curl.html)
+* [Cython-3.1.3](#Cython313)						<a id="Cython313">[Cython-3.1.3](https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#cython)
+* [dbus-1.16.2](#dbus1162)							<a id="dbus1162">[dbus-1.16.2](https://www.linuxfromscratch.org/blfs/view/stable/general/dbus.html)
+* [docbook-xml-4.5](#docbookxml45)					<a id="docbookxml45">[docbook-xml-4.5](https://www.linuxfromscratch.org/blfs/view/stable/pst/docbook.html)
+* [docbook-xsl-nons-1.79.2](#docbookxslnons1792)	<a id="docbookxslnons1792">[docbook-xsl-nons-1.79.2](https://www.linuxfromscratch.org/blfs/view/stable/pst/docbook-xsl.html)
+* [docutils-0.21.2](#docutils0212)					<a id="docutils0212">[docutils-0.21.2](https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#docutils)
+* [duktape-2.7.0](#duktape270)						<a id="duktape270">[duktape-2.7.0](https://www.linuxfromscratch.org/blfs/view/stable/general/duktape.html)
+* [elogind-255.17](#elogind25517)					<a id="elogind25517">[elogind-255.17](https://www.linuxfromscratch.org/blfs/view/stable/general/elogind.html)
+* [Fontconfig-2.17.1](#Fontconfig2171)				<a id="Fontconfig2171">[Fontconfig-2.17.1](https://www.linuxfromscratch.org/blfs/view/stable/general/fontconfig.html)
+* [FreeType-2.13.3](#FreeType2133)					<a id="FreeType2133">[FreeType-2.13.3](https://www.linuxfromscratch.org/blfs/view/stable/general/freetype2.html)
+* [GCC-15.2.0](#GCC1520)							<a id="GCC1520">[GCC-15.2.0](https://www.linuxfromscratch.org/blfs/view/stable/general/gcc.html)
+* [GLib-2.84.4](#GLib2844)							<a id="GLib2844">[GLib-2.84.4](https://www.linuxfromscratch.org/blfs/view/stable/general/glib2.html)
+* [glslang-15.4.0](#glslang1540)					<a id="glslang1540">[glslang-15.4.0](https://www.linuxfromscratch.org/blfs/view/stable/x/glslang.html)
+* [Graphite2-1.3.14](#Graphite21314)				<a id="Graphite21314">[Graphite2-1.3.14](https://www.linuxfromscratch.org/blfs/view/stable/general/graphite2.html)
+* [harfBuzz-11.4.1](#harfBuzz1141)					<a id="harfBuzz1141">[harfBuzz-11.4.1](https://www.linuxfromscratch.org/blfs/view/stable/general/harfbuzz.html)
+* [ICU-77.1](#ICU771)								<a id="ICU771">[ICU-77.1](https://www.linuxfromscratch.org/blfs/view/stable/general/icu.html)
+* [libarchive-3.8.1](#libarchive381)				<a id="libarchive381">[libarchive-3.8.1](https://www.linuxfromscratch.org/blfs/view/stable/general/libarchive.html)
+* [libclc-20.1.8](#libclc2018)						<a id="libclc2018">[libclc-20.1.8](https://www.linuxfromscratch.org/blfs/view/stable/general/libclc.html)
+* [Libdrm-2.4.125](#Libdrm24125)					<a id="Libdrm24125">[Libdrm-2.4.125](https://www.linuxfromscratch.org/blfs/view/stable/x/libdrm.html)
+* [libepoxy-1.5.10](#libepoxy1510)					<a id="libepoxy1510">[libepoxy-1.5.10](https://www.linuxfromscratch.org/blfs/view/stable/x/libepoxy.html)
+* [libidn2-2.3.8](#libidn2238)						<a id="libidn2238">[libidn2-2.3.8](https://www.linuxfromscratch.org/blfs/view/stable/general/libidn2.html)
+* [libpng-1.6.50](#libpng1650)						<a id="libpng1650">[libpng-1.6.50](https://www.linuxfromscratch.org/blfs/view/stable/general/libpng.html)
+* [libpsl-0.21.5](#libpsl0215)						<a id="libpsl0215">[libpsl-0.21.5](https://www.linuxfromscratch.org/blfs/view/stable/basicnet/libpsl.html)
+* [libtasn1-4.20.0](#libtasn14200)					<a id="libtasn14200">[libtasn1-4.20.0](https://www.linuxfromscratch.org/blfs/view/stable/general/libtasn1.html)
+* [libtirpc-1.3.6](#libtirpc136)					<a id="libtirpc136">[libtirpc-1.3.6](https://www.linuxfromscratch.org/blfs/view/stable/basicnet/libtirpc.html)
+* [libuv-1.51.0](#libuv1510)						<a id="libuv1510">[libuv-1.51.0](https://www.linuxfromscratch.org/blfs/view/stable/general/libuv.html)
+* [libva-2.22.0](#libva2220)						<a id="libva2220">[libva-2.22.0](https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libva.html)
+* [libvdpau-1.5](#libvdpau15)						<a id="libvdpau15">[libvdpau-1.5](https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libvdpau.html)
+* [libvdpau-va-gl-0.4.2](#libvdpauvagl042)			<a id="libvdpauvagl042">[libvdpau-va-gl-0.4.2](https://www.linuxfromscratch.org/blfs/view/stable/multimedia/libvdpau-va-gl.html)
+* [libXau-1.0.12](#libXau1012)						<a id="libXau1012">[libXau-1.0.12](https://www.linuxfromscratch.org/blfs/view/stable/x/libXau.html)
+* [libxcb-1.17.0](#libxcb1170)						<a id="libxcb1170">[libxcb-1.17.0](https://www.linuxfromscratch.org/blfs/view/stable/x/libxcb.html)
+* [libxcvt-0.1.3](#libxcvt013)						<a id="libxcvt013">[libxcvt-0.1.3](https://www.linuxfromscratch.org/blfs/view/stable/x/libxcvt.html)
+* [libXdmcp-1.1.5](#libXdmcp115)					<a id="libXdmcp115">[libXdmcp-1.1.5](https://www.linuxfromscratch.org/blfs/view/stable/x/libXdmcp.html)
+* [libxml2-2.14.5](#libxml22145)					<a id="libxml22145">[libxml2-2.14.5](https://www.linuxfromscratch.org/blfs/view/stable/general/libxml2.html)
+* [libyaml-0.2.5](#libyaml025)						<a id="libyaml025">[libyaml-0.2.5](https://www.linuxfromscratch.org/blfs/view/stable/general/libyaml.html)
+* [LLVM-20.1.8](#LLVM2018)							<a id="LLVM2018">[LLVM-20.1.8](https://www.linuxfromscratch.org/blfs/view/stable/general/llvm.html)
+* [luit-20240910](#luit20240910)					<a id="luit20240910">[luit-20240910](https://www.linuxfromscratch.org/blfs/view/stable/x/luit.html)
+* [make-ca-1.16.1](#makeca1161)						<a id="makeca1161">[make-ca-1.16.1](https://www.linuxfromscratch.org/blfs/view/stable/postlfs/make-ca.html)
+* [Mako-1.3.10](#Mako1310)							<a id="Mako1310">[Mako-1.3.10](https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#Mako)
+* [Mesa-25.1.8](#Mesa2518)							<a id="Mesa2518">[Mesa-25.1.8](https://www.linuxfromscratch.org/blfs/view/stable/x/mesa.html)
+* [nghttp2-1.66.0](#nghttp21660)					<a id="nghttp21660">[nghttp2-1.66.0](https://www.linuxfromscratch.org/blfs/view/stable/basicnet/nghttp2.html)
+* [p11-kit-0.25.5](#p11kit0255)						<a id="p11kit0255">[p11-kit-0.25.5](https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html)
+* [PCRE2-10.45](#PCRE21045)							<a id="PCRE21045">[PCRE2-10.45](https://www.linuxfromscratch.org/blfs/view/stable/general/pcre2.html)
+* [Pixman-0.46.4](#Pixman0464)						<a id="Pixman0464">[Pixman-0.46.4](https://www.linuxfromscratch.org/blfs/view/stable/general/pixman.html)
+* [Polkit-126](#Polkit126)							<a id="Polkit126">[Polkit-126](https://www.linuxfromscratch.org/blfs/view/stable/postlfs/polkit.html)
+* [ply-3.11](#ply311)								<a id="ply311">[ply-3.11](https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#ply)
+* [PyYAML-6.0.2](#PyYAML602)						<a id="PyYAML602">[PyYAML-6.0.2](https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#PyYAML)
+* [rust-bindgen-0.72.0](#rustbindgen0720)			<a id="rustbindgen0720">[rust-bindgen-0.72.0](https://www.linuxfromscratch.org/blfs/view/stable/general/rust-bindgen.html)
+* [rustc-1.89.0](#rustc1890)						<a id="rustc1890">[rustc-1.89.0](https://www.linuxfromscratch.org/blfs/view/stable/general/rust.html)
+* [Shadow-4.18.0](#Shadow4180)						<a id="Shadow4180">[Shadow-4.18.0](https://www.linuxfromscratch.org/blfs/view/stable/postlfs/shadow.html)
+* [SPIRV-LLVM-Translator-20.1.5](#SPIRVLLVM2015)	<a id="SPIRVLLVM2015">[SPIRV-LLVM-Translator-20.1.5](https://www.linuxfromscratch.org/blfs/view/stable/general/spirv-llvm-translator.html)
+* [SPIRV-Tools-1.4.321.0](#SPIRVTools143210)		<a id="SPIRVTools143210">[SPIRV-Tools-1.4.321.0](https://www.linuxfromscratch.org/blfs/view/stable/general/spirv-tools.html)
+* [twm-1.0.13.1](#twm10131)							<a id="twm10131">[twm-1.0.13.1](https://www.linuxfromscratch.org/blfs/view/stable/x/twm.html)
+* [util-macros-1.20.2](#utilmacros1202)				<a id="utilmacros1202">[util-macros-1.20.2](https://www.linuxfromscratch.org/blfs/view/stable/x/util-macros.html)
+* [Vulkan-Headers-1.4.321](#VulkanHeaders14321)		<a id="VulkanHeaders14321">[Vulkan-Headers-1.4.321](https://www.linuxfromscratch.org/blfs/view/stable/x/vulkan-headers.html)
+* [Which-2.23](#Which223)							<a id="Which223">[Which-2.23](https://www.linuxfromscratch.org/blfs/view/stable/general/which.html)
+* [xbitmaps-1.1.3](#xbitmaps113)					<a id="xbitmaps113">[xbitmaps-1.1.3](https://www.linuxfromscratch.org/blfs/view/stable/x/xbitmaps.html)
+* [xclock-1.1.1](#xclock111) 						<a id="xclock111">[xclock-1.1.1](https://www.linuxfromscratch.org/blfs/view/stable/x/xclock.html)
+* [xcursor-themes-1.0.7](#xcursorthemes107)			<a id="xcursorthemes107">[xcursor-themes-1.0.7](https://www.linuxfromscratch.org/blfs/view/stable/x/xcursor-themes.html)
+* [xcb-proto-1.17.0](#xcbproto1170)					<a id="xcbproto1170">[xcb-proto-1.17.0](https://www.linuxfromscratch.org/blfs/view/stable/x/xcb-proto.html)
+* [xinit-1.4.4](#xinit144)							<a id="xinit144">[xinit-1.4.4](https://www.linuxfromscratch.org/blfs/view/stable/x/xinit.html)
+* [XKeyboardConfig245](#XKeyboardConfig245)			<a id="XKeyboardConfig245">[XKeyboardConfig-2.45](https://www.linuxfromscratch.org/blfs/view/stable/x/xkeyboard-config.html)
+* [Xorg Applications](#XorgApplications)			<a id="XorgApplications">[Xorg Applications](https://www.linuxfromscratch.org/blfs/view/stable/x/x7app.html)
+* [Xorg Fonts](#XorgFonts)							<a id="XorgFonts">[Xorg Fonts](https://www.linuxfromscratch.org/blfs/view/stable/x/x7font.html)
+* [Xorg Input Drivers](#XorgInputDrivers)			<a id="XorgInputDrivers">[Xorg Input Drivers](https://www.linuxfromscratch.org/blfs/view/stable/x/x7driver.html#xorg-libinput-driver)
+* [Xorg Libraries](#XorgLibs)						<a id="XorgLibs">[Xorg Libraries](https://www.linuxfromscratch.org/blfs/view/stable/x/x7lib.html)
+* [Xorg-Server-21.1.18](#XorgServer21118)			<a id="XorgServer21118">[Xorg-Server-21.1.18](https://www.linuxfromscratch.org/blfs/view/stable/x/xorg-server.html)
+* [xorgproto-2024.1](#xorgproto20241)				<a id="xorgproto20241">[xorgproto-2024.1](https://www.linuxfromscratch.org/blfs/view/stable/x/xorgproto.html)
+* [xterm-401](#xterm401)							<a id="xterm401">[xterm-401](https://www.linuxfromscratch.org/blfs/view/stable/x/xterm.html)
 
