@@ -110,19 +110,12 @@ lfs_System_Config () {
 	return 1
 }
 
-lfs_Xwindows () {
-	echo "X Windows System"
-	"$HERE/1.08-X-WindowsSystem/$EXEC_SCRIPT"
-	echo "X Windows System Software"
+BLFSLibraryFoundation () {
+	echo "BLFS Library Foundation"
+	"$HERE/B-01-Library Foundation/$EXEC_SCRIPT"
+	echo "BLFS Library Foundation Complete"
 	return 1
 }
-
-#lfs_Cleanup () {
-#	echo "Cleanup and Final Steps"
-#	"$HERE/1.09-Cleanup/$EXEC_SCRIPT"
-#	echo "Cleanup and Final Steps Complete"
-#	return 1
-#}
 
 main() {
 	export LFS=/mnt/lfs

@@ -285,15 +285,6 @@ Optional
 /	wasm-micro-runtime
 
 
-p11-kit-0.25.5			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
-Recommended
->	libtasn1-4.20.0
-Recommended (runtime)
->	make-ca-1.16.1
-Optional
-/	GTK-Doc-1.34.0
->	libxslt-1.1.43
-/	and nss-3.115 (runtime)
 
 
 
@@ -567,10 +558,6 @@ Optional
 
 
 
-ICU-77.1				https://www.linuxfromscratch.org/blfs/view/stable/general/icu.html
-Optional
-/	Doxygen-1.14.0 (for documentation)
-
 
 libxml2-2.14.5			https://www.linuxfromscratch.org/blfs/view/stable/general/libxml2.html
 Recommended
@@ -683,5 +670,125 @@ Optional
 /	cppdap
 /	jsoncpp
 /	rhash
+
+
+
+GCC-15.2.0				https://www.linuxfromscratch.org/blfs/view/stable/general/gcc.html
+Optional
+/	GDB-16.3
+/	Graphviz-13.1.2 (some tests use it if installed; note that if it's installed but not built with libpng-1.6.50 these tests will fail)
+/	Valgrind-3.25.1 (for tests), and ISL (to enable graphite optimization)
+
+Which-2.23				https://www.linuxfromscratch.org/blfs/view/stable/general/which.html
+--
+
+duktape-2.7.0			https://www.linuxfromscratch.org/blfs/view/stable/general/duktape.html
+--
+
+ply-3.11				https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#ply
+--
+
+Cython-3.1.3			https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#cython
+--
+
+docutils-0.21.2			https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#docutils
+--
+
+
+
+
+Xorg build environment
+--
+
+libpng-1.6.50			https://www.linuxfromscratch.org/blfs/view/stable/general/libpng.html
+--
+
+libxcvt-0.1.3			https://www.linuxfromscratch.org/blfs/view/stable/x/libxcvt.html
+Required
+>	Xorg build environment
+
+util-macros-1.20.2		https://www.linuxfromscratch.org/blfs/view/stable/x/util-macros.html
+Required
+>	Xorg build environment
+
+
+
+
+ICU-77.1				https://www.linuxfromscratch.org/blfs/view/stable/general/icu.html
+Optional
+/	Doxygen-1.14.0 (for documentation)
+
+Mako-1.3.10				https://www.linuxfromscratch.org/blfs/view/stable/general/python-modules.html#Mako
+Optional (for Testing)
+/	pytest-8.4.1
+
+libyaml-0.2.5			https://www.linuxfromscratch.org/blfs/view/stable/general/libyaml.html
+Optional
+/	Doxygen-1.14.0
+
+PCRE2-10.45				https://www.linuxfromscratch.org/blfs/view/stable/general/pcre2.html
+Optional
+/	Valgrind-3.25.1
+/	libedit
+
+p11-kit-0.25.5			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
+Recommended
+>	libtasn1-4.20.0
+Recommended (runtime)
+>	make-ca-1.16.1
+Optional
+/	GTK-Doc-1.34.0
+>	libxslt-1.1.43
+/	and nss-3.115 (runtime)
+
+
+libtasn1-4.20.0			https://www.linuxfromscratch.org/blfs/view/stable/general/libtasn1.html
+Optional
+/	GTK-Doc-1.34.0
+/	Valgrind-3.25.1
+
+p11-kit-0.25.5			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
+Recommended
+>	libtasn1-4.20.0
+Recommended (runtime)
+>	make-ca-1.16.1
+Optional
+/	GTK-Doc-1.34.0
+>	libxslt-1.1.43
+/	and nss-3.115 (runtime)
+
+make-ca-1.16.1			https://www.linuxfromscratch.org/blfs/view/stable/postlfs/make-ca.html
+Required
+>	p11-kit-0.25.5 (runtime, built after libtasn1-4.20.0, required in the following instructions to generate certificate stores from trust anchors, and each time make-ca is run)
+>	libtasn1-4.20.0
+Optional (runtime)
+/	nss-3.115 (to generate a shared NSSDB)
+
+
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+Non X
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+Basic X 
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+X with Unused Optionals
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+X with Simple Dependencies
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+=========================================================================================================
+X with Complex Dependencies
 
 
