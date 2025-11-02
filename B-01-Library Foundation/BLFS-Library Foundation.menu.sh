@@ -58,6 +58,36 @@ blfslibpng() {
 	return 1
 }
 
+blfsWhich() {
+	echoL "Which (2.23)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsICU771() {
+	echoL "ICU (77.1)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsdocutils() {
+	echoL "Doc utils (0.21.2)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 #	export XORG_PREFIX="/usr"
 #	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
 
