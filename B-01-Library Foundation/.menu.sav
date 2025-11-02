@@ -3,3 +3,7 @@ blfslibtirpc	*
 blfslibpng	*
 blfsWhich	*
 blfsICU771	*
+blfsdocutils	*
+blfsValgrind3251	*
+blfslibuv1510	*
+blfsGCC1520	*
