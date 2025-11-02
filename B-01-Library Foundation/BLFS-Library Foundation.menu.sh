@@ -118,6 +118,18 @@ blfsGCC1520() {
 	return 1
 }
 
+blfslibunistring13() {
+	echoL "libunistring (1.3)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+
+
 #	export XORG_PREFIX="/usr"
 #	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
 
