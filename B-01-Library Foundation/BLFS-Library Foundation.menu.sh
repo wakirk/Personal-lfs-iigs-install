@@ -208,6 +208,66 @@ blfslibyaml025() {
 	return 1
 }
 
+blfsply311() {
+	echoL "ply (3.11)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsNettools210() {
+	echoL "Net-tools (2.10)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+hwdata0398() {
+	echoL "HWdata (0.398)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfslibarchive381() {
+	echoL "libarchive (3.8.1)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsSQLite3504() {
+	echoL "SQLite (3.50.4)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsPython3137() {
+	echoL "Python (3.13.7)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
 #	export XORG_PREFIX="/usr"
 #	export XORG_CONFIG="--prefix=$XORG_PREFIX --sysconfdir=/etc --localstatedir=/var --disable-static"
 

@@ -6,3 +6,4 @@ lfs_Cross_adddon_tempTools	Chroot-Addon-TempTools.menu.sh	Entering Chroot and Bu
 lfs_System_Software	Install-System-Software.menu.sh	Installing Basic System Software
 lfs_System_Config	System-Config.menu.sh	System Configuration
 BLFSLibraryFoundation	BLFS-Library Foundation.menu.sh	BLFS Library Foundation
+BLFSSupportLibrary	BLFS-Support Library.menu.sh	BLFS Support Library

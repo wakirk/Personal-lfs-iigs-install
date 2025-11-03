@@ -117,6 +117,13 @@ BLFSLibraryFoundation () {
 	return 1
 }
 
+BLFSSupportLibrary () {
+	echo "BLFS Support Library"
+	"$HERE/B-02-Support Library/$EXEC_SCRIPT"
+	echo "BLFS Support Library Complete"
+	return 1
+}
+
 main() {
 	export LFS=/mnt/lfs
 	umask 022
