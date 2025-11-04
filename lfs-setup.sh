@@ -124,6 +124,14 @@ BLFSSupportLibrary () {
 	return 1
 }
 
+BLFSSupportApplications () {
+	echo "BLFS Support Applications"
+	"$HERE/B-03-Support Applications/$EXEC_SCRIPT"
+	echo "BLFS Support Applications Complete"
+	return 1
+}
+
+
 main() {
 	export LFS=/mnt/lfs
 	umask 022
