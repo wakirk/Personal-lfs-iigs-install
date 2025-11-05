@@ -1,0 +1,17 @@
+blfsWget1250	01 Wget-1.25.0.sh	Wget (1.25.0)
+blfsxcbutil041	02 xcb-util-0.4.1.sh	xcb-util (0.4.1)
+blfslibpwquality145	03 libpwquality-1.4.5.sh	libpwquality (1.4.5)
+blfsLinuxPAM171	04 Linux-PAM-1.7.1.sh	Linux-PAM (1.7.1)
+blfsShadow4180	05 Shadow-4.18.0.sh	Shadow (4.18.0) Required Reinstall
+blfslibxslt1143	06 libxslt-1.1.43.sh	libxslt (1.1.43)
+blfsdocutils0212	07 docutils-0.21.2.sh	docutils (0.21.2)
+blfsGLib2844Pass1	08 GLib-2.84.4 Pass 1.sh	GLib (2.84.4) Pass 1
+blfsdesktopfileutils028	09 desktop-file-utils-0.28.sh	Desktop File-utils (0.28)
+blfssharedmimeinfo24	10 shared-mime-info-2.4.sh	shared mime info (2.4)
+GLib2844Pass2	11 GLib-2.84.4 Pass 2.sh	GLib (2.84.4) Pass 2
+blfsFreeType2133Pass1	12 FreeType-2.13.3 Pass 1.sh	FreeType (2.13.3) Pass 1
+blfsharfBuzz1141	13 harfBuzz-11.4.1.sh	harfBuzz (11.4.1)
+blfsFreeType2133Pass2	14 FreeType-2.13.3 Pass 2.sh	FreeType (2.13.3) Pass 2
+blfsSudo1917p2	15 Sudo-1.9.17p2.sh	Sudo (1.9.17p2)
+blfsOpenSSH100p1	16 OpenSSH-10.0p1.sh	OpenSSH (10.0p1)
+blfslibssh21111	17 libssh2-1.11.1.sh	libssh2 (1.11.1)

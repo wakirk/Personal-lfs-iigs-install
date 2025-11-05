@@ -8,3 +8,5 @@ lfs_System_Config	System-Config.menu.sh	System Configuration
 BLFSLibraryFoundation	BLFS-Library Foundation.menu.sh	BLFS Library Foundation
 BLFSSupportLibrary	BLFS-Support Library.menu.sh	BLFS Support Library
 BLFSSupportApplications	BLFS-Support Applications.menu.sh	BLFS Support Applications
+BLFSSecurityLayer	BLFS-Security Layer.menu.sh	BLFS Security Layer
+BLFSXLibsandMesa	BLFS-Libraries and Mesa.menu.sh	BLFS Xorg Libraries and Mesa

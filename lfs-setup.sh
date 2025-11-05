@@ -131,6 +131,19 @@ BLFSSupportApplications () {
 	return 1
 }
 
+BLFSSecurityLayer () {
+	echo "BLFS Security Layer"
+	"$HERE/B-04-Security Layer/$EXEC_SCRIPT"
+	echo "BLFS Security Layer Complete"
+	return 1
+}
+
+BLFSXLibsandMesa () {
+	echo "BLFS Xorg Libraries and Mesa"
+	"$HERE/B-05-Xorg Libraries and Mesa/$EXEC_SCRIPT"
+	echo "BLFS Xorg Libraries and Mesa Complete"
+	return 1
+}
 
 main() {
 	export LFS=/mnt/lfs

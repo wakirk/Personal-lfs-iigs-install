@@ -434,6 +434,7 @@ DRM_VIRTIO_GPU=y
 CONFIG_DRM_VIRTIO_GPU=y
 CONFIG_DRM_BOCHS=y
 CONFIG_DRM_QXL=y
+CONFIG_AUDIT=y
 
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)
@@ -453,7 +454,11 @@ EOF
 	grep -nE '^(# +CONFIG_(USB(|_XHCI_HCD|_XHCI_PCI)|HID(|_GENERIC|_SONY|_NINTENDO)|USB_HID|INPUT|UHID|UINPUT|JOYSTICK_XPAD|BT(|_HIDP)) +is +not +set)' Kernel.cfg
 
 	echoL "Configure Linux Kernerl Setup (6.16.1)"
-#	make nconfig
+
+	# ------------MENU CONFIG
+	make nconfig
+	# ------------MENU CONFIG
+
 	cp .config /root/lfs/bash/config.default
 #	/bin/bash
 #	return 1
