@@ -34,7 +34,7 @@ blfsSPIRVHeaders143210() {
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"
 	chroot_exit
-	return_wait 1
+		return_wait 1
 	return 1
 }
 
@@ -50,6 +50,16 @@ blfsSPIRVTools143210() {
 
 blfsLLVM2018() {
 	echoL "LLVM (20.1.8)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsFontconfig2171() {
+	echoL "Fontconfig (2.17.1)"
 	echoR "BLFS X System Build"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"

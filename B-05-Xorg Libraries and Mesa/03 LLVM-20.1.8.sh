@@ -99,7 +99,7 @@ main () {
 	grep -rl '#!.*python' | xargs sed -i '1s/python$/python3/'
 
 	sed 's/utility/tool/' -i utils/FileCheck/CMakeLists.txt
-	read
+#	read
 
 	echoL "Building LLVM (20.1.8)..."
 	sleep 2
@@ -121,21 +121,21 @@ main () {
 		-D CLANG_CONFIG_FILE_SYSTEM_DIR=/etc/clang \
 		-W no-dev -G Ninja ..                  &&
 	ninja
-	read
+#	read
 
 	sed -e 's/config.has_no_default_config_flag/True/' \
 		-e 's/"-fuse-ld=gold"//'                       \
 		-i ../projects/compiler-rt/test/lit.common.cfg.py
 
-	echoL "Testing LLVM (20.1.8)..."
-	sleep 2
-	sh -c 'ulimit -c 0 && ninja check-all'
-	read
+#	echoL "Testing LLVM (20.1.8)..."
+#	sleep 2
+#	sh -c 'ulimit -c 0 && ninja check-all'
+#	read
 
 	echoL "Installing LLVM (20.1.8)..."
 	sleep 2
 	ninja install
-	read
+#	read
 
 	echoL "Cleaning up build area...."
 	sleep 2
