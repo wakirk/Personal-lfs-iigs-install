@@ -98,9 +98,178 @@ blfsSPIRVLLVMTrans2015() {
 	return 1
 }
 
-
 blfsRustc1890() {
 	echoL "Rustc (1.89.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsCbindgen0290() {
+	echoL "Cbindgen (0.29.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsrustbindgen0720() {
+	echoL "rust-bindgen (0.72.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfslibclc2018() {
+	echoL "libclc (20.1.8)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfslibvdpau15() {
+	echoL "libvdpau (1.5)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsglslang1540() {
+	echoL "glslang (15.4.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsVulkanHeaders14321() {
+	echoL "Vulkan-Headers (1.4.321)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsVulkanLoader14321() {
+	echoL "Vulkan-Loader (1.4.321)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsdmidecode36() {
+	echoL "DMI Decode (3.6)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsCairo1184() {
+	echoL "Cairo (1.18.4)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsFriBidi1016() {
+	echoL "FriBidi (1.0.16)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsPango1564() {
+	echoL "Pango (1.56.4)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsrrdtool190() {
+	echoL "RRD tool (1.9.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfslmsensors362() {
+	echoL "lm-sensors (3.6.2)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfslibva2220() {
+	echoL "libva (2.22.0)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsgmmlib2281() {
+	echoL "gmmlib (22.8.1)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsintelmediadriver2526() {
+	echoL "Intel Media Driver (25.2.6)"
+	echoR "BLFS X System Build"
+	chroot_entry
+	chroot_run "$HERE/$EXEC_SCRIPT"
+	chroot_exit
+	return_wait 1
+	return 1
+}
+
+blfsMesa2518() {
+	echoL "Mesa (25.1.8)"
 	echoR "BLFS X System Build"
 	chroot_entry
 	chroot_run "$HERE/$EXEC_SCRIPT"

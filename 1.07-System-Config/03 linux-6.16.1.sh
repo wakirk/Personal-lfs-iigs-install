@@ -436,6 +436,27 @@ CONFIG_DRM_BOCHS=y
 CONFIG_DRM_QXL=y
 CONFIG_AUDIT=y
 
+CONFIG_ACPI=y
+CONFIG_ACPI_BATTERY=y
+CONFIG_ACPI_THERMAL=y
+
+CONFIG_BLK_DEV_NVME=y
+CONFIG_NVME_HWMON=y
+CONFIG_HWMON=y
+CONFIG_SENSORS_K8TEMP=y
+CONFIG_SENSORS_K10TEMP=y
+CONFIG_SENSORS_FAM15H_POWER=y
+CONFIG_SENSORS_CORETEMP=y
+
+CONFIG_DRM=y
+#Intel
+CONFIG_DRM_I915=y
+CONFIG_DRM_XE=y
+CONFIG_DRM_XE_FORCE_PROBE=y
+
+#invida
+CONFIG_DRM_NOUVEAU=y
+
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)
 	echo "patching setup..."
@@ -456,7 +477,7 @@ EOF
 	echoL "Configure Linux Kernerl Setup (6.16.1)"
 
 	# ------------MENU CONFIG
-	make nconfig
+	#	make nconfig
 	# ------------MENU CONFIG
 
 	cp .config /root/lfs/bash/config.default
