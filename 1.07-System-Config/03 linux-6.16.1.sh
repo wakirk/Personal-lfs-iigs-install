@@ -31,6 +31,15 @@ source /root/lfs/lib/menu.lib   # In every script.
 
 # ==== Arch / base ====
 
+CONFIG_DRM=y
+#Intel
+CONFIG_DRM_I915=y
+CONFIG_DRM_XE=y
+CONFIG_DRM_XE_FORCE_PROBE=y
+
+#invida
+CONFIG_DRM_NOUVEAU=y
+
 # BLFS UEFI boot essentials (built-in)
 
 # Processor type and features → EFI runtime + stub
@@ -447,15 +456,6 @@ CONFIG_SENSORS_K8TEMP=y
 CONFIG_SENSORS_K10TEMP=y
 CONFIG_SENSORS_FAM15H_POWER=y
 CONFIG_SENSORS_CORETEMP=y
-
-CONFIG_DRM=y
-#Intel
-CONFIG_DRM_I915=y
-CONFIG_DRM_XE=y
-CONFIG_DRM_XE_FORCE_PROBE=y
-
-#invida
-CONFIG_DRM_NOUVEAU=y
 
 EOF
 	# merge ONLY your required bits (the fragments we made earlier)
