@@ -145,6 +145,13 @@ BLFSXLibsandMesa () {
 	return 1
 }
 
+BLFSXAppsnFonts () {
+	echo "BLFS Xorg Applications and Fonts"
+	"$HERE/B-06-Xorg Applications and Fonts/$EXEC_SCRIPT"
+	echo "BLFS Xorg Applications and Fonts Complete"
+	return 1
+}
+
 main() {
 	export LFS=/mnt/lfs
 	umask 022
