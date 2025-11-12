@@ -43,12 +43,10 @@ main () {
 		-D documentation=disabled \
 		-D tests=disabled
 	ninja
-	read
 
 	echoL "Installing libevdev (1.13.4)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

@@ -36,17 +36,14 @@ main () {
 	sleep 2
 	./configure $XORG_CONFIG
 	make
-	read
 
 	echoL "Testing Libinput Driver (1.5.0)..."
 	sleep 2
 	make check
-	read
 
 	echoL "Installing Libinput Driver (1.5.0)..."
 	sleep 2
 	make install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

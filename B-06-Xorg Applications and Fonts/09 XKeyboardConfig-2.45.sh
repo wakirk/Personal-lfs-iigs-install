@@ -41,12 +41,10 @@ main () {
 	cd    build
 	meson setup --prefix=$XORG_PREFIX --buildtype=release ..
 	ninja
-	read
 
 	echoL "Installing X Keyboard Config (2.45)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2
