@@ -11,6 +11,7 @@ main () {
 	# Download size: 256 MB
 	# Estimated disk space required: 9.4 GB (252 MB installed); add 7.4 GB if running the tests
 	# Estimated build time: 9.0 SBU (including download time; add 15 SBU for tests, both using parallelism=8)	echoR "Group 5 Xorg Libraries and Mesa"
+	echoR "Group 5 Xorg Libraries and Mesa"
 	echoL "Downloading Rustc (1.89.0)..."
 	sleep 2
 	cd "/root/lfs/B-05-Xorg Libraries and Mesa"

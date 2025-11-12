@@ -152,6 +152,13 @@ BLFSXAppsnFonts () {
 	return 1
 }
 
+BLFSApplications () {
+	echo "BLFS Applications"
+	"$HERE/B-07-Applications/$EXEC_SCRIPT"
+	echo "BLFS Applications Complete"
+	return 1
+}
+
 main() {
 	export LFS=/mnt/lfs
 	umask 022

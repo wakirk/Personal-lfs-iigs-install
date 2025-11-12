@@ -11,3 +11,4 @@ BLFSSupportApplications	BLFS-Support Applications.menu.sh	BLFS Support Applicati
 BLFSSecurityLayer	BLFS-Security Layer.menu.sh	BLFS Security Layer
 BLFSXLibsandMesa	BLFS-Libraries and Mesa.menu.sh	BLFS Xorg Libraries and Mesa
 BLFSXAppsnFonts	BLFS-Apps and Fonts.menu.sh	BLFS Xorg Applications and Fonts
+BLFSApplications	BLFS-Applications.menu.sh	BLFS Applications

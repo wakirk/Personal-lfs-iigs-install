@@ -1,14 +1,14 @@
-blfsXorgApps	 
-blfsxcursorthemes107	 
-blfsdesktopschemas480	 
-blfsFonts	 
-blfsdbus1162	 
-blfselogind25517	 
-blfsPolkit126	 
-blfslibepoxy1510	 
-blfsXKeyboardConfig245	 
-blfslibevdev1134	 
-blfslibinput1290	 
-blfsXorgServer21118	 
-blfsLibinputDriver150	 
-blfsEvdevDriver2110	 
+blfsXorgApps	*
+blfsxcursorthemes107	*
+blfsdesktopschemas480	*
+blfsFonts	*
+blfsdbus1162	*
+blfselogind25517	*
+blfsPolkit126	*
+blfslibepoxy1510	*
+blfsXKeyboardConfig245	*
+blfslibevdev1134	*
+blfslibinput1290	*
+blfsXorgServer21118	*
+blfsLibinputDriver150	*
+blfsEvdevDriver2110	*

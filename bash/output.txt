@@ -1,5 +1,9 @@
 Using .config as base
 Merging Kernel.cfg
+Value of CONFIG_DRM is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_DRM is not set
+New value: CONFIG_DRM=y CONFIG_DRM=y CONFIG_DRM=y CONFIG_DRM=y CONFIG_DRM=y
+
 Value of CONFIG_PARTITION_ADVANCED is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_PARTITION_ADVANCED is not set
 New value: CONFIG_PARTITION_ADVANCED=y CONFIG_PARTITION_ADVANCED=y CONFIG_PARTITION_ADVANCED=y
@@ -26,15 +30,15 @@ New value: CONFIG_EXFAT_FS=y CONFIG_EXFAT_FS=y
 
 Value of CONFIG_INPUT is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_INPUT=y
-New value: CONFIG_INPUT=y CONFIG_INPUT=y
+New value: CONFIG_INPUT=y CONFIG_INPUT=y CONFIG_INPUT=y
 
 Value of CONFIG_USB_SUPPORT is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_USB_SUPPORT is not set
-New value: CONFIG_USB_SUPPORT=y
+New value: CONFIG_USB_SUPPORT=y CONFIG_USB_SUPPORT=y
 
 Value of CONFIG_HID_SUPPORT is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_HID_SUPPORT is not set
-New value: CONFIG_HID_SUPPORT=y CONFIG_HID_SUPPORT=y
+New value: CONFIG_HID_SUPPORT=y CONFIG_HID_SUPPORT=y CONFIG_HID_SUPPORT=y
 
 Value of CONFIG_64BIT is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_64BIT is not set
@@ -42,7 +46,7 @@ New value: CONFIG_64BIT=y
 
 Value of CONFIG_ACPI is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_ACPI is not set
-New value: CONFIG_ACPI=y
+New value: CONFIG_ACPI=y CONFIG_ACPI=y
 
 Value of CONFIG_PROC_FS is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_PROC_FS=y
@@ -74,7 +78,7 @@ New value: CONFIG_EXT4_FS=y CONFIG_EXT4_FS=y
 
 Value of CONFIG_TMPFS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_TMPFS is not set
-New value: CONFIG_TMPFS=y
+New value: CONFIG_TMPFS=y CONFIG_TMPFS=y
 
 Value of CONFIG_BINFMT_ELF is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_BINFMT_ELF is not set
@@ -92,17 +96,13 @@ Value of CONFIG_VT_CONSOLE is redefined by fragment Kernel.cfg:
 Previous value: CONFIG_VT_CONSOLE=y
 New value: CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE=y
 
-Value of CONFIG_DRM is redefined by fragment Kernel.cfg:
-Previous value: # CONFIG_DRM is not set
-New value: CONFIG_DRM=y CONFIG_DRM=y CONFIG_DRM=y
-
 Value of CONFIG_FB is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_FB is not set
 New value: CONFIG_FB=y CONFIG_FB=y
 
 Value of CONFIG_INPUT_EVDEV is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_INPUT_EVDEV is not set
-New value: CONFIG_INPUT_EVDEV=y
+New value: CONFIG_INPUT_EVDEV=y CONFIG_INPUT_EVDEV=y
 
 Value of CONFIG_INPUT_JOYSTICK is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_INPUT_JOYSTICK is not set
@@ -118,7 +118,7 @@ New value: CONFIG_NET=y
 
 Value of CONFIG_CRYPTO is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_CRYPTO is not set
-New value: CONFIG_CRYPTO=y
+New value: CONFIG_CRYPTO=y CONFIG_CRYPTO=y
 
 Value of CONFIG_SOUND is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_SOUND is not set
@@ -142,7 +142,7 @@ New value: CONFIG_WATCHDOG=y
 
 Value of CONFIG_HWMON is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_HWMON is not set
-New value: CONFIG_HWMON=y
+New value: CONFIG_HWMON=y CONFIG_HWMON=y
 
 Value of CONFIG_RTC_CLASS is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_RTC_CLASS is not set
@@ -206,7 +206,7 @@ New value: CONFIG_NTFS3_FS=y
 
 Value of CONFIG_INOTIFY_USER is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_INOTIFY_USER is not set
-New value: CONFIG_INOTIFY_USER=y
+New value: CONFIG_INOTIFY_USER=y CONFIG_INOTIFY_USER=y
 
 Value of CONFIG_SWAP is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_SWAP is not set
@@ -224,66 +224,101 @@ Value of CONFIG_VIRTIO_MENU is redefined by fragment Kernel.cfg:
 Previous value: # CONFIG_VIRTIO_MENU is not set
 New value: CONFIG_VIRTIO_MENU=y
 
-./.tmp.config.6ZByV5AeTX:1492:warning: override: reassigning to symbol USB_ULPI_BUS
-./.tmp.config.6ZByV5AeTX:1493:warning: override: reassigning to symbol HID_SUPPORT
-./.tmp.config.6ZByV5AeTX:1515:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.6ZByV5AeTX:1516:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.6ZByV5AeTX:1531:warning: override: reassigning to symbol FAT_FS
-./.tmp.config.6ZByV5AeTX:1532:warning: override: reassigning to symbol MSDOS_FS
-./.tmp.config.6ZByV5AeTX:1533:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.6ZByV5AeTX:1534:warning: override: reassigning to symbol NLS
-./.tmp.config.6ZByV5AeTX:1535:warning: override: reassigning to symbol NLS_CODEPAGE_437
-./.tmp.config.6ZByV5AeTX:1536:warning: override: reassigning to symbol NLS_ISO8859_1
-./.tmp.config.6ZByV5AeTX:1546:warning: override: reassigning to symbol EFI
-./.tmp.config.6ZByV5AeTX:1547:warning: override: reassigning to symbol EFI_STUB
-./.tmp.config.6ZByV5AeTX:1548:warning: override: reassigning to symbol EFIVAR_FS
-./.tmp.config.6ZByV5AeTX:1572:warning: override: reassigning to symbol USB
-./.tmp.config.6ZByV5AeTX:1574:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.6ZByV5AeTX:1575:warning: override: reassigning to symbol USB_XHCI_PCI
-./.tmp.config.6ZByV5AeTX:1577:warning: override: reassigning to symbol INPUT
-./.tmp.config.6ZByV5AeTX:1583:warning: override: reassigning to symbol HID
-./.tmp.config.6ZByV5AeTX:1584:warning: override: reassigning to symbol HID_GENERIC
-./.tmp.config.6ZByV5AeTX:1753:warning: override: reassigning to symbol PARTITION_ADVANCED
-./.tmp.config.6ZByV5AeTX:1754:warning: override: reassigning to symbol EFI_PARTITION
-./.tmp.config.6ZByV5AeTX:1759:warning: override: reassigning to symbol SCSI
-./.tmp.config.6ZByV5AeTX:1762:warning: override: reassigning to symbol BLK_DEV_SD
-./.tmp.config.6ZByV5AeTX:1764:warning: override: reassigning to symbol ATA
-./.tmp.config.6ZByV5AeTX:1765:warning: override: reassigning to symbol SATA_AHCI
-./.tmp.config.6ZByV5AeTX:1768:warning: override: reassigning to symbol NVME_CORE
-./.tmp.config.6ZByV5AeTX:1769:warning: override: reassigning to symbol BLK_DEV_NVME
-./.tmp.config.6ZByV5AeTX:1771:warning: override: reassigning to symbol USB_STORAGE
-./.tmp.config.6ZByV5AeTX:1772:warning: override: reassigning to symbol USB_XHCI_HCD
-./.tmp.config.6ZByV5AeTX:1778:warning: override: reassigning to symbol EXT4_FS
-./.tmp.config.6ZByV5AeTX:1779:warning: override: reassigning to symbol VFAT_FS
-./.tmp.config.6ZByV5AeTX:1780:warning: override: reassigning to symbol EXFAT_FS
-./.tmp.config.6ZByV5AeTX:1788:warning: override: reassigning to symbol PROC_FS
-./.tmp.config.6ZByV5AeTX:1789:warning: override: reassigning to symbol SYSFS
-./.tmp.config.6ZByV5AeTX:1790:warning: override: reassigning to symbol UNIX
-./.tmp.config.6ZByV5AeTX:1796:warning: override: reassigning to symbol DEVTMPFS
-./.tmp.config.6ZByV5AeTX:1798:warning: override: reassigning to symbol DEVTMPFS_MOUNT
-./.tmp.config.6ZByV5AeTX:1805:warning: override: reassigning to symbol FUSE_FS
-./.tmp.config.6ZByV5AeTX:1812:warning: override: reassigning to symbol DRM
-./.tmp.config.6ZByV5AeTX:1813:warning: override: reassigning to symbol DRM_KMS_HELPER
-./.tmp.config.6ZByV5AeTX:1815:warning: override: reassigning to symbol DRM_SIMPLEDRM
-./.tmp.config.6ZByV5AeTX:1820:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
-./.tmp.config.6ZByV5AeTX:1825:warning: override: reassigning to symbol VT
-./.tmp.config.6ZByV5AeTX:1826:warning: override: reassigning to symbol VT_CONSOLE
-./.tmp.config.6ZByV5AeTX:1830:warning: override: reassigning to symbol DRM
-./.tmp.config.6ZByV5AeTX:1831:warning: override: reassigning to symbol DRM_KMS_HELPER
-./.tmp.config.6ZByV5AeTX:1832:warning: override: reassigning to symbol DRM_FBDEV_EMULATION
-./.tmp.config.6ZByV5AeTX:1835:warning: override: reassigning to symbol DRM_SIMPLEDRM
-./.tmp.config.6ZByV5AeTX:1836:warning: override: reassigning to symbol FB
-./.tmp.config.6ZByV5AeTX:1837:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
-./.tmp.config.6ZByV5AeTX:1838:warning: override: reassigning to symbol VT
-./.tmp.config.6ZByV5AeTX:1839:warning: override: reassigning to symbol VT_CONSOLE
-./.tmp.config.6ZByV5AeTX:1840:warning: override: reassigning to symbol FB_EFI
-./.tmp.config.6ZByV5AeTX:1843:warning: override: reassigning to symbol PCI
-./.tmp.config.6ZByV5AeTX:1844:warning: override: reassigning to symbol PCI_MSI
-./.tmp.config.6ZByV5AeTX:1845:warning: override: reassigning to symbol VIRTIO_PCI
-./.tmp.config.6ZByV5AeTX:1849:warning: override: reassigning to symbol VIRTIO_PCI
-./.tmp.config.6ZByV5AeTX:1851:warning: unexpected data: VIRTIO_RTC_CLASS=y
-./.tmp.config.6ZByV5AeTX:1852:warning: unexpected data: DRM_VIRTIO_GPU=y
-./.tmp.config.6ZByV5AeTX:1853:warning: override: reassigning to symbol DRM_VIRTIO_GPU
+Value of CONFIG_USER_NS is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_USER_NS is not set
+New value: CONFIG_USER_NS=y
+
+Value of CONFIG_INPUT_MISC is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_INPUT_MISC is not set
+New value: CONFIG_INPUT_MISC=y
+
+Value of CONFIG_SYSFB_SIMPLEFB is redefined by fragment Kernel.cfg:
+Previous value: # CONFIG_SYSFB_SIMPLEFB is not set
+New value: CONFIG_SYSFB_SIMPLEFB=y
+
+./.tmp.config.7XM8Bynb1W:1500:warning: override: reassigning to symbol USB_ULPI_BUS
+./.tmp.config.7XM8Bynb1W:1501:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.7XM8Bynb1W:1523:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.7XM8Bynb1W:1524:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.7XM8Bynb1W:1539:warning: override: reassigning to symbol FAT_FS
+./.tmp.config.7XM8Bynb1W:1540:warning: override: reassigning to symbol MSDOS_FS
+./.tmp.config.7XM8Bynb1W:1541:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.7XM8Bynb1W:1542:warning: override: reassigning to symbol NLS
+./.tmp.config.7XM8Bynb1W:1543:warning: override: reassigning to symbol NLS_CODEPAGE_437
+./.tmp.config.7XM8Bynb1W:1544:warning: override: reassigning to symbol NLS_ISO8859_1
+./.tmp.config.7XM8Bynb1W:1554:warning: override: reassigning to symbol EFI
+./.tmp.config.7XM8Bynb1W:1555:warning: override: reassigning to symbol EFI_STUB
+./.tmp.config.7XM8Bynb1W:1556:warning: override: reassigning to symbol EFIVAR_FS
+./.tmp.config.7XM8Bynb1W:1565:warning: override: reassigning to symbol DRM
+./.tmp.config.7XM8Bynb1W:1576:warning: override: reassigning to symbol DRM_I915
+./.tmp.config.7XM8Bynb1W:1577:warning: override: reassigning to symbol DRM_NOUVEAU
+./.tmp.config.7XM8Bynb1W:1580:warning: override: reassigning to symbol USB
+./.tmp.config.7XM8Bynb1W:1582:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.7XM8Bynb1W:1583:warning: override: reassigning to symbol USB_XHCI_PCI
+./.tmp.config.7XM8Bynb1W:1585:warning: override: reassigning to symbol INPUT
+./.tmp.config.7XM8Bynb1W:1591:warning: override: reassigning to symbol HID
+./.tmp.config.7XM8Bynb1W:1592:warning: override: reassigning to symbol HID_GENERIC
+./.tmp.config.7XM8Bynb1W:1761:warning: override: reassigning to symbol PARTITION_ADVANCED
+./.tmp.config.7XM8Bynb1W:1762:warning: override: reassigning to symbol EFI_PARTITION
+./.tmp.config.7XM8Bynb1W:1767:warning: override: reassigning to symbol SCSI
+./.tmp.config.7XM8Bynb1W:1770:warning: override: reassigning to symbol BLK_DEV_SD
+./.tmp.config.7XM8Bynb1W:1772:warning: override: reassigning to symbol ATA
+./.tmp.config.7XM8Bynb1W:1773:warning: override: reassigning to symbol SATA_AHCI
+./.tmp.config.7XM8Bynb1W:1776:warning: override: reassigning to symbol NVME_CORE
+./.tmp.config.7XM8Bynb1W:1777:warning: override: reassigning to symbol BLK_DEV_NVME
+./.tmp.config.7XM8Bynb1W:1779:warning: override: reassigning to symbol USB_STORAGE
+./.tmp.config.7XM8Bynb1W:1780:warning: override: reassigning to symbol USB_XHCI_HCD
+./.tmp.config.7XM8Bynb1W:1786:warning: override: reassigning to symbol EXT4_FS
+./.tmp.config.7XM8Bynb1W:1787:warning: override: reassigning to symbol VFAT_FS
+./.tmp.config.7XM8Bynb1W:1788:warning: override: reassigning to symbol EXFAT_FS
+./.tmp.config.7XM8Bynb1W:1796:warning: override: reassigning to symbol PROC_FS
+./.tmp.config.7XM8Bynb1W:1797:warning: override: reassigning to symbol SYSFS
+./.tmp.config.7XM8Bynb1W:1798:warning: override: reassigning to symbol UNIX
+./.tmp.config.7XM8Bynb1W:1804:warning: override: reassigning to symbol DEVTMPFS
+./.tmp.config.7XM8Bynb1W:1806:warning: override: reassigning to symbol DEVTMPFS_MOUNT
+./.tmp.config.7XM8Bynb1W:1813:warning: override: reassigning to symbol FUSE_FS
+./.tmp.config.7XM8Bynb1W:1820:warning: override: reassigning to symbol DRM
+./.tmp.config.7XM8Bynb1W:1821:warning: override: reassigning to symbol DRM_KMS_HELPER
+./.tmp.config.7XM8Bynb1W:1823:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.7XM8Bynb1W:1828:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
+./.tmp.config.7XM8Bynb1W:1833:warning: override: reassigning to symbol VT
+./.tmp.config.7XM8Bynb1W:1834:warning: override: reassigning to symbol VT_CONSOLE
+./.tmp.config.7XM8Bynb1W:1838:warning: override: reassigning to symbol DRM
+./.tmp.config.7XM8Bynb1W:1839:warning: override: reassigning to symbol DRM_KMS_HELPER
+./.tmp.config.7XM8Bynb1W:1840:warning: override: reassigning to symbol DRM_FBDEV_EMULATION
+./.tmp.config.7XM8Bynb1W:1843:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.7XM8Bynb1W:1844:warning: override: reassigning to symbol FB
+./.tmp.config.7XM8Bynb1W:1845:warning: override: reassigning to symbol FRAMEBUFFER_CONSOLE
+./.tmp.config.7XM8Bynb1W:1846:warning: override: reassigning to symbol VT
+./.tmp.config.7XM8Bynb1W:1847:warning: override: reassigning to symbol VT_CONSOLE
+./.tmp.config.7XM8Bynb1W:1848:warning: override: reassigning to symbol FB_EFI
+./.tmp.config.7XM8Bynb1W:1851:warning: override: reassigning to symbol PCI
+./.tmp.config.7XM8Bynb1W:1852:warning: override: reassigning to symbol PCI_MSI
+./.tmp.config.7XM8Bynb1W:1853:warning: override: reassigning to symbol VIRTIO_PCI
+./.tmp.config.7XM8Bynb1W:1857:warning: override: reassigning to symbol VIRTIO_PCI
+./.tmp.config.7XM8Bynb1W:1859:warning: unexpected data: VIRTIO_RTC_CLASS=y
+./.tmp.config.7XM8Bynb1W:1860:warning: unexpected data: DRM_VIRTIO_GPU=y
+./.tmp.config.7XM8Bynb1W:1861:warning: override: reassigning to symbol DRM_VIRTIO_GPU
+./.tmp.config.7XM8Bynb1W:1866:warning: override: reassigning to symbol ACPI
+./.tmp.config.7XM8Bynb1W:1870:warning: override: reassigning to symbol BLK_DEV_NVME
+./.tmp.config.7XM8Bynb1W:1871:warning: override: reassigning to symbol NVME_HWMON
+./.tmp.config.7XM8Bynb1W:1872:warning: override: reassigning to symbol HWMON
+./.tmp.config.7XM8Bynb1W:1876:warning: override: reassigning to symbol SENSORS_CORETEMP
+./.tmp.config.7XM8Bynb1W:1879:warning: override: reassigning to symbol INOTIFY_USER
+./.tmp.config.7XM8Bynb1W:1880:warning: override: reassigning to symbol TMPFS
+./.tmp.config.7XM8Bynb1W:1881:warning: override: reassigning to symbol TMPFS_POSIX_ACL
+./.tmp.config.7XM8Bynb1W:1882:warning: override: reassigning to symbol CRYPTO
+./.tmp.config.7XM8Bynb1W:1891:warning: override: reassigning to symbol INPUT
+./.tmp.config.7XM8Bynb1W:1892:warning: override: reassigning to symbol INPUT_EVDEV
+./.tmp.config.7XM8Bynb1W:1897:warning: override: reassigning to symbol DRM
+./.tmp.config.7XM8Bynb1W:1899:warning: override: reassigning to symbol DRM_BOCHS
+./.tmp.config.7XM8Bynb1W:1902:warning: override: reassigning to symbol DRM_SIMPLEDRM
+./.tmp.config.7XM8Bynb1W:1904:warning: override: reassigning to symbol HID_SUPPORT
+./.tmp.config.7XM8Bynb1W:1905:warning: override: reassigning to symbol HID
+./.tmp.config.7XM8Bynb1W:1906:warning: override: reassigning to symbol USB
+./.tmp.config.7XM8Bynb1W:1907:warning: override: reassigning to symbol USB_HID
+./.tmp.config.7XM8Bynb1W:1908:warning: override: reassigning to symbol USB_SUPPORT
+./.tmp.config.7XM8Bynb1W:1909:warning: override: reassigning to symbol USB
 #
 # configuration written to .config
 #
@@ -823,6 +858,28 @@ Value requested for CONFIG_HAVE_FTRACE_GRAPH_FUNC not in final .config
 Requested value:  CONFIG_HAVE_FTRACE_GRAPH_FUNC=y
 Actual value:     
 
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_I915 not in final .config
+Requested value:  CONFIG_DRM_I915=y
+CONFIG_DRM_I915=y
+Actual value:     CONFIG_DRM_I915=y
+
+Value requested for CONFIG_DRM_XE_FORCE_PROBE not in final .config
+Requested value:  CONFIG_DRM_XE_FORCE_PROBE=y
+Actual value:     CONFIG_DRM_XE_FORCE_PROBE=""
+
+Value requested for CONFIG_DRM_NOUVEAU not in final .config
+Requested value:  CONFIG_DRM_NOUVEAU=y
+CONFIG_DRM_NOUVEAU=y
+Actual value:     CONFIG_DRM_NOUVEAU=y
+
 Value requested for CONFIG_EFI not in final .config
 Requested value:  CONFIG_EFI=y
 CONFIG_EFI=y
@@ -889,10 +946,18 @@ Actual value:     CONFIG_EXFAT_FS=y
 Value requested for CONFIG_INPUT not in final .config
 Requested value:  CONFIG_INPUT=y
 CONFIG_INPUT=y
+CONFIG_INPUT=y
 Actual value:     CONFIG_INPUT=y
+
+Value requested for CONFIG_USB_SUPPORT not in final .config
+Requested value:  CONFIG_USB_SUPPORT=y
+CONFIG_USB_SUPPORT=y
+Actual value:     CONFIG_USB_SUPPORT=y
 
 Value requested for CONFIG_USB not in final .config
 Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
 CONFIG_USB=y
 Actual value:     CONFIG_USB=y
 
@@ -910,10 +975,12 @@ Actual value:     CONFIG_USB_XHCI_PCI=y
 Value requested for CONFIG_HID_SUPPORT not in final .config
 Requested value:  CONFIG_HID_SUPPORT=y
 CONFIG_HID_SUPPORT=y
+CONFIG_HID_SUPPORT=y
 Actual value:     CONFIG_HID_SUPPORT=y
 
 Value requested for CONFIG_HID not in final .config
 Requested value:  CONFIG_HID=y
+CONFIG_HID=y
 CONFIG_HID=y
 Actual value:     CONFIG_HID=y
 
@@ -935,7 +1002,13 @@ Actual value:     CONFIG_USB_ULPI_BUS=y
 Value requested for CONFIG_HID_SUPPORT not in final .config
 Requested value:  CONFIG_HID_SUPPORT=y
 CONFIG_HID_SUPPORT=y
+CONFIG_HID_SUPPORT=y
 Actual value:     CONFIG_HID_SUPPORT=y
+
+Value requested for CONFIG_ACPI not in final .config
+Requested value:  CONFIG_ACPI=y
+CONFIG_ACPI=y
+Actual value:     CONFIG_ACPI=y
 
 Value requested for CONFIG_PROC_FS not in final .config
 Requested value:  CONFIG_PROC_FS=y
@@ -992,6 +1065,7 @@ Actual value:     CONFIG_EFI_PARTITION=y
 Value requested for CONFIG_BLK_DEV_NVME not in final .config
 Requested value:  CONFIG_BLK_DEV_NVME=y
 CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
 Actual value:     CONFIG_BLK_DEV_NVME=y
 
 Value requested for CONFIG_NVME_CORE not in final .config
@@ -1013,6 +1087,16 @@ Value requested for CONFIG_EXT4_FS not in final .config
 Requested value:  CONFIG_EXT4_FS=y
 CONFIG_EXT4_FS=y
 Actual value:     CONFIG_EXT4_FS=y
+
+Value requested for CONFIG_TMPFS not in final .config
+Requested value:  CONFIG_TMPFS=y
+CONFIG_TMPFS=y
+Actual value:     CONFIG_TMPFS=y
+
+Value requested for CONFIG_TMPFS_POSIX_ACL not in final .config
+Requested value:  CONFIG_TMPFS_POSIX_ACL=y
+CONFIG_TMPFS_POSIX_ACL=y
+Actual value:     CONFIG_TMPFS_POSIX_ACL=y
 
 Value requested for CONFIG_FAT_FS not in final .config
 Requested value:  CONFIG_FAT_FS=y
@@ -1087,6 +1171,8 @@ Value requested for CONFIG_DRM not in final .config
 Requested value:  CONFIG_DRM=y
 CONFIG_DRM=y
 CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
 Actual value:     CONFIG_DRM=y
 
 Value requested for CONFIG_DRM_KMS_HELPER not in final .config
@@ -1102,6 +1188,7 @@ Actual value:     CONFIG_DRM_FBDEV_EMULATION=y
 
 Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
 Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 Actual value:     CONFIG_DRM_SIMPLEDRM=y
@@ -1120,8 +1207,20 @@ Value requested for CONFIG_FB_SIMPLE not in final .config
 Requested value:  CONFIG_FB_SIMPLE=y
 Actual value:     
 
+Value requested for CONFIG_DRM_I915 not in final .config
+Requested value:  CONFIG_DRM_I915=y
+CONFIG_DRM_I915=y
+Actual value:     CONFIG_DRM_I915=y
+
+Value requested for CONFIG_DRM_NOUVEAU not in final .config
+Requested value:  CONFIG_DRM_NOUVEAU=y
+CONFIG_DRM_NOUVEAU=y
+Actual value:     CONFIG_DRM_NOUVEAU=y
+
 Value requested for CONFIG_USB not in final .config
 Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
 CONFIG_USB=y
 Actual value:     CONFIG_USB=y
 
@@ -1144,7 +1243,13 @@ Actual value:     CONFIG_USB_XHCI_PCI=y
 Value requested for CONFIG_INPUT not in final .config
 Requested value:  CONFIG_INPUT=y
 CONFIG_INPUT=y
+CONFIG_INPUT=y
 Actual value:     CONFIG_INPUT=y
+
+Value requested for CONFIG_INPUT_EVDEV not in final .config
+Requested value:  CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+Actual value:     CONFIG_INPUT_EVDEV=y
 
 Value requested for CONFIG_UINPUT not in final .config
 Requested value:  CONFIG_UINPUT=y
@@ -1153,6 +1258,7 @@ Actual value:
 Value requested for CONFIG_HID not in final .config
 Requested value:  CONFIG_HID=y
 CONFIG_HID=y
+CONFIG_HID=y
 Actual value:     CONFIG_HID=y
 
 Value requested for CONFIG_HID_GENERIC not in final .config
@@ -1160,9 +1266,19 @@ Requested value:  CONFIG_HID_GENERIC=y
 CONFIG_HID_GENERIC=y
 Actual value:     CONFIG_HID_GENERIC=y
 
+Value requested for CONFIG_USB_HID not in final .config
+Requested value:  CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+Actual value:     CONFIG_USB_HID=y
+
 Value requested for CONFIG_KEYBOARD_ATKBD not in final .config
 Requested value:  CONFIG_KEYBOARD_ATKBD=y
 Actual value:     
+
+Value requested for CONFIG_CRYPTO not in final .config
+Requested value:  CONFIG_CRYPTO=y
+CONFIG_CRYPTO=y
+Actual value:     CONFIG_CRYPTO=y
 
 Value requested for CONFIG_EEPROM not in final .config
 Requested value:  CONFIG_EEPROM=y
@@ -1175,6 +1291,21 @@ Actual value:
 Value requested for CONFIG_SPI_NOR not in final .config
 Requested value:  CONFIG_SPI_NOR=y
 Actual value:     
+
+Value requested for CONFIG_HWMON not in final .config
+Requested value:  CONFIG_HWMON=y
+CONFIG_HWMON=y
+Actual value:     CONFIG_HWMON=y
+
+Value requested for CONFIG_SENSORS_CORETEMP not in final .config
+Requested value:  CONFIG_SENSORS_CORETEMP=y
+CONFIG_SENSORS_CORETEMP=y
+Actual value:     CONFIG_SENSORS_CORETEMP=y
+
+Value requested for CONFIG_NVME_HWMON not in final .config
+Requested value:  CONFIG_NVME_HWMON=y
+CONFIG_NVME_HWMON=y
+Actual value:     CONFIG_NVME_HWMON=y
 
 Value requested for CONFIG_CGROUP_BPF not in final .config
 Requested value:  CONFIG_CGROUP_BPF=y
@@ -1290,6 +1421,7 @@ Actual value:     CONFIG_NVME_CORE=y
 Value requested for CONFIG_BLK_DEV_NVME not in final .config
 Requested value:  CONFIG_BLK_DEV_NVME=y
 CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
 Actual value:     CONFIG_BLK_DEV_NVME=y
 
 Value requested for CONFIG_USB_STORAGE not in final .config
@@ -1334,6 +1466,11 @@ Requested value:  CONFIG_UNIX=y
 CONFIG_UNIX=y
 Actual value:     CONFIG_UNIX=y
 
+Value requested for CONFIG_INOTIFY_USER not in final .config
+Requested value:  CONFIG_INOTIFY_USER=y
+CONFIG_INOTIFY_USER=y
+Actual value:     CONFIG_INOTIFY_USER=y
+
 Value requested for CONFIG_DEVTMPFS not in final .config
 Requested value:  CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS=y
@@ -1358,6 +1495,8 @@ Value requested for CONFIG_DRM not in final .config
 Requested value:  CONFIG_DRM=y
 CONFIG_DRM=y
 CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
 Actual value:     CONFIG_DRM=y
 
 Value requested for CONFIG_DRM_KMS_HELPER not in final .config
@@ -1368,6 +1507,7 @@ Actual value:     CONFIG_DRM_KMS_HELPER=y
 
 Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
 Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 Actual value:     CONFIG_DRM_SIMPLEDRM=y
@@ -1403,6 +1543,8 @@ Value requested for CONFIG_DRM not in final .config
 Requested value:  CONFIG_DRM=y
 CONFIG_DRM=y
 CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
 Actual value:     CONFIG_DRM=y
 
 Value requested for CONFIG_DRM_KMS_HELPER not in final .config
@@ -1418,6 +1560,7 @@ Actual value:     CONFIG_DRM_FBDEV_EMULATION=y
 
 Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
 Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 CONFIG_DRM_SIMPLEDRM=y
 Actual value:     CONFIG_DRM_SIMPLEDRM=y
@@ -1476,4 +1619,126 @@ Value requested for CONFIG_DRM_VIRTIO_GPU not in final .config
 Requested value:  CONFIG_DRM_VIRTIO_GPU=y
 CONFIG_DRM_VIRTIO_GPU=y
 Actual value:     CONFIG_DRM_VIRTIO_GPU=y
+
+Value requested for CONFIG_DRM_BOCHS not in final .config
+Requested value:  CONFIG_DRM_BOCHS=y
+CONFIG_DRM_BOCHS=y
+Actual value:     CONFIG_DRM_BOCHS=y
+
+Value requested for CONFIG_ACPI not in final .config
+Requested value:  CONFIG_ACPI=y
+CONFIG_ACPI=y
+Actual value:     CONFIG_ACPI=y
+
+Value requested for CONFIG_BLK_DEV_NVME not in final .config
+Requested value:  CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
+CONFIG_BLK_DEV_NVME=y
+Actual value:     CONFIG_BLK_DEV_NVME=y
+
+Value requested for CONFIG_NVME_HWMON not in final .config
+Requested value:  CONFIG_NVME_HWMON=y
+CONFIG_NVME_HWMON=y
+Actual value:     CONFIG_NVME_HWMON=y
+
+Value requested for CONFIG_HWMON not in final .config
+Requested value:  CONFIG_HWMON=y
+CONFIG_HWMON=y
+Actual value:     CONFIG_HWMON=y
+
+Value requested for CONFIG_SENSORS_CORETEMP not in final .config
+Requested value:  CONFIG_SENSORS_CORETEMP=y
+CONFIG_SENSORS_CORETEMP=y
+Actual value:     CONFIG_SENSORS_CORETEMP=y
+
+Value requested for CONFIG_INOTIFY_USER not in final .config
+Requested value:  CONFIG_INOTIFY_USER=y
+CONFIG_INOTIFY_USER=y
+Actual value:     CONFIG_INOTIFY_USER=y
+
+Value requested for CONFIG_TMPFS not in final .config
+Requested value:  CONFIG_TMPFS=y
+CONFIG_TMPFS=y
+Actual value:     CONFIG_TMPFS=y
+
+Value requested for CONFIG_TMPFS_POSIX_ACL not in final .config
+Requested value:  CONFIG_TMPFS_POSIX_ACL=y
+CONFIG_TMPFS_POSIX_ACL=y
+Actual value:     CONFIG_TMPFS_POSIX_ACL=y
+
+Value requested for CONFIG_CRYPTO not in final .config
+Requested value:  CONFIG_CRYPTO=y
+CONFIG_CRYPTO=y
+Actual value:     CONFIG_CRYPTO=y
+
+Value requested for CONFIG_INPUT not in final .config
+Requested value:  CONFIG_INPUT=y
+CONFIG_INPUT=y
+CONFIG_INPUT=y
+Actual value:     CONFIG_INPUT=y
+
+Value requested for CONFIG_INPUT_EVDEV not in final .config
+Requested value:  CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_EVDEV=y
+Actual value:     CONFIG_INPUT_EVDEV=y
+
+Value requested for CONFIG_DRM not in final .config
+Requested value:  CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+CONFIG_DRM=y
+Actual value:     CONFIG_DRM=y
+
+Value requested for CONFIG_DRM_VMWGFX not in final .config
+Requested value:  CONFIG_DRM_VMWGFX=y
+Actual value:     
+
+Value requested for CONFIG_DRM_BOCHS not in final .config
+Requested value:  CONFIG_DRM_BOCHS=y
+CONFIG_DRM_BOCHS=y
+Actual value:     CONFIG_DRM_BOCHS=y
+
+Value requested for CONFIG_DRM_SIMPLEDRM not in final .config
+Requested value:  CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_SIMPLEDRM=y
+Actual value:     CONFIG_DRM_SIMPLEDRM=y
+
+Value requested for CONFIG_HID_SUPPORT not in final .config
+Requested value:  CONFIG_HID_SUPPORT=y
+CONFIG_HID_SUPPORT=y
+CONFIG_HID_SUPPORT=y
+Actual value:     CONFIG_HID_SUPPORT=y
+
+Value requested for CONFIG_HID not in final .config
+Requested value:  CONFIG_HID=y
+CONFIG_HID=y
+CONFIG_HID=y
+Actual value:     CONFIG_HID=y
+
+Value requested for CONFIG_USB not in final .config
+Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+Actual value:     CONFIG_USB=y
+
+Value requested for CONFIG_USB_HID not in final .config
+Requested value:  CONFIG_USB_HID=y
+CONFIG_USB_HID=y
+Actual value:     CONFIG_USB_HID=y
+
+Value requested for CONFIG_USB_SUPPORT not in final .config
+Requested value:  CONFIG_USB_SUPPORT=y
+CONFIG_USB_SUPPORT=y
+Actual value:     CONFIG_USB_SUPPORT=y
+
+Value requested for CONFIG_USB not in final .config
+Requested value:  CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+CONFIG_USB=y
+Actual value:     CONFIG_USB=y
 
