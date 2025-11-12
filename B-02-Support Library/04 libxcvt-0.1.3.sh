@@ -37,12 +37,10 @@ main () {
 	cd    build
 	meson setup --prefix=$XORG_PREFIX --buildtype=release ..
 	ninja
-	read
-	
+
 	echoL "Installing libxcvt (0.1.3)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

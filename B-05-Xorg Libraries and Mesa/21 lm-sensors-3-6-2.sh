@@ -66,7 +66,6 @@ main () {
 		BUILD_STATIC_LIB=0  \
 		PROG_EXTRA=sensord  \
 		MANDIR=/usr/share/man
-	read
 
 	echoL "Installing lm-sensors (3.6.2)..."
 	sleep 2
@@ -75,7 +74,6 @@ main () {
 		MANDIR=/usr/share/man install
 	install -v -m755 -d /usr/share/doc/lm-sensors-3-6-2
 	cp -rv README INSTALL doc/* /usr/share/doc/lm-sensors-3-6-2
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

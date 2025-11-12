@@ -35,13 +35,11 @@ main () {
 	sleep 2
 	sed -r '/INSTALL/{/PCI_IDS|update-pciids /d; s/update-pciids.8//}' -i Makefile
 	make PREFIX=/usr SHAREDIR=/usr/share/hwdata SHARED=yes
-	read
 
 	echoL "Installing pciutils (3.14.0)..."
 	sleep 2
 	make PREFIX=/usr SHAREDIR=/usr/share/hwdata SHARED=yes install install-lib
 	chmod -v 755 /usr/lib/libpci.so
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

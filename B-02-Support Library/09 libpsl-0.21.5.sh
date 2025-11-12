@@ -44,17 +44,14 @@ main () {
 	cd    build
 	meson setup --prefix=/usr --buildtype=release
 	ninja
-	read
 
 	echoL "Testomg libpsl (0.21.5)..."
 	sleep 2
 	ninja test
-	read
 
 	echoL "Installing libpsl (0.21.5)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

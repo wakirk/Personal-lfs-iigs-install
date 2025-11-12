@@ -60,12 +60,10 @@ main () {
 	cd    build
 	meson setup --prefix=/usr --buildtype=release .. &&
 	ninja
-	read
 
 	echoL "Installing Cairo (1.18.4)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

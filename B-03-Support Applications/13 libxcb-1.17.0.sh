@@ -44,18 +44,15 @@ main () {
 		--without-doxygen     \
 		--docdir='${datadir}'/doc/libxcb-1.17.0 &&
 	LC_ALL=en_US.UTF-8 make
-	read
 
 	echoL "Testing libxcb (1.17.0)..."
 	sleep 2
 	make check
-	read
 
 	echoL "Installing libxcb (1.17.0)..."
 	sleep 2
 	make install
 	chown -Rv root:root $XORG_PREFIX/share/doc/libxcb-1.17.0
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

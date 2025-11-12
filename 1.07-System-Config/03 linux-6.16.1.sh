@@ -457,7 +457,44 @@ CONFIG_SENSORS_K10TEMP=y
 CONFIG_SENSORS_FAM15H_POWER=y
 CONFIG_SENSORS_CORETEMP=y
 
+#elogid's needs
+CONFIG_INOTIFY_USER=y
+CONFIG_TMPFS=y
+CONFIG_TMPFS_POSIX_ACL=y
+CONFIG_CRYPTO=y
+CONFIG_CRYPTO_USER=y
+CONFIG_CRYPTO_USER_API_HASH=y
+
+#polkit's needs
+CONFIG_NAMESPACES=y
+CONFIG_USER_NS=y
+
+# libevdev 1.13.4's needs
+CONFIG_INPUT=y
+CONFIG_INPUT_EVDEV=y
+CONFIG_INPUT_MISC=y
+CONFIG_INPUT_UINPUT=y
+
+# X server's needs
+CONFIG_DRM=y
+CONFIG_DRM_VMWGFX=y
+CONFIG_DRM_BOCHS=y
+CONFIG_DRM_VBOXVIDEO=y
+CONFIG_SYSFB_SIMPLEFB=y
+CONFIG_DRM_SIMPLEDRM=y
+
+CONFIG_HID_SUPPORT=y
+CONFIG_HID=y
+CONFIG_USB=y
+CONFIG_USB_HID=y
+CONFIG_USB_SUPPORT=y
+CONFIG_USB=y
+
 EOF
+	# If you want to use the simple frame buffer driver on a system booted via BIOS (instead of UEFI), add the following
+	# line before the first menuentry block in the /boot/grub/grub.cfg file to initialize the VESA frame buffer:
+	# set gfxpayload=1024x768x32
+
 	# merge ONLY your required bits (the fragments we made earlier)
 	echo "patching setup..."
 	scripts/kconfig/merge_config.sh .config Kernel.cfg > output.txt 2>&1

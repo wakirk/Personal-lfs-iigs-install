@@ -29,12 +29,10 @@ main () {
 	# change prefix form /usr/local to /usr 
 	sed -i.bak -E 's/^([[:space:]]*prefix[[:space:]]*=[[:space:]]*)\/usr\/local/\1\/usr/' Makefile
 	make
-	read
 
 	echoL "Installing DMI Decode (3.6)..."
 	sleep 2
 	make install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2

@@ -2,3 +2,13 @@ blfsXorgApps	01 Xorg Apps.sh	Xorg Applications
 blfsxcursorthemes107	02 xcursor-themes-1.0.7.sh	X cursor themes (1.0.7)
 blfsdesktopschemas480	03 gsettings-desktop-schemas-48.0.sh	Gsettings Desktop Schemas (48.0)
 blfsFonts	04 Fonts.sh	Fonts
+blfsdbus1162	05 dbus-1.16.2.sh	dbus (1.16.2)
+blfselogind25517	06 elogind-255.17.sh	elogind (255.17)
+blfsPolkit126	07 Polkit-126.sh	Polkit (126)
+blfslibepoxy1510	08 libepoxy-1.5.10.sh	libepoxy (1.5.10)
+blfsXKeyboardConfig245	09 XKeyboardConfig-2.45.sh	X Keyboard Config (2.45)
+blfslibevdev1134	10 libevdev 1.13.4.sh	libevdev (1.13.4)
+blfslibinput1290	11 libinput-1.29.0.sh	libinput (1.29.0)
+blfsXorgServer21118	12 Xorg-Server-21.1.18.sh	Xorg-Server (21.1.18)
+blfsLibinputDriver150	13 Libinput Driver-1.5.0.sh	Libinput Driver (1.5.0)
+blfsEvdevDriver2110	14 Evdev Driver-2.11.0.sh	Evdev Driver (2.11.0)

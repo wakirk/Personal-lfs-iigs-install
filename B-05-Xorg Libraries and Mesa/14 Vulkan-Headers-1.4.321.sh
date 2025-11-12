@@ -36,17 +36,14 @@ main () {
 	cd    build
 	cmake -D CMAKE_INSTALL_PREFIX=/usr -G Ninja ..
 	ninja
-	read
 
 	echoL "Testing Vulkan-Headers (1.4.321)..."
 	sleep 2
 	ninja test
-	read
 
 	echoL "Installing Vulkan-Headers (1.4.321)..."
 	sleep 2
 	ninja install
-	read
 
 	echoL "Cleaning up build area...."
 	sleep 2
