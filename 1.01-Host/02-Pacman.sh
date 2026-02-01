@@ -55,7 +55,8 @@ pacman -S --noconfirm archlinux-keyring gnupg
 sed -i '0,/^SigLevel = Never/{s/^SigLevel = Never/SigLevel = Required DatabaseOptional/}' /etc/pacman.conf
 
 # Now do the full upgrade
-pacman -Syu --noconfirm --ignore linux,linux-lts,linux-zen,linux-hardened,mkinitcpio,systemd,dracut,systemd-sysvcompat,systemd-libs
+pacman -Syu --noconfirm --ask=4 --ignore \
+  linux,linux-lts,linux-zen,linux-hardened,mkinitcpio,systemd,dracut,systemd-sysvcompat,systemd-libs
 
 # Updating System (full upgrade; fix nvidia firmware split)
 
