@@ -9,7 +9,7 @@ sgdisk -n 1:0:+1G -t 1:EF00 -c 1:"EFI System" /dev/sda
 
 # Create root (30 GB, type 8300)
 echoL "Creating root partition..."
-sgdisk -n 2:0:+52G -t 2:8300 -c 2:"LFS Root" /dev/sda
+sgdisk -n 2:0:+51G -t 2:8300 -c 2:"LFS Root" /dev/sda
 
 # Create swap (8 GB, type 8200)
 echoL "Creating swap partition..."
