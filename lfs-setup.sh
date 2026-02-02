@@ -1,5 +1,60 @@
 #!/bin/bash
 
+# Relocate script from /root/lfs to /home/lfs/lfs 
+relocate() {
+  # Self-contained first-run relocation from /root/lfs -> /home/lfs/lfs
+  # Data/locals prefixed with RE_ to avoid collisions.
+
+  RE_OLD_ROOT="/root/lfs"
+  RE_NEW_ROOT="/home/lfs/lfs"
+
+  # Resolve the currently executing script path.
+  RE_SELF="${BASH_SOURCE[0]}"
+  RE_SELF_ABS="$(readlink -f -- "$RE_SELF")" || return 1
+
+  case "$RE_SELF_ABS" in
+    "$RE_OLD_ROOT"/*)
+      # Running from old location: relocate then re-exec from new location.
+      RE_REL_PATH="${RE_SELF_ABS#"$RE_OLD_ROOT"/}"
+      RE_NEW_SELF="$RE_NEW_ROOT/$RE_REL_PATH"
+
+      mkdir -p -- "$RE_NEW_ROOT" || return 1
+
+      # Copy everything including dotfiles.
+      cp -a -- "$RE_OLD_ROOT"/. "$RE_NEW_ROOT"/ || return 1
+
+      # Replace this process with the relocated script (root context preserved).
+      exec -- "$RE_NEW_SELF" "$@"
+      exit 0
+      ;;
+    "$RE_NEW_ROOT"/*)
+      # Running from new location: if old tree still exists, remove it.
+      if [ -d "$RE_OLD_ROOT" ]; then
+        rm -rf -- "$RE_OLD_ROOT" || return 1
+      fi
+      return 0
+      ;;
+    *)
+      # Not running from either root; do nothing.
+      return 0
+      ;;
+  esac
+}
+
+# will fix these testing commands later.
+echo "Pre-run locate: "
+pwd
+ls -l
+echo "----------------"
+
+relocate      # Move script to correct running location.
+
+echo "Post-run locate: "
+pwd
+ls -l
+exit 0
+echo "----------------"
+
 source /root/lfs/lib/menu.lib   # In every script.
 
 #"$HERE/$EXEC_SCRIPT"
