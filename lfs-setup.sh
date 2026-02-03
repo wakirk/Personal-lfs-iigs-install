@@ -24,6 +24,7 @@ relocate() {
       cp -a -- "$RE_OLD_ROOT"/. "$RE_NEW_ROOT"/ || return 1
 
       # Replace this process with the relocated script (root context preserved).
+	  cd -- "$RE_NEW_ROOT" || return 1
       exec -- "$RE_NEW_SELF" "$@"
       exit 0
       ;;
