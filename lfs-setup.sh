@@ -24,7 +24,7 @@ relocate() {
       cp -a -- "$RE_OLD_ROOT"/. "$RE_NEW_ROOT"/ || return 1
 
       # Replace this process with the relocated script (root context preserved).
-	  cd -- "$RE_NEW_ROOT" || return 1
+      cd -- "$RE_NEW_ROOT" || return 1
       exec -- "$RE_NEW_SELF" "$@"
       exit 0
       ;;
@@ -32,6 +32,8 @@ relocate() {
       # Running from new location: if old tree still exists, remove it.
       if [ -d "$RE_OLD_ROOT" ]; then
         rm -rf -- "$RE_OLD_ROOT" || return 1
+        echo "Project moved to $RE_NEW_ROOT.  Restart script."
+        exit 0
       fi
       return 0
       ;;
@@ -42,20 +44,8 @@ relocate() {
   esac
 }
 
-# will fix these testing commands later.
-echo "Pre-run locate: "
-pwd
-ls -l
-echo "----------------"
-
-echo "Testing relocate..."
 relocate      # Move script to correct running location.
 
-echo "Post-run locate: "
-pwd
-ls -l
-exit 0
-echo "----------------"
 
 source /root/lfs/lib/menu.lib   # In every script.
 
