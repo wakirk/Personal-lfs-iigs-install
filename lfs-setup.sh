@@ -48,6 +48,7 @@ pwd
 ls -l
 echo "----------------"
 
+echo "Testing relocate..."
 relocate      # Move script to correct running location.
 
 echo "Post-run locate: "
