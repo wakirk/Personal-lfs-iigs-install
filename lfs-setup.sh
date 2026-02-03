@@ -47,7 +47,7 @@ relocate() {
 relocate      # Move script to correct running location.
 
 
-source /root/lfs/lib/menu.lib   # In every script.
+source lib/menu.lib   # In every script.
 
 #"$HERE/$EXEC_SCRIPT"
 # Manual callback return mapping (applied after a manual selection):
