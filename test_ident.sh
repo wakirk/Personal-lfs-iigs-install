@@ -197,6 +197,9 @@ chown lfs:lfs /home/lfs/lfs
 mkdir -p $LFS/sources
 chown lfs:lfs $LFS/sources
 
+echoL "Fixing ownership under /home/lfs ..."
+chown -Rv lfs:lfs /home/lfs
+
 }
 
 
