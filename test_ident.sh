@@ -202,11 +202,8 @@ chown -Rv lfs:lfs /home/lfs
 
 }
 
-
 tests() {
-    bash   # Place holder and to check fixed enviornment.
-
-
+    run_as_lfs "$HERE/whoami.sh"
 }
 
 main() {
