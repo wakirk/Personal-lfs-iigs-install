@@ -112,6 +112,20 @@ chroot_entry() {
 	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
 }
 
+# Exit: unmount CIFS under the chroot view
+chroot_exit() {   # something got copy/pasted wrong, was remvoed, fixed.
+ 	echo "$LFS > chroot_exit()"
+	mountpoint -q $LFS/dev/pts && umount -v $LFS/dev/pts
+	mountpoint -q $LFS/dev/shm && umount -v $LFS/dev/shm
+	mountpoint -q $LFS/dev     && umount -v $LFS/dev
+	mountpoint -q $LFS/proc    && umount -v $LFS/proc
+	mountpoint -q $LFS/sys     && umount -v $LFS/sys
+	mountpoint -q $LFS/run     && umount -v $LFS/run
+
+	umount -v $LFS/mnt/net/d
+    return 0
+}
+
 # Run a target script inside chroot (no exec; returns to caller)
 chroot_run() {
     local host_target="$1"
