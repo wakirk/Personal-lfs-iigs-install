@@ -42,8 +42,17 @@ lfs_identity() {
 }
 
 lfs_share_on() {
-    # Make CIFS appear owned/writable by lfs:lfs
-    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
+	echo "FATAL: lfs_share_on() is no longer valid. Remove/replace the caller." >&2
+	echo "Call stack:" >&2
+
+	local i
+	for ((i=1; i<${#FUNCNAME[@]}; i++)); do
+		echo "  at ${FUNCNAME[$i]} (${BASH_SOURCE[$i]}:${BASH_LINENO[$((i-1))]})" >&2
+	done
+
+	exit 1
+	#    # Make CIFS appear owned/writable by lfs:lfs
+	#    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
 }
 
 run_as_lfs() {
