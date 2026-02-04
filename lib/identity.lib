@@ -57,6 +57,7 @@ run_as_lfs() {
 
     echo "what was passed: $0"
     echo "Where is $HERE"
+    read
     exit 1
 
     # Run as lfs:lfs, LOGIN shell (-l) so profiles load, then cd and exec the script with args.
