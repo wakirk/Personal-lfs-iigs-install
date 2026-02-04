@@ -204,6 +204,7 @@ chown -Rv lfs:lfs /home/lfs
 
 tests() {
     run_as_lfs "$HERE/whoami.sh"
+    read
 }
 
 main() {
