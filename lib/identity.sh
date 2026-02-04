@@ -1,7 +1,8 @@
+
 # Identify project paths and the calling script's directory (logical paths).
 lfs_identity() {
 	# Constants you requested
-	RUN_ROOT="/root/lfs"
+	RUN_ROOT="/home/lfs/lfs"    #changed from /root/lfs (new running location)
 	LFS="/mnt/lfs"
 
 	# Determine the outermost script that started this process.
