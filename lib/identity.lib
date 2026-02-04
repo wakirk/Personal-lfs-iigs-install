@@ -45,13 +45,13 @@ run_as_lfs() {
     # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
     # Normalize path so 'lfs' can traverse it (avoid /root and direct /mnt path).
 
-#	local target="$1"
-#	shift || true
+	local target="$1"
+	shift || true
 
-#	local tdir tbase
-#	tdir="$(dirname -- "$target")"
-#	tbase="$(basename -- "$target")"
-#   comment
+	local tdir tbase
+	tdir="$(dirname -- "$target")"
+	tbase="$(basename -- "$target")"
+    comment
 
     echo "tdir = $tdir , $tbase = $tbase" 
 #   exit 1
