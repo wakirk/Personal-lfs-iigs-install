@@ -55,7 +55,7 @@ run_as_lfs() {
 #   echo "tdir = $tdir , $tbase = $tbase" 
 #   exit 1
 
-    echo "what was passed: $0"
+    echo "what was passed: $@"
     echo "Where is $HERE"
     read
     exit 1
