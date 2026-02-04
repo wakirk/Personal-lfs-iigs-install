@@ -51,7 +51,7 @@ run_as_lfs() {
 #	local tdir tbase
 #	tdir="$(dirname -- "$target")"
 #	tbase="$(basename -- "$target")"
-
+#   comment
 
     echo "tdir = $tdir , $tbase = $tbase" 
 #   exit 1
