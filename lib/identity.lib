@@ -45,14 +45,18 @@ run_as_lfs() {
     # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
     # Normalize path so 'lfs' can traverse it (avoid /root and direct /mnt path).
 
-	local target="$1"
-	shift || true
+#	local target="$1"
+#	shift || true
 
-	local tdir tbase
-	tdir="$(dirname -- "$target")"
-	tbase="$(basename -- "$target")"
+#	local tdir tbase
+#	tdir="$(dirname -- "$target")"
+#	tbase="$(basename -- "$target")"
 
-    echo "tdir = $tdir , $tbase = $tbase" 
+#   echo "tdir = $tdir , $tbase = $tbase" 
+#   exit 1
+
+    echo "what was passed: $0"
+    echo "Where is $HERE"
     exit 1
 
     # Run as lfs:lfs, LOGIN shell (-l) so profiles load, then cd and exec the script with args.
