@@ -1,0 +1,194 @@
+# Identify project paths and the calling script's directory (logical paths).
+lfs_identity() {
+	# Constants you requested
+	RUN_ROOT="/root/lfs"
+	LFS="/mnt/lfs"
+
+	# Determine the outermost script that started this process.
+	# In a sourced library, BASH_SOURCE[last] is the top-level script.
+	local top_script
+	if [ "${#BASH_SOURCE[@]}" -gt 0 ]; then
+		top_script="${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}"
+	else
+		# Fallback (non-bash or unusual cases)
+		top_script="$0"
+	fi
+
+	# Compute HERE = directory of the outermost script (logical; preserves symlinks).
+	local dir oldpwd
+	case "$top_script" in
+	*/*)
+		dir="$(dirname -- "$top_script")"
+		oldpwd="$PWD"
+		if cd -- "$dir" 2>/dev/null; then
+			HERE="$PWD"               # logical current dir (no -P), keeps symlink form
+			cd -- "$oldpwd" 2>/dev/null || true
+		else
+			echo "ERROR: cannot cd to '$dir'" >&2
+			HERE="$PWD"               # fallback to current process dir
+		fi
+	;;
+	*)
+		# No slash in name → use current dir as the script’s directory
+		HERE="$PWD"
+	;;
+	esac
+
+	# Convenience: basename of the outermost script
+	SCRIPT_NAME="$(basename -- "$top_script")"
+
+	return 0
+}
+
+lfs_share_on() {
+    # Make CIFS appear owned/writable by lfs:lfs
+    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
+}
+
+run_as_lfs() {
+    # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
+    # Normalize path so 'lfs' can traverse it (avoid /root and direct /mnt path).
+    local target="$1"; shift || true
+
+    case "$target" in
+        /root/lfs/*)
+            target="/home/lfs/lfs/${target#/root/lfs/}"
+            ;;
+        /mnt/net/d/LFS/*)
+            target="/home/lfs/lfs/${target#/mnt/net/d/LFS/}"
+            ;;
+    esac
+
+    # Split into dir and file for a clean cd+exec
+    local tdir tbase
+    tdir="$(dirname -- "$target")" || return 1
+    tbase="$(basename -- "$target")" || return 1
+
+    # Run as lfs:lfs, LOGIN shell (-l) so profiles load, then cd and exec the script with args.
+    sudo -u lfs -g lfs -H -- /bin/bash -lc '
+        cd -- "$1" || exit 98
+        exec /bin/bash "./$2" "${@:3}"
+    ' _ "$tdir" "$tbase" "$@"
+}
+
+root_share_on() {
+    # Restore CIFS to root:root view (tweak modes as you prefer)
+    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid=0,gid=0 "$SHARE"
+}
+
+################################################################################
+# Chroot helpers — LFS Chapter 7
+# REQUIRE: LFS, SHARE_ID, SHARE_USER, SHARE_PASS, SHARE_VERS exported
+# NOTES:
+#  - We mount CIFS at $LFS/root/lfs so that inside chroot it is /root/lfs.
+#  - We never exec; control always returns to the caller.
+#  - chroot_prep() is invoked from within chroot_entry().
+################################################################################
+
+# Entry: mounts CIFS under the chroot view and calls chroot_prep()
+chroot_entry() {
+	echo "$LFS > chroot_entry()"
+	# Do something if ANY are unset OR empty
+	if [[ -z "${LFS:-}" || -z "${SHARE_ID:-}" || -z "${SHARE_USER:-}" || -z "${SHARE_PASS:-}" || -z "${SHARE_VERS:-}" ]]; then
+		echo "Missing Data"
+		read
+		return 10
+	fi
+	mkdir -p $LFS/mnt/net/d
+	mount -v -t cifs $SHARE_ID $LFS/mnt/net/d -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
+	install -dv -m 0750 $LFS/root
+	rm -v $LFS/root/lfs
+	ln -vfs /mnt/net/d/LFS $LFS/root/lfs
+	ls -v $LFS/root/lfs
+
+	chown --from lfs -R root:root $LFS/{usr,var,etc,tools}
+	case $(uname -m) in
+		x86_64) chown --from lfs -R root:root $LFS/lib64 ;;
+	esac
+
+	mkdir -pv $LFS/{dev,proc,sys,run}
+	mountpoint -q $LFS/dev     || mount -v  --bind /dev                      $LFS/dev
+	mountpoint -q $LFS/dev/pts || mount -vt devpts devpts -o gid=5,mode=0620 $LFS/dev/pts
+	mountpoint -q $LFS/proc    || mount -vt proc  proc                       $LFS/proc
+	mountpoint -q $LFS/sys     || mount -vt sysfs sysfs                      $LFS/sys
+	mountpoint -q $LFS/run     || mount -vt tmpfs tmpfs                      $LFS/run
+
+	if [ -h $LFS/dev/shm ]; then
+		install -v -d -m 1777 $LFS$(realpath /dev/shm)
+	else
+		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
+	fi
+	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
+ 
+}
+
+# Entry: mounts CIFS under the chroot view and calls chroot_prep()
+chroot_entry() {
+	echo "$LFS > chroot_entry()"
+	# Do something if ANY are unset OR empty
+	if [[ -z "${LFS:-}" || -z "${SHARE_ID:-}" || -z "${SHARE_USER:-}" || -z "${SHARE_PASS:-}" || -z "${SHARE_VERS:-}" ]]; then
+		echo "Missing Data"
+		read
+		return 10
+	fi
+	mkdir -p $LFS/mnt/net/d
+	mount -v -t cifs $SHARE_ID $LFS/mnt/net/d -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
+	install -dv -m 0750 $LFS/root
+	rm -v $LFS/root/lfs
+	ln -vfs /mnt/net/d/LFS $LFS/root/lfs
+	ls -v $LFS/root/lfs
+
+	chown --from lfs -R root:root $LFS/{usr,var,etc,tools}
+	case $(uname -m) in
+		x86_64) chown --from lfs -R root:root $LFS/lib64 ;;
+	esac
+
+	mkdir -pv $LFS/{dev,proc,sys,run}
+	mountpoint -q $LFS/dev     || mount -v  --bind /dev                      $LFS/dev
+	mountpoint -q $LFS/dev/pts || mount -vt devpts devpts -o gid=5,mode=0620 $LFS/dev/pts
+	mountpoint -q $LFS/proc    || mount -vt proc  proc                       $LFS/proc
+	mountpoint -q $LFS/sys     || mount -vt sysfs sysfs                      $LFS/sys
+	mountpoint -q $LFS/run     || mount -vt tmpfs tmpfs                      $LFS/run
+
+	if [ -h $LFS/dev/shm ]; then
+		install -v -d -m 1777 $LFS$(realpath /dev/shm)
+	else
+		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
+	fi
+	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
+ 
+}
+
+# Run a target script inside chroot (no exec; returns to caller)
+chroot_run() {
+    local host_target="$1"
+    shift || true
+	echo "> chroot_run()"
+    # Map like run_as_lfs, but for root-in-chroot
+    local in_target
+    case "$host_target" in
+        /root/lfs/*)
+            in_target="/root/lfs/${host_target#/root/lfs/}"
+            ;;
+        /mnt/net/d/LFS/*)
+            in_target="/root/lfs/${host_target#/mnt/net/d/LFS/}"
+            ;;
+        *)
+            echo "ERROR: chroot_run: unsupported target path: $host_target" >&2
+            return 97
+            ;;
+    esac
+
+    echo "Host Target: $host_target"
+    echo "==> chroot_run: entering chroot to run $in_target"
+
+	chroot "$LFS" /usr/bin/env -i   \
+		HOME=/root                  \
+		TERM="$TERM"                \
+		PS1='(lfs chroot) \u:\w\$ ' \
+		PATH=/usr/bin:/usr/sbin     \
+		MAKEFLAGS="-j$(nproc)"      \
+		TESTSUITEFLAGS="-j$(nproc)" \
+		/bin/bash "$in_target" "$@"
+
+}
