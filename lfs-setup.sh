@@ -22,6 +22,9 @@ relocate() {
 
       # Copy everything including dotfiles.
       cp -a -- "$RE_OLD_ROOT"/. "$RE_NEW_ROOT"/ || return 1
+	  
+      # make the new folder work with lfs:lfs
+      git config --global --add safe.directory /home/lfs/lfs  # safe directories patch.
 
       # Replace this process with the relocated script (root context preserved).
       cd -- "$RE_NEW_ROOT" || return 1
