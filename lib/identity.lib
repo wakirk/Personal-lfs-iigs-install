@@ -44,26 +44,18 @@ lfs_identity() {
 run_as_lfs() {
     # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
     # Normalize path so 'lfs' can traverse it (avoid /root and direct /mnt path).
-    local target="$1"; shift || true
 
-    case "$target" in
-        /root/lfs/*)
-            target="/home/lfs/lfs/${target#/root/lfs/}"
-            ;;
-        /mnt/net/d/LFS/*)
-            target="/home/lfs/lfs/${target#/mnt/net/d/LFS/}"
-            ;;
-    esac
+	local target="$1"
+	shift || true
 
-    # Split into dir and file for a clean cd+exec
-    local tdir tbase
-    tdir="$(dirname -- "$target")" || return 1
-    tbase="$(basename -- "$target")" || return 1
+	local tdir tbase
+	tdir="$(dirname -- "$target")"
+	tbase="$(basename -- "$target")"
 
     # Run as lfs:lfs, LOGIN shell (-l) so profiles load, then cd and exec the script with args.
     sudo -u lfs -g lfs -H -- /bin/bash -lc '
         cd -- "$1" || exit 98
-        exec /bin/bash "./$2" "${@:3}"
+        /bin/bash "./$2" "${@:3}"
     ' _ "$tdir" "$tbase" "$@"
 }
 
