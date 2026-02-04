@@ -207,6 +207,8 @@ tests() {
     read
     run_as_lfs "$HERE/whoami.sh"
     read
+    read
+    read
 }
 
 main() {
@@ -222,6 +224,7 @@ main() {
 #    inital_dirs
 #    environment
     tests    # Perform tests 
+    read
 }
 
 # call_bash  Starts a pre-configured prompt.
