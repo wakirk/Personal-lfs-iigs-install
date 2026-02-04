@@ -53,12 +53,12 @@ run_as_lfs() {
 	tbase="$(basename -- "$target")"
 
     echo "tdir = $tdir , tbase = $tbase" 
-#   exit 1
+#    exit 1
 
     echo "what was passed: $@"
     echo "Where is $HERE"
     read
-    exit 1
+#    exit 1
     set -x
     # Run as lfs:lfs, LOGIN shell (-l) so profiles load, then cd and exec the script with args.
     sudo -u lfs -g lfs -H -- /bin/bash -lc '
