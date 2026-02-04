@@ -52,7 +52,7 @@ run_as_lfs() {
 #	tdir="$(dirname -- "$target")"
 #	tbase="$(basename -- "$target")"
 
-#   echo "tdir = $tdir , $tbase = $tbase" 
+    echo "tdir = $tdir , $tbase = $tbase" 
 #   exit 1
 
     echo "what was passed: $@"
