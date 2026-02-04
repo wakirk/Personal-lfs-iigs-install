@@ -1,11 +1,19 @@
 #!/bin/bash
-
 source lib/menu.lib   # In every script.
 
-# code copied from actual environmental setup scripts.
-# Step 1
+# function names named after the script file name.
 
-echo "Cleaning Disk..."
+clean_partition() {
+
+# OH.... some scripts have the startup path hard coded, that's a NOPE!!!!!
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
+
+echoR "Preparing Partitions"
+echoL "Removing any mounts..."
+umount -v /dev/sda*
+
+echoL "Cleaning Disk..."
 # 1. Wipe first 10MB (MBR + GPT primary + boot code area)
 dd if=/dev/zero of=/dev/sda bs=1M count=4096 status=progress
 
@@ -19,22 +27,27 @@ udevadm settle
 lsblk
 
 echo "Drive Clean"
+}
 
-# Step 2
+new_partition() {
+
+# .... sigh..... 
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
 
 # Create EFI (2 GB, type EF00)
-echo "Creating EFI partition..."
+echoL "Creating EFI partition..."
 sgdisk -n 1:0:+1G -t 1:EF00 -c 1:"EFI System" /dev/sda
 
 # Create root (30 GB, type 8300)
-echo "Creating root partition..."
+echoL "Creating root partition..."
 sgdisk -n 2:0:+50G -t 2:8300 -c 2:"LFS Root" /dev/sda
 
 # Create swap (8 GB, type 8200)
-echo "Creating swap partition..."
+echoL "Creating swap partition..."
 sgdisk -n 3:0:+8G -t 3:8200 -c 3:"Linux Swap" /dev/sda
 
-echo "Cleaning residual data"
+echoL "Cleaning residual data"
 dd if=/dev/zero of=/dev/sda1 bs=1M count=4096 status=progress
 dd if=/dev/zero of=/dev/sda2 bs=1M count=4096 status=progress
 dd if=/dev/zero of=/dev/sda3 bs=1M count=4096 status=progress
@@ -43,49 +56,67 @@ dd if=/dev/zero of=/dev/sda3 bs=1M count=4096 status=progress
 sync
 blockdev --rereadpt /dev/sda
 
-# Step 3
+}
 
-echo "Formatting File System..."
+file_system() {
+
+# I really hope this isn't borked in all 80+ scripts.....
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
+
+echoL "Formatting File System..."
 
 # Format EFI
-echo "Formatting EFI..."
+echoL "Formatting EFI..."
 mkfs.vfat -F32 -n EFI /dev/sda1
 
 # Format root
-echo "Formatting root..."
+echoL "Formatting root..."
 mkfs.ext4 -L LFSROOT /dev/sda2
 
 # Init swap
-echo "Formatting swap..."
+echoL "Formatting swap..."
 mkswap -L LINUXSWAP /dev/sda3
 
-# Step 4
+}
 
-echo "Mounting Volumes..."
+mounting_system() {
+
+# boy oh boy, I got a bad feeling about this kid....
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
+
+echoL "Mounting Volumes..."
 
 # Prepare mountpoints
-echo "Making mount points..."
+echoL "Making mount points..."
 mkdir -pv /mnt/lfs
 
 # Mount root
-echo "Mounting root..."
+echoL "Mounting root..."
 mount -v /dev/sda2 /mnt/lfs
 
 # Prepare mountpoints
-echo "Making mount points..."
+echoL "Making mount points..."
 mkdir -pv /mnt/lfs/boot/efi
 
 # Mount EFI
-echo "Mounting EFI..."
+echoL "Mounting EFI..."
 mount -v /dev/sda1 /mnt/lfs/boot/efi
 
-echo "Partitioning and formatting complete."
+echoL "Partitioning and formatting complete."
 lsblk
 lsblk -f /dev/sda
 
-# Step 5
+}
 
-echo "Initial Directories..."
+inital_dirs() {
+
+# Weeping and nashing of teeth....
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
+
+echoL "Initial Directories..."
 
 chown root:root $LFS
 chmod 755 $LFS
@@ -109,14 +140,20 @@ mkdir -p $LFS/home
 mkdir -p $LFS/usr
 mkdir -p $LFS/tmp
 mkdir -p $LFS/usr/src
-chmod 1777 $LFS/lfs/tmp
+chmod 1777 $LFS/tmp  #was  chmod 1777 $LFS/lfs/tmp  
 
 echo LFS = $LFS
 ls $LFS -l
 echo umask:
 umask
 
-# Step 6
+}
+
+environment() {
+
+# In the words of Captian Global from the SDF1, ..."Gonna be long trip."
+#source /root/lfs/lib/menu.lib   # In every script.
+#cd /root/lfs/1.02-Preparing
 
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
@@ -154,18 +191,36 @@ export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 EOF
 
 chown lfs:lfs /home/lfs/.bashrc
-ln -fs /mnt/net/d/LFS /home/lfs/lfs
+# ln -fs /mnt/net/d/LFS /home/lfs/lfs
 chown lfs:lfs /home/lfs/lfs
 
 mkdir -p $LFS/sources
 chown lfs:lfs $LFS/sources
 
-# END of copied code. 
-
-# beginning of test code.
+}
 
 
+tests() {
+    bash   # Place holder and to check fixed enviornment.
 
 
+}
 
+main() {
+	export LFS=/mnt/lfs
+	umask 022
+	echoL "Test Left"
+	echoR "Test Right"
+	bash   # take a look around. TBR
+	clean_partition
+    new_partition
+    file_system
+    mounting_system
+    inital_dirs
+    environment
+    tests    # Perform tests 
+}
 
+# call_bash  Starts a pre-configured prompt.
+lfs_identity
+lfs_tmux_entry main  # must be called after the routine it defines.
