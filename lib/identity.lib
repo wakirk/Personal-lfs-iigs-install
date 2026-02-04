@@ -41,20 +41,6 @@ lfs_identity() {
 	return 0
 }
 
-lfs_share_on() {
-	echo "FATAL: lfs_share_on() is no longer valid. Remove/replace the caller." >&2
-	echo "Call stack:" >&2
-
-	local i
-	for ((i=1; i<${#FUNCNAME[@]}; i++)); do
-		echo "  at ${FUNCNAME[$i]} (${BASH_SOURCE[$i]}:${BASH_LINENO[$((i-1))]})" >&2
-	done
-
-	exit 1
-	#    # Make CIFS appear owned/writable by lfs:lfs
-	#    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
-}
-
 run_as_lfs() {
     # Usage: run_as_lfs /absolute/path/to/script.sh [args...]
     # Normalize path so 'lfs' can traverse it (avoid /root and direct /mnt path).
@@ -79,11 +65,6 @@ run_as_lfs() {
         cd -- "$1" || exit 98
         exec /bin/bash "./$2" "${@:3}"
     ' _ "$tdir" "$tbase" "$@"
-}
-
-root_share_on() {
-    # Restore CIFS to root:root view (tweak modes as you prefer)
-    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid=0,gid=0 "$SHARE"
 }
 
 ################################################################################
@@ -129,44 +110,6 @@ chroot_entry() {
 		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
 	fi
 	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
- 
-}
-
-# Entry: mounts CIFS under the chroot view and calls chroot_prep()
-chroot_entry() {
-	echo "$LFS > chroot_entry()"
-	# Do something if ANY are unset OR empty
-	if [[ -z "${LFS:-}" || -z "${SHARE_ID:-}" || -z "${SHARE_USER:-}" || -z "${SHARE_PASS:-}" || -z "${SHARE_VERS:-}" ]]; then
-		echo "Missing Data"
-		read
-		return 10
-	fi
-	mkdir -p $LFS/mnt/net/d
-	mount -v -t cifs $SHARE_ID $LFS/mnt/net/d -o username=$SHARE_USER,password=$SHARE_PASS,vers=$SHARE_VERS,uid=0,gid=0
-	install -dv -m 0750 $LFS/root
-	rm -v $LFS/root/lfs
-	ln -vfs /mnt/net/d/LFS $LFS/root/lfs
-	ls -v $LFS/root/lfs
-
-	chown --from lfs -R root:root $LFS/{usr,var,etc,tools}
-	case $(uname -m) in
-		x86_64) chown --from lfs -R root:root $LFS/lib64 ;;
-	esac
-
-	mkdir -pv $LFS/{dev,proc,sys,run}
-	mountpoint -q $LFS/dev     || mount -v  --bind /dev                      $LFS/dev
-	mountpoint -q $LFS/dev/pts || mount -vt devpts devpts -o gid=5,mode=0620 $LFS/dev/pts
-	mountpoint -q $LFS/proc    || mount -vt proc  proc                       $LFS/proc
-	mountpoint -q $LFS/sys     || mount -vt sysfs sysfs                      $LFS/sys
-	mountpoint -q $LFS/run     || mount -vt tmpfs tmpfs                      $LFS/run
-
-	if [ -h $LFS/dev/shm ]; then
-		install -v -d -m 1777 $LFS$(realpath /dev/shm)
-	else
-		mountpoint -q $LFS/dev/shm || mount -vt tmpfs -o nosuid,nodev tmpfs      $LFS/dev/shm
-	fi
-	rm -vfR $LFS/usr/lib64  # LFS Docs say murder this path.
- 
 }
 
 # Run a target script inside chroot (no exec; returns to caller)
@@ -201,4 +144,35 @@ chroot_run() {
 		TESTSUITEFLAGS="-j$(nproc)" \
 		/bin/bash "$in_target" "$@"
 
+}
+
+
+##########################################
+#   error out on no longer invalid code  #
+##########################################
+
+lfs_share_on() {
+	echo "FATAL: lfs_share_on() is no longer valid. Remove/replace the caller." >&2
+	echo "Call stack:" >&2
+
+	local i
+	for ((i=1; i<${#FUNCNAME[@]}; i++)); do
+		echo "  at ${FUNCNAME[$i]} (${BASH_SOURCE[$i]}:${BASH_LINENO[$((i-1))]})" >&2
+	done
+
+	exit 1
+	#    # Make CIFS appear owned/writable by lfs:lfs
+	#    mount -o remount,vers="$SHARE_VERS",username="$SHARE_USER",password="$SHARE_PASS",uid="$(id -u lfs)",gid="$(id -g lfs)" "$SHARE"
+}
+
+root_share_on() {
+  echo "FATAL: root_share_on() is no longer valid. Remove/replace the caller." >&2
+  echo "Call stack:" >&2
+
+  local i
+  for ((i=1; i<${#FUNCNAME[@]}; i++)); do
+    echo "  at ${FUNCNAME[$i]} (${BASH_SOURCE[$i]}:${BASH_LINENO[$((i-1))]})" >&2
+  done
+
+  exit 1
 }
