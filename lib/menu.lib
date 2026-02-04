@@ -1,3 +1,4 @@
 
-source identity.sh
-source menu-control.sh
+source lib/identity.lib
+source lib/menu-control.lib
+
