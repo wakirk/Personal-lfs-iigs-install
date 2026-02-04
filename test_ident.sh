@@ -203,22 +203,24 @@ chown -Rv lfs:lfs /home/lfs
 }
 
 tests() {
+    echo "Where is $HERE"
+    read
     run_as_lfs "$HERE/whoami.sh"
     read
 }
 
 main() {
-	export LFS=/mnt/lfs
-	umask 022
-	echoL "Test Left"
-	echoR "Test Right"
-	bash   # take a look around. TBR
-	clean_partition
-    new_partition
-    file_system
-    mounting_system
-    inital_dirs
-    environment
+    export LFS=/mnt/lfs
+    umask 022
+    echoL "Test Left"
+    echoR "Test Right"
+    bash   # take a look around. TBR
+#    clean_partition
+#    new_partition
+#    file_system
+#    mounting_system
+#    inital_dirs
+#    environment
     tests    # Perform tests 
 }
 
