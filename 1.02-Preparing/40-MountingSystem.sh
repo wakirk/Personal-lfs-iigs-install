@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
-cd /root/lfs/1.02-Preparing
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.02-Preparing
 
 echoL "Mounting Volumes..."
 
