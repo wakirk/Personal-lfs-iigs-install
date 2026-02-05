@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /home/lfs/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 #Linux (6.16.1) - 149,042 KB:
 #Home page: https://www.kernel.org/
