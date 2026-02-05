@@ -7,7 +7,7 @@ lfs_System_Software
 lfs_System_Config	 
 BLFSLibraryFoundation	 
 BLFSSupportLibrary	 
-BLFSSupportApplications	 
+BLFSSupportApplications	*
 BLFSSecurityLayer	 
 BLFSXLibsandMesa	 
 BLFSXAppsnFonts	 
