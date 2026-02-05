@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
-cd /root/lfs/1.02-Preparing
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.02-Preparing
 
 groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
@@ -39,8 +40,9 @@ export LFS LC_ALL LFS_TGT PATH CONFIG_SITE
 EOF
 
 chown lfs:lfs /home/lfs/.bashrc
-ln -fs /mnt/net/d/LFS /home/lfs/lfs
-chown lfs:lfs /home/lfs/lfs
-
+# ln -fs /mnt/net/d/LFS /home/lfs/lfs
 mkdir -p $LFS/sources
-chown lfs:lfs $LFS/sources
+
+echoL "Fixing ownership under /home/lfs ..."
+chown -Rv lfs:lfs /home/lfs
+chown -Rv lfs:lfs /mnt/lfs
