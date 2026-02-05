@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
-cd /root/lfs/1.02-Preparing
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.02-Preparing
 
 echoL "Initial Directories..."
 
@@ -27,7 +28,7 @@ mkdir -p $LFS/home
 mkdir -p $LFS/usr
 mkdir -p $LFS/tmp
 mkdir -p $LFS/usr/src
-chmod 1777 $LFS/lfs/tmp
+chmod 1777 $LFS/tmp  #was  chmod 1777 $LFS/lfs/tmp  
 
 echo LFS = $LFS
 ls $LFS -l
