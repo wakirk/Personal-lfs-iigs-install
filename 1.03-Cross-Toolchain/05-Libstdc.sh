@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /home/lfs/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 main () {
 	clear
