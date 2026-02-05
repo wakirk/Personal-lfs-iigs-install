@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /home/lfs/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 #Glibc (2.42) - 19,464 KB:
 #Home page: https://www.gnu.org/software/libc/
