@@ -1,9 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
-source /root/lfs/USB/userID.key  # Access Keys
-export $SHARE, $SHARE_USER, $SHARE_PASS, $SHARE_VERS, $SHARE_ID
-cd /root/lfs/1.03-Cross-Toolchain
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 Menu_Pre_Render() {
 	clear
