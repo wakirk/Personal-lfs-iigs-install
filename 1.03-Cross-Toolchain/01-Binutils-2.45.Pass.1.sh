@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /home/lfs/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 #Binutils (2.45) - 27,216 KB:
 #Home page: https://www.gnu.org/software/binutils/
