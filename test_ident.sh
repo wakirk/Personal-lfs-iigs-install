@@ -192,13 +192,11 @@ EOF
 
 chown lfs:lfs /home/lfs/.bashrc
 # ln -fs /mnt/net/d/LFS /home/lfs/lfs
-chown lfs:lfs /home/lfs/lfs
-
 mkdir -p $LFS/sources
-chown lfs:lfs $LFS/sources
 
 echoL "Fixing ownership under /home/lfs ..."
 chown -Rv lfs:lfs /home/lfs
+chown -Rv lfs:lfs /mnt/lfs
 
 }
 
@@ -213,12 +211,12 @@ main() {
     umask 022
     echoL "Test Left"
     echoR "Test Right"
-#    clean_partition
-#    new_partition
-#    file_system
-#    mounting_system
-#    inital_dirs
-#    environment
+    clean_partition
+    new_partition
+    file_system
+    mounting_system
+    inital_dirs
+    environment
     tests    # Perform tests 
 }
 
