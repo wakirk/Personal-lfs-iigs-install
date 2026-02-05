@@ -5,7 +5,7 @@
 
 URL="$1"
 FILE="$2"
-PKGDIR="../Packages"
+PKGDIR="/home/lfs/lfs/Packages"
 
 echo "Download:    $1 to File $PKGDIR/$FILE"
 
