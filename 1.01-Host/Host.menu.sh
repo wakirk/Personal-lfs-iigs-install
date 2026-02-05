@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /root/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.01-Host
 
 setupClock() {
 	echoL "Set Clock"
