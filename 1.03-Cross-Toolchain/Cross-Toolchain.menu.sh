@@ -28,45 +28,45 @@ Menu_Post_Render() {
 
 BinutilsPass1() {
 	echoL "Binutils-2.45 Pass 1"
-	lfs_share_on
+#	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"
-	root_share_on
+#	root_share_on
 	return_wait 1
 	return 1
 }
 
 GCCPass1() {
 	echoL "GCC-15.2.0 Pass 1"
-	lfs_share_on
+#	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"
-	root_share_on
+#	root_share_on
 	return_wait 1
 	return 1
 }
 
 LinuxHeaders() {
 	echoL "Linux-6.16.1 API Headers"
-	lfs_share_on
+#	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"
-	root_share_on
+#	root_share_on
 	return_wait 1
 	return 1
 }
 
 Glibc () {
 	echoL "Glibc-2.42"
-	lfs_share_on
+#	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"
-	root_share_on
+#	root_share_on
 	return_wait 1
 	return 1
 }
 
 Libstdc() {
 	echoL "Libstdc++ from GCC-15.2.0"
-	lfs_share_on
+#	lfs_share_on
 	run_as_lfs "$HERE/$EXEC_SCRIPT"
-	root_share_on
+#	root_share_on
 	return_wait 1
 	return 1
 }
