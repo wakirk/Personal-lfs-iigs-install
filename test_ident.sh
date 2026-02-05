@@ -204,10 +204,7 @@ chown -Rv lfs:lfs /home/lfs
 
 tests() {
     echo "Where is $HERE"
-    read
     run_as_lfs "$HERE/whoami.sh"
-    read
-    read
     read
 }
 
@@ -216,7 +213,6 @@ main() {
     umask 022
     echoL "Test Left"
     echoR "Test Right"
-    bash   # take a look around. TBR
 #    clean_partition
 #    new_partition
 #    file_system
@@ -224,7 +220,6 @@ main() {
 #    inital_dirs
 #    environment
     tests    # Perform tests 
-    read
 }
 
 # call_bash  Starts a pre-configured prompt.
