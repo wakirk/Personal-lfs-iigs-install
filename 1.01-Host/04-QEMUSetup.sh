@@ -16,8 +16,8 @@ pacman -Sy --noconfirm edk2-ovmf
 ldconfig
 
 # Load KVM kernel modules required by your "-enable-kvm" flag
-modprobe kvm 2>/dev/null || true
-modprobe kvm_intel 2>/dev/null || modprobe kvm_amd 2>/dev/null || true
+modprobe kvm 
+modprobe kvm_intel || modprobe kvm_amd 
 
 # Binary present + version OK (no GUI)
 command -v qemu-system-x86_64
