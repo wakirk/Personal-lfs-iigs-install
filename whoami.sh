@@ -6,8 +6,7 @@ echo "pwd: $PWD"
 echo "HOME: $HOME"
 echo "LFS: $LFS"
 echo "PATH: $PATH"
-echo
-env | sort
+env | sort | less
 echo
 bash
 /bin/bash
