@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source /home/lfs/lfs/lib/menu.lib   # In every script.
+cd /home/lfs/lfs
+source lib/menu.lib
+cd 1.03-Cross-Toolchain
 
 #GCC (15.2.0) - 98,688 KB:
 #Home page: https://gcc.gnu.org/
