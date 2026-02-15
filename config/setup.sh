@@ -57,7 +57,7 @@ sed -i '0,/^SigLevel = Never/{s/^SigLevel = Never/SigLevel = Required DatabaseOp
 # --- PACMAN PERSISTENT CACHE LOGIC ---
 
 # 1. Define the persistent storage location
-PACACHE="/mnt/share/pacman"
+PACACHE="/root/share/pacman"
 mkdir -p "$PACACHE"  
 
 echo "--- Checking for updates and building cache at $PACACHE ---"
@@ -79,8 +79,8 @@ pacman -Syu --noconfirm --cachedir "$PACACHE"
 # 4. Ensure Project Dependencies are also cached and installed
 # This ensures that even if the system is 'up to date', these specific 
 # tools are present and their installers are stored in your PACACHE.
-echo "--- Ensuring project dependencies are cached and installed ---"
-pacman -S --needed --noconfirm --cachedir "$PACACHE" base-devel git wget unzip rsync
+# echo "--- Ensuring project dependencies are cached and installed ---"
+# pacman -S --needed --noconfirm --cachedir "$PACACHE" base-devel git wget unzip rsync
 
 echo "--- Pacman setup and upgrade complete ---"
 
