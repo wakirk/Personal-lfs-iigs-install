@@ -74,7 +74,8 @@ echo "--- Cache build/refresh complete. Starting upgrade from local storage ---"
 # Now we run the actual upgrade. By pointing to the same --cachedir, 
 # pacman finds the 600+ packages we just verified/downloaded and 
 # installs them instantly without further network usage.
-pacman -Syu --noconfirm --cachedir "$PACACHE"
+# pacman -Syu --noconfirm --cachedir "$PACACHE"
+pacman -Syu --noconfirm --ask 4 --cachedir "$PACACHE"
 
 # 4. Ensure Project Dependencies are also cached and installed
 # This ensures that even if the system is 'up to date', these specific 
