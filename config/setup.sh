@@ -57,7 +57,7 @@ sed -i '0,/^SigLevel = Never/{s/^SigLevel = Never/SigLevel = Required DatabaseOp
 # --- PACMAN PERSISTENT CACHE LOGIC ---
 
 # 1. Define the persistent storage location
-PACACHE="/root/share/pacman"
+PACACHE="/root/share/packages/pacman"
 mkdir -p "$PACACHE"  
 
 echo "--- Checking for updates and building cache at $PACACHE ---"
