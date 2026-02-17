@@ -14,6 +14,37 @@
 #   - Username: wakirk (William Kirkpatrick)
 #
 
+# libcrc32c (dependency for btrfs)
+if ! lsmod | grep -q '^libcrc32c '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/lib/libcrc32c.ko
+fi
+
+# xor (dependency for btrfs)
+if ! lsmod | grep -q '^xor '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/crypto/xor.ko
+fi
+
+# raid6_pq (dependency for btrfs)
+if ! lsmod | grep -q '^raid6_pq '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/lib/raid6/raid6_pq.ko
+fi
+
+# btrfs
+if ! lsmod | grep -q '^btrfs '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/fs/btrfs/btrfs.ko
+fi
+
+# fat
+if ! lsmod | grep -q '^fat '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/fs/fat/fat.ko
+fi
+
+# vfat (depends on fat)
+if ! lsmod | grep -q '^vfat '; then
+    sudo insmod /lib/modules/6.6.47-1-lts/kernel/fs/fat/vfat.ko
+fi
+pacman -Sy arch-install-scripts
+
 # ===== PHASE 1: PREPARATION =====
 
 echo "Step 1: Prompting for password"
@@ -56,7 +87,7 @@ echo "Internet connectivity verified."
 
 echo "Step 5: Setting configuration variables"
 TARGET_DISK="/dev/sda"
-ROOT_MOUNT="/mnt"
+ROOT_MOUNT="/target"
 BOOT_PARTITION="${TARGET_DISK}1"
 ROOT_PARTITION="${TARGET_DISK}2"
 HOSTNAME="cachyos-x86qemu"
@@ -95,9 +126,14 @@ echo "Step 12: Formatting ${ROOT_PARTITION} as Btrfs"
 mkfs.btrfs -f -L ROOT "${ROOT_PARTITION}"
 
 # ===== PHASE 3: BTRFS SUBVOLUMES =====
+set -x
+
+echo "Step 12.5: Creating temporary mount point for Btrfs"
+mkdir -p "$ROOT_MOUNT"
 
 echo "Step 13: Mounting ${ROOT_PARTITION} temporarily to create subvolumes"
 mount "${ROOT_PARTITION}" "${ROOT_MOUNT}"
+set +x
 
 echo "Step 14: Creating Btrfs subvolume @"
 btrfs subvolume create "${ROOT_MOUNT}/@"
@@ -158,6 +194,48 @@ mount -o "subvol=/@log,${BTRFS_OPTS}" "${ROOT_PARTITION}" "${ROOT_MOUNT}/var/log
 echo "Step 30: Mounting ${BOOT_PARTITION} to ${ROOT_MOUNT}/boot"
 mount -o "${BOOT_OPTS}" "${BOOT_PARTITION}" "${ROOT_MOUNT}/boot"
 
+# ===== PHASE 4.5: CONFIGURE CACHYOS REPOSITORIES ON HOST =====
+
+echo "Step 30.1: Importing CachyOS GPG key"
+pacman-key --recv-keys F3B607488DB35A47 --keyserver keyserver.ubuntu.com
+pacman-key --lsign-key F3B607488DB35A47
+
+echo "Step 30.2: Creating CachyOS mirrorlist files"
+cat > /etc/pacman.d/cachyos-mirrorlist << 'EOF'
+Server = https://mirror.cachyos.org/repo/$arch/$repo
+Server = https://cdn-77.cachyos.org/repo/$arch/$repo
+Server = https://cdn-78.cachyos.org/repo/$arch/$repo
+EOF
+
+cat > /etc/pacman.d/cachyos-v3-mirrorlist << 'EOF'
+Server = https://mirror.cachyos.org/repo/$arch_v3/$repo
+Server = https://cdn-77.cachyos.org/repo/$arch_v3/$repo
+Server = https://cdn-78.cachyos.org/repo/$arch_v3/$repo
+EOF
+
+cat > /etc/pacman.d/cachyos-v4-mirrorlist << 'EOF'
+Server = https://mirror.cachyos.org/repo/$arch_v4/$repo
+Server = https://cdn-77.cachyos.org/repo/$arch_v4/$repo
+Server = https://cdn-78.cachyos.org/repo/$arch_v4/$repo
+EOF
+
+echo "Step 30.3: Setting architecture to baseline x86-64"
+ARCH_LEVEL="base"
+echo "Using baseline x86-64 (no v3/v4/znver4 optimizations)"
+
+
+echo "Step 30.4: Configuring CachyOS repositories for baseline"
+
+cat >> /etc/pacman.conf << 'EOF'
+
+# CachyOS repository (baseline x86-64)
+[cachyos]
+Include = /etc/pacman.d/cachyos-mirrorlist
+EOF
+
+echo "Step 30.5: Syncing package databases"
+pacman -Sy
+
 # ===== PHASE 5: BASE SYSTEM INSTALLATION =====
 
 echo "Step 31: Creating required directories for pacman"
@@ -193,11 +271,24 @@ cp /etc/pacman.d/cachyos-v4-mirrorlist "${ROOT_MOUNT}/etc/pacman.d/"
 echo "Step 37: Copying pacman gnupg keys to target system"
 cp -a /etc/pacman.d/gnupg "${ROOT_MOUNT}/etc/pacman.d/"
 
-echo "Step 38: Copying pacman.conf to target system"
+echo "Step 38: Copying architecture-specific pacman configuration to target"
 cp /etc/pacman.conf "${ROOT_MOUNT}/etc/pacman.conf"
 
 echo "Step 39: Copying resolv.conf for network access"
 cp /etc/resolv.conf "${ROOT_MOUNT}/etc/resolv.conf"
+
+echo "Step 39.5: Rating mirrors for fastest downloads"
+
+# Install mirror rating tools (small download)
+pacman -Sy --noconfirm --needed rate-mirrors cachyos-rate-mirrors
+
+echo "Step 39.6: Rating CachyOS mirrors"
+cachyos-rate-mirrors
+
+echo "Step 39.7: Rating Arch Linux mirrors"
+rate-mirrors --allow-root --protocol https arch | tee /etc/pacman.d/mirrorlist
+
+echo "Mirror rating complete - using fastest mirrors"
 
 echo "Step 40: Installing base packages using pacman --sysroot"
 # Base packages from pacstrap.conf
@@ -252,7 +343,9 @@ BASE_PACKAGES=(
     cachyos-plymouth-bootanimation
 )
 
-pacman --sysroot "${ROOT_MOUNT}" -Sy --noconfirm --needed "${BASE_PACKAGES[@]}"
+
+#pacman --sysroot "${ROOT_MOUNT}" -Sy --noconfirm --needed "${BASE_PACKAGES[@]}"
+pacstrap -K "${ROOT_MOUNT}" "${BASE_PACKAGES[@]}"
 
 echo "Step 41: Installing Limine bootloader packages"
 LIMINE_PACKAGES=(
@@ -606,6 +699,9 @@ EOF
 echo "Step 72: Generating initramfs"
 arch-chroot "${ROOT_MOUNT}" mkinitcpio -P
 
+echo "Step 72.5: Setting Plymouth boot animation theme"
+arch-chroot "${ROOT_MOUNT}" plymouth-set-default-theme cachyos-bootanimation
+
 echo "Step 73: Creating user ${USERNAME} (${USER_FULLNAME})"
 arch-chroot "${ROOT_MOUNT}" useradd -m -G wheel,rfkill,sys,users,lp,video,network,storage,audio -c "${USER_FULLNAME}" -s /bin/bash "${USERNAME}"
 
@@ -624,42 +720,121 @@ sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' "${ROOT_MOUNT}/
 # ===== PHASE 7: BOOTLOADER INSTALLATION =====
 
 echo "Step 78: Installing Limine bootloader to EFI System Partition"
-arch-chroot "${ROOT_MOUNT}" limine bios-install "${TARGET_DISK}"
+#arch-chroot "${ROOT_MOUNT}" limine bios-install "${TARGET_DISK}"
+arch-chroot "${ROOT_MOUNT}" limine-install
 
 echo "Step 79: Copying Limine EFI files to boot partition"
 mkdir -p "${ROOT_MOUNT}/boot/EFI/BOOT"
 cp "${ROOT_MOUNT}/usr/share/limine/BOOTX64.EFI" "${ROOT_MOUNT}/boot/EFI/BOOT/"
 
-echo "Step 80: Creating Limine configuration"
-cat > "${ROOT_MOUNT}/boot/limine.conf" << EOF
+# works:
+#echo "Step 80: Creating Limine configuration"
+#cat > "${ROOT_MOUNT}/boot/limine.conf" << EOF
+#timeout: 5
+#default_entry: 1
+#interface_resolution: 1024x768
+#graphics: yes
+#
+#/CachyOS
+#    protocol: linux
+#    kernel_path: boot():/vmlinuz-linux-cachyos
+#    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
+#    module_path: boot():/initramfs-linux-cachyos.img
+#
+#/CachyOS (LTS)
+#    protocol: linux
+#    kernel_path: boot():/vmlinuz-linux-cachyos-lts
+#    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
+#    module_path: boot():/initramfs-linux-cachyos-lts.img
+#
+#/CachyOS (fallback)
+#    protocol: linux
+#    kernel_path: boot():/vmlinuz-linux-cachyos
+#    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
+#    module_path: boot():/initramfs-linux-cachyos-fallback.img
+#
+#/CachyOS LTS (fallback)
+#    protocol: linux
+#    kernel_path: boot():/vmlinuz-linux-cachyos-lts
+#    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
+#    module_path: boot():/initramfs-linux-cachyos-lts-fallback.img
+#EOF
+#
+##--
+#
+#echo "Step 80.5: Configuring Limine theme colors and wallpaper"
+#
+## Copy the Limine splash image to boot partition
+#cp "${ROOT_MOUNT}/usr/share/wallpapers/cachyos-wallpapers/limine-splash.png" "${ROOT_MOUNT}/boot/"
+#
+## Add color palette and wallpaper to limine.conf
+#cat >> "${ROOT_MOUNT}/boot/limine.conf" << 'EOF'
+#
+## Catppuccin Mocha color palette
+#term_palette: 0x45475a
+#term_palette: 0xf38ba8
+#term_palette: 0xa6e3a1
+#term_palette: 0xf9e2af
+#term_palette: 0x89b4fa
+#term_palette: 0xf5c2e7
+#term_palette: 0x94e2d5
+#term_palette: 0xbac2de
+#term_palette_bright: 0x585b70
+#term_palette_bright: 0xf38ba8
+#term_palette_bright: 0xa6e3a1
+#term_palette_bright: 0xf9e2af
+#term_palette_bright: 0x89b4fa
+#term_palette_bright: 0xf5c2e7
+#term_palette_bright: 0x94e2d5
+#term_palette_bright: 0xa6adc8
+#term_background: 0x1e1e2e
+#term_foreground: 0xcdd6f4
+#term_background_bright: 0x181825
+#term_foreground_bright: 0xcdd6f4
+#
+## Wallpaper
+#wallpaper: boot():/limine-splash.png
+#EOF
+#
+##--
+
+echo "Step 80: Copying Limine splash image"
+cp "${ROOT_MOUNT}/usr/share/wallpapers/cachyos-wallpapers/limine-splash.png" "${ROOT_MOUNT}/boot/"
+
+echo "Step 80.1: Creating Limine configuration with theme"
+cat > "${ROOT_MOUNT}/boot/limine.conf" << 'EOF'
 timeout: 5
-default_entry: 1
+default_entry: 2
+remember_last_entry: yes
 interface_resolution: 1024x768
 graphics: yes
 
-/CachyOS
-    protocol: linux
-    kernel_path: boot():/vmlinuz-linux-cachyos
-    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
-    module_path: boot():/initramfs-linux-cachyos.img
+# Catppuccin Mocha theme
+term_palette: 0x45475a
+term_palette: 0xf38ba8
+term_palette: 0xa6e3a1
+term_palette: 0xf9e2af
+term_palette: 0x89b4fa
+term_palette: 0xf5c2e7
+term_palette: 0x94e2d5
+term_palette: 0xbac2de
+term_palette_bright: 0x585b70
+term_palette_bright: 0xf38ba8
+term_palette_bright: 0xa6e3a1
+term_palette_bright: 0xf9e2af
+term_palette_bright: 0x89b4fa
+term_palette_bright: 0xf5c2e7
+term_palette_bright: 0x94e2d5
+term_palette_bright: 0xa6adc8
+term_background: 0x1e1e2e
+term_foreground: 0xcdd6f4
+term_background_bright: 0x181825
+term_foreground_bright: 0xcdd6f4
+interface_branding:
 
-/CachyOS (LTS)
-    protocol: linux
-    kernel_path: boot():/vmlinuz-linux-cachyos-lts
-    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
-    module_path: boot():/initramfs-linux-cachyos-lts.img
+wallpaper: boot():/limine-splash.png
 
-/CachyOS (fallback)
-    protocol: linux
-    kernel_path: boot():/vmlinuz-linux-cachyos
-    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
-    module_path: boot():/initramfs-linux-cachyos-fallback.img
-
-/CachyOS LTS (fallback)
-    protocol: linux
-    kernel_path: boot():/vmlinuz-linux-cachyos-lts
-    kernel_cmdline: root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog
-    module_path: boot():/initramfs-linux-cachyos-lts-fallback.img
+/+CachyOS
 EOF
 
 echo "Step 81: Configuring EFI boot entry using efibootmgr"
@@ -671,6 +846,39 @@ if [ -f "${ROOT_MOUNT}/etc/limine-snapper-sync.conf" ]; then
     arch-chroot "${ROOT_MOUNT}" pacman -S --noconfirm --needed cachyos-snapper-support
     arch-chroot "${ROOT_MOUNT}" systemctl enable limine-snapper-sync.service
 fi
+
+echo "Step 82.5: Creating /etc/default/limine configuration"
+
+# Get the root partition UUID
+ROOT_UUID=$(blkid -s UUID -o value "${ROOT_PARTITION}")
+
+mkdir -p "${ROOT_MOUNT}/etc/default"
+cat > "${ROOT_MOUNT}/etc/default/limine" << EOF
+ESP_PATH="/boot"
+KERNEL_CMDLINE[default]+="quiet splash rw root=UUID=${ROOT_UUID} rootflags=subvol=/@"
+BOOT_ORDER="*, *lts, *fallback, Snapshots"
+EOF
+
+#echo "Step 82.5: Creating /etc/default/limine configuration"
+#
+## Get the root partition UUID
+#ROOT_UUID=$(blkid -s UUID -o value "${ROOT_PARTITION}")
+#
+#mkdir -p "${ROOT_MOUNT}/etc/default"
+#
+##cat > "${ROOT_MOUNT}/etc/default/limine" << EOF
+##ESP_PATH="/boot"
+##KERNEL_CMDLINE[default]+="root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog"
+##BOOT_ORDER="*, *lts, *fallback, Snapshots"
+##EOF
+
+cat > "${ROOT_MOUNT}/etc/default/limine" << EOF
+ESP_PATH="/boot"
+KERNEL_CMDLINE[default]+="root=UUID=${ROOT_UUID} rootflags=subvol=/@ rw quiet nowatchdog splash"
+BOOT_ORDER="*, *lts, *fallback, Snapshots"
+EOF
+
+echo "Created /etc/default/limine with kernel command line"
 
 echo "Step 83: Replacing limine-entry-tool with limine-mkinitcpio-hook"
 arch-chroot "${ROOT_MOUNT}" pacman -R --noconfirm limine-entry-tool
@@ -712,15 +920,28 @@ arch-chroot "${ROOT_MOUNT}" systemctl enable bluetooth
 echo "Step 92: Enabling SDDM display manager"
 arch-chroot "${ROOT_MOUNT}" systemctl enable sddm
 
-echo "Step 93: Configuring UFW firewall - setting default policies"
-arch-chroot "${ROOT_MOUNT}" ufw default deny incoming
-arch-chroot "${ROOT_MOUNT}" ufw default allow outgoing
+#echo "Step 93: Configuring UFW firewall - setting default policies"
+#arch-chroot "${ROOT_MOUNT}" ufw default deny incoming
+#arch-chroot "${ROOT_MOUNT}" ufw default allow outgoing
 
-echo "Step 94: Enabling UFW firewall"
-arch-chroot "${ROOT_MOUNT}" ufw enable
+#echo "Step 94: Enabling UFW firewall"
+#arch-chroot "${ROOT_MOUNT}" ufw enable
 
-echo "Step 95: Enabling UFW service"
-arch-chroot "${ROOT_MOUNT}" systemctl enable ufw
+#echo "Step 95: Enabling UFW service"
+#arch-chroot "${ROOT_MOUNT}" systemctl enable ufw
+
+#--
+echo "Step 93-95: Configuring UFW firewall (if installed)"
+if arch-chroot "${ROOT_MOUNT}" pacman -Qs ufw > /dev/null 2>&1; then
+    # Just configure policies - DON'T enable yet
+    arch-chroot "${ROOT_MOUNT}" ufw default deny incoming
+    arch-chroot "${ROOT_MOUNT}" ufw default allow outgoing
+    # Only enable the systemd service (starts on first boot, not in chroot)
+    arch-chroot "${ROOT_MOUNT}" systemctl enable ufw
+    # Skip "ufw enable" - it will auto-activate on first boot
+fi
+
+#--
 
 echo "Step 96: Removing wrong microcode package based on CPU vendor"
 CPU_VENDOR=$(grep -m1 "vendor_id" /proc/cpuinfo | awk '{print $3}')
@@ -751,7 +972,8 @@ echo "Step 99: Removing X session files from user home"
 arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- rm -rf "/home/${USERNAME}/.xsession" "/home/${USERNAME}/.xprofile" "/home/${USERNAME}/.xinitrc"
 
 echo "Step 100: Creating xdg user directories"
-arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- xdg-user-dirs-update
+#arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- xdg-user-dirs-update
+echo "Step 100 skipped."
 
 # ===== PHASE 9: CLEANUP =====
 
