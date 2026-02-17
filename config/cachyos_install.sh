@@ -809,27 +809,36 @@ remember_last_entry: yes
 interface_resolution: 1024x768
 graphics: yes
 
+# CachyOS Limine theme (matches cachyos-calamares)
+# Author: diegons490 (https://github.com/diegons490/cachyos-limine-theme)
+term_palette: 1e1e2e;f38ba8;a6e3a1;f9e2af;89b4fa;f5c2e7;94e2d5;cdd6f4
+term_palette_bright: 585b70;f38ba8;a6e3a1;f9e2af;89b4fa;f5c2e7;94e2d5;cdd6f4
+term_background: ffffffff
+term_foreground: cdd6f4
+term_background_bright: ffffffff
+term_foreground_bright: cdd6f4
+
 # Catppuccin Mocha theme
-term_palette: 0x45475a
-term_palette: 0xf38ba8
-term_palette: 0xa6e3a1
-term_palette: 0xf9e2af
-term_palette: 0x89b4fa
-term_palette: 0xf5c2e7
-term_palette: 0x94e2d5
-term_palette: 0xbac2de
-term_palette_bright: 0x585b70
-term_palette_bright: 0xf38ba8
-term_palette_bright: 0xa6e3a1
-term_palette_bright: 0xf9e2af
-term_palette_bright: 0x89b4fa
-term_palette_bright: 0xf5c2e7
-term_palette_bright: 0x94e2d5
-term_palette_bright: 0xa6adc8
-term_background: 0x1e1e2e
-term_foreground: 0xcdd6f4
-term_background_bright: 0x181825
-term_foreground_bright: 0xcdd6f4
+# term_palette: 0x45475a
+# term_palette: 0xf38ba8
+# term_palette: 0xa6e3a1
+# term_palette: 0xf9e2af
+# term_palette: 0x89b4fa
+# term_palette: 0xf5c2e7
+# term_palette: 0x94e2d5
+# term_palette: 0xbac2de
+# term_palette_bright: 0x585b70
+# term_palette_bright: 0xf38ba8
+# term_palette_bright: 0xa6e3a1
+# term_palette_bright: 0xf9e2af
+# term_palette_bright: 0x89b4fa
+# term_palette_bright: 0xf5c2e7
+# term_palette_bright: 0x94e2d5
+# term_palette_bright: 0xa6adc8
+# term_background: 0x1e1e2e
+# term_foreground: 0xcdd6f4
+# term_background_bright: 0x181825
+# term_foreground_bright: 0xcdd6f4
 
 # Fix for blacked out work area and text
 editor_background: 0x1e1e2e
