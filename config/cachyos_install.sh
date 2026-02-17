@@ -830,7 +830,14 @@ term_background: 0x1e1e2e
 term_foreground: 0xcdd6f4
 term_background_bright: 0x181825
 term_foreground_bright: 0xcdd6f4
-interface_branding:
+
+# Fix for blacked out work area and text
+editor_background: 0x1e1e2e
+editor_foreground: 0xcdd6f4
+editor_highlight: 0x89b4fa
+editor_highlight_foreground: 0x1e1e2e
+
+interface_branding: CachyOS
 
 wallpaper: boot():/limine-splash.png
 
