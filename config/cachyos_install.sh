@@ -987,9 +987,13 @@ arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- cp -rf /etc/skel/. "/hom
 echo "Step 99: Removing X session files from user home"
 arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- rm -rf "/home/${USERNAME}/.xsession" "/home/${USERNAME}/.xprofile" "/home/${USERNAME}/.xinitrc"
 
-echo "Step 100: Creating xdg user directories"
+#echo "Step 100: Creating xdg user directories"
 #arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- xdg-user-dirs-update
-echo "Step 100 skipped."
+#echo "Step 100 skipped."
+echo "Step 100: Copying custom files to OS."
+sync
+
+exit 0
 
 # ===== PHASE 9: CLEANUP =====
 
