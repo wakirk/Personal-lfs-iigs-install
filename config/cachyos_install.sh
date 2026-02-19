@@ -43,7 +43,7 @@ fi
 if ! lsmod | grep -q '^vfat '; then
     sudo insmod /lib/modules/6.6.47-1-lts/kernel/fs/fat/vfat.ko
 fi
-pacman -Sy arch-install-scripts
+pacman -Sy --noconfirm arch-install-scripts
 
 # ===== PHASE 1: PREPARATION =====
 
