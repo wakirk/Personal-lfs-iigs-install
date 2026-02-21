@@ -428,7 +428,7 @@ main
     # --- EXECUTION FLOW ---
 
     # 1. Run the install function (will skip if .installed exists)
-    preflight_check
+    Startup_check
     select_gpu_target
     install_ComfyUI
 
