@@ -1,9 +1,9 @@
 #!/bin/bash
 
 
-sudo pacman -Syu --needed spice-vdagent
-sudo pacman -Syu --needed plasma-x11-session xorg-server
-sudo pacman -Syu --needed tree mc
+sudo pacman -Syu --needed --noconfirm spice-vdagent
+sudo pacman -Syu --needed --noconfirm plasma-x11-session xorg-server
+sudo pacman -Syu --needed --noconfirm tree mc
 sudo umount /mnt/hostshare
 sudo rmdir /mnt/hostshare
 sudo mkdir -p /mnt/hostshare
