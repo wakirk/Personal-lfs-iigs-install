@@ -991,7 +991,8 @@ arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- rm -rf "/home/${USERNAME
 #arch-chroot "${ROOT_MOUNT}" runuser -u "${USERNAME}" -- xdg-user-dirs-update
 #echo "Step 100 skipped."
 echo "Step 100: Copying custom files to OS."
-cp /root/lfs/config/link-qemu.sh /target/home/wakirk 
+mkdir -p /target/home/wakirk/config
+cp /root/lfs/config/* /target/home/wakirk/config 
 
 # ===== PHASE 9: CLEANUP =====
 
