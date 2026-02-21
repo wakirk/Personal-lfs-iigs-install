@@ -11,6 +11,112 @@ set -euo pipefail
 #    Custom Voice
 #
 #UI Interface  "Comfy UI"  (with repo for Quent3 control)
+Startup_check() {
+    # --- PREFLIGHT: Ensure Python 3.13, git, curl are available ---
+    if [ -f ~/AI/.preflight.complete ]; then
+        # Still need to export PYTHON_BIN for this session
+        if command -v python3.13 &> /dev/null; then
+            export PYTHON_BIN="python3.13"
+        elif command -v python3.12 &> /dev/null; then
+            export PYTHON_BIN="python3.12"
+        else
+            export PYTHON_BIN="python3"
+        fi
+        return
+    fi
+
+    echo ">>> Running startup checks..."
+
+    # Install git and curl if missing
+    for pkg in git curl; do
+        if ! command -v "$pkg" &> /dev/null; then
+            echo ">>> Installing $pkg..."
+            sudo pacman -S --noconfirm "$pkg"
+        fi
+    done
+
+    # Find or install suitable Python (3.13 preferred, 3.12 fallback)
+    if command -v python3.13 &> /dev/null; then
+        export PYTHON_BIN="python3.13"
+    elif command -v python3.12 &> /dev/null; then
+        export PYTHON_BIN="python3.12"
+    else
+        # Check if system python3 is 3.12 or 3.13
+        if command -v python3 &> /dev/null; then
+            PY_VER=$(python3 -c "import sys; print(f'{sys.version_info.minor}')")
+            if [[ "$PY_VER" == "12" || "$PY_VER" == "13" ]]; then
+                export PYTHON_BIN="python3"
+            fi
+        fi
+    fi
+
+    # If still no suitable Python, install python313 from AUR
+    if [ -z "${PYTHON_BIN:-}" ]; then
+        echo ">>> No Python 3.12/3.13 found. Installing python313 from AUR..."
+        if command -v paru &> /dev/null; then
+            paru -S --noconfirm python313
+        elif command -v yay &> /dev/null; then
+            yay -S --noconfirm python313
+        else
+            echo "ERROR: No AUR helper (paru/yay) found. Install python313 manually."
+            exit 1
+        fi
+        export PYTHON_BIN="python3.13"
+    fi
+
+    # Verify venv module works
+    if ! "$PYTHON_BIN" -m venv --help &> /dev/null; then
+        echo "ERROR: $PYTHON_BIN is missing the venv module."
+        sudo pacman -S python-virtualenv
+    fi
+
+    echo ">>> Preflight OK: $PYTHON_BIN ($($PYTHON_BIN --version))"
+    touch ~/AI/.preflight.complete
+}
+
+select_gpu_target() {
+    # --- GPU TARGET: NVIDIA / AMD / CPU ---
+    if [ -f ~/AI/.gpu_target ]; then
+        export GPU_TARGET=$(cat ~/AI/.gpu_target)
+        echo ">>> GPU target already set: $GPU_TARGET"
+        return
+    fi
+
+    echo -e "\n\e[1;34m======================================\e[0m"
+    echo -e "\e[1;32m       SELECT YOUR GPU TARGET          \e[0m"
+    echo -e "\e[1;34m======================================\e[0m"
+    echo -e "  \e[1m1\e[0m) NVIDIA  (CUDA 13.0)"
+    echo -e "  \e[1m2\e[0m) AMD     (ROCm 6.4)"
+    echo -e "  \e[1m3\e[0m) CPU only (no GPU)"
+    echo -e "\e[1;34m======================================\e[0m"
+
+    while true; do
+        read -rp "  Choice [1/2/3]: " gpu_choice
+        case "$gpu_choice" in
+            1)
+                export GPU_TARGET="cuda"
+                echo "cuda" > ~/AI/.gpu_target
+                echo ">>> Set: NVIDIA (CUDA 13.0)"
+                break
+                ;;
+            2)
+                export GPU_TARGET="rocm"
+                echo "rocm" > ~/AI/.gpu_target
+                echo ">>> Set: AMD (ROCm 6.4)"
+                break
+                ;;
+            3)
+                export GPU_TARGET="cpu"
+                echo "cpu" > ~/AI/.gpu_target
+                echo ">>> Set: CPU only"
+                break
+                ;;
+            *)
+                echo ">>> Invalid choice. Enter 1, 2, or 3."
+                ;;
+        esac
+    done
+}
 
 install_ComfyUI() {
     # Check if the hidden marker file exists to skip installation
@@ -36,7 +142,8 @@ install_ComfyUI() {
     cd ~/AI
     git clone https://github.com/Comfy-Org/ComfyUI.git
     cd ComfyUI
-    python -m venv venv
+
+    "$PYTHON_BIN" -m venv venv
     source venv/bin/activate
     pip install -U pip
 
@@ -44,13 +151,20 @@ install_ComfyUI() {
     # - Installs torch, torchvision, torchaudio with CUDA 13.0 bindings
     # - In VM: This will install but won't use GPU (testing install process only)
     # - On bare metal: Requires NVIDIA drivers compatible with CUDA 13.0+
-
-    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
-
     # INSTALL STEP 1: PYTORCH (ROCm 6.2 - AMD GPU SUPPORT)
     # - Installs torch with AMD ROCm bindings
     # - This is what allows CachyOS to use your AMD GPU for AI
-    #pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.2
+    case "$GPU_TARGET" in
+        cuda)
+            pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+            ;;
+        rocm)
+            pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.4
+            ;;
+        cpu)
+            pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+            ;;
+    esac
 
     # INSTALL STEP 2: COMFYUI CORE DEPENDENCIES
     # - Installs all base requirements for ComfyUI engine
@@ -62,8 +176,12 @@ install_ComfyUI() {
     # - Installs extension manager for custom nodes (Voice, Music, Image generators)
     # - Allows one-click install of additional AI systems from the UI
     # - Required to enable manager with: python main.py --enable-manager
-
-    pip install -r manager_requirements.txt
+    # Guard: manager_requirements.txt may not exist in all versions
+    if [ -f manager_requirements.txt ]; then
+        pip install -r manager_requirements.txt
+    else
+        echo ">>> manager_requirements.txt not found, skipping (manager will self-install deps)"
+    fi
 
      # Create the marker file so we don't re-install next time
      touch ~/AI/.comfyui.installed
@@ -261,13 +379,23 @@ ACEStep15() {
 }
 
 launch_menu() {
+    # Read GPU target for launch flags
+    local gpu_flag=""
+    if [ -f ~/AI/.gpu_target ]; then
+        local target=$(cat ~/AI/.gpu_target)
+        if [ "$target" = "cpu" ]; then
+            gpu_flag="--cpu"
+        fi
+        # cuda and rocm: no flag needed, PyTorch handles it
+    fi
+
     while true; do
         echo -e "\n\e[1;34m======================================\e[0m"
-        echo -e "\e[1;32m       AI STUDIO LAUNCHER             \e[0m"
+        echo -e "\e[1;32m        AI STUDIO LAUNCHER             \e[0m"
         echo -e "\e[1;34m======================================\e[0m"
-        echo -e "  \e[1m1\e[0m)  ComfyUI        (Voice + Image)"
-        echo -e "  \e[1m2\e[0m)  ACE-Step 1.5   (Music)"
-        echo -e "  \e[1mx\e[0m)  Exit"
+        echo -e "  \e[1m1\e[0m) ComfyUI (Voice + Image)"
+        echo -e "  \e[1m2\e[0m) ACE-Step 1.5 (Music)"
+        echo -e "  \e[1mx\e[0m) Exit"
         echo -e "\e[1;34m======================================\e[0m"
         read -rp "  Choice: " choice
 
@@ -276,7 +404,7 @@ launch_menu() {
                 echo -e "\e[1;32m>>> Launching ComfyUI...\e[0m"
                 cd ~/AI/ComfyUI
                 source venv/bin/activate
-                python main.py --enable-manager --cpu || true
+                python main.py --enable-manager $gpu_flag || true
                 echo -e "\e[1;33m>>> ComfyUI stopped. Returning to menu...\e[0m"
                 ;;
             2)
@@ -296,25 +424,27 @@ launch_menu() {
     done
 }
 
-main () {
-
+main
     # --- EXECUTION FLOW ---
 
     # 1. Run the install function (will skip if .installed exists)
+    preflight_check
+    select_gpu_target
     install_ComfyUI
-    configure_model_paths
+
+#   configure_model_paths
 
     # GitHub first (UI code)
-    GHqwen31ComfyUI
+#    GHqwen31ComfyUI
 
     # Then the Tokenizer (Critical Dependency)
-    HFqwen3Tokenizer
+#    HFqwen3Tokenizer
 
     # Then the 1.7B Models
-    HFqwen317bBase
-    HFqwen317bVoiceDesign
-    HFqwen317bCustomVoice
-    ACEStep15
+#    HFqwen317bBase
+#    HFqwen317bVoiceDesign
+#    HFqwen317bCustomVoice
+#    ACEStep15
 
     # 2. Enter the directory and activate the environment for launch
     cd ~/AI/ComfyUI
