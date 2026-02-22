@@ -124,13 +124,12 @@ HFqwen317bBase() {
 import os
 from huggingface_hub import snapshot_download
 
-base = os.path.expanduser("~/AI/models/qwen3_tts")
+base = os.path.expanduser("~/AI/ComfyUI/models/Qwen3-TTS")
 os.makedirs(base, exist_ok=True)
 
 snapshot_download(
     repo_id="Qwen/Qwen3-TTS-12Hz-1.7B-Base",
-    local_dir=os.path.join(base, "Qwen/Qwen3-TTS-12Hz-1.7B-Base"),
-    local_dir_use_symlinks=False
+    local_dir=os.path.join(base, "Qwen3-TTS-12Hz-1.7B-Base"),
 )
 EOF
 
@@ -149,12 +148,11 @@ HFqwen317bVoiceDesign() {
 import os
 from huggingface_hub import snapshot_download
 
-base = os.path.expanduser("~/AI/models/qwen3_tts")
+base = os.path.expanduser("~/AI/ComfyUI/models/Qwen3-TTS")
 
 snapshot_download(
     repo_id="Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
-    local_dir=os.path.join(base, "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign"),
-    local_dir_use_symlinks=False
+    local_dir=os.path.join(base, "Qwen3-TTS-12Hz-1.7B-VoiceDesign"),
 )
 EOF
 
@@ -173,12 +171,11 @@ HFqwen317bCustomVoice() {
 import os
 from huggingface_hub import snapshot_download
 
-base = os.path.expanduser("~/AI/models/qwen3_tts")
+base = os.path.expanduser("~/AI/ComfyUI/models/Qwen3-TTS")
 
 snapshot_download(
     repo_id="Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
-    local_dir=os.path.join(base, "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice"),
-    local_dir_use_symlinks=False
+    local_dir=os.path.join(base, "Qwen3-TTS-12Hz-1.7B-CustomVoice"),
 )
 EOF
 
@@ -199,23 +196,6 @@ GHqwen31ComfyUI() {
     touch ~/AI/.GHqwen31ComfyUI.complete
 }
 
-show_model_guide() {
-    echo -e "\n\e[1;34m----------------------------------------------------------------------\e[0m"
-    echo -e "\e[1;32m  AI STUDIO MODEL PLACEMENT GUIDE (Civitai Reference) \e[0m"
-    echo -e "\e[1;34m----------------------------------------------------------------------\e[0m"
-    echo -e "  \e[1mFILE TYPE\e[0m          |  \e[1mEXTENSION\e[0m        |  \e[1mDIRECTORY PATH\e[0m"
-    echo -e "  -------------------|-------------------|----------------------------"
-    echo -e "  \e[33mCheckpoints\e[0m        |  .safetensors     |  ~/AI/models/checkpoints/"
-    echo -e "  \e[33mLoRAs\e[0m              |  .safetensors     |  ~/AI/models/loras/"
-    echo -e "  \e[33mVAEs\e[0m               |  .safetensors     |  ~/AI/models/vae/"
-    echo -e "  \e[33mControlNets\e[0m        |  .safetensors     |  ~/AI/models/controlnet/"
-    echo -e "  \e[33mEmbeddings\e[0m         |  .pt / .bin       |  ~/AI/models/embeddings/"
-    echo -e "  \e[33mUpscalers\e[0m          |  .pth / .bin      |  ~/AI/models/upscale_models/"
-    echo -e "  ----------------------------------------------------------------------"
-    echo -e "  \e[1mModel Source:\e[0m      https://civitai.com/models"
-    echo -e "\e[1;34m----------------------------------------------------------------------\e[0m\n"
-}
-
 HFqwen3Tokenizer() {
     # Source: https://huggingface.co/Qwen/Qwen3-TTS-Tokenizer-12Hz
     if [ -f ~/AI/.HFqwen3Tokenizer.complete ]; then
@@ -228,12 +208,11 @@ HFqwen3Tokenizer() {
 import os
 from huggingface_hub import snapshot_download
 
-base = os.path.expanduser("~/AI/models/qwen3_tts")
+base = os.path.expanduser("~/AI/ComfyUI/models/Qwen3-TTS")
 
 snapshot_download(
     repo_id="Qwen/Qwen3-TTS-Tokenizer-12Hz",
-    local_dir=os.path.join(base, "Qwen/Qwen3-TTS-Tokenizer-12Hz"),
-    local_dir_use_symlinks=False
+    local_dir=os.path.join(base, "Qwen3-TTS-Tokenizer-12Hz"),
 )
 EOF
 
@@ -258,6 +237,23 @@ ACEStep15() {
     uv sync
 
     touch ~/AI/.ACEStep15.installed
+}
+
+show_model_guide() {
+    echo -e "\n\e[1;34m----------------------------------------------------------------------\e[0m"
+    echo -e "\e[1;32m  AI STUDIO MODEL PLACEMENT GUIDE (Civitai Reference) \e[0m"
+    echo -e "\e[1;34m----------------------------------------------------------------------\e[0m"
+    echo -e "  \e[1mFILE TYPE\e[0m          |  \e[1mEXTENSION\e[0m        |  \e[1mDIRECTORY PATH\e[0m"
+    echo -e "  -------------------|-------------------|----------------------------"
+    echo -e "  \e[33mCheckpoints\e[0m        |  .safetensors     |  ~/AI/models/checkpoints/"
+    echo -e "  \e[33mLoRAs\e[0m              |  .safetensors     |  ~/AI/models/loras/"
+    echo -e "  \e[33mVAEs\e[0m               |  .safetensors     |  ~/AI/models/vae/"
+    echo -e "  \e[33mControlNets\e[0m        |  .safetensors     |  ~/AI/models/controlnet/"
+    echo -e "  \e[33mEmbeddings\e[0m         |  .pt / .bin       |  ~/AI/models/embeddings/"
+    echo -e "  \e[33mUpscalers\e[0m          |  .pth / .bin      |  ~/AI/models/upscale_models/"
+    echo -e "  ----------------------------------------------------------------------"
+    echo -e "  \e[1mModel Source:\e[0m      https://civitai.com/models"
+    echo -e "\e[1;34m----------------------------------------------------------------------\e[0m\n"
 }
 
 launch_menu() {
@@ -305,16 +301,16 @@ main () {
     configure_model_paths
 
     # GitHub first (UI code)
-#    GHqwen31ComfyUI
+    GHqwen31ComfyUI
 
     # Then the Tokenizer (Critical Dependency)
-#    HFqwen3Tokenizer
+    HFqwen3Tokenizer
 
     # Then the 1.7B Models
-#    HFqwen317bBase
-#    HFqwen317bVoiceDesign
-#    HFqwen317bCustomVoice
-#    ACEStep15
+    HFqwen317bBase
+    HFqwen317bVoiceDesign
+    HFqwen317bCustomVoice
+    ACEStep15
 
     # 2. Enter the directory and activate the environment for launch
     cd ~/AI/ComfyUI
@@ -329,7 +325,6 @@ main () {
     echo "Voice:    https://www.youtube.com/watch?v=eC8mZceIy5k"
 
     show_model_guide
-#    python main.py --enable-manager --cpu
     launch_menu
 
     #Command Line Options
@@ -344,3 +339,5 @@ main () {
 }
 
 main
+
+# 347
