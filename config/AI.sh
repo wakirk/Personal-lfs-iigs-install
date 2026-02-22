@@ -11,6 +11,9 @@ set -euo pipefail
 #    Custom Voice
 #
 #UI Interface  "Comfy UI"  (with repo for Quent3 control)
+host_software() {
+    sudo pacman -Sy --noconfirm sox git curl ffmpeg
+}
 
 install_ComfyUI() {
     # Check if the hidden marker file exists to skip installation
@@ -297,6 +300,7 @@ main () {
     # --- EXECUTION FLOW ---
 
     # 1. Run the install function (will skip if .installed exists)
+    host_software
     install_ComfyUI
     configure_model_paths
 
