@@ -12,7 +12,6 @@ set -euo pipefail
 #UI Interface  "Comfy UI"  (with repo for Quent3 control)
 host_software() {
     mkdir -p ~/AI
-    export PATH="$HOME/.local/bin:$PATH"
     if [ -f ~/AI/.host_software_done ]; then
         echo "Host software already installed, skipping..."
         return 0
@@ -372,4 +371,4 @@ main () {
 
 main
 
-# 349
+# 350
