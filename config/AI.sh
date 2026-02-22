@@ -101,8 +101,8 @@ comfyui:
     diffusers: diffusers/
     unet: unet/
 
-qwen-tts: ${MODEL_BASE_PATH}/qwen3_tts
 EOF
+#qwen-tts: ${MODEL_BASE_PATH}/qwen3_tts
 
     # Create any missing model subdirectories
     mkdir -p ~/AI/models/{vae,loras,upscale_models,controlnet,embeddings,clip,clip_vision,style_models,diffusers,unet}
@@ -305,16 +305,16 @@ main () {
     configure_model_paths
 
     # GitHub first (UI code)
-    GHqwen31ComfyUI
+#    GHqwen31ComfyUI
 
     # Then the Tokenizer (Critical Dependency)
-    HFqwen3Tokenizer
+#    HFqwen3Tokenizer
 
     # Then the 1.7B Models
-    HFqwen317bBase
-    HFqwen317bVoiceDesign
-    HFqwen317bCustomVoice
-    ACEStep15
+#    HFqwen317bBase
+#    HFqwen317bVoiceDesign
+#    HFqwen317bCustomVoice
+#    ACEStep15
 
     # 2. Enter the directory and activate the environment for launch
     cd ~/AI/ComfyUI
