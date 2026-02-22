@@ -310,7 +310,6 @@ launch_menu() {
                 echo -e "\e[1;32m>>> Launching ACE-Step 1.5...\e[0m"
                 deactivate 2>/dev/null || true
                 cd ~/AI/ACE-Step-1.5
-                source venv/bin/activate
                 uv run acestep || true
                 echo -e "\e[1;33m>>> ACE-Step stopped. Returning to menu...\e[0m"
                 ;;
@@ -371,4 +370,4 @@ main () {
 
 main
 
-# 350
+# 349
