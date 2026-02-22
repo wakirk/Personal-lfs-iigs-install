@@ -118,7 +118,7 @@ HFqwen317bBase() {
     fi
 
     source ~/AI/ComfyUI/venv/bin/activate
-    pip install -U huggingface_hub
+#    pip install -U huggingface_hub
 
     python - << 'EOF'
 import os
