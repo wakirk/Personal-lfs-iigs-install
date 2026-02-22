@@ -266,6 +266,8 @@ show_model_guide() {
 }
 
 launch_menu() {
+    trap '' INT  # Protect the menu loop from Ctrl+C
+
     while true; do
         echo -e "\n\e[1;34m======================================\e[0m"
         echo -e "\e[1;32m       AI STUDIO LAUNCHER             \e[0m"
@@ -279,19 +281,26 @@ launch_menu() {
         case "$choice" in
             1)
                 echo -e "\e[1;32m>>> Launching ComfyUI...\e[0m"
+                trap - INT  # Allow Ctrl+C to reach the server
                 cd ~/AI/ComfyUI
                 source venv/bin/activate
-                python main.py --enable-manager --cpu || true
+                python main.py --enable-manager --cpu
+                deactivate 2>/dev/null
+                trap '' INT  # Re-protect the menu
                 echo -e "\e[1;33m>>> ComfyUI stopped. Returning to menu...\e[0m"
                 ;;
             2)
                 echo -e "\e[1;32m>>> Launching ACE-Step 1.5...\e[0m"
+                deactivate 2>/dev/null
+                trap - INT
                 cd ~/AI/ACE-Step-1.5
-                uv run acestep || true
+                uv run acestep
+                trap '' INT
                 echo -e "\e[1;33m>>> ACE-Step stopped. Returning to menu...\e[0m"
                 ;;
             x|X)
                 echo -e "\e[1;32m>>> Goodbye!\e[0m"
+                trap - INT
                 exit 0
                 ;;
             *)
@@ -322,11 +331,7 @@ main () {
     HFqwen317bCustomVoice
     ACEStep15
 
-    # 2. Enter the directory and activate the environment for launch
-    cd ~/AI/ComfyUI
-    source venv/bin/activate
-
-    # 3. Launch ComfyUI with the Manager enabled
+    # 2. Launch ComfyUI with the Manager enabled
     # Note: Use --cpu flag here if the VM crashes on GPU detection
     # python main.py --enable-manager     # Will run Nvidia.
     echo "Model source site:    https://civitai.com/models"
@@ -350,4 +355,4 @@ main () {
 
 main
 
-# 347
+# 348
