@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -euo pipefail
-
 #set -x
 
 #1.7B Model
@@ -12,6 +11,8 @@ set -euo pipefail
 #
 #UI Interface  "Comfy UI"  (with repo for Quent3 control)
 host_software() {
+    mkdir -p ~/AI
+    export PATH="$HOME/.local/bin:$PATH"
     if [ -f ~/AI/.host_software_done ]; then
         echo "Host software already installed, skipping..."
         return 0
@@ -234,6 +235,9 @@ ACEStep15() {
         return
     fi
 
+    # Deactivate ComfyUI's venv so its uv doesn't mask the check
+    deactivate 2>/dev/null || true
+
     # Ensure uv is installed
     if ! command -v uv &> /dev/null; then
         curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -246,6 +250,24 @@ ACEStep15() {
     uv sync
 
     touch ~/AI/.ACEStep15.installed
+}
+
+configFiles() {
+
+    if [ -f ~/AI/.configFiles.done ]; then
+        return 0
+    fi
+
+    cat > ~/AI/ACE-Step-1.5/.env <<EOF
+
+ACESTEP_CONFIG_PATH=acestep-v15-turbo
+ACESTEP_LM_MODEL_PATH=acestep-5Hz-lm-1.7B
+ACESTEP_DEVICE=cpu
+ACESTEP_LM_BACKEND=pt
+ACESTEP_INIT_LLM=true
+
+EOF
+    touch ~/AI/.configFiles.done
 }
 
 show_model_guide() {
@@ -266,8 +288,6 @@ show_model_guide() {
 }
 
 launch_menu() {
-    trap '' INT  # Protect the menu loop from Ctrl+C
-
     while true; do
         echo -e "\n\e[1;34m======================================\e[0m"
         echo -e "\e[1;32m       AI STUDIO LAUNCHER             \e[0m"
@@ -281,26 +301,22 @@ launch_menu() {
         case "$choice" in
             1)
                 echo -e "\e[1;32m>>> Launching ComfyUI...\e[0m"
-                trap - INT  # Allow Ctrl+C to reach the server
+                deactivate 2>/dev/null || true
                 cd ~/AI/ComfyUI
                 source venv/bin/activate
-                python main.py --enable-manager --cpu
-                deactivate 2>/dev/null
-                trap '' INT  # Re-protect the menu
+                python main.py --enable-manager --cpu || true
                 echo -e "\e[1;33m>>> ComfyUI stopped. Returning to menu...\e[0m"
                 ;;
             2)
                 echo -e "\e[1;32m>>> Launching ACE-Step 1.5...\e[0m"
-                deactivate 2>/dev/null
-                trap - INT
+                deactivate 2>/dev/null || true
                 cd ~/AI/ACE-Step-1.5
-                uv run acestep
-                trap '' INT
+                source venv/bin/activate
+                uv run acestep || true
                 echo -e "\e[1;33m>>> ACE-Step stopped. Returning to menu...\e[0m"
                 ;;
             x|X)
                 echo -e "\e[1;32m>>> Goodbye!\e[0m"
-                trap - INT
                 exit 0
                 ;;
             *)
@@ -330,6 +346,7 @@ main () {
     HFqwen317bVoiceDesign
     HFqwen317bCustomVoice
     ACEStep15
+    configFiles
 
     # 2. Launch ComfyUI with the Manager enabled
     # Note: Use --cpu flag here if the VM crashes on GPU detection
