@@ -117,7 +117,7 @@ EOF
     mkdir -p ~/AI/models/{vae,loras,upscale_models,controlnet,embeddings,clip,clip_vision,style_models,diffusers,unet}
 
     wget -P ~/AI/ComfyUI/models/checkpoints/ https://huggingface.co/Comfy-Org/stable-diffusion-v1-5-archive/resolve/main/v1-5-pruned-emaonly-fp16.safetensors
-    
+
     touch ~/AI/.model_paths_configured
     echo ">>> Model paths configured successfully."
 }
@@ -372,4 +372,4 @@ main () {
 
 main
 
-# 351
+# 350
