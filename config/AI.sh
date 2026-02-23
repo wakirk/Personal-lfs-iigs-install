@@ -8,7 +8,7 @@ set -euo pipefail
 #    Base
 #    Voice Design
 #    Custom Voice
-#
+
 #UI Interface  "Comfy UI"  (with repo for Quent3 control)
 host_software() {
     mkdir -p ~/AI
@@ -19,6 +19,36 @@ host_software() {
     sudo pacman -Sy --noconfirm sox git curl ffmpeg
     touch ~/AI/.host_software_done
     echo "Host software installed."
+}
+
+select_gpu() {
+    # If already selected, just load it
+    if [ -f ~/AI/.gpu_mode ]; then
+        GPU_MODE=$(cat ~/AI/.gpu_mode)
+        echo ">>> GPU mode already set: $GPU_MODE"
+        return
+    fi
+
+    echo -e "\n\e[1;34m======================================\e[0m"
+    echo -e "\e[1;32m       GPU SELECTION                  \e[0m"
+    echo -e "\e[1;34m======================================\e[0m"
+    echo -e "  \e[1m1\e[0m)  NVIDIA  (CUDA 13.0)"
+    echo -e "  \e[1m2\e[0m)  AMD     (ROCm 6.2)"
+    echo -e "  \e[1m3\e[0m)  CPU     (No GPU / VM testing)"
+    echo -e "\e[1;34m======================================\e[0m"
+
+    while true; do
+        read -rp "  Choice: " gpu_choice
+        case "$gpu_choice" in
+            1) GPU_MODE="nvidia" ; break ;;
+            2) GPU_MODE="amd"    ; break ;;
+            3) GPU_MODE="cpu"    ; break ;;
+            *) echo -e "\e[1;31m>>> Invalid choice. Try again.\e[0m" ;;
+        esac
+    done
+
+    echo "$GPU_MODE" > ~/AI/.gpu_mode
+    echo ">>> GPU mode set: $GPU_MODE"
 }
 
 install_ComfyUI() {
@@ -48,19 +78,29 @@ install_ComfyUI() {
     python -m venv venv
     source venv/bin/activate
     pip install -U pip
-
-    # INSTALL STEP 1: PYTORCH (CUDA 13.0 - NVIDIA GPU SUPPORT)
-    # - Installs torch, torchvision, torchaudio with CUDA 13.0 bindings
-    # - In VM: This will install but won't use GPU (testing install process only)
-    # - On bare metal: Requires NVIDIA drivers compatible with CUDA 13.0+
-
-    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
-
-    # INSTALL STEP 1: PYTORCH (ROCm 6.2 - AMD GPU SUPPORT)
-    # - Installs torch with AMD ROCm bindings
-    # - This is what allows CachyOS to use your AMD GPU for AI
-    #pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.2
-
+    
+    # INSTALL STEP 1: PYTORCH - GPU-SPECIFIC
+    case "$GPU_MODE" in
+        nvidia)  # this has been used.
+            # INSTALL STEP 1: PYTORCH (CUDA 13.0 - NVIDIA GPU SUPPORT)
+            # - Installs torch, torchvision, torchaudio with CUDA 13.0 bindings
+            # - In VM: This will install but won't use GPU (testing install process only)
+            # - On bare metal: Requires NVIDIA drivers compatible with CUDA 13.0+
+            # pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+            pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+            ;;
+        amd)  # never (been/can't) test(ed) 
+            # INSTALL STEP 1: PYTORCH (ROCm 6.2 - AMD GPU SUPPORT)
+            # - Installs torch with AMD ROCm bindings
+            # - This is what allows CachyOS to use your AMD GPU for AI
+            #pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.2
+            pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.2
+            ;;
+        cpu)    # this is untested.
+            pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+            ;;
+    esac
+    
     # INSTALL STEP 2: COMFYUI CORE DEPENDENCIES
     # - Installs all base requirements for ComfyUI engine
     # - Includes: diffusers, transformers, accelerate, safetensors, etc.
@@ -71,7 +111,6 @@ install_ComfyUI() {
     # - Installs extension manager for custom nodes (Voice, Music, Image generators)
     # - Allows one-click install of additional AI systems from the UI
     # - Required to enable manager with: python main.py --enable-manager
-
     pip install -r manager_requirements.txt
 
      # Create the marker file so we don't re-install next time
@@ -254,16 +293,22 @@ ACEStep15() {
 }
 
 configFiles() {
-
     if [ -f ~/AI/.configFiles.done ]; then
         return 0
+    fi
+
+    GPU_MODE=$(cat ~/AI/.gpu_mode)
+    if [ "$GPU_MODE" = "cpu" ]; then
+        ACESTEP_DEVICE="cpu"
+    else
+        ACESTEP_DEVICE="cuda"
     fi
 
     cat > ~/AI/ACE-Step-1.5/.env <<EOF
 
 ACESTEP_CONFIG_PATH=acestep-v15-turbo
 ACESTEP_LM_MODEL_PATH=acestep-5Hz-lm-1.7B
-ACESTEP_DEVICE=cpu
+ACESTEP_DEVICE=${ACESTEP_DEVICE}
 ACESTEP_LM_BACKEND=pt
 ACESTEP_INIT_LLM=true
 
@@ -305,9 +350,14 @@ launch_menu() {
                 deactivate 2>/dev/null || true
                 cd ~/AI/ComfyUI
                 source venv/bin/activate
-                python main.py --enable-manager --cpu || true
+                GPU_MODE=$(cat ~/AI/.gpu_mode)
+                if [ "$GPU_MODE" = "cpu" ]; then
+                    python main.py --enable-manager --cpu || true
+                else
+                    python main.py --enable-manager || true
+                fi
                 echo -e "\e[1;33m>>> ComfyUI stopped. Returning to menu...\e[0m"
-                ;;
+                ;;               
             2)
                 echo -e "\e[1;32m>>> Launching ACE-Step 1.5...\e[0m"
                 deactivate 2>/dev/null || true
@@ -332,6 +382,7 @@ main () {
 
     # 1. Run the install function (will skip if .installed exists)
     host_software
+    select_gpu          # <-- add before install_ComfyUI    
     install_ComfyUI
     configure_model_paths
 
@@ -372,4 +423,4 @@ main () {
 
 main
 
-# 350
+# 360
