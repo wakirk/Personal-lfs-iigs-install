@@ -87,7 +87,11 @@ install_ComfyUI() {
             # - In VM: This will install but won't use GPU (testing install process only)
             # - On bare metal: Requires NVIDIA drivers compatible with CUDA 13.0+
             # pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+            sudo pacman -S --noconfirm cuda
             pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
+            export CUDA_HOME=/opt/cuda
+            echo "This step takes time, let it cook...."
+            pip install flash-attn --no-build-isolation
             ;;
         amd)  # never (been/can't) test(ed) 
             # INSTALL STEP 1: PYTORCH (ROCm 6.2 - AMD GPU SUPPORT)
