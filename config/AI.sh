@@ -315,8 +315,13 @@ ACESTEP_LM_MODEL_PATH=acestep-5Hz-lm-1.7B
 ACESTEP_DEVICE=${ACESTEP_DEVICE}
 ACESTEP_LM_BACKEND=pt
 ACESTEP_INIT_LLM=true
+ACESTEP_DISABLE_CUDA_GRAPHS=1
 
 EOF
+
+    # Fix ACE-Step CUDA graphs crash on NVIDIA (upstream bug)
+    sed -i 's/enforce_eager_for_vllm = bool(is_rocm)/enforce_eager_for_vllm = True/' ~/AI/ACE-Step-1.5/acestep/llm_inference.py
+
     touch ~/AI/.configFiles.done
 }
 
