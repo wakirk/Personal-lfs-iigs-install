@@ -78,7 +78,7 @@ install_ComfyUI() {
     python -m venv venv
     source venv/bin/activate
     pip install -U pip
-    
+
     # INSTALL STEP 1: PYTORCH - GPU-SPECIFIC
     case "$GPU_MODE" in
         nvidia)  # this has been used.
@@ -87,13 +87,9 @@ install_ComfyUI() {
             # - In VM: This will install but won't use GPU (testing install process only)
             # - On bare metal: Requires NVIDIA drivers compatible with CUDA 13.0+
             # pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
-            sudo pacman -S --noconfirm cuda
             pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
-            export CUDA_HOME=/opt/cuda
-            echo "This step takes time, let it cook...."
-            pip install flash-attn --no-build-isolation
             ;;
-        amd)  # never (been/can't) test(ed) 
+        amd)  # never (been/can't) test(ed)
             # INSTALL STEP 1: PYTORCH (ROCm 6.2 - AMD GPU SUPPORT)
             # - Installs torch with AMD ROCm bindings
             # - This is what allows CachyOS to use your AMD GPU for AI
@@ -104,7 +100,7 @@ install_ComfyUI() {
             pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
             ;;
     esac
-    
+
     # INSTALL STEP 2: COMFYUI CORE DEPENDENCIES
     # - Installs all base requirements for ComfyUI engine
     # - Includes: diffusers, transformers, accelerate, safetensors, etc.
@@ -315,13 +311,8 @@ ACESTEP_LM_MODEL_PATH=acestep-5Hz-lm-1.7B
 ACESTEP_DEVICE=${ACESTEP_DEVICE}
 ACESTEP_LM_BACKEND=pt
 ACESTEP_INIT_LLM=true
-ACESTEP_DISABLE_CUDA_GRAPHS=1
 
 EOF
-
-    # Fix ACE-Step CUDA graphs crash on NVIDIA (upstream bug)
-    sed -i 's/enforce_eager_for_vllm = bool(is_rocm)/enforce_eager_for_vllm = True/' ~/AI/ACE-Step-1.5/acestep/llm_inference.py
-
     touch ~/AI/.configFiles.done
 }
 
@@ -360,18 +351,20 @@ launch_menu() {
                 cd ~/AI/ComfyUI
                 source venv/bin/activate
                 GPU_MODE=$(cat ~/AI/.gpu_mode)
+                echo "GPU MODE $GPU_MODE"  # added for this.
                 if [ "$GPU_MODE" = "cpu" ]; then
                     python main.py --enable-manager --cpu || true
                 else
-                    python main.py --enable-manager || true
+                    python main.py --enable-manager --use-flash-attention || true #  --use-sage-attention
                 fi
                 echo -e "\e[1;33m>>> ComfyUI stopped. Returning to menu...\e[0m"
-                ;;               
+                ;;
             2)
                 echo -e "\e[1;32m>>> Launching ACE-Step 1.5...\e[0m"
                 deactivate 2>/dev/null || true
                 cd ~/AI/ACE-Step-1.5
-                uv run acestep || true
+                ~/.local/bin/uv run acestep || true
+#               uv run acestep || true
                 echo -e "\e[1;33m>>> ACE-Step stopped. Returning to menu...\e[0m"
                 ;;
             x|X)
@@ -391,7 +384,7 @@ main () {
 
     # 1. Run the install function (will skip if .installed exists)
     host_software
-    select_gpu          # <-- add before install_ComfyUI    
+    select_gpu          # <-- add before install_ComfyUI
     install_ComfyUI
     configure_model_paths
 
