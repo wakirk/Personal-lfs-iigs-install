@@ -51,7 +51,6 @@
 # 11	install_models	            Creates model directory structure
 # 12	install_verify	            Smoke test — imports everything, checks CUDA
 
-
 set -euo pipefail
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -135,7 +134,7 @@ install_cuda_toolkit() {
 
     chmod +x "$runfile"
     info "Installing CUDA Toolkit (no root, toolkit only)..."
-    "$runfile" --silent --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
+    "$runfile" --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
         || die "CUDA Toolkit installation failed"
 
     # Verify nvcc exists
@@ -166,18 +165,18 @@ install_python() {
     info "Configuring..."
     cd "$srcdir"
     ./configure --prefix="$PYTHON_DIR" --enable-optimizations --with-lto \
-        --with-ensurepip=install 2>&1 | tail -5
+        --with-ensurepip=install
 
     info "Building (this takes a few minutes)..."
-    make -j"$(nproc)" 2>&1 | tail -3
-    make install 2>&1 | tail -3
+    make -j"$(nproc)"
+    make install
 
     # Verify
     [[ -x "$PYTHON_BIN" ]] || die "Python binary not found after install"
     info "Python version: $($PYTHON_BIN --version)"
 
     # Upgrade pip
-    "$PYTHON_BIN" -m pip install --upgrade pip 2>&1 | tail -1
+    "$PYTHON_BIN" -m pip install --upgrade pip
 
     drop_tick "02_python"
 }
@@ -437,3 +436,4 @@ main() {
 }
 
 main "$@"
+
