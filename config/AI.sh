@@ -87,8 +87,8 @@ ok()    { echo -e "${GREEN}[OK]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
 die()   { echo -e "${RED}[FATAL]${NC} $*"; exit 1; }
 
-tick_exists() { [[ -f "$TICKS_DIR/\$1" ]]; }
-drop_tick()   { mkdir -p "$TICKS_DIR" && touch "$TICKS_DIR/\$1" && ok "Tick: \$1"; }
+tick_exists() { [[ -f "$TICKS_DIR/$1" ]]; }
+drop_tick()   { mkdir -p "$TICKS_DIR" && touch "$TICKS_DIR/$1" && ok "Tick: $1"; }
 
 # ─── Nuke ────────────────────────────────────────────────────────────────────
 nuke() {
@@ -106,11 +106,15 @@ nuke() {
     read -rp "Type YES to confirm: " confirm
     [[ "$confirm" == "YES" ]] || { info "Nuke cancelled."; exit 0; }
 
+    # Copy ourselves out before we delete our own home
+    local self_script="$(realpath "$0")"
+    local tmp_dir="$(mktemp -d)"
+    cp "$self_script" "$tmp_dir/AI.sh"
+
     # Move workspaces out temporarily
     local tmp_ws=""
     if [[ -d "$WORKSPACES_DIR" ]]; then
-        tmp_ws="$(mktemp -d)"
-        mv "$WORKSPACES_DIR" "$tmp_ws/workspaces"
+        mv "$WORKSPACES_DIR" "$tmp_dir/workspaces"
     fi
 
     # Wipe everything
@@ -118,10 +122,14 @@ nuke() {
     mkdir -p "$AI_HOME"
 
     # Restore workspaces
-    if [[ -n "$tmp_ws" ]]; then
-        mv "$tmp_ws/workspaces" "$WORKSPACES_DIR"
-        rmdir "$tmp_ws"
+    if [[ -d "$tmp_dir/workspaces" ]]; then
+        mv "$tmp_dir/workspaces" "$WORKSPACES_DIR"
     fi
+
+    # Restore ourselves
+    cp "$tmp_dir/AI.sh" "$AI_HOME/AI.sh"
+    chmod +x "$AI_HOME/AI.sh"
+    rm -rf "$tmp_dir"
 
     ok "Nuke complete. Run AI.sh again to reinstall."
     exit 0
