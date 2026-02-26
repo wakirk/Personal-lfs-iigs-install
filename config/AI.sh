@@ -1,10 +1,12 @@
 ~/AI/
-├── cuda/                 # CUDA Toolkit 13.0 (nvcc, headers, libs)
+├── python/               # Standalone Python 3.13 (or symlink to system)
 ├── ComfyUI/
-│   ├── .venv/            # Python venv — PyTorch cu130, all deps
-│   ├── models/
+│   ├── .venv/            # Python venv — PyTorch, all deps live here
+│   ├── models/           # Checkpoints, LoRAs, etc.
 │   ├── custom_nodes/
 │   └── ...
-├── workspaces/           # Survives --nuke
-└── AI.sh                 # Installer/launcher
-
+├── ACE-Step-1.5/         # (later, ACE.sh territory)
+│   └── .venv/            # Its own venv
+├── AI.sh                 # ComfyUI installer/launcher
+├── ACE.sh                # ACE installer/launcher (later)
+└── workspaces/           # Your saved work (survives --nuke)
