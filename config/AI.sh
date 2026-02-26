@@ -51,6 +51,7 @@
 # 11	install_models	            Creates model directory structure
 # 12	install_verify	            Smoke test — imports everything, checks CUDA
 
+
 set -euo pipefail
 
 # ─── Configuration ───────────────────────────────────────────────────────────
@@ -92,44 +93,28 @@ drop_tick()   { mkdir -p "$TICKS_DIR" && touch "$TICKS_DIR/$1" && ok "Tick: $1";
 
 # ─── Nuke ────────────────────────────────────────────────────────────────────
 nuke() {
-    warn "NUKE MODE: Wiping everything under $AI_HOME EXCEPT workspaces/"
+    warn "NUKE MODE: Removing only what AI.sh created"
     echo ""
     echo "This will delete:"
-    echo "  - $CUDA_DIR"
-    echo "  - $PYTHON_DIR"
-    echo "  - $COMFYUI_DIR"
-    echo "  - $TICKS_DIR"
-    echo "  - All other files/dirs under $AI_HOME"
+    echo "  - $CUDA_DIR          (CUDA Toolkit)"
+    echo "  - $PYTHON_DIR        (Python)"
+    echo "  - $COMFYUI_DIR       (ComfyUI + venv)"
+    echo "  - $AI_HOME/downloads (downloaded archives)"
+    echo "  - $TICKS_DIR         (tick files)"
     echo ""
-    echo "PRESERVED: $WORKSPACES_DIR"
+    echo "PRESERVED:"
+    echo "  - $WORKSPACES_DIR"
+    echo "  - $AI_HOME/AI.sh     (this script)"
     echo ""
     read -rp "Type YES to confirm: " confirm
     [[ "$confirm" == "YES" ]] || { info "Nuke cancelled."; exit 0; }
 
-    # Copy ourselves out before we delete our own home
-    local self_script="$(realpath "$0")"
-    local tmp_dir="$(mktemp -d)"
-    cp "$self_script" "$tmp_dir/AI.sh"
-
-    # Move workspaces out temporarily
-    local tmp_ws=""
-    if [[ -d "$WORKSPACES_DIR" ]]; then
-        mv "$WORKSPACES_DIR" "$tmp_dir/workspaces"
-    fi
-
-    # Wipe everything
-    rm -rf "$AI_HOME"
-    mkdir -p "$AI_HOME"
-
-    # Restore workspaces
-    if [[ -d "$tmp_dir/workspaces" ]]; then
-        mv "$tmp_dir/workspaces" "$WORKSPACES_DIR"
-    fi
-
-    # Restore ourselves
-    cp "$tmp_dir/AI.sh" "$AI_HOME/AI.sh"
-    chmod +x "$AI_HOME/AI.sh"
-    rm -rf "$tmp_dir"
+    # Only remove what we know we created
+    rm -rf "$CUDA_DIR"
+    rm -rf "$PYTHON_DIR"
+    rm -rf "$COMFYUI_DIR"
+    rm -rf "$AI_HOME/downloads"
+    rm -rf "$TICKS_DIR"
 
     ok "Nuke complete. Run AI.sh again to reinstall."
     exit 0
