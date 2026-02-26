@@ -36,6 +36,21 @@
 # ├── ACE.sh                # ACE installer/launcher (later)
 # └── workspaces/           # Your saved work (survives --nuke)
 
+# 12 functions, called in sequence from main():
+# Step	Function	                What it does
+# 01	install_cuda_toolkit    	Downloads & installs CUDA 13.0 to ~/AI/cuda/ (no root)
+# 02	install_python	            Builds Python 3.13.2 from source to ~/AI/python/
+# 03	install_comfyui_clone    	Clones ComfyUI repo
+# 04	install_comfyui_venv	    Creates venv, wires CUDA_HOME into activation
+# 05	install_pytorch	Installs    PyTorch cu130 via pip
+# 06	install_comfyui_deps	    Installs ComfyUI's requirements.txt
+# 07	install_flash_attn	        Compiles flash-attn against our CUDA
+# 08	install_sageattention	    Compiles SageAttention against our CUDA
+# 09	install_triton	            Installs Triton
+# 10	install_custom_nodes	    Clones ComfyUI-Manager + installs node deps
+# 11	install_models	            Creates model directory structure
+# 12	install_verify	            Smoke test — imports everything, checks CUDA
+
 set -euo pipefail
 
 # ─── Configuration ───────────────────────────────────────────────────────────
