@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 1.05
+# Version 1.06
 
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
@@ -62,8 +62,8 @@ TICKS_DIR="$AI_HOME/.ticks"
 WORKSPACES_DIR="$AI_HOME/workspaces"
 
 CUDA_VERSION="13.0"
-CUDA_RUNFILE_URL="https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda_13.0.0_575.51.03_linux.run"
-CUDA_RUNFILE="cuda_13.0.0_575.51.03_linux.run"
+CUDA_RUNFILE_URL="https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda_13.0.0_580.65.06_linux.run"
+CUDA_RUNFILE="cuda_13.0.0_580.65.06_linux.run"
 CUDA_DIR="$AI_HOME/cuda"
 
 PYTHON_VERSION="3.13.2"
@@ -443,4 +443,3 @@ main() {
 }
 
 main "$@"
-
