@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 1.11"
+Version="Version 1.12"
 echo "$Version"
 
 ###############################################################################
@@ -62,9 +62,9 @@ AI_HOME="$HOME/AI"
 TICKS_DIR="$AI_HOME/.ticks"
 WORKSPACES_DIR="$AI_HOME/workspaces"
 
-CUDA_VERSION="13.0"
-CUDA_RUNFILE_URL="https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda_13.0.0_580.65.06_linux.run"
-CUDA_RUNFILE="cuda_13.0.0_580.65.06_linux.run"
+CUDA_VERSION="12.8"
+CUDA_RUNFILE_URL="https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_570.86.10_linux.run"
+CUDA_RUNFILE="cuda_12.8.0_570.86.10_linux.run"
 CUDA_DIR="$AI_HOME/cuda"
 
 PYTHON_VERSION="3.13.2"
@@ -76,7 +76,7 @@ COMFYUI_DIR="$AI_HOME/ComfyUI"
 COMFYUI_REPO="https://github.com/comfyanonymous/ComfyUI.git"
 COMFYUI_VENV="$COMFYUI_DIR/.venv"
 
-PYTORCH_INDEX="https://download.pytorch.org/whl/cu130"
+PYTORCH_INDEX="https://download.pytorch.org/whl/cu128"
 
 # ─── Colors ──────────────────────────────────────────────────────────────────
 RED='\033[0;31m'
@@ -263,7 +263,7 @@ install_flash_attn() {
     export MAX_JOBS=4
     # Build deps needed for flash-attn compilation
     pip install ninja packaging wheel setuptools || die "Failed to install flash-attn build deps"
- 
+
     pip install flash-attn --no-build-isolation || die "Failed to install flash-attn"
 
     python3 -c "import flash_attn; print(f'flash-attn {flash_attn.__version__}')" \
@@ -271,6 +271,7 @@ install_flash_attn() {
 
     drop_tick "07_flash_attn"
 }
+
 
 # ─── Step 08: SageAttention ─────────────────────────────────────────────────
 install_sageattention() {
