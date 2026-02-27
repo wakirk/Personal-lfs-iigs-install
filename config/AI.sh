@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Version 1.10
+Version = "Version 1.11"
+echo "$Version"
 
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
