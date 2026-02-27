@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 1.13"
+Version="Version 2.0"
 echo "$Version"
 
 ###############################################################################
@@ -14,46 +14,59 @@ echo "$Version"
 ###############################################################################
 
 # ~/AI/
-# ├── cuda/                 # CUDA Toolkit 13.0 (nvcc, headers, libs)
-# ├── python/               # Standalone Python 3.13 (or symlink to system)
+# ├── cuda/                 # CUDA Toolkit 12.8 (nvcc, headers, libs)
+# ├── python/               # Standalone Python 3.13.2
 # ├── ComfyUI/
-# │   ├── .venv/            # Python venv — PyTorch, all deps live here
+# │   ├── .venv/            # Python venv — PyTorch 2.9.1 cu128, all deps
 # │   ├── models/           # Checkpoints, LoRAs, etc.
 # │   ├── custom_nodes/
 # │   └── ...
+# ├── ComfyUI/qwen3-tts-env/  # Isolated venv for Qwen3-TTS (transformers 4.57.3)
 # ├── .ticks/
-# │   ├── 01_cuda_toolkit        # CUDA 13.0 installed to ~/AI/cuda/
-# │   ├── 02_python              # Python 3.13 installed to ~/AI/python/
-# │   ├── 03_comfyui_clone       # ComfyUI repo cloned
+# │   ├── 01_cuda_toolkit        # CUDA 12.8 installed to ~/AI/cuda/
+# │   ├── 02_python              # Python 3.13.2 installed to ~/AI/python/
+# │   ├── 03_comfyui_clone       # ComfyUI repo cloned & pinned to v0.15.1
 # │   ├── 04_comfyui_venv        # venv created with CUDA_HOME wired up
-# │   ├── 05_pytorch             # PyTorch cu130 installed in venv
+# │   ├── 05_pytorch             # PyTorch 2.9.1 cu128 installed in venv
 # │   ├── 06_comfyui_deps        # ComfyUI requirements.txt installed
-# │   ├── 07_flash_attn          # flash-attn compiled & installed
-# │   ├── 08_sageattention       # SageAttention compiled & installed
-# │   ├── 09_triton              # Triton installed
-# │   ├── 10_custom_nodes        # Custom nodes installed
-# │   ├── 11_models              # Models downloaded/linked
-# │   └── 12_verified            # Smoke test passed
+# │   ├── 07_aifc_sunau          # standard-aifc 3.13.0 + standard-sunau 3.13.0
+# │   ├── 08_llvmlite            # llvmlite 0.46.0
+# │   ├── 09_numba               # numba 0.64.0
+# │   ├── 10_librosa             # librosa 0.11.0
+# │   ├── 11_soxr                # soxr 1.0.0
+# │   ├── 12_flash_attn          # flash-attn 2.8.3 (prebuilt wheel)
+# │   ├── 13_comfyui_app         # ComfyUI 0.15.1 verified
+# │   ├── 14_comfy_env           # comfy-env installed
+# │   ├── 15_transformers        # transformers (ComfyUI default)
+# │   ├── 16_transformers_qwen   # transformers 4.57.3 (Qwen3-TTS isolated)
+# │   ├── 17_models              # Model directory structure created
+# │   └── 18_verified            # Full smoke test passed
 # ├── ACE-Step-1.5/         # (later, ACE.sh territory)
 # │   └── .venv/            # Its own venv
 # ├── AI.sh                 # ComfyUI installer/launcher
 # ├── ACE.sh                # ACE installer/launcher (later)
 # └── workspaces/           # Your saved work (survives --nuke)
 
-# 12 functions, called in sequence from main():
-# Step	Function	                What it does
-# 01	install_cuda_toolkit    	Downloads & installs CUDA 13.0 to ~/AI/cuda/ (no root)
-# 02	install_python	            Builds Python 3.13.2 from source to ~/AI/python/
-# 03	install_comfyui_clone    	Clones ComfyUI repo
-# 04	install_comfyui_venv	    Creates venv, wires CUDA_HOME into activation
-# 05	install_pytorch	Installs    PyTorch cu130 via pip
-# 06	install_comfyui_deps	    Installs ComfyUI's requirements.txt
-# 07	install_flash_attn	        Compiles flash-attn against our CUDA
-# 08	install_sageattention	    Compiles SageAttention against our CUDA
-# 09	install_triton	            Installs Triton
-# 10	install_custom_nodes	    Clones ComfyUI-Manager + installs node deps
-# 11	install_models	            Creates model directory structure
-# 12	install_verify	            Smoke test — imports everything, checks CUDA
+# 18 functions, called in sequence from main():
+# Step  Function                    What it does
+# 01    install_cuda_toolkit        Downloads & installs CUDA 12.8 to ~/AI/cuda/ (no root)
+# 02    install_python              Builds Python 3.13.2 from source to ~/AI/python/
+# 03    install_comfyui_clone       Clones ComfyUI repo, pins to v0.15.1
+# 04    install_comfyui_venv        Creates venv, wires CUDA_HOME into activation
+# 05    install_pytorch             Installs PyTorch 2.9.1 cu128 via pip
+# 06    install_comfyui_deps        Installs ComfyUI's requirements.txt
+# 07    install_aifc_sunau          Installs standard-aifc 3.13.0 + standard-sunau 3.13.0
+# 08    install_llvmlite            Installs llvmlite 0.46.0
+# 09    install_numba               Installs numba 0.64.0
+# 10    install_librosa             Installs librosa 0.11.0
+# 11    install_soxr                Installs soxr 1.0.0
+# 12    install_flash_attn          Installs flash-attn 2.8.3 (prebuilt wheel)
+# 13    install_comfyui_app         Verifies ComfyUI 0.15.1 is ready
+# 14    install_comfy_env           Installs comfy-env
+# 15    install_transformers        Verifies transformers (ComfyUI default from deps)
+# 16    install_transformers_qwen   Installs transformers 4.57.3 in isolated Qwen3-TTS venv
+# 17    install_models              Creates model directory structure
+# 18    install_verify              Full smoke test — imports everything, checks CUDA
 
 set -euo pipefail
 
@@ -74,7 +87,10 @@ PYTHON_BIN="$PYTHON_DIR/bin/python3"
 
 COMFYUI_DIR="$AI_HOME/ComfyUI"
 COMFYUI_REPO="https://github.com/comfyanonymous/ComfyUI.git"
+COMFYUI_TAG="v0.15.1"
 COMFYUI_VENV="$COMFYUI_DIR/.venv"
+
+QWEN_VENV="$COMFYUI_DIR/qwen3-tts-env"
 
 PYTORCH_INDEX="https://download.pytorch.org/whl/cu128"
 
@@ -101,7 +117,7 @@ nuke() {
     echo "This will delete:"
     echo "  - $CUDA_DIR          (CUDA Toolkit)"
     echo "  - $PYTHON_DIR        (Python)"
-    echo "  - $COMFYUI_DIR       (ComfyUI + venv)"
+    echo "  - $COMFYUI_DIR       (ComfyUI + venv + Qwen3-TTS venv)"
     echo "  - $AI_HOME/downloads (downloaded archives)"
     echo "  - $TICKS_DIR         (tick files)"
     echo ""
@@ -138,7 +154,7 @@ install_cuda_toolkit() {
 
     chmod +x "$runfile"
     info "Installing CUDA Toolkit (no root, toolkit only)..."
-    "$runfile" --silent --override --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
+    "$runfile" --silent --no-man-page --override --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
         || die "CUDA Toolkit installation failed"
 
     # Verify nvcc exists
@@ -188,9 +204,13 @@ install_python() {
 # ─── Step 03: Clone ComfyUI ─────────────────────────────────────────────────
 install_comfyui_clone() {
     if tick_exists "03_comfyui_clone"; then return; fi
-    info "Step 03: Cloning ComfyUI"
+    info "Step 03: Cloning ComfyUI and pinning to $COMFYUI_TAG"
 
     git clone "$COMFYUI_REPO" "$COMFYUI_DIR" || die "Failed to clone ComfyUI"
+
+    cd "$COMFYUI_DIR"
+    git checkout "$COMFYUI_TAG" || die "Failed to checkout $COMFYUI_TAG"
+    info "ComfyUI pinned to $(git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)"
 
     drop_tick "03_comfyui_clone"
 }
@@ -223,11 +243,11 @@ CUDA_ENV
 # ─── Step 05: PyTorch ────────────────────────────────────────────────────────
 install_pytorch() {
     if tick_exists "05_pytorch"; then return; fi
-    info "Step 05: Installing PyTorch cu130"
+    info "Step 05: Installing PyTorch 2.9.1 cu128"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install torch torchvision torchaudio --index-url "$PYTORCH_INDEX" \
+    pip install torch==2.9.1 torchvision torchaudio --index-url "$PYTORCH_INDEX" \
         || die "Failed to install PyTorch"
 
     # Verify CUDA is available
@@ -250,105 +270,202 @@ install_comfyui_deps() {
     drop_tick "06_comfyui_deps"
 }
 
-# ─── Step 07: flash-attn ────────────────────────────────────────────────────
-install_flash_attn() {
-    if tick_exists "07_flash_attn"; then return; fi
-    info "Step 07: Compiling flash-attn (this takes a while)"
+# ─── Step 07: standard-aifc + standard-sunau ─────────────────────────────────
+install_aifc_sunau() {
+    if tick_exists "07_aifc_sunau"; then return; fi
+    info "Step 07: Installing standard-aifc 3.13.0 + standard-sunau 3.13.0"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    # Ensure CUDA_HOME is set (should be from venv activation)
-    [[ -x "$CUDA_HOME/bin/nvcc" ]] || die "CUDA_HOME/bin/nvcc not found — CUDA_HOME=$CUDA_HOME"
+    pip install standard-aifc==3.13.0 || die "Failed to install standard-aifc"
+    pip install standard-sunau==3.13.0 || die "Failed to install standard-sunau"
 
-    export MAX_JOBS=4
-    # Build deps needed for flash-attn compilation
-    pip install ninja packaging wheel setuptools || die "Failed to install flash-attn build deps"
+    python3 -c "import aifc; print('standard-aifc OK')" || die "standard-aifc import failed"
+    python3 -c "import sunau; print('standard-sunau OK')" || die "standard-sunau import failed"
 
-    pip install flash-attn --no-build-isolation || die "Failed to install flash-attn"
+    drop_tick "07_aifc_sunau"
+}
+
+# ─── Step 08: llvmlite ───────────────────────────────────────────────────────
+install_llvmlite() {
+    if tick_exists "08_llvmlite"; then return; fi
+    info "Step 08: Installing llvmlite 0.46.0"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install llvmlite==0.46.0 || die "Failed to install llvmlite"
+
+    python3 -c "import llvmlite; print(f'llvmlite {llvmlite.__version__}')" \
+        || die "llvmlite import failed"
+
+    drop_tick "08_llvmlite"
+}
+
+# ─── Step 09: numba ──────────────────────────────────────────────────────────
+install_numba() {
+    if tick_exists "09_numba"; then return; fi
+    info "Step 09: Installing numba 0.64.0"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install numba==0.64.0 || die "Failed to install numba"
+
+    python3 -c "import numba; print(f'numba {numba.__version__}')" \
+        || die "numba import failed"
+
+    drop_tick "09_numba"
+}
+
+# ─── Step 10: librosa ────────────────────────────────────────────────────────
+install_librosa() {
+    if tick_exists "10_librosa"; then return; fi
+    info "Step 10: Installing librosa 0.11.0"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install librosa==0.11.0 || die "Failed to install librosa"
+
+    python3 -c "import librosa; print(f'librosa {librosa.__version__}')" \
+        || die "librosa import failed"
+
+    drop_tick "10_librosa"
+}
+
+# ─── Step 11: soxr ───────────────────────────────────────────────────────────
+install_soxr() {
+    if tick_exists "11_soxr"; then return; fi
+    info "Step 11: Installing soxr 1.0.0"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install soxr==1.0.0 || die "Failed to install soxr"
+
+    python3 -c "import soxr; print(f'soxr {soxr.__version__}')" \
+        || die "soxr import failed"
+
+    drop_tick "11_soxr"
+}
+
+# ─── Step 12: flash-attn ────────────────────────────────────────────────────
+install_flash_attn() {
+    if tick_exists "12_flash_attn"; then return; fi
+    info "Step 12: Installing flash-attn 2.8.3 (prebuilt wheel)"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install flash-attn==2.8.3 || die "Failed to install flash-attn"
 
     python3 -c "import flash_attn; print(f'flash-attn {flash_attn.__version__}')" \
         || die "flash-attn import failed"
 
-    drop_tick "07_flash_attn"
+    drop_tick "12_flash_attn"
 }
 
+# ─── Step 13: ComfyUI app verify ────────────────────────────────────────────
+install_comfyui_app() {
+    if tick_exists "13_comfyui_app"; then return; fi
+    info "Step 13: Verifying ComfyUI 0.15.1 is ready"
 
-# ─── Step 08: SageAttention ─────────────────────────────────────────────────
-install_sageattention() {
-    if tick_exists "08_sageattention"; then return; fi
-    info "Step 08: Installing SageAttention"
+    source "$COMFYUI_VENV/bin/activate"
+    cd "$COMFYUI_DIR"
+
+    # Verify we're on the right tag
+    local current_tag
+    current_tag=$(git describe --tags --exact-match 2>/dev/null || echo "unknown")
+    info "ComfyUI tag: $current_tag"
+    [[ "$current_tag" == "$COMFYUI_TAG" ]] || warn "Expected $COMFYUI_TAG but got $current_tag"
+
+    # Quick import test
+    python3 -c "import comfy; print('ComfyUI core import OK')" \
+        || die "ComfyUI core import failed"
+
+    drop_tick "13_comfyui_app"
+}
+
+# ─── Step 14: comfy-env ─────────────────────────────────────────────────────
+install_comfy_env() {
+    if tick_exists "14_comfy_env"; then return; fi
+    info "Step 14: Installing comfy-env"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install sageattention --no-build-isolation || die "Failed to install SageAttention"
+    pip install comfy-env || die "Failed to install comfy-env"
 
-    python3 -c "import sageattention; print('SageAttention OK')" \
-        || die "SageAttention import failed"
+    python3 -c "import comfy_env; print('comfy-env OK')" \
+        || die "comfy-env import failed"
 
-    drop_tick "08_sageattention"
+    drop_tick "14_comfy_env"
 }
 
-# ─── Step 09: Triton ────────────────────────────────────────────────────────
-install_triton() {
-    if tick_exists "09_triton"; then return; fi
-    info "Step 09: Installing Triton"
+# ─── Step 15: transformers (ComfyUI default) ────────────────────────────────
+install_transformers() {
+    if tick_exists "15_transformers"; then return; fi
+    info "Step 15: Verifying transformers (ComfyUI default)"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install triton || die "Failed to install Triton"
+    # transformers should already be installed via ComfyUI deps or we install it now
+    pip install transformers || die "Failed to install transformers"
 
-    python3 -c "import triton; print(f'Triton {triton.__version__}')" \
-        || die "Triton import failed"
+    python3 -c "import transformers; print(f'transformers {transformers.__version__}')" \
+        || die "transformers import failed"
 
-    drop_tick "09_triton"
+    drop_tick "15_transformers"
 }
 
-# ─── Step 10: Custom Nodes ──────────────────────────────────────────────────
-install_custom_nodes() {
-    if tick_exists "10_custom_nodes"; then return; fi
-    info "Step 10: Installing custom nodes"
+# ─── Step 16: transformers 4.57.3 (Qwen3-TTS isolated venv) ─────────────────
+install_transformers_qwen() {
+    if tick_exists "16_transformers_qwen"; then return; fi
+    info "Step 16: Creating isolated Qwen3-TTS venv with transformers 4.57.3"
 
-    source "$COMFYUI_VENV/bin/activate"
-    local nodes_dir="$COMFYUI_DIR/custom_nodes"
-    mkdir -p "$nodes_dir"
+    # Create a separate venv for Qwen3-TTS
+    "$PYTHON_BIN" -m venv "$QWEN_VENV" || die "Failed to create Qwen3-TTS venv"
 
-    # ComfyUI Manager
-    if [[ ! -d "$nodes_dir/ComfyUI-Manager" ]]; then
-        git clone https://github.com/ltdrdata/ComfyUI-Manager.git "$nodes_dir/ComfyUI-Manager"
-    fi
+    # Wire CUDA_HOME into Qwen venv activation script
+    local activate="$QWEN_VENV/bin/activate"
+    cat >> "$activate" << 'CUDA_ENV'
 
-    # Install any requirements from custom nodes
-    for req in "$nodes_dir"/*/requirements.txt; do
-        if [[ -f "$req" ]]; then
-            info "Installing deps for $(dirname "$req" | xargs basename)"
-            pip install -r "$req" || warn "Some deps failed for $req"
-        fi
-    done
+# ── AI.sh: CUDA environment (Qwen3-TTS) ──
+export CUDA_HOME="$HOME/AI/cuda"
+export PATH="$CUDA_HOME/bin:$PATH"
+export LD_LIBRARY_PATH="$CUDA_HOME/lib64:${LD_LIBRARY_PATH:-}"
+CUDA_ENV
 
-    drop_tick "10_custom_nodes"
+    source "$activate"
+
+    pip install --upgrade pip || die "Failed to upgrade pip in Qwen3-TTS venv"
+    pip install torch==2.9.1 torchvision torchaudio --index-url "$PYTORCH_INDEX" \
+        || die "Failed to install PyTorch in Qwen3-TTS venv"
+    pip install transformers==4.57.3 || die "Failed to install transformers 4.57.3"
+
+    python3 -c "import transformers; assert transformers.__version__ == '4.57.3', f'Got {transformers.__version__}'; print('transformers 4.57.3 OK')" \
+        || die "transformers 4.57.3 verification failed"
+
+    deactivate
+    info "Qwen3-TTS isolated venv ready at $QWEN_VENV"
+
+    drop_tick "16_transformers_qwen"
 }
 
-# ─── Step 11: Models ────────────────────────────────────────────────────────
+# ─── Step 17: Models ────────────────────────────────────────────────────────
 install_models() {
-    if tick_exists "11_models"; then return; fi
-    info "Step 11: Setting up models directory"
+    if tick_exists "17_models"; then return; fi
+    info "Step 17: Setting up models directory"
 
     # Create standard model directories
     local models_dir="$COMFYUI_DIR/models"
     mkdir -p "$models_dir"/{checkpoints,clip,clip_vision,controlnet,diffusers,embeddings}
     mkdir -p "$models_dir"/{gligen,hypernetworks,loras,style_models,unet,upscale_models,vae}
 
-    # TODO: Add model downloads here as needed
-    # For now, just ensure the directory structure exists
     info "Model directories created. Add models manually or extend this step."
 
-    drop_tick "11_models"
+    drop_tick "17_models"
 }
 
-# ─── Step 12: Verify ────────────────────────────────────────────────────────
+# ─── Step 18: Verify ────────────────────────────────────────────────────────
 install_verify() {
-    if tick_exists "12_verified"; then return; fi
-    info "Step 12: Running smoke test"
+    if tick_exists "18_verified"; then return; fi
+    info "Step 18: Running full smoke test"
 
     source "$COMFYUI_VENV/bin/activate"
     cd "$COMFYUI_DIR"
@@ -372,16 +489,58 @@ except Exception as e:
     errors.append(f"flash-attn: {e}")
 
 try:
-    import sageattention
-    print("  SageAttention OK")
+    import aifc
+    print("  standard-aifc OK")
 except Exception as e:
-    errors.append(f"SageAttention: {e}")
+    errors.append(f"standard-aifc: {e}")
 
 try:
-    import triton
-    print(f"  Triton {triton.__version__}")
+    import sunau
+    print("  standard-sunau OK")
 except Exception as e:
-    errors.append(f"Triton: {e}")
+    errors.append(f"standard-sunau: {e}")
+
+try:
+    import llvmlite
+    print(f"  llvmlite {llvmlite.__version__}")
+except Exception as e:
+    errors.append(f"llvmlite: {e}")
+
+try:
+    import numba
+    print(f"  numba {numba.__version__}")
+except Exception as e:
+    errors.append(f"numba: {e}")
+
+try:
+    import librosa
+    print(f"  librosa {librosa.__version__}")
+except Exception as e:
+    errors.append(f"librosa: {e}")
+
+try:
+    import soxr
+    print(f"  soxr {soxr.__version__}")
+except Exception as e:
+    errors.append(f"soxr: {e}")
+
+try:
+    import transformers
+    print(f"  transformers {transformers.__version__}")
+except Exception as e:
+    errors.append(f"transformers: {e}")
+
+try:
+    import comfy
+    print("  ComfyUI core OK")
+except Exception as e:
+    errors.append(f"ComfyUI: {e}")
+
+try:
+    import comfy_env
+    print("  comfy-env OK")
+except Exception as e:
+    errors.append(f"comfy-env: {e}")
 
 if errors:
     print("\nFAILED checks:")
@@ -394,7 +553,17 @@ SMOKE_TEST
 
     [[ $? -eq 0 ]] || die "Smoke test failed"
 
-    drop_tick "12_verified"
+    # Also verify Qwen3-TTS venv
+    info "Checking Qwen3-TTS isolated venv..."
+    source "$QWEN_VENV/bin/activate"
+    python3 -c "import transformers; assert transformers.__version__ == '4.57.3'; print(f'  Qwen3-TTS venv: transformers {transformers.__version__} ✓')" \
+        || die "Qwen3-TTS venv verification failed"
+    deactivate
+
+    # Re-activate main venv for launch
+    source "$COMFYUI_VENV/bin/activate"
+
+    drop_tick "18_verified"
 }
 
 # ─── Run ComfyUI ─────────────────────────────────────────────────────────────
@@ -409,7 +578,7 @@ run_comfyui() {
 main() {
     echo ""
     echo "============================================"
-    echo "  AI.sh — ComfyUI Installer & Launcher"
+    echo "  AI.sh v2.0 — ComfyUI Installer & Launcher"
     echo "  Everything under ~/AI/ — sealed box."
     echo "============================================"
     echo ""
@@ -422,22 +591,28 @@ main() {
     # Ensure base dirs exist
     mkdir -p "$AI_HOME" "$TICKS_DIR" "$WORKSPACES_DIR"
 
-    # Run install steps in sequence
-    install_cuda_toolkit
-    install_python
-    install_comfyui_clone
-    install_comfyui_venv
-    install_pytorch
-    install_comfyui_deps
-    install_flash_attn
-    install_sageattention
-    install_triton
-    install_custom_nodes
-    install_models
-    install_verify
+    # Run install steps in sequence (18 steps)
+    install_cuda_toolkit        # 01 — CUDA 12.8
+    install_python              # 02 — Python 3.13.2
+    install_comfyui_clone       # 03 — ComfyUI 0.15.1 (pinned)
+    install_comfyui_venv        # 04 — venv + CUDA_HOME
+    install_pytorch             # 05 — PyTorch 2.9.1 cu128
+    install_comfyui_deps        # 06 — ComfyUI requirements.txt
+    install_aifc_sunau          # 07 — standard-aifc + standard-sunau
+    install_llvmlite            # 08 — llvmlite 0.46.0
+    install_numba               # 09 — numba 0.64.0
+    install_librosa             # 10 — librosa 0.11.0
+    install_soxr                # 11 — soxr 1.0.0
+    install_flash_attn          # 12 — flash-attn 2.8.3
+    install_comfyui_app         # 13 — ComfyUI verify
+    install_comfy_env           # 14 — comfy-env
+    install_transformers        # 15 — transformers (default)
+    install_transformers_qwen   # 16 — transformers 4.57.3 (Qwen3-TTS)
+    install_models              # 17 — model directories
+    install_verify              # 18 — full smoke test
 
     echo ""
-    ok "All 12 steps complete. Launching ComfyUI..."
+    ok "All 18 steps complete. Launching ComfyUI..."
     echo ""
 
     # Pass any remaining args to ComfyUI (skip --nuke if present)
