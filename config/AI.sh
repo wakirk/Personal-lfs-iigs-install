@@ -134,7 +134,7 @@ install_cuda_toolkit() {
 
     chmod +x "$runfile"
     info "Installing CUDA Toolkit (no root, toolkit only)..."
-    "$runfile" --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
+    "$runfile" --silent --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
         || die "CUDA Toolkit installation failed"
 
     # Verify nvcc exists
@@ -256,6 +256,9 @@ install_flash_attn() {
     # Ensure CUDA_HOME is set (should be from venv activation)
     [[ -x "$CUDA_HOME/bin/nvcc" ]] || die "CUDA_HOME/bin/nvcc not found — CUDA_HOME=$CUDA_HOME"
 
+    # Build deps needed for flash-attn compilation
+    pip install ninja packaging || die "Failed to install flash-attn build deps"
+    
     pip install flash-attn --no-build-isolation || die "Failed to install flash-attn"
 
     python3 -c "import flash_attn; print(f'flash-attn {flash_attn.__version__}')" \
