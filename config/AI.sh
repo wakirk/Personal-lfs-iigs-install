@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 2.0"
+Version="Version 2.10"
 echo "$Version"
 
 ###############################################################################
@@ -349,17 +349,42 @@ install_soxr() {
 # ─── Step 12: flash-attn ────────────────────────────────────────────────────
 install_flash_attn() {
     if tick_exists "12_flash_attn"; then return; fi
-    info "Step 12: Installing flash-attn 2.8.3 (prebuilt wheel)"
+    info "Step 12: Source build with gcc-14"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install flash-attn==2.8.3 || die "Failed to install flash-attn"
+    # ── Clean build environment ──
+    pip cache purge 2>/dev/null || true
+    pip uninstall flash-attn -y 2>/dev/null || true
+
+    # ── Patch glibc 2.41 vs CUDA 12.8 header mismatch ──
+    # CachyOS glibc declares cospi/sinpi/rsqrt with noexcept(true)
+    # but CUDA 12.8 math_functions.h does not — nvcc chokes on the conflict.
+    # Line numbers are pinned to CUDA 12.8 runfile.
+    local _mf="$CUDA_HOME/include/crt/math_functions.h"
+    if [ -f "$_mf" ] && ! grep -q 'noexcept' "$_mf"; then
+        info "Patching CUDA math_functions.h for glibc 2.41 compatibility"
+        sed -i \
+          -e '597s/);$/) noexcept(true);/' \
+          -e '621s/);$/) noexcept(true);/' \
+          -e '2556s/);$/) noexcept(true);/' \
+          -e '2579s/);$/) noexcept(true);/' \
+          -e '2601s/);$/) noexcept(true);/' \
+          -e '2623s/);$/) noexcept(true);/' \
+          "$_mf" || die "Failed to patch math_functions.h"
+    fi
+
+    # ── Build deps + compile ──
+    pip install ninja packaging wheel setuptools || die "Failed to install flash-attn build deps"
+    export NVCC_PREPEND_FLAGS="--compiler-bindir=/usr/bin/gcc-14"
+    MAX_JOBS=4 pip install flash-attn==2.8.3 --no-build-isolation || die "Failed to install flash-attn"
 
     python3 -c "import flash_attn; print(f'flash-attn {flash_attn.__version__}')" \
         || die "flash-attn import failed"
 
     drop_tick "12_flash_attn"
 }
+
 
 # ─── Step 13: ComfyUI app verify ────────────────────────────────────────────
 install_comfyui_app() {
@@ -603,20 +628,21 @@ main() {
     install_numba               # 09 — numba 0.64.0
     install_librosa             # 10 — librosa 0.11.0
     install_soxr                # 11 — soxr 1.0.0
-    install_flash_attn          # 12 — flash-attn 2.8.3
-    install_comfyui_app         # 13 — ComfyUI verify
-    install_comfy_env           # 14 — comfy-env
-    install_transformers        # 15 — transformers (default)
-    install_transformers_qwen   # 16 — transformers 4.57.3 (Qwen3-TTS)
-    install_models              # 17 — model directories
-    install_verify              # 18 — full smoke test
+    install_flash_attn          # 12 — flash-attn 2.8.3 !!!
+    #install_comfyui_app         # 13 — ComfyUI verify
+    #install_comfy_env           # 14 — comfy-env
+    #install_transformers        # 15 — transformers (default)
+    #install_transformers_qwen   # 16 — transformers 4.57.3 (Qwen3-TTS)
+    #install_models              # 17 — model directories
+    #install_verify              # 18 — full smoke test
 
     echo ""
-    ok "All 18 steps complete. Launching ComfyUI..."
+    #ok "All 18 steps complete. Launching ComfyUI..."
     echo ""
 
     # Pass any remaining args to ComfyUI (skip --nuke if present)
-    run_comfyui "$@"
+    #run_comfyui "$@"
+
 }
 
 main "$@"
@@ -626,3 +652,4 @@ exit 0
 # Installer notes:
 # sudo pacman -S libxml2
 # sudo ln -s /usr/lib/libxml2.so.16 /usr/lib/libxml2.so.2
+# sudo pacman -S gcc14
