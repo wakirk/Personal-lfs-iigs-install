@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 1.03
+# Version 1.04
 
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
@@ -171,7 +171,7 @@ install_python() {
         --with-ensurepip=install
 
     info "Building (this takes a few minutes)..."
-    make -j"$(nproc)"
+    make -j4
     make install
 
     # Verify
@@ -259,6 +259,7 @@ install_flash_attn() {
     # Ensure CUDA_HOME is set (should be from venv activation)
     [[ -x "$CUDA_HOME/bin/nvcc" ]] || die "CUDA_HOME/bin/nvcc not found — CUDA_HOME=$CUDA_HOME"
 
+    MAX_JOBS=4
     # Build deps needed for flash-attn compilation
     pip install ninja packaging || die "Failed to install flash-attn build deps"
     
