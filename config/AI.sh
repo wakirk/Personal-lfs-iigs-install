@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 1.04
+# Version 1.05
 
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
@@ -259,7 +259,7 @@ install_flash_attn() {
     # Ensure CUDA_HOME is set (should be from venv activation)
     [[ -x "$CUDA_HOME/bin/nvcc" ]] || die "CUDA_HOME/bin/nvcc not found — CUDA_HOME=$CUDA_HOME"
 
-    MAX_JOBS=4
+    export MAX_JOBS=4
     # Build deps needed for flash-attn compilation
     pip install ninja packaging || die "Failed to install flash-attn build deps"
     
