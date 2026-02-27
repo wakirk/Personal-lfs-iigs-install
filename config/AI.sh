@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 1.12"
+Version="Version 1.13"
 echo "$Version"
 
 ###############################################################################
@@ -138,7 +138,7 @@ install_cuda_toolkit() {
 
     chmod +x "$runfile"
     info "Installing CUDA Toolkit (no root, toolkit only)..."
-    "$runfile" --silent --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
+    "$runfile" --silent --override --toolkit --toolkitpath="$CUDA_DIR" --defaultroot="$CUDA_DIR" \
         || die "CUDA Toolkit installation failed"
 
     # Verify nvcc exists
