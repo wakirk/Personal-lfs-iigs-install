@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version 1.09
+# Version 1.10
 
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
@@ -443,3 +443,9 @@ main() {
 }
 
 main "$@"
+
+exit 0
+
+# Installer notes:
+# sudo pacman -S libxml2
+# sudo ln -s /usr/lib/libxml2.so.16 /usr/lib/libxml2.so.2
