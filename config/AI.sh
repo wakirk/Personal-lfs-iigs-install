@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Version 1.07
+# Version 1.08
 
-###############################################################################
+####
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
 #
 # IRON RULE: Everything lives under ~/AI/ except NVIDIA driver & basic tools.
@@ -10,7 +10,7 @@
 #
 # Tick system: each completed step drops a file in ~/AI/.ticks/
 # On re-run, skips completed steps and resumes where it left off.
-###############################################################################
+####
 
 # ~/AI/
 # ├── cuda/                 # CUDA Toolkit 13.0 (nvcc, headers, libs)
@@ -56,7 +56,7 @@
 
 set -euo pipefail
 
-# ─── Configuration ───────────────────────────────────────────────────────────
+# ─── Configuration ────
 AI_HOME="$HOME/AI"
 TICKS_DIR="$AI_HOME/.ticks"
 WORKSPACES_DIR="$AI_HOME/workspaces"
@@ -77,14 +77,14 @@ COMFYUI_VENV="$COMFYUI_DIR/.venv"
 
 PYTORCH_INDEX="https://download.pytorch.org/whl/cu130"
 
-# ─── Colors ──────────────────────────────────────────────────────────────────
+# ─── Colors ────
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# ─── Helpers ─────────────────────────────────────────────────────────────────
+# ─── Helpers ────
 info()  { echo -e "${CYAN}[INFO]${NC} $*"; }
 ok()    { echo -e "${GREEN}[OK]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
@@ -93,7 +93,7 @@ die()   { echo -e "${RED}[FATAL]${NC} $*"; exit 1; }
 tick_exists() { [[ -f "$TICKS_DIR/$1" ]]; }
 drop_tick()   { mkdir -p "$TICKS_DIR" && touch "$TICKS_DIR/$1" && ok "Tick: $1"; }
 
-# ─── Nuke ────────────────────────────────────────────────────────────────────
+# ─── Nuke ────
 nuke() {
     warn "NUKE MODE: Removing only what AI.sh created"
     echo ""
@@ -122,7 +122,7 @@ nuke() {
     exit 0
 }
 
-# ─── Step 01: CUDA Toolkit ──────────────────────────────────────────────────
+# ─── Step 01: CUDA Toolkit ────
 install_cuda_toolkit() {
     if tick_exists "01_cuda_toolkit"; then return; fi
     info "Step 01: Installing CUDA Toolkit $CUDA_VERSION to $CUDA_DIR"
@@ -147,7 +147,7 @@ install_cuda_toolkit() {
     drop_tick "01_cuda_toolkit"
 }
 
-# ─── Step 02: Python ────────────────────────────────────────────────────────
+# ─── Step 02: Python ────
 install_python() {
     if tick_exists "02_python"; then return; fi
     info "Step 02: Building Python $PYTHON_VERSION to $PYTHON_DIR"
@@ -184,7 +184,7 @@ install_python() {
     drop_tick "02_python"
 }
 
-# ─── Step 03: Clone ComfyUI ─────────────────────────────────────────────────
+# ─── Step 03: Clone ComfyUI ────
 install_comfyui_clone() {
     if tick_exists "03_comfyui_clone"; then return; fi
     info "Step 03: Cloning ComfyUI"
@@ -194,7 +194,7 @@ install_comfyui_clone() {
     drop_tick "03_comfyui_clone"
 }
 
-# ─── Step 04: Create venv ───────────────────────────────────────────────────
+# ─── Step 04: Create venv ────
 install_comfyui_venv() {
     if tick_exists "04_comfyui_venv"; then return; fi
     info "Step 04: Creating ComfyUI venv with CUDA_HOME wired up"
@@ -219,7 +219,7 @@ CUDA_ENV
     drop_tick "04_comfyui_venv"
 }
 
-# ─── Step 05: PyTorch ────────────────────────────────────────────────────────
+# ─── Step 05: PyTorch ────
 install_pytorch() {
     if tick_exists "05_pytorch"; then return; fi
     info "Step 05: Installing PyTorch cu130"
@@ -236,7 +236,7 @@ install_pytorch() {
     drop_tick "05_pytorch"
 }
 
-# ─── Step 06: ComfyUI deps ──────────────────────────────────────────────────
+# ─── Step 06: ComfyUI deps ────
 install_comfyui_deps() {
     if tick_exists "06_comfyui_deps"; then return; fi
     info "Step 06: Installing ComfyUI requirements"
@@ -249,7 +249,7 @@ install_comfyui_deps() {
     drop_tick "06_comfyui_deps"
 }
 
-# ─── Step 07: flash-attn ────────────────────────────────────────────────────
+# ─── Step 07: flash-attn ────
 install_flash_attn() {
     if tick_exists "07_flash_attn"; then return; fi
     info "Step 07: Compiling flash-attn (this takes a while)"
@@ -261,7 +261,7 @@ install_flash_attn() {
 
     export MAX_JOBS=4
     # Build deps needed for flash-attn compilation
-    pip install ninja packaging || die "Failed to install flash-attn build deps"
+    pip install ninja packaging wheel setuptools || die "Failed to install flash-attn build deps"
     
     pip install flash-attn --no-build-isolation || die "Failed to install flash-attn"
 
@@ -271,7 +271,7 @@ install_flash_attn() {
     drop_tick "07_flash_attn"
 }
 
-# ─── Step 08: SageAttention ─────────────────────────────────────────────────
+# ─── Step 08: SageAttention ────
 install_sageattention() {
     if tick_exists "08_sageattention"; then return; fi
     info "Step 08: Installing SageAttention"
@@ -286,7 +286,7 @@ install_sageattention() {
     drop_tick "08_sageattention"
 }
 
-# ─── Step 09: Triton ────────────────────────────────────────────────────────
+# ─── Step 09: Triton ────
 install_triton() {
     if tick_exists "09_triton"; then return; fi
     info "Step 09: Installing Triton"
@@ -301,7 +301,7 @@ install_triton() {
     drop_tick "09_triton"
 }
 
-# ─── Step 10: Custom Nodes ──────────────────────────────────────────────────
+# ─── Step 10: Custom Nodes ────
 install_custom_nodes() {
     if tick_exists "10_custom_nodes"; then return; fi
     info "Step 10: Installing custom nodes"
@@ -326,7 +326,7 @@ install_custom_nodes() {
     drop_tick "10_custom_nodes"
 }
 
-# ─── Step 11: Models ────────────────────────────────────────────────────────
+# ─── Step 11: Models ────
 install_models() {
     if tick_exists "11_models"; then return; fi
     info "Step 11: Setting up models directory"
@@ -343,7 +343,7 @@ install_models() {
     drop_tick "11_models"
 }
 
-# ─── Step 12: Verify ────────────────────────────────────────────────────────
+# ─── Step 12: Verify ────
 install_verify() {
     if tick_exists "12_verified"; then return; fi
     info "Step 12: Running smoke test"
@@ -395,7 +395,7 @@ SMOKE_TEST
     drop_tick "12_verified"
 }
 
-# ─── Run ComfyUI ─────────────────────────────────────────────────────────────
+# ─── Run ComfyUI ────
 run_comfyui() {
     info "Starting ComfyUI..."
     source "$COMFYUI_VENV/bin/activate"
@@ -403,13 +403,13 @@ run_comfyui() {
     python3 main.py --listen 0.0.0.0 --port 8188 "$@"
 }
 
-# ─── Main ────────────────────────────────────────────────────────────────────
+# ─── Main ────
 main() {
     echo ""
-    echo "============================================"
+    echo "===="
     echo "  AI.sh — ComfyUI Installer & Launcher"
     echo "  Everything under ~/AI/ — sealed box."
-    echo "============================================"
+    echo "===="
     echo ""
 
     # Handle --nuke
@@ -449,7 +449,3 @@ exit 0
 # Installer notes:
 # sudo pacman -S libxml2
 # sudo ln -s /usr/lib/libxml2.so.16 /usr/lib/libxml2.so.2
-
-
-
-
