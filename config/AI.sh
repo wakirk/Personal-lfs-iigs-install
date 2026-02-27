@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# Version 1.03
+
 ###############################################################################
 # AI.sh — ComfyUI Installer & Launcher for CachyOS
 #
