@@ -30,8 +30,8 @@ echo "$Version"
 # │   ├── 05_pytorch             # PyTorch 2.9.1 cu128 installed in venv
 # │   ├── 06_comfyui_deps        # ComfyUI requirements.txt installed
 # │   ├── 07_aifc_sunau          # standard-aifc 3.13.0 + standard-sunau 3.13.0
-# │   ├── 08_llvmlite            # llvmlite 0.46.0
-# │   ├── 09_numba               # numba 0.64.0
+# │   ├── 08_numba_shim          # numba shim (no-op decorators for librosa)
+# │   ├── 09                     # (removed — real numba broken on Python 3.13)
 # │   ├── 10_librosa             # librosa 0.11.0
 # │   ├── 11_soxr                # soxr 1.0.0
 # │   ├── 12_flash_attn          # flash-attn 2.8.3 (prebuilt wheel)
@@ -56,8 +56,8 @@ echo "$Version"
 # 05    install_pytorch             Installs PyTorch 2.9.1 cu128 via pip
 # 06    install_comfyui_deps        Installs ComfyUI's requirements.txt
 # 07    install_aifc_sunau          Installs standard-aifc 3.13.0 + standard-sunau 3.13.0
-# 08    install_llvmlite            Installs llvmlite 0.46.0
-# 09    install_numba               Installs numba 0.64.0
+# 08    install_numba_shim          Installs numba shim (no-op decorators for librosa)
+# 09    (removed)                   Real numba 0.64.0 broken on Python 3.13
 # 10    install_librosa             Installs librosa 0.11.0
 # 11    install_soxr                Installs soxr 1.0.0
 # 12    install_flash_attn          Installs flash-attn 2.8.3 (prebuilt wheel)
@@ -287,33 +287,89 @@ install_aifc_sunau() {
 }
 
 # ─── Step 08: llvmlite ───────────────────────────────────────────────────────
-install_llvmlite() {
-    if tick_exists "08_llvmlite"; then return; fi
-    info "Step 08: Installing llvmlite 0.46.0"
-
-    source "$COMFYUI_VENV/bin/activate"
-
-    pip install llvmlite==0.46.0 || die "Failed to install llvmlite"
-
-    python3 -c "import llvmlite; print(f'llvmlite {llvmlite.__version__}')" \
-        || die "llvmlite import failed"
-
-    drop_tick "08_llvmlite"
-}
+#install_llvmlite() {
+#    if tick_exists "08_llvmlite"; then return; fi
+#    info "Step 08: Installing llvmlite 0.46.0"
+#
+#    source "$COMFYUI_VENV/bin/activate"
+#
+#    pip install llvmlite==0.46.0 || die "Failed to install llvmlite"
+#
+#    python3 -c "import llvmlite; print(f'llvmlite {llvmlite.__version__}')" \
+#        || die "llvmlite import failed"
+#
+#    drop_tick "08_llvmlite"
+#}
 
 # ─── Step 09: numba ──────────────────────────────────────────────────────────
-install_numba() {
-    if tick_exists "09_numba"; then return; fi
-    info "Step 09: Installing numba 0.64.0"
+#install_numba() {
+#    if tick_exists "09_numba"; then return; fi
+#    info "Step 09: Installing numba 0.64.0"
+#
+#    source "$COMFYUI_VENV/bin/activate"
+#
+#    pip install numba==0.64.0 || die "Failed to install numba"
+#
+#    python3 -c "import numba; print(f'numba {numba.__version__}')" \
+#        || die "numba import failed"
+#
+#    drop_tick "09_numba"
+#}
+
+# ─── Step 08: numba shim ────
+# numba 0.64.0 has a Python 3.13 bug (@guvectorize broken).
+# librosa hard-imports numba, so we provide a fake shim with no-op decorators.
+# Actual resampling is handled by soxr — numba is never called.
+install_numba_shim() {
+    if tick_exists "08_numba_shim"; then return; fi
+    info "Step 08: Installing numba shim (no-op decorators for librosa)"
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install numba==0.64.0 || die "Failed to install numba"
+    # Remove real numba/llvmlite if present
+    pip uninstall numba llvmlite -y 2>/dev/null || true
 
-    python3 -c "import numba; print(f'numba {numba.__version__}')" \
-        || die "numba import failed"
+    local shim_dir
+    shim_dir="$(python3 -c 'import site; print(site.getsitepackages()[0])')/numba"
+    mkdir -p "$shim_dir"
 
-    drop_tick "09_numba"
+    cat > "$shim_dir/__init__.py" << 'SHIM'
+"""Fake numba shim — provides no-op decorators so librosa imports cleanly.
+librosa.resample() will fall back to soxr when JIT is unavailable."""
+
+def jit(*args, **kwargs):
+    if args and callable(args[0]):
+        return args[0]
+    def wrapper(fn):
+        return fn
+    return wrapper
+
+def stencil(*args, **kwargs):
+    if args and callable(args[0]):
+        return args[0]
+    def wrapper(fn):
+        return fn
+    return wrapper
+
+def guvectorize(*args, **kwargs):
+    if args and callable(args[0]):
+        return args[0]
+    def wrapper(fn):
+        return fn
+    return wrapper
+
+def vectorize(*args, **kwargs):
+    if args and callable(args[0]):
+        return args[0]
+    def wrapper(fn):
+        return fn
+    return wrapper
+SHIM
+
+    python3 -c "import numba; print('numba shim OK')" \
+        || die "numba shim import failed"
+
+    drop_tick "08_numba_shim"
 }
 
 # ─── Step 10: librosa ────────────────────────────────────────────────────────
@@ -323,7 +379,7 @@ install_librosa() {
 
     source "$COMFYUI_VENV/bin/activate"
 
-    pip install librosa==0.11.0 || die "Failed to install librosa"
+    pip install librosa==0.11.0 --no-deps || die "Failed to install librosa"
 
     python3 -c "import librosa; print(f'librosa {librosa.__version__}')" \
         || die "librosa import failed"
@@ -539,16 +595,10 @@ except Exception as e:
     errors.append(f"standard-sunau: {e}")
 
 try:
-    import llvmlite
-    print(f"  llvmlite {llvmlite.__version__}")
-except Exception as e:
-    errors.append(f"llvmlite: {e}")
-
-try:
     import numba
-    print(f"  numba {numba.__version__}")
+    print("  numba shim OK")
 except Exception as e:
-    errors.append(f"numba: {e}")
+    errors.append(f"numba shim: {e}")
 
 try:
     import librosa
@@ -638,8 +688,9 @@ main() {
     install_pytorch             # 05 — PyTorch 2.9.1 cu128
     install_comfyui_deps        # 06 — ComfyUI requirements.txt
     install_aifc_sunau          # 07 — standard-aifc + standard-sunau
-    install_llvmlite            # 08 — llvmlite 0.46.0
-    install_numba               # 09 — numba 0.64.0
+#    install_llvmlite            # 08 — llvmlite 0.46.0
+#    install_numba               # 09 — numba 0.64.0
+    install_numba_shim          # 08 — numba shim (no-op, soxr does resampling)
     install_librosa             # 10 — librosa 0.11.0
     install_soxr                # 11 — soxr 1.0.0
     install_flash_attn          # 12 — flash-attn 2.8.3 !!!
