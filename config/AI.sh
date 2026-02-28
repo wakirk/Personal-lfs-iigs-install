@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 2.10"
+Version="Version 2.0"
 echo "$Version"
 
 ###############################################################################
@@ -362,7 +362,7 @@ install_flash_attn() {
     # but CUDA 12.8 math_functions.h does not — nvcc chokes on the conflict.
     # Line numbers are pinned to CUDA 12.8 runfile.
     local _mf="$CUDA_HOME/include/crt/math_functions.h"
-    if [ -f "$_mf" ] && ! grep -q 'noexcept' "$_mf"; then
+    if [ -f "$_mf" ] && ! sed -n '597p' "$_mf" | grep -q 'noexcept(true)'; then
         info "Patching CUDA math_functions.h for glibc 2.41 compatibility"
         sed -i \
           -e '597s/);$/) noexcept(true);/' \
@@ -377,7 +377,7 @@ install_flash_attn() {
     # ── Build deps + compile ──
     pip install ninja packaging wheel setuptools || die "Failed to install flash-attn build deps"
     export NVCC_PREPEND_FLAGS="--compiler-bindir=/usr/bin/gcc-14"
-    MAX_JOBS=4 pip install flash-attn==2.8.3 --no-build-isolation || die "Failed to install flash-attn"
+    MAX_JOBS=1 pip install flash-attn==2.8.3 --no-build-isolation || die "Failed to install flash-attn"
 
     python3 -c "import flash_attn; print(f'flash-attn {flash_attn.__version__}')" \
         || die "flash-attn import failed"
@@ -420,6 +420,19 @@ install_comfy_env() {
         || die "comfy-env import failed"
 
     drop_tick "14_comfy_env"
+}
+
+# NEW CODE
+# ─── Step 14b: comfyui-manager ──────────────────────────────────────────────
+install_comfyui_manager() {
+    if tick_exists "14b_comfyui_manager"; then return; fi
+    info "Step 14b: Installing comfyui-manager"
+
+    source "$COMFYUI_VENV/bin/activate"
+
+    pip install --pre comfyui_manager || die "Failed to install comfyui-manager"
+
+    drop_tick "14b_comfyui_manager"
 }
 
 # ─── Step 15: transformers (ComfyUI default) ────────────────────────────────
@@ -596,7 +609,8 @@ run_comfyui() {
     info "Starting ComfyUI..."
     source "$COMFYUI_VENV/bin/activate"
     cd "$COMFYUI_DIR"
-    python3 main.py --listen 0.0.0.0 --port 8188 "$@"
+    export NUMBA_DISABLE_JIT=1
+    python3 main.py --listen 127.0.0.1 --port 8188 --enable-manager --use-flash-attention "$@"
 }
 
 # ─── Main ────────────────────────────────────────────────────────────────────
@@ -629,19 +643,20 @@ main() {
     install_librosa             # 10 — librosa 0.11.0
     install_soxr                # 11 — soxr 1.0.0
     install_flash_attn          # 12 — flash-attn 2.8.3 !!!
-    #install_comfyui_app         # 13 — ComfyUI verify
-    #install_comfy_env           # 14 — comfy-env
-    #install_transformers        # 15 — transformers (default)
-    #install_transformers_qwen   # 16 — transformers 4.57.3 (Qwen3-TTS)
-    #install_models              # 17 — model directories
-    #install_verify              # 18 — full smoke test
+    install_comfyui_app         # 13 — ComfyUI verify
+    install_comfy_env           # 14 — comfy-env
+    install_comfyui_manager     # 14b — comfyui-manager   NEW CODE
+    install_transformers        # 15 — transformers (default)
+    install_transformers_qwen   # 16 — transformers 4.57.3 (Qwen3-TTS)
+    install_models              # 17 — model directories
+    install_verify              # 18 — full smoke test
 
     echo ""
     #ok "All 18 steps complete. Launching ComfyUI..."
     echo ""
 
     # Pass any remaining args to ComfyUI (skip --nuke if present)
-    #run_comfyui "$@"
+    run_comfyui "$@"
 
 }
 
@@ -653,3 +668,8 @@ exit 0
 # sudo pacman -S libxml2
 # sudo ln -s /usr/lib/libxml2.so.16 /usr/lib/libxml2.so.2
 # sudo pacman -S gcc14
+# https://github.com/Comfy-Org/ComfyUI
+# https://github.com/QwenLM/Qwen3-TTS
+# https://qwen.ai/blog?id=qwen3tts-0115
+# https://github.com/wakirk/Personal-lfs-iigs-install
+# https://apps.abacus.ai/chatllm/?appId=97fe78a64&convoId=b2d41fdc1
