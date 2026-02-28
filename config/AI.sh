@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 2.0"
+Version="Version 2.5"
 echo "$Version"
 
 ###############################################################################
@@ -286,36 +286,6 @@ install_aifc_sunau() {
     drop_tick "07_aifc_sunau"
 }
 
-# ─── Step 08: llvmlite ───────────────────────────────────────────────────────
-#install_llvmlite() {
-#    if tick_exists "08_llvmlite"; then return; fi
-#    info "Step 08: Installing llvmlite 0.46.0"
-#
-#    source "$COMFYUI_VENV/bin/activate"
-#
-#    pip install llvmlite==0.46.0 || die "Failed to install llvmlite"
-#
-#    python3 -c "import llvmlite; print(f'llvmlite {llvmlite.__version__}')" \
-#        || die "llvmlite import failed"
-#
-#    drop_tick "08_llvmlite"
-#}
-
-# ─── Step 09: numba ──────────────────────────────────────────────────────────
-#install_numba() {
-#    if tick_exists "09_numba"; then return; fi
-#    info "Step 09: Installing numba 0.64.0"
-#
-#    source "$COMFYUI_VENV/bin/activate"
-#
-#    pip install numba==0.64.0 || die "Failed to install numba"
-#
-#    python3 -c "import numba; print(f'numba {numba.__version__}')" \
-#        || die "numba import failed"
-#
-#    drop_tick "09_numba"
-#}
-
 # ─── Step 08: numba shim ────
 # numba 0.64.0 has a Python 3.13 bug (@guvectorize broken).
 # librosa hard-imports numba, so we provide a fake shim with no-op decorators.
@@ -381,6 +351,10 @@ install_librosa() {
 
     pip install librosa==0.11.0 --no-deps || die "Failed to install librosa"
 
+    # Install librosa's deps minus numba/llvmlite
+    pip install soundfile audioread decorator pooch msgpack platformdirs \
+        || die "Failed to install librosa dependencies"
+        
     python3 -c "import librosa; print(f'librosa {librosa.__version__}')" \
         || die "librosa import failed"
 
@@ -688,8 +662,6 @@ main() {
     install_pytorch             # 05 — PyTorch 2.9.1 cu128
     install_comfyui_deps        # 06 — ComfyUI requirements.txt
     install_aifc_sunau          # 07 — standard-aifc + standard-sunau
-#    install_llvmlite            # 08 — llvmlite 0.46.0
-#    install_numba               # 09 — numba 0.64.0
     install_numba_shim          # 08 — numba shim (no-op, soxr does resampling)
     install_librosa             # 10 — librosa 0.11.0
     install_soxr                # 11 — soxr 1.0.0
@@ -703,7 +675,7 @@ main() {
     install_verify              # 18 — full smoke test
 
     echo ""
-    #ok "All 18 steps complete. Launching ComfyUI..."
+    ok "All install steps complete. Launching ComfyUI..."
     echo ""
 
     # Pass any remaining args to ComfyUI (skip --nuke if present)
