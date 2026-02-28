@@ -1,6 +1,6 @@
 #!/bin/bash
 
-Version="Version 2.5"
+Version="Version 2.52"
 echo "$Version"
 
 ###############################################################################
@@ -353,8 +353,9 @@ install_librosa() {
 
     # Install librosa's deps minus numba/llvmlite
     pip install soundfile audioread decorator pooch msgpack platformdirs \
+        lazy_loader joblib scikit-learn \
         || die "Failed to install librosa dependencies"
-        
+
     python3 -c "import librosa; print(f'librosa {librosa.__version__}')" \
         || die "librosa import failed"
 
